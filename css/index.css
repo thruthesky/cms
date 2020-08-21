@@ -12,4 +12,11 @@ nav a {
   text-decoration: none;
 }
 
+main {
+  padding: 2em;
+}
+main .alert strong {
+  font-size: 1.5em;
+}
+
 /*# sourceMappingURL=index.css.map */

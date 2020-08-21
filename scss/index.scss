@@ -13,3 +13,12 @@ nav {
       text-decoration: none;
     }
   }
+
+main {
+  padding: 2em;
+  .alert {
+    strong {
+      font-size: 1.5em;
+    }
+  }
+}

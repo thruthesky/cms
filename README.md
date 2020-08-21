@@ -4,7 +4,38 @@ CMS for community projects
 
 ## Overview
 
-### Restful API
+## Installation
+
+* git clone `cms` theme inti `wp-content/themes` folder.
+* activate the theme on admin pannel.
+
+
+## Development
+
+### Live reload
+
+* `cd wp-content/thtmes`
+* `npm i`
+* Run below to watch & compile sass files into css.
+  `$ ./node_modules/.bin/sass --watch scss:css`
+* Run below to live reload.
+  `$ node live-reload.js`
+
+
+
+## Component
+
+* `Node.js`
+  * For sass compilation, hot reload.
+* `Bootstrap v5`
+  * and it's supporting Javascirpt.
+    * `popper.js`, `bootstrap.js`
+* `Fontawesome 5 free version`
+  * The size of fontawesome pro version is too big.
+* `jQuery`
+
+
+## Restful API
 
 * JSON communication as Wordpress plugin system is some what tedious.
   * You have to follow Wordpress JSON rules and it's not easy to customize.
@@ -14,17 +45,3 @@ CMS for community projects
 
 * We will make our own code for this project.
   * We will put the code inside the theme. so, we don't have to manage the restful api code and the theme code separately.
-
-## SCSS Compile
-
-```` Install sass via npm
-    npm install -g sass
-````
-
-```` Watch single file
-    sass --watch scss/index.scss css/index.css
-````
-
-```` Watch folder. format sourceFolder:outputFolder
-    sass --watch sass:css
-````
