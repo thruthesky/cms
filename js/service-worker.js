@@ -1,1 +1,2 @@
-console.log('This is service-worker.js');
+// console.log('This is service-worker.js');
+

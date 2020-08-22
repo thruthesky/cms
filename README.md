@@ -21,13 +21,13 @@ $ phprun vendor/bin/phpunit tests
 
 ## Development
 
-### Live reload
+### Installing Developer Tools & Live reload
 
-* `cd wp-content/thtmes`
+* `cd wp-content/thtmes/cms`
 * `npm i`
-* Run below to watch & compile sass files into css.
+* Run below to watch & compile sass files into css.\
   `$ ./node_modules/.bin/sass --watch scss:css`
-* Run below to live reload.
+* Run below to live reload.\
   `$ node live-reload.js`
 
 
