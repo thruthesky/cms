@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="<?php theme_path();?>/css/fontawesome/css/all.css">
     <link rel="stylesheet" href="<?php theme_path()?>/css/index.css">
 
-    <link rel="manifest" href="<?php theme_path()?>/manifest.json">
+    <link rel="manifest" href="<?php theme_path()?>/manifest.json?v=2">
     <meta name="theme-color" content="#4285f4">
     <link rel="apple-touch-icon" href="<?php theme_path()?>/img/pwa/Icon-192.png">
     <title>Hello, world!</title>
