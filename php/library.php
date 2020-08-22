@@ -103,3 +103,67 @@ function localhost() {
     return false;
 
 }
+
+function echo_json_error()
+{
+
+    switch (json_last_error()) {
+        case JSON_ERROR_NONE:
+            echo ' - No errors';
+            break;
+        case JSON_ERROR_DEPTH:
+            echo ' - Maximum stack depth exceeded';
+            break;
+        case JSON_ERROR_STATE_MISMATCH:
+            echo ' - Underflow or the modes mismatch';
+            break;
+        case JSON_ERROR_CTRL_CHAR:
+            echo ' - Unexpected control character found';
+            break;
+        case JSON_ERROR_SYNTAX:
+            echo ' - Syntax error, malformed JSON';
+            break;
+        case JSON_ERROR_UTF8:
+            echo ' - Malformed UTF-8 characters, possibly incorrectly encoded';
+            break;
+        default:
+            echo ' - Unknown error';
+            break;
+    }
+
+    echo PHP_EOL;
+}
+
+/**
+ * JSON 문자열은 첫 문자열이 { 또는 [ 로 시작해야한다.
+ * JSON 문자열은 숫자나 문자열이 될 수 없다.
+ * @param $str
+ * @return bool
+ *  - true if the string is as JSON string.
+ *  - false otherwise.
+ */
+function is_json($str) {
+    if ( !$str ) return false;
+    $str = trim($str);
+    if ( !$str ) return false;
+    if ( $str[0] != '{' && $str[0] != '[' ) return false;
+    return true;
+}
+
+
+function isCommandLineInterface()
+{
+    return (php_sapi_name() === 'cli');
+}
+
+
+
+/**
+ * Returns true if the user is admin
+ * @return bool
+ */
+function admin()
+{
+    return current_user_can('manage_options');
+}
+

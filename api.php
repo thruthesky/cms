@@ -1,6 +1,6 @@
 <?php
 
-
+define('API_CALL', true);
 include_once './php/preflight.php';
 require_once('../../../wp-load.php');
 include_once './php/defines.php';
@@ -30,7 +30,7 @@ class Api extends ApiBase
 
 
         if (in('session_id')) {
-            $this->authenticate();
+            $this->authenticate(in());
         } /**
          * The client didn't send user's session_id.
          * Then, it needs to log out in case the user logged in with web browser.
@@ -55,7 +55,7 @@ class Api extends ApiBase
             include $path;
             $className = "{$className}Route";
             $obj = new $className();
-            if (!method_exists($obj, $methodName)) $this->error(ERROR_METHOD_NOT_EXIST, ['route' => $route]);
+            if (!method_exists($obj, $methodName)) $this->error(ERROR_ROUTE_NOT_EXIST);
             $obj->$methodName();
         } else {
             $this->error(ERROR_MALFORMED_METHOD_NAME);

@@ -71,7 +71,7 @@ $ phprun vendor/bin/phpunit tests
   * And supporting `boostrap.js`, `popper.js` has been added.
   
 * jQuery
-  * The reason why we need jQuery is 1) to manipulate DOM 2) we may need jQuery plugins like animations, form funtions.
+  * The reason why we need jQuery is 1) to manipulate DOM 2) Ajax 3) we may need jQuery plugins like animations, form funtions.
 
 * Fontawesome 5
   * Only for free version. The file size of pro version is too big.

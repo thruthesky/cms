@@ -10,7 +10,11 @@ include_once 'php/library.php';
 /**
  * Initialization for theme and api.
  */
-if ( localhost()) live_reload();
+if ( defined('API_CALL') || isCommandLineInterface() ) {}
+else {
+    if ( localhost() ) live_reload();;
+}
+//if ( localhost() && (!defined('API_CALL') || !isCommandLineInterface() ) ) live_reload();
 
 /**
  * echo theme path

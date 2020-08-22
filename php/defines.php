@@ -3,16 +3,23 @@
 define('APP_VERSION', '0.1');
 $_theme_path = 'wp-content/themes/cms';
 define('THEME_PATH', $_theme_path);
-define('PHP_PATH', ABSPATH . $_theme_path . '/php');
 
 
 define('ERROR_ROUTE_IS_EMPTY', 'route is empty');
 define('ERROR_ROUTE_NOT_FOUND', 'route not found');
+define('ERROR_SESSION_ID_MUS_NOT_PROVIDED', 'session_id_must_not_provided_on_registration');
 
+
+define('ERROR_PASSWORD_IS_EMPTY', 'password_is_empty');
+
+define('ERROR_ROUTE_NOT_EXIST', 'route_not_exist');
+
+define('ERROR_USER_NOT_FOUND_BY_THAT_SESSION_ID', 'user_not_found_by_that_session_id');
 
 
 /**
  * @todo defines below are not in use. remove on Oct 1st.
+ * -----------------------------------
  */
 
 //
@@ -69,23 +76,21 @@ define('PUSH_TOKENS', 'push_tokens');
 
 define('ERROR_WORDPRESS_ERROR', 'wordpress_error');
 define('ERROR_NO_DATA', 'no_data_from_backend');
-define('ERROR_METHOD_NOT_EXIST', 'method_not_exist');
 define('ERROR_MALFORMED_METHOD_NAME', 'malformed_method_name');
 
 define('ERROR_USER_EXIST', 'user_already_exists');
 
 define('ERROR_EMAIL_EXISTS', 'email_already_exists');
-define('ERROR_EMPTY_EMAIL', 'email_is_empty');
+define('ERROR_EMAIL_IS_EMPTY', 'email_is_empty');
 define('ERROR_WRONG_EMAIL_FORMAT', 'invalid_email_format');
 
-define('ERROR_EMPTY_PASSWORD', 'password_is_empty');
 define('ERROR_WRONG_PASSWORD', 'wrong_password');
 define('ERROR_PASSWORD_TOO_SHORT', 'password_too_short');
 define('ERROR_EMPTY_SESSION_ID', 'session_id_is_empty');
 
 define('ERROR_WRONG_SESSION_ID', 'wrong_session_id');
 define('ERROR_MALFORMED_SESSION_ID', 'invalid_session_id');
-define('ERROR_NO_USER_BY_THAT_SESSION_ID', 'user_not_found_by_that_session_id');
+//define('ERROR_NO_USER_BY_THAT_SESSION_ID', 'user_not_found_by_that_session_id');
 define('ERROR_USER_NOT_FOUND_BY_THAT_EMAIL', 'user_not_found_by_that_email');
 
 define('ERROR_CATEGORY_NOT_PROVIDED', 'category_is_not_provided');
