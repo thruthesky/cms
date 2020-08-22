@@ -1,11 +1,20 @@
 <?php
+/**
+ * @file funtions.php
+ * @desc This script `functions.php` is being called whenever wp-load.php is loaded.
+ * And it called before the theme loads or the api script runs.
+ */
+include_once 'php/defines.php';
+include_once 'php/library.php';
 
 /**
- * @todo run this only development mode.
+ * Initialization for theme and api.
  */
-live_reload();
+if ( localhost()) live_reload();
 
-$_theme_path = 'wp-content/themes/cms';
+/**
+ * echo theme path
+ */
 function theme_path() {
     global $_theme_path;
     echo $_theme_path;

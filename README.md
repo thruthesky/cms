@@ -2,13 +2,23 @@
 
 CMS for community projects
 
-## Overview
 
 ## Installation
 
 * git clone `cms` theme inti `wp-content/themes` folder.
 * activate the theme on admin pannel.
 
+
+## Tests
+
+### PHP Unit Test
+
+* Run `vendor/bin/phpunit tests` in `cms` folder.
+
+* To watch, download [phprun](https://www.npmjs.com/package/phprun) and run like below.
+```shell script
+$ phprun vendor/bin/phpunit tests
+```
 
 ## Development
 
