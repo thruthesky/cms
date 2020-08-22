@@ -19,7 +19,7 @@ function initServiceWorker() {
 if ('serviceWorker' in navigator) {
     // Use the window load event to keep the page load performant
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register(theme_path + '/js/service-worker.js').then(function(registration) {
+        navigator.serviceWorker.register(theme_path + '/js/service-worker.js?v=2').then(function(registration) {
             // Registration was successful
             console.log('ServiceWorker registration successful with scope: ', registration.scope);
         }, function(err) {
