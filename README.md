@@ -2,7 +2,6 @@
 
 CMS for community projects
 
-
 ## Installation
 
 * git clone `cms` theme inti `wp-content/themes` folder.
@@ -55,3 +54,26 @@ $ phprun vendor/bin/phpunit tests
 
 * We will make our own code for this project.
   * We will put the code inside the theme. so, we don't have to manage the restful api code and the theme code separately.
+
+
+## Dev Environment
+
+
+​* Everything is saved in `cms` theme.
+  * The PHP Restful Api is saved under `cms` theme folder to avoid multiple setup.
+
+* Live reload is implemented with `Node.js` and `Socket.io`.
+  * Whenever HTML, CSS, Javascript, PHP has changed, it will reload the site.
+
+* SCSS are saved in `cms/scss` and compiled into `css` folder.
+
+* Bootstrap 5
+  * And supporting `boostrap.js`, `popper.js` has been added.
+  
+* jQuery
+  * The reason why we need jQuery is 1) to manipulate DOM 2) we may need jQuery plugins like animations, form funtions.
+
+* Fontawesome 5
+  * Only for free version. The file size of pro version is too big.
+
+* PHPUnit

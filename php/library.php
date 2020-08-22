@@ -98,9 +98,8 @@ if ( function_exists('get_JSON_input') == false ) {
 
 
 function localhost() {
-
-    if ( strpos(PHP_OS, 'WIN') !== false ) return true;
-    if ( strpos(PHP_OS, 'DAR') !== false ) return true;
+    if ( stripos(PHP_OS, 'WIN') !== false ) return true;
+    if ( stripos(PHP_OS, 'DAR') !== false ) return true;
     return false;
 
 }

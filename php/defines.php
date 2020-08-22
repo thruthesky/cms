@@ -1,11 +1,9 @@
 <?php
 
 define('APP_VERSION', '0.1');
-$_theme_path = ABSPATH . 'wp-content/themes/cms';
+$_theme_path = 'wp-content/themes/cms';
 define('THEME_PATH', $_theme_path);
-define('PHP_PATH', $_theme_path . '/php');
-
-
+define('PHP_PATH', ABSPATH . $_theme_path . '/php');
 
 
 define('ERROR_ROUTE_IS_EMPTY', 'route is empty');
