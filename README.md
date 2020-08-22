@@ -4,8 +4,16 @@ CMS for community projects
 
 ## Installation
 
+* Install wordpress with `https` supported domain. Or PWA and other things may not work.
+
 * git clone `cms` theme inti `wp-content/themes` folder.
-* activate the theme on admin pannel.
+```text
+$ cd wp-content/themes/
+$ git clone https://github.com/thruthesky/cms
+```
+
+* activate the theme on admin panel.
+
 
 
 ## Tests
