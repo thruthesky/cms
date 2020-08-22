@@ -17,12 +17,19 @@
 <body>
 <main>
 
-    <h1>Hello, world! 2</h1>
-
-    <svg class="bi bi-chevron-right" width="32" height="32" viewBox="0 0 20 20" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.646 3.646a.5.5 0 01.708 0l6 6a.5.5 0 010 .708l-6 6a.5.5 0 01-.708-.708L12.293 10 6.646 4.354a.5.5 0 010-.708z"/></svg>
+    <h1>Sonub</h1>
+    <p>
+        Social network hub.
+    </p>
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+        <strong>What we do</strong> is to collecting all the lives in different kinds of social networks into one place.
+
+        <p>
+            <small>
+                Facebook, Twitter, Instagram, and other socials.
+            </small>
+        </p>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
