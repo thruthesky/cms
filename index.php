@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="<?php theme_path()?>/css/index.css">
 
     <link rel="manifest" href="<?php theme_path()?>/manifest.json">
+    <meta name="theme-color" content="#4285f4">
+    <link rel="apple-touch-icon" href="<?php theme_path()?>/img/pwa/icon-192.png">
     <title>Hello, world!</title>
 
 </head>
