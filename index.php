@@ -1,6 +1,6 @@
 <?php
 if ( localhost() ) {
-    $appVersion = time();
+    Config::$appVersion = time();
 }
 ?>
 <!doctype html>
@@ -39,23 +39,47 @@ if ( localhost() ) {
     <title>Hello, world!</title>
     <script>
         var isLocalhost = <?php echo localhost()?>;
-        var appVersion = "<?php echo $appVersion?>";
+        var appVersion = "<?php echo Config::$appVersion?>";
+        var apiUrl = "<?php echo home_url() . Config::$apiUrl?>";
+        var homePage = "/";
+        var themePath = "<?php echo THEME_PATH ?>";
+        var registerPage = "<?php echo Config::$registerPage?>";
     </script>
 </head>
 <body>
-<main>
-    <?php
 
-    include page_path();
-    ?>
+<?php widget('header')?>
 
-</main>
+<div class="container">
+    <div class="row">
+        <div class="col">
+
+            <main>
+                <?php
+
+                include page_path();
+                ?>
+
+                yo
+
+                <textarea></textarea>
+
+            </main>
+        </div>
+        <div class="col-lg-3 d-none d-lg-block">
+            <?php widget('login')?>
+        </div>
+    </div>
+</div>
+
+
 
 <!-- Optional JavaScript -->
 <!-- Popper.js first, then Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="<?php theme_path()?>/js/js.cookie.min.js"></script>
 <script src="<?php theme_path()?>/js/index.js?v=<?php echo $appVersion?>"></script>
 
 </body>

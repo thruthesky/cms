@@ -22,8 +22,7 @@ else {
  * echo theme path
  */
 function theme_path() {
-    global $_theme_path;
-    echo $_theme_path;
+    echo THEME_PATH;
 }
 
 
@@ -72,4 +71,29 @@ function page_path() {
 
 function widget($name) {
     include "widgets/$name/$name.php";
+}
+
+
+/**
+ * @return bool
+ *  - true if the user has loggged in.
+ */
+function loggedIn() {
+
+    return isset($_COOKIE['session_id']) && ! empty($_COOKIE['session_id']);
+
+}
+function userNickname() {
+    echo getUserNickname();
+}
+function getUserNickname() {
+    return $_COOKIE['nickname'];
+}
+function userPhotoUrl() {
+    echo getUserPhotoUrl();
+}
+function getUserPhotoUrl() {
+    $re = $_COOKIE['photoURL'];
+    if ( !$re ) return THEME_PATH . '/img/anonymous/anonymous.jpg';
+    return $re;
 }

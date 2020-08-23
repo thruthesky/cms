@@ -266,11 +266,11 @@ class ApiBase {
 
     public function userLogin($in)
     {
-        if (!$in['user_email']) return ERROR_EMPTY_EMAIL;
+        if (!$in['user_email']) return ERROR_EMAIL_IS_EMPTY;
 
         if ($this->check_email_format($in['user_email']) === false) return ERROR_WRONG_EMAIL_FORMAT;
 
-        if (!$in['user_pass']) return ERROR_EMPTY_PASSWORD;
+        if (!$in['user_pass']) return ERROR_PASSWORD_IS_EMPTY;
 
         $user = get_user_by('email', $in['user_email']);
         if (!$user) return ERROR_USER_NOT_FOUND_BY_THAT_EMAIL;

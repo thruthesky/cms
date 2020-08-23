@@ -27,7 +27,16 @@ $ git clone https://github.com/thruthesky/cms
 $ phprun vendor/bin/phpunit tests
 ```
 
-## Development
+## Development View
+
+### Browser Support
+
+* All major browser except Internet Explorer. The support of IE from MS will be ended by 2020.
+  * Benefit of not supporting IE.
+    * We can use Bootstrap 5.
+    * We can use [Javascript Template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals).
+
+  * Chrome, Edge, Safari would be the major browsers.
 
 ### Installing Developer Tools & Live reload
 
@@ -93,4 +102,32 @@ $ phprun vendor/bin/phpunit tests
 
 ## Coding Guidelines
 
+* WEB/PWA development and design must follow bootstrap way.
+
 * All form submits and form submit like actions should be made by `ajax` call.
+
+
+### Javascript & jQuery
+
+* When you need to listen on Javascript event with jquery, you can do it like below.
+  Since jQuery is loaded at the bottom of the page, you can use jQuery within `load` event listener.
+```javascript
+window.addEventListener('load', function() {
+    $(function() {
+        
+    });
+});
+```
+
+* When you don't have to use jQuery as listener, simply declare functions Javascript way like below.
+ 
+ ```javascript
+function onLoginFormSubmit(form) {
+    console.log(form);
+    console.log( $( form ).serialize() );
+    return false;
+}
+```
+
+* Javascript cookie is handled with [js-cookie](https://github.com/js-cookie/js-cookie).
+  It is included at the bottom of `index.php` and available on all pages .

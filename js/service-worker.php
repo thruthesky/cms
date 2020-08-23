@@ -2,6 +2,7 @@
 header('Service-Worker-Allowed: /');
 header('Content-Type: application/javascript');
 include_once '../config.php';
+$appVersion = Config::$appVersion;
 ?>
 
 const cacheName = 'cache-v1';
