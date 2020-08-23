@@ -4,6 +4,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
 
+    <meta name="description" content="소셜 네트워크 허브. 모든 소셜 서비스를 모았습니다.">
 
     <link rel="manifest" href="<?php theme_path()?>/manifest.json?v=2">
 
