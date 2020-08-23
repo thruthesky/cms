@@ -1,19 +1,20 @@
 <?php
 header('Service-Worker-Allowed: /');
 header('Content-Type: application/javascript');
+include_once '../config.php';
 ?>
 
 const cacheName = 'cache-v1';
 console.log('service worker version. v2. ', (new Date).toLocaleString());
 const precacheResources = [
-  '/wp-content/themes/cms/pwa-start.html',
-  '/wp-content/themes/cms/js/jquery-3.5.1-min.js',
-'/wp-content/themes/cms/css/bootstrap-5-alpha-0.min.css',
-'/wp-content/themes/cms/css/fontawesome/css/all.css',
-'/wp-content/themes/cms/css/index.css',
-'/wp-content/themes/cms/js/index.js',
-'/wp-content/themes/cms/manifest.json',
-'/wp-content/themes/cms/favicon.ico',
+  '/wp-content/themes/cms/pwa-start.html?v=' + '<?php echo $appVersion?>',
+  '/wp-content/themes/cms/js/jquery-3.5.1-min.js?v=' + '<?php echo $appVersion?>',
+'/wp-content/themes/cms/css/bootstrap-5-alpha-0.min.css?v=' + '<?php echo $appVersion?>',
+'/wp-content/themes/cms/css/fontawesome/css/all.css?v=' + '<?php echo $appVersion?>',
+'/wp-content/themes/cms/css/index.css?v=' + '<?php echo $appVersion?>',
+'/wp-content/themes/cms/js/index.js?v=' + '<?php echo $appVersion?>',
+'/wp-content/themes/cms/manifest.json?v=' + '<?php echo $appVersion?>',
+'/wp-content/themes/cms/favicon.ico?v=' + '<?php echo $appVersion?>',
 ];
 
 self.addEventListener('install', event => {

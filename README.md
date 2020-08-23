@@ -39,32 +39,7 @@ $ phprun vendor/bin/phpunit tests
   `$ node live-reload.js`
 
 
-
-## Component
-
-* `Node.js`
-  * For sass compilation, hot reload.
-* `Bootstrap v5`
-  * and it's supporting Javascirpt.
-    * `popper.js`, `bootstrap.js`
-* `Fontawesome 5 free version`
-  * The size of fontawesome pro version is too big.
-* `jQuery`
-
-
-## Restful API
-
-* JSON communication as Wordpress plugin system is some what tedious.
-  * You have to follow Wordpress JSON rules and it's not easy to customize.
-  * And you have to deal with the odd user authentication with Wordpress - the naunce.
-  * After all, only admin can post/edit/delete and we need to hack it.
-  * This is the reason why we made our own code and put it under `/wordpress-api-v2`.
-
-* We will make our own code for this project.
-  * We will put the code inside the theme. so, we don't have to manage the restful api code and the theme code separately.
-
-
-## Dev Environment
+### Dev Environment, Tools & Components
 
 
 ​* Everything is saved in `cms` theme.
@@ -85,3 +60,37 @@ $ phprun vendor/bin/phpunit tests
   * Only for free version. The file size of pro version is too big.
 
 * PHPUnit
+
+
+* Node.js
+  * For sass compilation, hot reload.
+
+
+## Web/PWA Functionality
+
+### PWA
+
+* `manifest.json` exists on `cms` theme folder.
+* App icons are saved under `cms/img/pwa` folder.
+* `index.js` triggers installation of `Service Worker`.
+    * The `cms/js/service-worker.php` file is the service worker.
+    It's a PHP script that wraps Javascript for `service worker scope`.
+* PWA start_url is pointing `cms/pwa-start.html` to avoid caching on the first page.
+
+
+
+## Restful API
+
+* JSON communication as Wordpress plugin system is some what tedious.
+  * You have to follow Wordpress JSON rules and it's not easy to customize.
+  * And you have to deal with the odd user authentication with Wordpress - the naunce.
+  * After all, only admin can post/edit/delete and we need to hack it.
+  * This is the reason why we made our own code and put it under `/wordpress-api-v2`.
+
+* We will make our own code for this project.
+  * We will put the code inside the theme. so, we don't have to manage the restful api code and the theme code separately.
+
+
+## Coding Guidelines
+
+* All form submits and form submit like actions should be made by `ajax` call.
