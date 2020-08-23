@@ -1,7 +1,13 @@
 <?php
 
 define('APP_VERSION', '0.1');
-$_theme_path = 'wp-content/themes/cms';
+define('PWA_APP_NAME', '소너브');
+define('PWA_START_URL', '/?start_url=pwa');
+
+/**
+ * Theme relative path for URL.
+ */
+$_theme_path = '/wp-content/themes/cms';
 define('THEME_PATH', $_theme_path);
 
 

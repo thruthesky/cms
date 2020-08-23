@@ -3,16 +3,31 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="<?php echo PWA_APP_NAME?>">
+    <meta name="apple-mobile-web-app-title" content="<?php echo PWA_APP_NAME?>">
+    <meta name="theme-color" content="#FF9800">
+    <meta name="msapplication-navbutton-color" content="#FF9800">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="msapplication-starturl" content="<?php echo PWA_START_URL?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="<?php theme_path()?>/css/bootstrap-5-alpha-0.min.css">
     <link rel="stylesheet" href="<?php theme_path();?>/css/fontawesome/css/all.css">
     <link rel="stylesheet" href="<?php theme_path()?>/css/index.css">
 
-    <link rel="manifest" href="<?php theme_path()?>/manifest.json?v=2">
-    <meta name="theme-color" content="#4285f4">
-    <link rel="apple-touch-icon" href="<?php theme_path()?>/img/pwa/Icon-192.png">
+<link rel="manifest" href="<?php theme_path()?>/manifest.json?v=2">
+<meta name="theme-color" content="#4285f4">
+<link rel="apple-touch-icon" href="<?php theme_path()?>/img/pwa/Icon-192.png">
+
+    <link rel="shortcut icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
+
     <title>Hello, world!</title>
 
 </head>
@@ -22,6 +37,10 @@
     <h1>Sonub</h1>
     <p>
         Social network hub.
+    </p>
+
+    <p>
+        count: 6
     </p>
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
