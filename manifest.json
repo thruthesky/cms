@@ -1,6 +1,7 @@
 {
   "name": "소너브",
   "short_name": "소너브",
+  "lang": "ko-KR",
   "description": "다시 한 번, 소셜 네트워크 허브!",
   "theme_color": "#2196f3",
   "background_color": "#2196f3",
