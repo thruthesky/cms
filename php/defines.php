@@ -2,7 +2,7 @@
 
 define('APP_VERSION', '0.1');
 define('PWA_APP_NAME', '소너브');
-define('PWA_START_URL', '/?start_url=pwa');
+define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 
 /**
  * Theme relative path for URL.

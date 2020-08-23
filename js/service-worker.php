@@ -6,7 +6,7 @@ header('Content-Type: application/javascript');
 const cacheName = 'cache-v1';
 console.log('service worker version. v2. ', (new Date).toLocaleString());
 const precacheResources = [
-  '/',
+  '/wp-content/themes/cms/pwa-start.html',
   '/wp-content/themes/cms/js/jquery-3.5.1-min.js',
 '/wp-content/themes/cms/css/bootstrap-5-alpha-0.min.css',
 '/wp-content/themes/cms/css/fontawesome/css/all.css',

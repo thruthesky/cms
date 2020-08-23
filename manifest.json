@@ -7,7 +7,7 @@
   "background_color": "#2196f3",
   "display": "standalone",
   "Scope": "/",
-  "start_url": "/?start_url=pwa",
+  "start_url": "/wp-content/themes/cms/pwa-start.html",
   "icons": [
     {
       "src": "/wp-content/themes/cms/img/pwa/Icon-72.png",
