@@ -53,10 +53,8 @@ EOH;
  * https://domain.com/?page=abc.def_ghi => pages/abc/def_ghi.php
  */
 function page_path() {
-
     if ( in('page') == null ) $page = 'home';
     else $page = in('page');
-
     $path = 'error/path-not-found.php';
     if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
         $path = 'error/wrong-input.php';
@@ -69,7 +67,9 @@ function page_path() {
             $path = "$arr[0]/$arr[1].php";
         }
     }
-
     return 'pages/' . $path;
+}
 
+function widget($name) {
+    include "widgets/$name/$name.php";
 }

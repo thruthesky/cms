@@ -70,11 +70,11 @@
                         </button>
                     </div>
                 </div>
+
+                <?php widget('login')?>
             </div>
             <div class="col-lg-3 d-none d-lg-block">
-                <div class="bg-info">
-                    skye blue
-                </div>
+                <?php widget('login')?>
             </div>
         </div>
     </div>
