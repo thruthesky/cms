@@ -43,7 +43,7 @@
     </p>
 
     <p>
-        count: 12
+        count: 13
     </p>
 
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
