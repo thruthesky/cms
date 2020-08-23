@@ -10,9 +10,6 @@ const theme_path = '/wp-content/themes/cms';
  */
 initServiceWorker();
 
-
-
-
 function initServiceWorker() {
 
 // Check that service workers are supported

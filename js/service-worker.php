@@ -2,7 +2,7 @@
 header('Service-Worker-Allowed: /');
 header('Content-Type: application/javascript');
 ?>
-// console.log('This is service-worker.js');
+
 const cacheName = 'cache-v1';
 console.log('service worker version. v2. ', (new Date).toLocaleString());
 const precacheResources = [
