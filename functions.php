@@ -66,7 +66,7 @@ function page_path() {
             $path = "$arr[0]/$arr[1].php";
         }
     }
-    return 'pages/' . $path;
+    return 'pages/'. Config::$domain . '/' . $path;
 }
 
 function widget($name) {
