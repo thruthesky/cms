@@ -4,7 +4,7 @@ CMS for community projects
 
 ## Reference
 
-* To learn how to use this `cms` theme, read [USER MENUAL](https://github.com/thruthesky/cms/USER_MANUEL.md).
+* To learn how to use this `cms` theme, read [USER MENUAL](https://github.com/thruthesky/cms/blob/master/USER_MANUAL.md).
 
 ## Installation
 
