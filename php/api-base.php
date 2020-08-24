@@ -17,13 +17,15 @@ class ApiBase {
      *
      * @param WP_User $user
      * @return string
+     *  - [USER_ID]_MD5(string)
+     *  - Ex) 1_asdfasdf0asdi8f
      *
      * @code How to get session_id
-    $user = new XUser($raw->ID );
-    $raw->session_id = $user->get_session_id( $user );
+     *
      * @endcode
      *
      * @Attention it returns '' if there is error.
+     *
      *
      *
      */
@@ -207,8 +209,8 @@ class ApiBase {
 
         if (isset($in['session_id'])) return ERROR_SESSION_ID_MUS_NOT_PROVIDED;
 
-        if (!isset($in['user_email']))return ERROR_EMAIL_IS_EMPTY;
-        if (!isset($in['user_pass'])) return ERROR_PASSWORD_IS_EMPTY;
+        if (!isset($in['user_email']) || empty($in['user_email']))return ERROR_EMAIL_IS_EMPTY;
+        if (!isset($in['user_pass']) || empty($in['user_pass'])) return ERROR_PASSWORD_IS_EMPTY;
         if (strlen($in['user_pass']) < MINIMUM_PASSWORD_LENGTH) return ERROR_PASSWORD_TOO_SHORT;
 
         $nickname = $in['nickname'] ?? $in['user_email'];

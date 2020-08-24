@@ -7,6 +7,15 @@
 include_once 'config.php';
 include_once 'php/defines.php';
 include_once 'php/library.php';
+include_once 'php/api-base.php';
+
+
+/**
+ * Global Variables
+ */
+
+$apiBase = new ApiBase();
+
 
 
 /**
@@ -16,7 +25,8 @@ if ( defined('API_CALL') || isCommandLineInterface() ) {}
 else {
     if ( localhost() ) live_reload();;
 }
-//if ( localhost() && (!defined('API_CALL') || !isCommandLineInterface() ) ) live_reload();
+
+
 
 /**
  * echo theme path
@@ -66,11 +76,29 @@ function page_path() {
             $path = "$arr[0]/$arr[1].php";
         }
     }
-    return 'pages/' . $path;
+    return ABSPATH . THEME_PATH . '/pages/'. Config::$domain . '/' . $path;
 }
 
+
+/**
+ * Includes a widget script
+ *
+ * If a widget script exists under `cms/pages/[domain]/widgets` folder, then it will load this first.
+ * Or it will look for the widget script under `cms/widgets` folder.
+ *
+ * @param $name
+ */
 function widget($name) {
-    include "widgets/$name/$name.php";
+    $domain = Config::$domain;
+    $widget_path = "widgets/$name/$name.php";
+    $p = ABSPATH . THEME_PATH . "/pages/$domain/$widget_path";
+    if ( file_exists($p) ) {
+        $widget_path = $p;
+    }
+
+
+    include $widget_path;
+//    include "widgets/$name/$name.php";
 }
 
 
@@ -79,9 +107,18 @@ function widget($name) {
  *  - true if the user has loggged in.
  */
 function loggedIn() {
+    return sessionId() != null;
+}
 
-    return isset($_COOKIE['session_id']) && ! empty($_COOKIE['session_id']);
-
+/**
+ * Returns login user's Session Id.
+ */
+function sessionId() {
+    if ( isset($_COOKIE['session_id']) && ! empty($_COOKIE['session_id']) ) {
+        return $_COOKIE['session_id'];
+    } else {
+        return null;
+    }
 }
 function userNickname() {
     echo getUserNickname();

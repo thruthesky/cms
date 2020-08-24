@@ -8,7 +8,6 @@
 
     function onRegisterFormSubmit(form) {
 
-        // var data = objectifyForm(form);
         $.ajax( registerUrl(form) )
             .done(function(re) {
                 if ( isBackendError(re) ) {
@@ -22,6 +21,7 @@
             .fail(function() {
                 alert( "Server error" );
             });
+
         return false;
     }
 </script>

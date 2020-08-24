@@ -101,7 +101,6 @@ function localhost() {
     if ( stripos(PHP_OS, 'WIN') !== false ) return true;
     if ( stripos(PHP_OS, 'DAR') !== false ) return true;
     return false;
-
 }
 
 function echo_json_error()

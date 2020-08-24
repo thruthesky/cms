@@ -4,6 +4,7 @@
         <h1>Sonub</h1>
 
 
+        <h2>Welcome, ~~ !!</h2>
         <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <strong>What we do</strong> is to collecting all the lives in different kinds of social networks into one place.
 
