@@ -2,6 +2,11 @@
 
 CMS for community projects
 
+## TODO
+
+* double check to support on IE.
+
+
 ## Installation
 
 * Install wordpress with `https` supported domain. Or PWA and other things may not work.
