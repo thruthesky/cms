@@ -51,7 +51,7 @@ if ( localhost() ) {
 </head>
 <body class="bg-warning">
 
-<?php widget('header')?>
+<?php include widget('header')?>
 
 <div class="container px-0">
     <div class="row no-gutters">
@@ -63,7 +63,7 @@ if ( localhost() ) {
             </main>
         </div>
         <div class="col-lg-3 d-none d-lg-block">
-            <?php widget('login')?>
+            <?php include widget('login')?>
         </div>
     </div>
 </div>

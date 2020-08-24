@@ -90,14 +90,22 @@ function page_path() {
  */
 function widget($name) {
     $domain = Config::$domain;
-    $widget_path = "widgets/$name/$name.php";
-    $p = ABSPATH . THEME_PATH . "/pages/$domain/$widget_path";
+
+    if ( strpos( $name, '.') !== false ) {
+        $arr = explode('.', $name);
+        $rel_path = "/widgets/$arr[0]/$arr[1].php";
+    } else {
+        $rel_path = "/widgets/$name/$name.php";
+    }
+    $p = ABSPATH . THEME_PATH . "/pages/$domain$rel_path";
     if ( file_exists($p) ) {
         $widget_path = $p;
+    } else {
+        $widget_path = ABSPATH . THEME_PATH . $rel_path;
     }
 
 
-    include $widget_path;
+    return $widget_path;
 //    include "widgets/$name/$name.php";
 }
 
