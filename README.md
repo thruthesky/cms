@@ -2,8 +2,9 @@
 
 CMS for community projects
 
-## TODO
+## Reference
 
+* To learn how to use this `cms` theme, read [USER MENUAL](https://github.com/thruthesky/cms/blob/master/USER_MANUAL.md).
 
 ## Installation
 
@@ -169,3 +170,12 @@ function onLoginFormSubmit(form) {
 
 * Javascript cookie is handled with [js-cookie](https://github.com/js-cookie/js-cookie).
   It is included at the bottom of `index.php` and available on all pages .
+
+  
+  
+  
+  ### Pages & Widgets
+  
+  * Each domain can have a different theme.
+    * Pages as theme design are saved under 'pages/[domain]' folder.
+    * You can update the domain settings in `Config` folder.

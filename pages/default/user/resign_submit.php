@@ -5,7 +5,7 @@ $re = $apiBase->userResign(['session_id' => sessionId()]);
 
 if ($re = sessionId()) {
     setLogout();
-} 
+}
 
 
 
