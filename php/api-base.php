@@ -333,7 +333,11 @@ class ApiBase {
                 if (get_user_by('email', $in['user_email'])) {
                     $this->error(ERROR_EMAIL_EXISTS);
                 } else {
+                    /**
+                     * @TODO Verify if we can change user_login.
+                     */
                     $userdata['user_login'] = $in['user_email'];
+                    $userdata['user_email'] = $in['user_email'];
                 }
             }
         }

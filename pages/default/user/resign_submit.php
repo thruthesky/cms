@@ -3,8 +3,15 @@
 
 $re = $apiBase->userResign(['session_id' => sessionId()]);
 
-if ($re = sessionId()) {
-    setLogout();
+/**
+ * Resign success
+ */
+if ($re['session_id'] == sessionId()) {
+    ?>
+    <script>
+        setLogout();
+    </script>
+<?php
 }
 
 

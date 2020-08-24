@@ -120,6 +120,17 @@ function sessionId() {
         return null;
     }
 }
+
+/**
+ * Returns user ID.
+ * @return int|mixed
+ */
+function userId() {
+    $sid = sessionId();
+    if ( $sid == null ) return 0;
+    $arr = explode('_', $sid);
+    return $arr[0];
+}
 function userNickname() {
     echo getUserNickname();
 }
