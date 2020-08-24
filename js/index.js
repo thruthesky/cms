@@ -6,6 +6,8 @@
  */
 const theme_path = '/wp-content/themes/cms';
 
+
+
 /**
  * Initialization
  */

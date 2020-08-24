@@ -17,11 +17,11 @@
 
 <form class="login login-form" onsubmit="return onLoginFormSubmit(this)" style="display: none;">
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Email address</label>
+        <label class="form-label">Email address</label>
         <input type="email" class="form-control"aria-describedby="emailHelp" name="user_email">
     </div>
     <div class="mb-3">
-        <label for="exampleInputPassword1" class="form-label">Password</label>
+        <label class="form-label">Password</label>
         <input type="password" class="form-control" name="user_pass">
     </div>
     <div class="mb-3 form-check">

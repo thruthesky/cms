@@ -11,7 +11,7 @@ if ( localhost() ) {
 
     <meta name="description" content="소셜 네트워크 허브. 모든 소셜 서비스를 모았습니다.">
 
-    <link rel="manifest" href="<?php theme_path()?>/manifest.json?v=2">
+    <link rel="manifest" href="<?php theme_path()?>/manifest.json">
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -33,7 +33,7 @@ if ( localhost() ) {
     <link rel="stylesheet" href="<?php theme_path();?>/css/fontawesome/css/all.css">
 
     <!-- Index CSS compiled from index.scss -->
-    <link rel="stylesheet" href="<?php theme_path()?>/css/index.css?v=<?php echo $appVersion?>">
+    <link rel="stylesheet" href="<?php theme_path()?>/css/index.css?v=<?php echo Config::$appVersion?>">
 
 
     <link rel="shortcut icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
@@ -89,7 +89,7 @@ if ( localhost() ) {
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="<?php theme_path()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="<?php theme_path()?>/js/js.cookie.min.js"></script>
-<script src="<?php theme_path()?>/js/index.js?v=<?php echo $appVersion?>"></script>
+<script src="<?php theme_path()?>/js/index.js?v=<?php echo Config::$appVersion?>"></script>
 
 </body>
 </html>
