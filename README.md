@@ -17,14 +17,23 @@ CMS for community projects
 
 ## SCSS Compile
 
-```` Install sass via npm
+### Installing sass via npm
+
+```` npm
     npm install -g sass
 ````
 
-```` Watch single file
+### watching single file
+
+```` sass
+
+    sass --watch <sourceFolder/index.scss> <outputFolder/index.css>
     sass --watch scss/index.scss css/index.css
 ````
 
-```` Watch folder. format sourceFolder:outputFolder
+### watching folder
+
+```` sass
+    sass --watch <sourceFolder>:<outputFolder>
     sass --watch sass:css
 ````
