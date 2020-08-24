@@ -33,6 +33,7 @@
                         <li><a class="dropdown-item" href="#">Flutter Developers</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Create your forum</a></li>
+                        <li><a class="dropdown-item" href="/?page=contact">Contact</a></li>
                     </ul>
                 </li>
 

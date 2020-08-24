@@ -49,8 +49,19 @@ function setLogout() {
     Cookies.remove('photoURL');
 }
 
+/**
+ * Return true if browser as session_id as cookie.
+ * @returns {boolean}
+ */
 function loggedIn() {
-    return getCookie('session_id') !== undefined;
+    var sid = getCookie('session_id');
+    if ( sid ) {
+        /**
+         * There must be '_' in session_id.
+         */
+        return sid.indexOf('_') >= 0;
+    }
+    return false;
 }
 
 function getUserPhotoUrl() {

@@ -8,6 +8,7 @@
     </div>
     <div class="card-footer bg-transparent border-success">
         <button type="button" onclick="setLogout(); move(homePage);">Logout</button>
+        <a class="btn btn-secondary" href="/?page=user.profile">Profile</a>
     </div>
 </div>
 
@@ -30,7 +31,7 @@
             Remember Me</label>
     </div>
     <div class="d-flex justify-content-between">
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary">LOGIN</button>
         <a class="btn btn-secondary" href="<?php echo Config::$registerPage?>">Register</a>
     </div>
 </form>
@@ -72,7 +73,6 @@
     function onLoginFormSubmit(form) {
         $.ajax( loginUrl(form) )
             .done(function(re) {
-
                 if ( isBackendError(re) ) {
                     alert(re);
                 }
