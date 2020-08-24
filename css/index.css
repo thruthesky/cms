@@ -1,15 +1,19 @@
-nav ul {
-  margin: 0;
-  padding: 0;
-  list-style: none;
+.bg-lighter {
+  background-color: #fefefe !important;
 }
-nav li {
-  display: inline-block;
+
+.circle {
+  border-radius: 50%;
 }
-nav a {
-  display: block;
-  padding: 6px 12px;
-  text-decoration: none;
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+}
+.no-gutters > .col,
+.no-gutters > [class*=col-] {
+  padding-right: 0;
+  padding-left: 0;
 }
 
 /*# sourceMappingURL=index.css.map */
