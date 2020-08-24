@@ -2,8 +2,9 @@
 
 CMS for community projects
 
-## TODO
+## Reference
 
+* To learn how to use this `cms` theme, read [USER MENUAL](https://github.com/thruthesky/cms/USER_MANUEL.md).
 
 ## Installation
 
