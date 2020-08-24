@@ -1,19 +1,8 @@
 <?php
-$user_email = '';
-$first_name = '';
-$middle_name = '';
-$last_name = '';
-$nickname = '';
-$mobile = '';
-
+//
+$user = [];
 if ( loggedIn()) {
-    $user = $apiBase->userResponse(sessionID());
-    $user_email = $user['user_email'];
-    $first_name = $user['first_name'];
-    $middle_name = $user['middle_name'];
-    $last_name = $user['last_name'];
-    $nickname = $user['nickname'];
-    $mobile = $user['mobile'];
+    $user = $apiBase->userResponse(sessionId());
 }
 
 ?>
@@ -55,7 +44,7 @@ if ( loggedIn()) {
 
     <div class="mb-3">
         <label  class="form-label">Email address</label>
-        <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=$user_email?>">
+        <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=$user['user_email']?>">
     </div>
 
     <? if (!loggedIn()) { ?>
@@ -71,21 +60,21 @@ if ( loggedIn()) {
             <div class="col">
                 <div class="mb-3">
                     <label  class="form-label">First name</label>
-                    <input type="text" class="form-control" name="first_name" value="<?=$first_name?>">
+                    <input type="text" class="form-control" name="first_name" value="<?=$user['first_name']?>">
                 </div>
             </div>
             <div class="col">
 
                 <div class="mb-3">
                     <label class="form-label">Middle name</label>
-                    <input type="text" class="form-control" name="middle_name" maxlength="1" value="<?=$middle_name?>">
+                    <input type="text" class="form-control" name="middle_name" maxlength="1" value="<?=$user['middle_name']?>">
                 </div>
             </div>
             <div class="col">
 
                 <div class="mb-3">
                     <label class="form-label">Last name</label>
-                    <input type="text" class="form-control" name="last_name" value="<?=$last_name?>">
+                    <input type="text" class="form-control" name="last_name" value="<?=$user['last_name']?>">
                 </div>
 
             </div>
@@ -95,12 +84,12 @@ if ( loggedIn()) {
 
     <div class="mb-3">
         <label class="form-label">Nickname</label>
-        <input type="text" class="form-control" name="nickname"  value="<?=$nickname?>">
+        <input type="text" class="form-control" name="nickname"  value="<?=$user['nickname']?>">
     </div>
 
     <div class="mb-3">
         <label class="form-label">Mobile number</label>
-        <input type="text" class="form-control" name="mobile"  value="<?=$mobile?>">
+        <input type="text" class="form-control" name="mobile"  value="<?=$user['mobile']?>">
     </div>
 
     <button type="submit" class="btn btn-primary">Submit</button>
