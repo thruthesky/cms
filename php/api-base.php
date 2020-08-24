@@ -207,7 +207,7 @@ class ApiBase {
      */
     public function userRegister($in) {
 
-        if (isset($in['session_id'])) return ERROR_SESSION_ID_MUS_NOT_PROVIDED;
+        if (isset($in['session_id'])) return ERROR_SESSION_ID_MUST_NOT_PROVIDED;
 
         if (!isset($in['user_email']) || empty($in['user_email']))return ERROR_EMAIL_IS_EMPTY;
         if (!isset($in['user_pass']) || empty($in['user_pass'])) return ERROR_PASSWORD_IS_EMPTY;

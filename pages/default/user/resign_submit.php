@@ -1,12 +1,13 @@
 <?php
 
-/// @TODO: Do the resign.
-///
 
-//print_r($_COOKIE);
+$re = $apiBase->userResign(['session_id' => sessionId()]);
+
+if ($re = sessionId()) {
+    setLogout();
+} 
 
 
-//print_r($apiBase->userResign(['session_id' => sessionId()]));
 
 
 ?>

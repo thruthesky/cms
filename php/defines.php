@@ -13,7 +13,7 @@ define('THEME_PATH', $_theme_path);
 
 define('ERROR_ROUTE_IS_EMPTY', 'route is empty');
 define('ERROR_ROUTE_NOT_FOUND', 'route not found');
-define('ERROR_SESSION_ID_MUS_NOT_PROVIDED', 'session_id_must_not_provided_on_registration');
+define('ERROR_SESSION_ID_MUST_NOT_PROVIDED', 'session_id_must_not_provided_on_registration');
 
 
 define('ERROR_PASSWORD_IS_EMPTY', 'password_is_empty');
