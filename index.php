@@ -28,8 +28,11 @@ if ( localhost() ) {
     <link rel="apple-touch-icon" href="<?php theme_path()?>/img/pwa/Icon-192.png">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?php theme_path()?>/css/bootstrap-5-alpha-0.min.css">
+    <link rel="stylesheet" href="<?php theme_path()?>/css/bootstrap-4.5.2/css/bootstrap.min.css">
+    <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="<?php theme_path();?>/css/fontawesome/css/all.css">
+
+    <!-- Index CSS compiled from index.scss -->
     <link rel="stylesheet" href="<?php theme_path()?>/css/index.css?v=<?php echo $appVersion?>">
 
 
@@ -50,11 +53,13 @@ if ( localhost() ) {
 
 <?php widget('header')?>
 
-<div class="container">
-    <div class="row">
-        <div class="col">
 
-            <main>
+
+<div class="container px-0">
+
+    <div class="row no-gutters">
+        <div class="col">
+            <main class="mr-4  bg-info">
                 <?php
 
                 include page_path();
@@ -63,6 +68,12 @@ if ( localhost() ) {
                 yo
 
                 <textarea></textarea>
+
+
+                <div class="row no-gutters">
+                    <div class="col bg-warning">Custom column padding</div>
+                    <div class="col bg-info">Custom column padding</div>
+                </div>
 
             </main>
         </div>
@@ -75,10 +86,8 @@ if ( localhost() ) {
 
 
 <!-- Optional JavaScript -->
-<!-- Popper.js first, then Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/js/bootstrap.min.js" integrity="sha384-oesi62hOLfzrys4LxRF63OJCXdXDipiYWBnvTl9Y9/TRlw5xlKIEHpNyvvDShgf/" crossorigin="anonymous"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="<?php theme_path()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="<?php theme_path()?>/js/js.cookie.min.js"></script>
 <script src="<?php theme_path()?>/js/index.js?v=<?php echo $appVersion?>"></script>
 

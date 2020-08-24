@@ -18,7 +18,7 @@ initServiceWorker();
 function isBackendError(obj) {
     return typeof obj == 'string';
 }
-/**
+ /**
  * Move (or redirect)to another page.
  * @param url
  */

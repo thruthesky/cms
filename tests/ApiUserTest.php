@@ -45,6 +45,15 @@ class ApiUserTest extends TestCase
         $this->assertTrue($user['meta1'] == 'v1');
 
 
+
+        /// Register with Api
+        $reApiRegister = get_api("user.register&user_email=a$email&user_pass=$pass&nickname=MyNick&meta_a=Apple");
+//        print_r($reApiRegister);
+        $this->assertTrue(isBackendSuccess($reApiRegister));
+
+
+
+
         /// Email Exists
         $re = $this->lib->userRegister(['user_email' => $email, 'user_pass' => $pass]);
         $this->assertSame($re, ERROR_EMAIL_EXISTS);
@@ -56,6 +65,8 @@ class ApiUserTest extends TestCase
         ///
         $reApiLogin = get_api("user.login&user_email=$email&user_pass=$pass");
 
+
+        $this->assertTrue(isBackendSuccess($reApiLogin), 'user.login (reApiLogin) should success.');
         $this->assertSame($reLogin['ID'], $reApiLogin['ID']);
         $this->assertSame($reLogin['session_id'], $reApiLogin['session_id']);
 

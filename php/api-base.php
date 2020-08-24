@@ -4,6 +4,10 @@ class ApiBase {
 
 
 
+    public function __construct()
+    {
+    }
+
     /**
      * Returns a session_id which never changes. Which means, even if user changes his data, it will never changes.
      *
@@ -80,10 +84,6 @@ class ApiBase {
         return $data;
     }
 
-
-    public function __construct()
-    {
-    }
 
     /**
      * This method let the user log-in with $_REQUEST['session_id'].

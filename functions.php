@@ -97,3 +97,9 @@ function getUserPhotoUrl() {
     if ( !$re ) return THEME_PATH . '/img/anonymous/anonymous.jpg';
     return $re;
 }
+function isBackendError($re) {
+    return is_string($re);
+}
+function isBackendSuccess($re) {
+    return isBackendError($re) == false;
+}
