@@ -41,7 +41,7 @@ if ( localhost() ) {
 
     <title>Hello, world!</title>
     <script>
-        var isLocalhost = <?php echo localhost()?>;
+        var isLocalhost = <?php if (localhost()) echo 'true'; else echo 'false'; ?>;
         var appVersion = "<?php echo Config::$appVersion?>";
         var apiUrl = "<?php echo home_url() . Config::$apiUrl?>";
         var homePage = "/";
@@ -49,32 +49,17 @@ if ( localhost() ) {
         var registerPage = "<?php echo Config::$registerPage?>";
     </script>
 </head>
-<body>
+<body class="bg-warning">
 
 <?php widget('header')?>
 
-
-
 <div class="container px-0">
-
     <div class="row no-gutters">
         <div class="col">
-            <main class="mr-4  bg-info">
+            <main class="mr-lg-4 bg-info">
                 <?php
-
-                include page_path();
+                    include page_path();
                 ?>
-
-                yo
-
-                <textarea></textarea>
-
-
-                <div class="row no-gutters">
-                    <div class="col bg-warning">Custom column padding</div>
-                    <div class="col bg-info">Custom column padding</div>
-                </div>
-
             </main>
         </div>
         <div class="col-lg-3 d-none d-lg-block">
@@ -83,6 +68,7 @@ if ( localhost() ) {
     </div>
 </div>
 
+<?php widget('footer')?>
 
 
 <!-- Optional JavaScript -->
