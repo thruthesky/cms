@@ -28,7 +28,7 @@ if ( loggedIn()) {
                 else {
                     console.log('re', re);
                     setLogin(re);
-                    // move(homePage);
+                    move(homePage);
                 }
             })
             .fail(function() {
@@ -38,7 +38,7 @@ if ( loggedIn()) {
         return false;
     }
 </script>
-<form onsubmit="return onRegisterFormSubmit(this)">
+<form class="register" onsubmit="return onRegisterFormSubmit(this)">
 
     <? if (loggedIn()) { ?>
         <input type="hidden" name="session_id" value="<?=$user['session_id']?>">
@@ -94,6 +94,6 @@ if ( loggedIn()) {
         <input type="text" class="form-control" name="mobile"  value="<?=$user['mobile']?>">
     </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary" data-button="submit">Submit</button>
 </form>
 
