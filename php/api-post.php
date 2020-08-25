@@ -202,7 +202,7 @@ class ApiPost extends ApiLibrary
         if ($in['files']) {
             $this->attachFiles($in['comment_ID'], $in['files'], COMMENT_ATTACHMENT);
         }
-        return $this->commentResponse(in('comment_ID'));
+        return $this->commentResponse($in['comment_ID']);
     }
 
     public function commentDelete($in)

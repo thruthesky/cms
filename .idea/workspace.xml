@@ -5,9 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ef5d8fc-c7ba-4711-b51d-64dd1dfcb430" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/api-test-helper.php" afterPath="$PROJECT_DIR$/php/api-test-helper.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/ApiPostTest.php" afterPath="$PROJECT_DIR$/tests/ApiPostTest.php" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/api-post.php" afterPath="$PROJECT_DIR$/php/api-post.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
