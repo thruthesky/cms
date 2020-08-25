@@ -35,9 +35,7 @@
         <a class="btn btn-secondary" data-button="register" href="<?php echo Config::$registerPage?>">Register</a>
     </div>
 </form>
-<?php
-print_r($_COOKIE);
-?>
+
 <script>
 
     window.addEventListener('load', function() {

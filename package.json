@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "publish": "./node_modules/.bin/cypress run --env server=wordpress.philgo.com --config integrationFolder=tests/cypress,testFiles=**/*.spec.js && npm run push:live",
-    "push:live": "git add . && git commit -a -m 'push:live' && ssh sonub@english-fun.com 'cd www/wp-content/themes/cms; git pull'",
+    "push:live": "git add . && git commit -a -m 'push:live' && git push && ssh sonub@english-fun.com 'cd www/wp-content/themes/cms; git pull'",
     "cypress:run": "./node_modules/.bin/cypress run --config integrationFolder=src,testFiles=**/*.spec.js",
     "cypress:open": "./node_modules/.bin/cypress open --config integrationFolder=src,testFiles=**/*.spec.js"
   },
