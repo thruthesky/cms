@@ -4,7 +4,10 @@
   "description": "CMS for community projects",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "./node_modules/.bin/cypress open --env server=wordpress.philgo.com --config integrationFolder=tests/cypress,testFiles=**/*.spec.js",
+    "cypress:run": "./node_modules/.bin/cypress run --config integrationFolder=src,testFiles=**/*.spec.js",
+    "cypress:open": "./node_modules/.bin/cypress open --config integrationFolder=src,testFiles=**/*.spec.js"
   },
   "repository": {
     "type": "git",
@@ -18,7 +21,10 @@
   },
   "homepage": "https://github.com/thruthesky/cms#readme",
   "devDependencies": {
+    "@types/faker": "^4.1.12",
     "chokidar": "^3.4.2",
+    "cypress": "^5.0.0",
+    "faker": "^5.0.0",
     "sass": "^1.26.10",
     "socket.io": "^2.3.0"
   }
