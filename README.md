@@ -29,6 +29,7 @@ $ git clone https://github.com/thruthesky/cms
 * To watch, download [phprun](https://www.npmjs.com/package/phprun) and run like below.
 ```shell script
 $ phprun vendor/bin/phpunit tests
+$ phprun vendor/bin/phpunit tests/ApiPostTest.php
 ```
 
 ## Development View
