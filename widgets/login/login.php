@@ -7,8 +7,8 @@
         <p class="card-text">Blog description. In the long history of the world, only a few generation have been granted the role of </p>
     </div>
     <div class="card-footer bg-transparent border-success">
-        <button type="button" onclick="setLogout(); move(homePage);">Logout</button>
-        <a class="btn btn-secondary" href="/?page=user.profile">Profile</a>
+        <button type="button" data-button="logout" onclick="setLogout(); move(homePage);">Logout</button>
+        <a class="btn btn-secondary" data-button="profile" href="/?page=user.profile">Profile</a>
     </div>
 </div>
 
@@ -32,7 +32,7 @@
     </div>
     <div class="d-flex justify-content-between">
         <button type="submit" class="btn btn-primary">LOGIN</button>
-        <a class="btn btn-secondary" href="<?php echo Config::$registerPage?>">Register</a>
+        <a class="btn btn-secondary" data-button="register" href="<?php echo Config::$registerPage?>">Register</a>
     </div>
 </form>
 

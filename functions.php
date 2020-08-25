@@ -76,8 +76,7 @@ EOH;
  * https://domain.com/?page=abc.def_ghi => pages/abc/def_ghi.php
  */
 function page_path() {
-    if ( in('page') == null ) $page = 'home';
-    else $page = in('page');
+    $page = in('page', 'home');
     $path = 'error/path-not-found.php';
     if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
         $path = 'error/wrong-input.php';
@@ -125,11 +124,15 @@ function widget($name) {
 
 
 /**
+ * Check if user is logged in.
+ *
+ * It checks the session_id in Cookie.
+ *
  * @return bool
  *  - true if the user has loggged in.
  */
 function loggedIn() {
-    return !sessionId();
+    return sessionId() != null;
 }
 
 /**

@@ -42,7 +42,7 @@ if ( localhost() ) {
     <title>Hello, world!</title>
 <?=$_head_script?>
 </head>
-<body class="bg-warning">
+<body class="bg-warning" data-page="<?=in('page', 'home')?>">
 
 <?php include widget('header')?>
 
