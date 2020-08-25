@@ -111,11 +111,11 @@ class ApiPost extends ApiLibrary
         if ($ID == 0 || is_wp_error($ID)) return ERROR_FAILED_TO_EDIT_POST;
 
 
-        if ($in['files']) {
+        if (isset($in['files'])) {
             $this->attachFiles($ID, $in['files']);
         }
 
-        if ($in['featured_image_ID']) {
+        if (isset($in['featured_image_ID'])) {
             set_post_thumbnail($ID, $in['featured_image_ID']);
         }
 
