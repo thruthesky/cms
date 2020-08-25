@@ -1,6 +1,6 @@
 <?php
 
-class UserRoute extends ApiBase
+class UserRoute extends ApiLibrary
 {
 
 

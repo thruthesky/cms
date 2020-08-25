@@ -1,7 +1,7 @@
 <?php
 
 
-class AppRoute extends ApiBase
+class AppRoute extends ApiLibrary
 {
 
     public function version()

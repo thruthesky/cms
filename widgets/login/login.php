@@ -77,6 +77,7 @@
                     alert(re);
                 }
                 else {
+                    console.log('re', re);
                     setLogin(re);
                     console.log(getCookie('session_id'));
                     hideLoginForm();

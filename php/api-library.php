@@ -1,8 +1,6 @@
 <?php
 
-class ApiBase {
-
-
+class ApiLibrary {
 
     public function __construct()
     {
@@ -254,6 +252,7 @@ class ApiBase {
     {
         if (empty($user_ID)) return [];
         $all_metas = get_user_meta($user_ID, '', true);
+        if ( ! $all_metas ) return [];
         $metas = [];
         foreach ($all_metas as $k => $v) {
             if (!in_array($k, USER_NOT_ALLOWED_METAS_FOR_RESPONSE))
@@ -460,7 +459,7 @@ class ApiBase {
         require_once(ABSPATH . 'wp-admin/includes/user.php');
         $user = $this->getUserResponseBySessionId($in['session_id']);
 
-        $this->userUpdate(['session_id' => $in['session_id'], 'resigned' => 'Y']);
+//        $this->userUpdate(['session_id' => $in['session_id'], 'resigned' => 'Y']);
         $re = wp_delete_user($user['ID']);
 
         if ($re) return $user;

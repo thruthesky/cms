@@ -7,14 +7,15 @@
 include_once 'config.php';
 include_once 'php/defines.php';
 include_once 'php/library.php';
-include_once 'php/api-base.php';
+include_once 'php/api-library.php';
+include_once 'php/api-post.php';
 
 
 /**
  * Global Variables
  */
 
-$apiBase = new ApiBase();
+$apiLib = new ApiLibrary();
 
 
 
@@ -115,7 +116,7 @@ function widget($name) {
  *  - true if the user has loggged in.
  */
 function loggedIn() {
-    return sessionId() != null;
+    return !sessionId();
 }
 
 /**
@@ -158,4 +159,32 @@ function isBackendError($re) {
 }
 function isBackendSuccess($re) {
     return isBackendError($re) == false;
+}
+
+
+/**
+ * Returns TLD
+ *
+ * @param $domain - domain of the site.
+ * @return string
+ * google.com -> google.com
+ * www.google.com -> google.com
+ * image.dev.google.com -> google.com
+ * i.love.my.home.co.kr -> home.co.kr
+ *
+ * @TODO: currently it only supports domain that has only business domain without country name. like '.com', '.net', '.org', '.biz'.
+ *  Supporting with country name like '.co.kr', '.or.jpg' should be updated.
+ */
+function getRootDomain($domain=null) {
+
+    if ( $domain == null ) $domain = $_SERVER['HTTP_HOST'];
+
+    $parts = explode('.', $domain);
+    if ( count($parts) == 2 ) return $domain;
+    else return "$parts[1].$parts[2]";
+}
+
+function getCompleteGUID($guid)
+{
+    return get_option('siteurl') . '/' . $guid;
 }

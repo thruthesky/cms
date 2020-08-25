@@ -40,14 +40,7 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-    <script>
-        var isLocalhost = <?php if (localhost()) echo 'true'; else echo 'false'; ?>;
-        var appVersion = "<?php echo Config::$appVersion?>";
-        var apiUrl = "<?php echo home_url() . Config::$apiUrl?>";
-        var homePage = "/";
-        var themePath = "<?php echo THEME_PATH ?>";
-        var registerPage = "<?php echo Config::$registerPage?>";
-    </script>
+<?=$_head_script?>
 </head>
 <body class="bg-warning">
 

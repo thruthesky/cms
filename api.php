@@ -3,15 +3,12 @@
 define('API_CALL', true);
 include_once './php/preflight.php';
 require_once('../../../wp-load.php');
-include_once './php/defines.php';
-include_once './php/library.php';
-include_once './php/api-base.php';
 
 
 ///
 xlog('[xlog] api.php begin', in());
 
-class Api extends ApiBase
+class Api extends ApiLibrary
 {
 
 

@@ -1,23 +1,17 @@
 <?php
 
 
-class PostRoute extends ApiBase
+class PostRoute extends ApiPost
 {
 
 
-    /// 여기서 부터.
-    function getPosts()
+
+
+    public function get()
     {
-        if (!in('slug')) $this->error(ERROR_CATEGORY_NOT_PROVIDED);
-
-        $posts = get_posts(in());
-        $rets = [];
-        foreach ($posts as $p) {
-            $rets[] = $this->postResponse($p, ['with_autop' => true]);
-        }
-
-        $this->success($rets);
+        $this->response($this->postGet(in()));
     }
+
 
 }
 

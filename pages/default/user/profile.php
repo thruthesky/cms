@@ -1,5 +1,5 @@
 <?php
-$user = $apiBase->userResponse(sessionID());
+$user = $apiLib->userResponse(sessionID());
 ?>
 
 
