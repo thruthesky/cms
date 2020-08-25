@@ -25,7 +25,7 @@ context('Integration Test', () => {
     })
     describe('Register', () => {
         it('Submit register', () => {
-            cy.get("[data-button='register00']").click();
+            cy.get("[data-button='register']").click();
             cy.get("form.register [name='user_email']").type(faker.internet.email());
             cy.get("form.register [name='user_pass']").type(faker.internet.password());
             cy.get("form.register [name='first_name']").type(faker.name.findName());
