@@ -40,6 +40,7 @@ class ApiPostTest extends TestCase
     public function testEdit()
     {
 
+
         $this->assertTrue(true);
     }
     public function testDelete()
@@ -50,6 +51,10 @@ class ApiPostTest extends TestCase
     public function testGets()
     {
 
-        $this->assertTrue(true);
+        $this->assertTrue(false);
     }
+
+
+    
+
 }

@@ -7,7 +7,13 @@ class Config {
     static public $resignResultPage = '/?page=user.resign_result';
 }
 
-$_host = $_SERVER['HTTP_HOST'];
+if (isset($_SERVER['HTTP_HOST'])) {
+    $_host = $_SERVER['HTTP_HOST'];
+} else {
+    $_host = null;
+}
+
+
 
 if ($_host == 'wp-blog.philgo.com' ) {
     Config::$domain = 'blog';

@@ -2,6 +2,32 @@
 
 class ApiLibrary {
 
+    static $post_fields = [
+        'ID',
+        'post_author',
+        'post_date',
+        'post_date_gmt',
+        'post_content',
+        'post_title',
+        'post_excerpt',
+        'post_status',
+        'comment_status',
+        'ping_status',
+        'post_password',
+        'post_name',
+        'to_ping',
+        'pinged',
+        'post_modified',
+        'post_modified_gmt',
+        'post_content_filtered',
+        'post_parent',
+        'guid',
+        'menu_order',
+        'post_type',
+        'post_mime_type',
+        'comment_count',
+    ];
+
     public function __construct()
     {
     }
@@ -603,6 +629,220 @@ class ApiLibrary {
 
         return $post;
     }
+
+
+    /**
+     * Check if the post belong to the login user.
+     * @param $post_ID
+     * @return bool
+     *      true if the post belongs to the login user.
+     *      false otherwise.
+     */
+    public function isMyPost($post_ID)
+    {
+        $p = get_post($post_ID);
+        //        xlog($p);
+        if ($p) {
+            //            xlog("isMyPost: comp: " . $p->post_author . " == " . wp_get_current_user()->ID );
+            return $p->post_author == wp_get_current_user()->ID;
+        }
+        return false;
+    }
+
+    /**
+     * Check if the comment belong to the login user.
+     * @param $comment_ID
+     * @return bool
+     *      true if the comment belongs to the login user.
+     *      false otherwise.
+     */
+    public function isMyComment($comment_ID)
+    {
+        $c = get_comment($comment_ID);
+        if ($c) {
+            return $c->user_id == wp_get_current_user()->ID;
+        }
+        return false;
+    }
+
+
+    /**
+     * Attach uploaded files to a post.
+     * @param $post_ID int Post ID as wp_posts.ID
+     * @param $files mixed IDs of attachment in wp_posts
+     * @param string $post_type
+     *          - For comment, it is COMMENT_ATTACHMENT.
+     * @attention
+     *          The reason why we use COMMENT_ATTACHMENT as post_type is because comment_ID can be mixed up with wp_posts.ID
+     *          Files that belongs to 50 of wp_posts.ID would belong to 50 of comment_ID.
+     *          To avoid this problem, we put post_type to COMMENT_ATTACHMENT.
+     *          But the problem is wp_delete_attachment can not delete COMMENT_ATTACHMENT.
+     *          So, we change it to 'attachment' to delete the comment attachments.
+     *
+     * @example  $this->attachFiles(in('comment_ID'), in('files'), COMMENT_ATTACHMENT);
+     */
+    public function attachFiles($post_ID, $files, $post_type = '')
+    {
+        if (!$files) return;
+        if (!is_array($files)) {
+            $files = explode(',', $files);
+        }
+        foreach ($files as $file_ID) {
+            $up = ['ID' => $file_ID, 'post_parent' => $post_ID];
+            if ($post_type) {
+                $up['post_type'] = $post_type;
+            }
+            wp_update_post($up);
+        }
+    }
+
+    /**
+     * @todo Why do we need this method?
+     * @param $ID
+     */
+    public function updateFirstImage($ID)
+    {
+        /**
+         * If a file is deleted right after uploading (without attaching to a post), then $ID may be empty.
+         */
+        if (!$ID) return;
+        $post = $this->postResponse($ID);
+        if ($post && isset($post['files']) && count($post['files'])) {
+            update_post_meta($ID, 'first_image_ID', $post['files'][0]['ID']);
+        } else {
+            update_post_meta($ID, 'first_image_ID', 0);
+        }
+    }
+
+    /**
+     *
+     * This method saves all the input data into post_meta
+     *      (except those are already saved in wp_posts table and specified in xapi_post_query_meta_exclude_vars() )
+     *
+     *
+     * @attention This will save everything except wp_posts fields,
+     *      so you need to be careful not to add un-wanted form values.
+     *      So, don't just pass unnecessary data from client end.
+     *
+     * @note
+     */
+    public function updatePostMeta($post_ID)
+    {
+        foreach ($_REQUEST as $k => $v) {
+            if (in_array($k, self::$post_fields)) continue;
+            if (in_array($k, $this->post_query_meta_exclude_vars())) continue;
+            update_post_meta($post_ID, $k, $v);
+        }
+    }
+
+    /**
+     *
+     * Returns HTTP query names to exclude for saving meta data.
+     *
+     * @return array
+     */
+    function post_query_meta_exclude_vars()
+    {
+        return ['method', 'session_id', 'category', 'slug', 'fid', 'files', 'meta'];
+    }
+
+    public function commentResponse($comment_id)
+    {
+        $comment = get_comment($comment_id, ARRAY_A);
+        $ret['comment_ID'] = $comment['comment_ID'];
+        $ret['comment_post_ID'] = $comment['comment_post_ID'];
+        $ret['comment_parent'] = $comment['comment_parent'];
+        $ret['user_id'] = $comment['user_id'];
+        $ret['comment_author'] = $comment['comment_author'];
+        $ret['comment_content'] = $comment['comment_content'];
+        $ret['comment_content_autop'] = wpautop(($comment['comment_content']));
+        $ret['comment_date'] = $comment['comment_date'];
+        $ret['files'] = $this->get_uploaded_files($comment_id, COMMENT_ATTACHMENT);
+        /// post author user profile
+        ///
+        $u = $this->userResponse($comment['user_id']);
+        $ret['user_photo'] = $u['photo'] ?? '';
+        // date
+        $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
+        return $ret;
+    }
+
+    public function shortDateTime($date)
+    {
+        $stamp = strtotime($date);
+        $Y = date('Y', $stamp);
+        $m = date('m', $stamp);
+        $d = date('d', $stamp);
+        if ($Y == date('Y') && $m == date('m') && $d == date('d')) {
+            $dt = date("h:i a", $stamp);
+        } else {
+            $dt = "$Y-$m-$d";
+        }
+        return $dt;
+    }
+
+    /**
+     * Returns uploaded files of a post.
+     *
+     * @param $parent_ID
+     * @param string $post_type
+     * @return array
+     * @example
+     *      $files = get_uploaded_files(129);
+     * print_r($files);
+     */
+    function get_uploaded_files($parent_ID, $post_type = 'attachment')
+    {
+        $ret = [];
+
+        $files = get_children(['post_parent' => $parent_ID, 'post_type' => $post_type, 'orderby' => 'ID', 'order' => 'ASC']);
+        // xlog('get_uploaded_files ====> ' . $files);
+
+
+        if ($files) {
+            foreach ($files as $file) {
+                $ret[] = $this->get_uploaded_file($file->ID);
+            }
+        }
+
+        return $ret;
+    }
+
+    /**
+     * Returns a single file information.
+     * @note this returns upload photo information
+     * @param $post_ID - the attachment post id.
+     *
+     * @todo update thumbnail url. Thumbnail is not right.
+     * @return array
+     */
+    function get_uploaded_file($post_ID)
+    {
+
+        $post = get_post($post_ID);
+        if (!$post) return null;
+        $ret = [
+            'url' => $post->guid, // url is guid.
+            'ID' => $post->ID, // wp_posts.ID
+            //        'status' => $post->post_status,
+            //        'author' => $post->post_author,
+            //        'type' => $post->post_type,
+            'media_type' => strpos($post->post_mime_type, 'image/') === 0 ? 'image' : 'file', // it will have 'image' or 'file'
+            'type' => $post->post_mime_type,
+            'name' => $post->post_name, // file name?
+            //        'post' => $post->post_parent
+        ];
+        if ($ret['media_type'] == 'image') {
+            $ret['thumbnail_url'] = $post->guid; // thumbnail url
+        }
+        /// Add image size, width, height
+        $ret['exif'] = image_exif_details(image_path_from_url($ret['url']));
+        return $ret;
+    }
+
+
+
+
 
 
 

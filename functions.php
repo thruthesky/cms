@@ -188,3 +188,51 @@ function getCompleteGUID($guid)
 {
     return get_option('siteurl') . '/' . $guid;
 }
+
+
+/**
+ * Returns image size, width, height and extra information.
+ * @param $path
+ * @return array
+ *  - array of information
+ *  - or empty array if there is any error.
+ *
+ * @example of return data.
+FileName: "a5ba08b7b3f8816f6fbec39f3b79898f.jpg"
+FileDateTime: 1582106902
+FileSize: 12602
+FileType: 2
+MimeType: "image/jpeg"
+SectionsFound: ""
+html: "width="274" height="164""
+Height: 164
+Width: 274
+IsColor: 1
+ *
+ *
+ */
+function image_exif_details($path) {
+    $exif = @exif_read_data($path, 'COMPUTED', true);
+    if ( ! $exif ) return [];
+    $rets = [];
+    foreach ($exif as $key => $section) {
+        foreach ($section as $name => $val) {
+
+            $rets[$name] =  $val;
+        }
+    }
+    return $rets;
+}
+
+
+
+/**
+ * returns the path of the image.
+ * If an Image has wrong url, then it returns null.
+ */
+function image_path_from_url($url) {
+    $arr = explode('/wp-content/', $url);
+    if ( count($arr) == 1 ) return null;
+    $path = ABSPATH . 'wp-content/' . $arr[1];
+    return $path;
+}
