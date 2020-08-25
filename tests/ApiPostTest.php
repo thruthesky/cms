@@ -22,7 +22,6 @@ class ApiPostTest extends TestCase
     private $user;
 
 
-
     public function __construct(string $name = null, array $data = [], $dataName = '')
     {
         $this->libLib = new ApiLibrary();
@@ -57,7 +56,7 @@ class ApiPostTest extends TestCase
         $this->assertIsString($re);
         $this->assertSame($re, ERROR_NO_SLUG_NOR_ID);
 
-
+        // title is empty
         $re = get_api("post.edit&session_id=$sid&slug=uncategorized");
         $this->assertSame($re, ERROR_NO_POST_TITLE_PROVIDED);
 
@@ -68,8 +67,46 @@ class ApiPostTest extends TestCase
 
         /// success
         $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1");
-        print_r($re);
         $this->assertTrue( isBackendSuccess($re) );
+    }
+
+    public function testGet()
+    {
+
+        $user = $this->userRegister();
+        $sid = $user['session_id'];
+
+        $re = $this->libPost->postGet(null);
+        $this->assertIsString($re);
+        $this->assertSame($re, ERROR_ID_NOT_PROVIDED);
+
+        /// create new post
+        $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=Get this post");
+        $this->assertTrue( isBackendSuccess($re) );
+
+        /// post get with ID via php
+        $re1 = $this->libPost->postGet([ 'ID' => $re['ID'] ]);
+        $this->assertSame($re1['post_title'], 'Get this post');
+
+        /// get post with ID via api
+        $re11 = get_api("post.get&ID=$re[ID]");
+        $this->assertSame($re11['post_title'], 'Get this post');
+
+        /// post get via guid
+        $re2 = $this->libPost->postGet([ 'guid' => $re['guid'] ]);
+        $this->assertSame($re1['post_title'], $re2['post_title']);
+
+
+        /// get post with ID via api
+        $re22 = get_api("post.get&guid=$re[guid]");
+        print($re22);
+        $this->assertSame($re2['post_title'], $re22['post_title']);
+
+
+        /// post get via path
+//        $re2 = $this->libPost->postGet([ 'guid' => $re['guid'] ]);
+//        $this->assertSame($re1['post_title'], $re2['post_title'])
+
 
     }
 
@@ -77,42 +114,60 @@ class ApiPostTest extends TestCase
     public function testUpdate()
     {
 
-        $user = $this->userRegister('update');
+        $user1 = $this->userRegister('update1');
+        $user2 = $this->userRegister('update2');
 
-        $sid = $user['session_id'];
+        $sid1 = $user1['session_id'];
+        $sid2 = $user2['session_id'];
 
         /// success
-        $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1");
+        $re = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title1");
         $this->assertTrue( isBackendSuccess($re) );
 
 
-        $re2 = get_api("post.edit&session_id=$sid&ID=$re[ID]&post_title=title2");
+        $re2 = get_api("post.edit&session_id=$sid1&ID=$re[ID]&post_title=title2");
         $this->assertTrue( isBackendSuccess($re2) );
         $this->assertTrue( $re['post_title'] != $re2['post_title'] );
         $this->assertTrue( $re2['post_title']=== 'title2' );
+
+        print_r($user2['ID']);
+
+
+        /// other user should not be able to edit other post
+        $re3 = get_api("post.edit&session_id=$sid2&ID=$re[ID]&post_title=title different user");
+        $this->assertSame( $re3, ERROR_NOT_YOUR_POST );
+
+
+    }
+
+    public function testDelete()
+    {
+        $user1 = $this->userRegister('delete1');
+        $user2 = $this->userRegister('delete2');
+        $sid1 = $user1['session_id'];
+        $sid2 = $user2['session_id'];
+        /// success
+        $re = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title1");
+        $this->assertTrue( isBackendSuccess($re) );
+
+        $re = get_api("post.delete&session_id=$sid1&ID=$re[ID]");
+        $this->assertTrue( isBackendSuccess($re) );
+        print($re);
+
+
     }
 
 
-//
-//    public function testGet()
-//    {
-//        $re = $this->libPost->postGet(null);
-//        $this->assertIsString($re);
-//        $this->assertSame($re, ERROR_ID_NOT_PROVIDED);
-//        $this->assertTrue(true);
-//    }
 
-//    public function testDelete()
+
+    //    public function testGets()
 //    {
 //
 //        $this->assertTrue(true);
 //    }
 
-//    public function testGets()
-//    {
-//
-//        $this->assertTrue(true);
-//    }
+
+
 
 
 

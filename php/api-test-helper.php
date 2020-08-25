@@ -12,7 +12,7 @@ function get_api($route = '', $url=null) {
     }
 
     $url = "$url?route=$route";
-    print("\n>>> Request URL: $url\n");
+//    print("\n>>> Request URL: $url\n");
 
 
     $re = file_get_contents($url);

@@ -37,15 +37,17 @@ class ApiPost extends ApiLibrary
         /**
          * Get post ID.
          */
+
         $ID = $in['ID'];
         if ($in['path']) {
             $ID = get_page_by_path($in['path'], OBJECT, 'post');
             if (!$ID) return ERROR_POST_NOT_FOUND_BY_THAT_PATH;
         }
         else if ($in['guid']) {
-            $p = $this->getPostFromGUID(getCompleteGUID($in['guid']));
+            $p = $this->getPostFromGUID($in['guid']);
+//            $p = $this->getPostFromGUID(getCompleteGUID($in['guid']));
             if (!$p) return ERROR_POST_NOT_FOUND_BY_THAT_GUID;
-            $ID = $p['ID'];
+            $ID = $p->ID;
         }
 
         /**
@@ -79,13 +81,11 @@ class ApiPost extends ApiLibrary
 
         if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
 
-
         if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+
         if (!isset($in['session_id'])) return ERROR_EMPTY_SESSION_ID;
 
         if ( empty($in['slug']) && !isset($in['ID'])) return ERROR_NO_SLUG_NOR_ID;
-
-
 
         if (!isset($in['post_title'])) return ERROR_NO_POST_TITLE_PROVIDED;  // required?
 
@@ -102,6 +102,7 @@ class ApiPost extends ApiLibrary
             if ( $cat == false ) return ERROR_WRONG_SLUG;
             $data['post_category'] = [$cat->term_id];
         } else {      // update. update with ID.
+            if (!$this->isMyPost($in['ID'])) return ERROR_NOT_YOUR_POST; // verify if you own the post
             $post = get_post($in['ID'], ARRAY_A);
             $data['ID'] = $in['ID'];
             $data['post_category'] = $post['post_category'];
