@@ -1,8 +1,6 @@
 <?php
 
-class ApiBase {
-
-
+class ApiLibrary {
 
     public function __construct()
     {
@@ -254,6 +252,7 @@ class ApiBase {
     {
         if (empty($user_ID)) return [];
         $all_metas = get_user_meta($user_ID, '', true);
+        if ( ! $all_metas ) return [];
         $metas = [];
         foreach ($all_metas as $k => $v) {
             if (!in_array($k, USER_NOT_ALLOWED_METAS_FOR_RESPONSE))
@@ -460,7 +459,7 @@ class ApiBase {
         require_once(ABSPATH . 'wp-admin/includes/user.php');
         $user = $this->getUserResponseBySessionId($in['session_id']);
 
-        $this->userUpdate(['session_id' => $in['session_id'], 'resigned' => 'Y']);
+//        $this->userUpdate(['session_id' => $in['session_id'], 'resigned' => 'Y']);
         $re = wp_delete_user($user['ID']);
 
         if ($re) return $user;
@@ -516,6 +515,94 @@ class ApiBase {
         }
     }
 
+
+
+
+    /**
+     * @note it returns the 'post_content' with HTML.
+     * @param $ID_or_post - This can be post ID or post object.
+     * @param $options
+     *
+     * @note by default, post_content is returned in 'wpautop()' stirng.
+     *  if $options['with_autop'] is set to true, 'post_content' will be set as normal, and 'post_content_autop' wil have wpautop() string.
+     *  if $optoins['with_autop'] is set set and $options['autop'] is set to false, then it does not do wpautop()
+     *
+     * @note postCreate(), postUpdate(), postSearch() uses 'with_autop' option by default.
+     *
+     * @return mixed|array
+     *      - error if there is any error
+     *      - An array of post data.
+     */
+    public function postResponse($ID_or_post, $options = [])
+    {
+
+        if (empty($ID_or_post)) $this->error(ERROR_EMPTY_ID_OR_POST);
+        $post = get_post($ID_or_post, ARRAY_A);
+
+
+        if (isset($options['with_autop']) && $options['with_autop']) {
+            $post['post_content_autop'] = wpautop(($post['post_content']));
+        } else if (!isset($options['autop']) || $options['autop']) {
+            $post['post_content'] = wpautop($post['post_content']);
+        }
+
+        /// Featured Image Url.
+        ///
+        $post_thumbnail_id = get_post_thumbnail_id($post['ID']);
+        if ($post_thumbnail_id) {
+            $post['featured_image_url'] = wp_get_attachment_image_url($post_thumbnail_id, 'full');
+            $post['featured_image_thumbnail_url_2'] = wp_get_attachment_image_url($post_thumbnail_id, '100x100');
+            $post['featured_image_ID'] = $post_thumbnail_id;
+        }
+
+        // $featured_image_url = get_the_post_thumbnail_url($post['ID']);
+        // if ($featured_image_url)   $post['featured_image_url'] = $featured_image_url;
+        // else $post['featured_image_url'] = '';
+
+        //
+        $post['files'] = $this->get_uploaded_files($post['ID']);
+
+        /// author name
+        $post['author_name'] = get_the_author_meta('display_name', $post['post_author']);
+
+        /// post author profile photo
+        ///
+        // $u = $this->userResponse($post['post_author']);
+        // $post['user_photo'] = $u['photo'];
+
+        /// post date
+        $post['short_date_time'] = $this->shortDateTime($post['post_date']);
+
+        /// Comments
+        /// If there is no comment, then it will return empty array.
+        ///
+        $comments = get_nested_comments($post['ID']);
+        $updated_comments = [];
+        foreach ($comments as $comment) {
+            $cmt = $this->commentResponse($comment['comment_ID']);
+            $cmt['depth'] = $comment['depth'];
+            $updated_comments[] = $cmt;
+        }
+        $post['comments'] = $updated_comments;
+        //                $post['comments'] = $comments;
+
+        // Add meta datas.
+        $metas = get_post_meta($post['ID'], '', true);
+        $singles = [];
+        foreach ($metas as $k => $v) {
+            $singles[$k] = $v[0];
+        }
+        $post = array_merge($singles, $post);
+
+
+        // get post slug as category name and pass
+        if (count($post['post_category'])) {
+            $cat = get_category($post['post_category'][0]);
+            $post['category_name'] = $cat->slug;
+        }
+
+        return $post;
+    }
 
 
 

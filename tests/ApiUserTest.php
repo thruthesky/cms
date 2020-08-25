@@ -1,20 +1,20 @@
 <?php
 use PHPUnit\Framework\TestCase;
 
-include_once 'php/defines.php';
+
 include_once 'php/api-test-helper.php';
-include_once 'php/api-base.php';
+
 
 class ApiUserTest extends TestCase
 {
 
     /**
-     * @var ApiBase
+     * @var ApiLibrary
      */
     private $lib;
     public function __construct(string $name = null, array $data = [], $dataName = '')
     {
-        $this->lib = new ApiBase();
+        $this->lib = new ApiLibrary();
         parent::__construct($name, $data, $dataName);
     }
 

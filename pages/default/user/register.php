@@ -2,8 +2,9 @@
 //
 $user = [];
 if ( loggedIn()) {
-    $user = $apiBase->userResponse(sessionId());
+    $user = $apiLib->userResponse(sessionId());
 }
+
 
 ?>
 
@@ -25,8 +26,9 @@ if ( loggedIn()) {
                     alert(re);
                 }
                 else {
+                    console.log('re', re);
                     setLogin(re);
-                    move(homePage);
+                    // move(homePage);
                 }
             })
             .fail(function() {

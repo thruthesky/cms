@@ -40,18 +40,11 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-    <script>
-        var isLocalhost = <?php if (localhost()) echo 'true'; else echo 'false'; ?>;
-        var appVersion = "<?php echo Config::$appVersion?>";
-        var apiUrl = "<?php echo home_url() . Config::$apiUrl?>";
-        var homePage = "/";
-        var themePath = "<?php echo THEME_PATH ?>";
-        var registerPage = "<?php echo Config::$registerPage?>";
-    </script>
+<?=$_head_script?>
 </head>
 <body class="bg-warning">
 
-<?php widget('header')?>
+<?php include widget('header')?>
 
 <div class="container px-0">
     <div class="row no-gutters">
@@ -63,7 +56,7 @@ if ( localhost() ) {
             </main>
         </div>
         <div class="col-lg-3 d-none d-lg-block">
-            <?php widget('login')?>
+            <?php include widget('login')?>
         </div>
     </div>
 </div>

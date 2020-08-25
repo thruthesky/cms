@@ -42,11 +42,17 @@ function setLogin(re) {
     setCookie('session_id', re['session_id'], { expires: 365 });
     setCookie('nickname', re['nickname'], { expires: 365 });
     setCookie('photoURL', re['photoURL'], { expires: 365 });
+    setCookie('session_id', re['session_id'], { expires: 365, domain: rootDomain });
+    setCookie('nickname', re['nickname'], { expires: 365, domain: rootDomain });
+    setCookie('photoURL', re['photoURL'], { expires: 365, domain: rootDomain });
 }
 function setLogout() {
     Cookies.remove('session_id');
     Cookies.remove('nickname');
     Cookies.remove('photoURL');
+    Cookies.remove('session_id', { domain: rootDomain });
+    Cookies.remove('nickname', { domain: rootDomain });
+    Cookies.remove('photoURL', { domain: rootDomain });
 }
 
 /**

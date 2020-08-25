@@ -1,7 +1,7 @@
 <?php
 
 
-$re = $apiBase->userResign(['session_id' => sessionId()]);
+$re = $apiLib->userResign(['session_id' => sessionId()]);
 
 /**
  * Resign success
@@ -9,7 +9,11 @@ $re = $apiBase->userResign(['session_id' => sessionId()]);
 if ($re['session_id'] == sessionId()) {
     ?>
     <script>
-        setLogout();
+
+        $$(function() {
+            setLogout();
+            move('<?=Config::$resignResultPage?>');
+        });
     </script>
 <?php
 }
@@ -18,9 +22,3 @@ if ($re['session_id'] == sessionId()) {
 
 
 ?>
-
-<h1>Thank you.</h1>
-
-<p>
-    We are looking forward to see you again. Good Bye!
-</p>
