@@ -767,6 +767,22 @@ class ApiLibrary {
         return $ret;
     }
 
+    /**
+     * @param $slug
+     * @return int
+     *      - Returns category ID as number
+     *      - Otherwise 0.
+     */
+    public function getCategoryID($slug)
+    {
+        $idObj = get_category_by_slug($slug);
+        if ($idObj) {
+            return $idObj->term_id;
+        } else {
+            return 0;
+        }
+    }
+
     public function shortDateTime($date)
     {
         $stamp = strtotime($date);

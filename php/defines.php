@@ -138,6 +138,9 @@ define('ERROR_NO_TOPIC_PROVIDED', 'no_topic_provided');
 define('ERROR_TOPIC_SUBSCRIPTION_FAILED', 'topic_subscription_failed');
 define('ERROR_TOPIC_UNSUBSCRIPTION_FAILED', 'topic_unsubscription_failed');
 
+define('ERROR_NO_POST_TITLE_PROVIDED', 'post_title_is_not_provided');
+define('ERROR_NO_POST_CONTENT_PROVIDED', 'post_content_is_not_provided');
+
 define('ERROR_NO_TITLE_PROVIDED', 'title_is_not_provided');
 define('ERROR_NO_BODY_PROVIDED', 'body_is_not_provided');
 define('ERROR_NO_CLICK_ACTION_PROVIDED', 'click_action_is_not_provided');

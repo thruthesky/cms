@@ -129,6 +129,46 @@ function sessionId() {
         return null;
     }
 }
+/**
+ * Returns login user's information from his profile.
+ * @param $key
+ * @return mixed
+ * @example login('nickname')
+ */
+function login($key)
+{
+
+    /**
+     * Error => Undefined index: ID
+     *
+     * `$user->to_array()` return empty even if `$user` is not empty.
+     */
+//     $user = wp_get_current_user();
+    // if ($user) {
+    //     $userdata = $user->to_array();
+    //     return $userdata[$key];
+    // }
+    // return null;
+
+//    $lib = new ApiLibrary();
+//    $profile = $lib->userResponse(in('session_id'));
+//    return $profile[$key] ?? null;
+
+    return user(in('session_id'), $key);
+}
+
+/**
+ * @param $user_ID mixed  - user_login or session_id
+ * @param $field string - field name to get the user's property.
+ * @return mixed|null
+ */
+function user($user_ID, $field)
+{
+    $lib = new ApiLibrary();
+    $profile = $lib->userResponse($user_ID);
+    if ( empty($profile) ) return null;
+    return $profile[$field] ?? null;
+}
 
 /**
  * Returns user ID.

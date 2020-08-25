@@ -71,19 +71,21 @@ class ApiPost extends ApiLibrary
      */
     public function postEdit($in)
     {
-        if (!$in['session_id']) return ERROR_LOGIN_FIRST;
+        if (!isset($in['session_id'])) return ERROR_LOGIN_FIRST;
+        if (!isset($in['post_title'])) return ERROR_NO_POST_TITLE_PROVIDED;  // required?
+        if (!isset($in['post_content'])) return ERROR_NO_POST_CONTENT_PROVIDED;  // required?
 
         $data = [
             'post_author' => login('ID'),
-            'post_title' => $in['post_title'],
-            'post_content' => $in['post_content'],
+            'post_title' => $in['post_title'] ?? '',
+            'post_content' => $in['post_content'] ?? '',
             'post_status' => 'publish'
         ];
-        if ($in['category_name']) {  // create
+        if (isset($in['category_name'])) {  // create/ required?
             $catID = $this->getCategoryID($in['category_name']);
             if (!$catID) return ERROR_WRONG_CATEGORY_NAME;
             $data['post_category'] = [$catID];
-        } else if ($in['ID']) {      // update
+        } else if (isset($in['ID'])) {      // update
             $post = get_post($in['ID'], ARRAY_A);
             $data['ID'] = $in('ID');
             $data['post_category'] = $post['post_category'];
@@ -91,7 +93,9 @@ class ApiPost extends ApiLibrary
             return ERROR_CATEGORY_NAME_OR_ID_NOT_PROVIDED;
         }
 
+//        print_r($data);
         $ID = wp_insert_post($data);
+        print_r($ID);
         if ($ID == 0 || is_wp_error($ID)) {
 //            $this->error(ERROR_FAILED_TO_EDIT_POST, ['reason' => $this->get_first_error_message($ID)]);
             return ERROR_FAILED_TO_EDIT_POST;
