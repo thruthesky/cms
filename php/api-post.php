@@ -66,14 +66,29 @@ class ApiPost extends ApiLibrary
     /**
      * Edit a post.
      *
+     * @warning API Call only.
+     *
      * @see wordpress-api.service.ts::edit() for more details.
      *
+     * @TODO: chaneg `category_name` to `slug`.
+     * @TODO @Warning this method only work with API call.
+     * @note post can have empty content.
      */
     public function postEdit($in)
     {
-        if (!isset($in['session_id'])) return ERROR_LOGIN_FIRST;
+
+        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+
+
+        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+        if (!isset($in['session_id'])) return ERROR_EMPTY_SESSION_ID;
+
+        if ( empty($in['slug']) && !isset($in['ID'])) return ERROR_NO_SLUG_NOR_ID;
+
+
+
         if (!isset($in['post_title'])) return ERROR_NO_POST_TITLE_PROVIDED;  // required?
-        if (!isset($in['post_content'])) return ERROR_NO_POST_CONTENT_PROVIDED;  // required?
+
 
         $data = [
             'post_author' => login('ID'),
@@ -81,25 +96,20 @@ class ApiPost extends ApiLibrary
             'post_content' => $in['post_content'] ?? '',
             'post_status' => 'publish'
         ];
-        if (isset($in['category_name'])) {  // create/ required?
-            $catID = $this->getCategoryID($in['category_name']);
-            if (!$catID) return ERROR_WRONG_CATEGORY_NAME;
-            $data['post_category'] = [$catID];
-        } else if (isset($in['ID'])) {      // update
+
+        if ($in['slug']) {  // create/ required?
+            $cat = get_category_by_slug($in['slug']);
+            if ( $cat == false ) return ERROR_WRONG_SLUG;
+            $data['post_category'] = [$cat->term_id];
+        } else {      // update. update with ID.
             $post = get_post($in['ID'], ARRAY_A);
-            $data['ID'] = $in('ID');
+            $data['ID'] = $in['ID'];
             $data['post_category'] = $post['post_category'];
-        } else {
-            return ERROR_CATEGORY_NAME_OR_ID_NOT_PROVIDED;
         }
 
-        print_r($data);
         $ID = wp_insert_post($data);
-        print_r($ID);
-        if ($ID == 0 || is_wp_error($ID)) {
-//            $this->error(ERROR_FAILED_TO_EDIT_POST, ['reason' => $this->get_first_error_message($ID)]);
-            return ERROR_FAILED_TO_EDIT_POST;
-        }
+        if ($ID == 0 || is_wp_error($ID)) return ERROR_FAILED_TO_EDIT_POST;
+
 
         if ($in['files']) {
             $this->attachFiles($ID, $in['files']);

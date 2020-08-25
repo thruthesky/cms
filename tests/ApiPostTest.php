@@ -22,14 +22,20 @@ class ApiPostTest extends TestCase
     private $user;
 
 
+
     public function __construct(string $name = null, array $data = [], $dataName = '')
     {
         $this->libLib = new ApiLibrary();
         $this->libPost = new ApiPost();
 
+        parent::__construct($name, $data, $dataName);
+    }
+
+    private function userRegister($salt='') {
+
         /// Register
         $stamp = time();
-        $email = "user$stamp@test.com";
+        $email = "user$salt$stamp@test.com";
         $pass = 'PW.test@,*';
         $this->user = $this->libLib->userRegister([
             'user_email' => $email,
@@ -37,87 +43,82 @@ class ApiPostTest extends TestCase
             'meta1' => 'postTest'
         ]);
 
-        parent::__construct($name, $data, $dataName);
+        return $this->user;
+
     }
 
 
-    public function testCreate()
-    {
+    public function testCreateAPost() {
 
-//        print_r($this->user);
-        $re = $this->libPost->postEdit(null);
+        $this->userRegister();
+
+        $sid = $this->user['session_id'];
+        $re = get_api("post.edit&session_id=$sid");
         $this->assertIsString($re);
-        $this->assertSame($re, ERROR_LOGIN_FIRST);
+        $this->assertSame($re, ERROR_NO_SLUG_NOR_ID);
 
-        $re = $this->libPost->postEdit([
-            'session_id' => $this->user['session_id'],
-        ]);
+
+        $re = get_api("post.edit&session_id=$sid&slug=uncategorized");
         $this->assertSame($re, ERROR_NO_POST_TITLE_PROVIDED);
 
-
-        $re = $this->libPost->postEdit([
-            'session_id' => $this->user['session_id'],
-            'post_title' => 'myPostTitle',
-        ]);
-        $this->assertSame($re, ERROR_NO_POST_CONTENT_PROVIDED);
+        /// wrong slug
+        $re = get_api("post.edit&session_id=$sid&slug=wrong-slug&post_title=title1");
+        $this->assertSame($re, ERROR_WRONG_SLUG);
 
 
-        $re = $this->libPost->postEdit([
-            'session_id' => $this->user['session_id'],
-            'post_title' => 'myPostTitle',
-            'post_content' => 'myPostContent',
-        ]);
-        $this->assertSame($re, ERROR_CATEGORY_NAME_OR_ID_NOT_PROVIDED);
-
-
-        $re = $this->libPost->postEdit([
-            'session_id' => $this->user['session_id'],
-            'post_title' => 'myPostTitle',
-            'post_content' => 'myPostContent',
-            'category_name' => 'qnaTest'
-        ]);
-        $this->assertSame($re, ERROR_WRONG_CATEGORY_NAME);
-
-
-        $re = $this->libPost->postEdit([
-            'session_id' => $this->user['session_id'],
-            'post_title' => 'myPostTitle',
-            'post_content' => 'myPostContent',
-            'category_name' => 'uncategorized'
-        ]);
-
-        print_r($re);
-//        $this->assertSame($re, ERROR_WRONG_CATEGORY_NAME);
-
-
-        $this->assertTrue(true);
+        /// success
+        $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1");
+        $this->assertTrue( isBackendSuccess($re) );
 
     }
-    public function testGet()
-    {
-        $re = $this->libPost->postGet(null);
-        $this->assertIsString($re);
-        $this->assertSame($re, ERROR_ID_NOT_PROVIDED);
-        $this->assertTrue(true);
-    }
-    public function testEdit()
+
+
+    public function testUpdate()
     {
 
+        $user = $this->userRegister('update');
 
-        $this->assertTrue(true);
+        $sid = $user['session_id'];
+
+        /// success
+        $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1");
+        $this->assertTrue( isBackendSuccess($re) );
+
+
+        $re2 = get_api("post.edit&session_id=$sid&ID=$re[ID]&post_title=title2");
+        $this->assertTrue( isBackendSuccess($re2) );
+        $this->assertTrue( $re['post_title'] != $re2['post_title'] );
+        $this->assertTrue( $re2['post_title']=== 'title2' );
     }
-    public function testDelete()
-    {
-
-        $this->assertTrue(true);
-    }
-    public function testGets()
-    {
-
-        $this->assertTrue(true);
-    }
 
 
-    
+//
+//    public function testGet()
+//    {
+//        $re = $this->libPost->postGet(null);
+//        $this->assertIsString($re);
+//        $this->assertSame($re, ERROR_ID_NOT_PROVIDED);
+//        $this->assertTrue(true);
+//    }
 
+//    public function testDelete()
+//    {
+//
+//        $this->assertTrue(true);
+//    }
+
+//    public function testGets()
+//    {
+//
+//        $this->assertTrue(true);
+//    }
+
+
+
+//    public function testCreateAComment() {}
+//    public function testUpdateAComment() {}
+//    public function testDeleteComment() {}
+
+//    public function testUpdateAFile() {}
+//    public function testDeleteAFile() {}
 }

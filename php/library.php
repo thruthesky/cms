@@ -47,9 +47,7 @@ if ( function_exists('in') == false ) {
         // If the request is made by application/json content-type,
         // Then get the data as JSON input.
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
-//    xlog("CONTENT_TYPE: $contentType");
-//    xlog($_SERVER);
-//    xlog($_REQUEST);
+
         if (strcasecmp($contentType, 'application/json') == 0) {
             $_REQUEST = get_JSON_input();
         }

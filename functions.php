@@ -4,6 +4,19 @@
  * @desc This script `functions.php` is being called whenever wp-load.php is loaded.
  * And it called before the theme loads or the api script runs.
  */
+
+
+/**
+ * `API_CALL` is true, when it is called through Ajax call or API call.
+ * @TODO This may not work when the input is coming from STDIN.
+ */
+if ( isset($_REQUEST['route'])) {
+    define('API_CALL', true);
+} else {
+    define('API_CALL', false);
+}
+
+
 include_once 'config.php';
 include_once 'php/defines.php';
 include_once 'php/library.php';
@@ -120,6 +133,7 @@ function loggedIn() {
 }
 
 /**
+ * @warning This is only for PHP function call.
  * Returns login user's Session Id.
  */
 function sessionId() {
@@ -130,7 +144,7 @@ function sessionId() {
     }
 }
 /**
- * Returns login user's information from his profile.
+ * Returns login user's information from his wp_users table.
  * @param $key
  * @return mixed
  * @example login('nickname')
@@ -143,18 +157,12 @@ function login($key)
      *
      * `$user->to_array()` return empty even if `$user` is not empty.
      */
-//     $user = wp_get_current_user();
-    // if ($user) {
-    //     $userdata = $user->to_array();
-    //     return $userdata[$key];
-    // }
-    // return null;
-
-//    $lib = new ApiLibrary();
-//    $profile = $lib->userResponse(in('session_id'));
-//    return $profile[$key] ?? null;
-
-    return user(in('session_id'), $key);
+     $user = wp_get_current_user();
+     if ($user) {
+         $userdata = $user->to_array();
+         return $userdata[$key];
+     }
+     return null;
 }
 
 /**
@@ -275,4 +283,46 @@ function image_path_from_url($url) {
     if ( count($arr) == 1 ) return null;
     $path = ABSPATH . 'wp-content/' . $arr[1];
     return $path;
+}
+
+
+
+/**
+ * Gets nested comments of a post.
+ */
+global $nest_comments;
+function get_nested_comments($post_ID)
+{
+    global $nest_comments;
+    $nest_comments = [];
+    $post = get_post($post_ID);
+
+
+    // @bug. Somehow, when other user (not the post creator) posts the first comment of a post,
+    // then this is remained as 0, and does return comments.
+    // So, it is commented out for now.
+    //    if ( ! $post->comment_count ) return [];
+    $comments = get_comments(['post_id' => $post_ID]);
+
+    $comment_html_template = wp_list_comments(
+        [
+            'max_depth' => 100,
+            'reverse_top_level' => 'asc',
+            'avatar_size' => 0,
+            'callback' => 'get_nested_comments_with_meta',
+            'echo' => false
+        ],
+        $comments
+    );
+    return $nest_comments;
+}
+
+
+function get_nested_comments_with_meta($comment, $args, $depth)
+{
+    global $nest_comments;
+    $nest_comments[] = [
+        'comment_ID' => $comment->comment_ID,
+        'depth' => $depth
+    ];
 }

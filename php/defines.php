@@ -12,6 +12,7 @@ define('THEME_PATH', $_theme_path);
 
 
 define('ERROR_ROUTE_IS_EMPTY', 'route is empty');
+define('ERROR_API_CALL_ONLY', 'api call only');
 define('ERROR_ROUTE_NOT_FOUND', 'route not found');
 define('ERROR_SESSION_ID_MUST_NOT_PROVIDED', 'session_id_must_not_provided_on_registration');
 
@@ -22,6 +23,10 @@ define('ERROR_ROUTE_NOT_EXIST', 'route_not_exist');
 
 define('ERROR_USER_NOT_FOUND_BY_THAT_SESSION_ID', 'user_not_found_by_that_session_id');
 
+
+define('ERROR_EMPTY_SLUG', 'error_empty_slug');
+define('ERROR_WRONG_SLUG', 'error_wrong_slug');
+define('ERROR_NO_SLUG_NOR_ID', 'one of slug or id is not provided');
 
 /**
  * @todo defines below are not in use. remove on Oct 1st.
@@ -107,7 +112,6 @@ define('ERROR_LOGIN_FIRST', 'login_first');
 define('ERROR_POST_NOT_FOUND_BY_THAT_PATH', 'post_not_found_by_that_path');
 define('ERROR_POST_NOT_FOUND_BY_THAT_GUID', 'post_not_found_by_that_gid');
 define('ERROR_ID_NOT_PROVIDED', 'post_id_is_not_provided');
-define('ERROR_CATEGORY_NAME_OR_ID_NOT_PROVIDED', 'category_name_or_id_not_provided');
 define('ERROR_EMPTY_ID_OR_POST', 'empty_id_or_post');
 
 define('ERROR_FAILED_TO_CREATE_COMMENT', 'failed_to_create_comment');

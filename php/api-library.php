@@ -316,8 +316,9 @@ class ApiLibrary {
 
 
     /**
-     *
      * This updates user information.
+     *
+     * @warning API call only.
      *
      * @note it gets user input data from $_REQUEST and update the user.
      *
@@ -325,6 +326,8 @@ class ApiLibrary {
      *  For instance, user wants to update first name only, then user can only pass first name without other properties like user_email, user_nickname.
      *
      * @warning User can change email.
+     *
+     * @TODO @Warning this method seems to work only with API call. Not php function call.
      */
     public function userUpdate($in)
     {
@@ -568,33 +571,24 @@ class ApiLibrary {
 
         if (isset($options['with_autop']) && $options['with_autop']) {
             $post['post_content_autop'] = wpautop(($post['post_content']));
-        } else if (!isset($options['autop']) || $options['autop']) {
-            $post['post_content'] = wpautop($post['post_content']);
         }
-
         /// Featured Image Url.
         ///
         $post_thumbnail_id = get_post_thumbnail_id($post['ID']);
+        /**
+         * @TODO double check the sizes.
+         */
         if ($post_thumbnail_id) {
             $post['featured_image_url'] = wp_get_attachment_image_url($post_thumbnail_id, 'full');
             $post['featured_image_thumbnail_url_2'] = wp_get_attachment_image_url($post_thumbnail_id, '100x100');
             $post['featured_image_ID'] = $post_thumbnail_id;
         }
 
-        // $featured_image_url = get_the_post_thumbnail_url($post['ID']);
-        // if ($featured_image_url)   $post['featured_image_url'] = $featured_image_url;
-        // else $post['featured_image_url'] = '';
-
         //
         $post['files'] = $this->get_uploaded_files($post['ID']);
 
         /// author name
         $post['author_name'] = get_the_author_meta('display_name', $post['post_author']);
-
-        /// post author profile photo
-        ///
-        // $u = $this->userResponse($post['post_author']);
-        // $post['user_photo'] = $u['photo'];
 
         /// post date
         $post['short_date_time'] = $this->shortDateTime($post['post_date']);
@@ -603,6 +597,8 @@ class ApiLibrary {
         /// If there is no comment, then it will return empty array.
         ///
         $comments = get_nested_comments($post['ID']);
+
+        /// Get comment information from the 'nested comments'.
         $updated_comments = [];
         foreach ($comments as $comment) {
             $cmt = $this->commentResponse($comment['comment_ID']);
@@ -610,9 +606,8 @@ class ApiLibrary {
             $updated_comments[] = $cmt;
         }
         $post['comments'] = $updated_comments;
-        //                $post['comments'] = $comments;
 
-        // Add meta datas.
+        // Add meta data and merge into post.
         $metas = get_post_meta($post['ID'], '', true);
         $singles = [];
         foreach ($metas as $k => $v) {
@@ -624,7 +619,7 @@ class ApiLibrary {
         // get post slug as category name and pass
         if (count($post['post_category'])) {
             $cat = get_category($post['post_category'][0]);
-            $post['category_name'] = $cat->slug;
+            $post['slug'] = $cat->slug;
         }
 
         return $post;

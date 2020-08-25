@@ -1,6 +1,5 @@
 <?php
 
-define('API_CALL', true);
 include_once './php/preflight.php';
 require_once('../../../wp-load.php');
 
