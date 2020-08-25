@@ -68,6 +68,7 @@ class ApiPostTest extends TestCase
 
         /// success
         $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1");
+        print_r($re);
         $this->assertTrue( isBackendSuccess($re) );
 
     }
