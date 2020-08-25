@@ -93,7 +93,7 @@ class ApiPost extends ApiLibrary
             return ERROR_CATEGORY_NAME_OR_ID_NOT_PROVIDED;
         }
 
-//        print_r($data);
+        print_r($data);
         $ID = wp_insert_post($data);
         print_r($ID);
         if ($ID == 0 || is_wp_error($ID)) {

@@ -90,7 +90,6 @@ class ApiPostTest extends TestCase
 //        $this->assertSame($re, ERROR_WRONG_CATEGORY_NAME);
 
 
-        print_r($re);
         $this->assertTrue(true);
 
     }

@@ -5,12 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7ef5d8fc-c7ba-4711-b51d-64dd1dfcb430" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/functions.php" afterPath="$PROJECT_DIR$/functions.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/api-library.php" afterPath="$PROJECT_DIR$/php/api-library.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/api-post.php" afterPath="$PROJECT_DIR$/php/api-post.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/php/defines.php" afterPath="$PROJECT_DIR$/php/defines.php" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/ApiPostTest.php" afterPath="$PROJECT_DIR$/tests/ApiPostTest.php" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -40,9 +36,7 @@
               <provider selected="true" editor-type-id="text-editor">
                 <state relative-caret-position="506">
                   <caret line="81" column="36" lean-forward="true" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
-                  <folding>
-                    <marker date="1598355439014" expanded="true" signature="1952:2280" ph="//..." />
-                  </folding>
+                  <folding />
                 </state>
               </provider>
             </entry>
@@ -394,12 +388,12 @@
       <updated>1598275132307</updated>
       <workItem from="1598275134332" duration="5561000" />
       <workItem from="1598330448241" duration="3145000" />
-      <workItem from="1598342909055" duration="9470000" />
+      <workItem from="1598342909055" duration="10022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="18176000" />
+    <option name="totallyTimeSpent" value="18728000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2391" y="-9" width="2418" height="1318" extended-state="6" />
@@ -765,9 +759,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="506">
           <caret line="81" column="36" lean-forward="true" selection-start-line="81" selection-start-column="36" selection-end-line="81" selection-end-column="36" />
-          <folding>
-            <marker date="1598355439014" expanded="true" signature="1952:2280" ph="//..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
