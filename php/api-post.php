@@ -106,7 +106,6 @@ class ApiPost extends ApiLibrary
             $data['ID'] = $in['ID'];
             $data['post_category'] = $post['post_category'];
         }
-
         $ID = wp_insert_post($data);
         if ($ID == 0 || is_wp_error($ID)) return ERROR_FAILED_TO_EDIT_POST;
 
