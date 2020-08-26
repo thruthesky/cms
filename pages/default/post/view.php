@@ -1,4 +1,3 @@
 <?php
 
-?>
-<h1>View</h1>
+include widget('post.view');

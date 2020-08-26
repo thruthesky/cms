@@ -27,9 +27,9 @@ foreach($posts as $post){
   <div class="card-body">
     <a class="card-title fs-lg" href="<?=$post['guid']?>"><?=$post['post_title']?></a>
 <!--    <p class="card-text">--><?//=$post['post_content']?><!--</p>-->
-      <? if ($apiLib->isMyPost($post)) {?>
-      <a href="/?page=post.edit&ID=<?=$post['ID']?>" class="btn btn-primary">Edit</a>
-      <?php } ?>
+<!--      --><?// if ($apiLib->isMyPost($post)) {?>
+<!--      <a href="/?page=post.edit&ID=--><?//=$post['ID']?><!--" class="btn btn-primary">Edit</a>-->
+<!--      --><?php //} ?>
   </div>
 </div>
 

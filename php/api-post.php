@@ -62,6 +62,7 @@ class ApiPost extends ApiLibrary
         $ID = $in['ID'];
         if ($in['path']) {
             $ID = get_page_by_path($in['path'], OBJECT, 'post');
+            print_r($ID);
             if (!$ID) return ERROR_POST_NOT_FOUND_BY_THAT_PATH;
         }
         else if ($in['guid']) {
@@ -117,15 +118,16 @@ class ApiPost extends ApiLibrary
             'post_status' => 'publish'
         ];
 
-        if ($in['slug']) {  // create/ required?
-            $cat = get_category_by_slug($in['slug']);
-            if ( $cat == false ) return ERROR_WRONG_SLUG;
-            $data['post_category'] = [$cat->term_id];
-        } else {      // update. update with ID.
+
+        if ($in['ID']) {  // update
             if (!$this->isMyPost($in['ID'])) return ERROR_NOT_YOUR_POST; // verify if you own the post
             $post = get_post($in['ID'], ARRAY_A);
             $data['ID'] = $in['ID'];
             $data['post_category'] = $post['post_category'];
+        } else {      // create
+            $cat = get_category_by_slug($in['slug']);
+            if ( $cat == false ) return ERROR_WRONG_SLUG;
+            $data['post_category'] = [$cat->term_id];
         }
         $ID = wp_insert_post($data);
         if ($ID == 0 || is_wp_error($ID)) return ERROR_FAILED_TO_EDIT_POST;
