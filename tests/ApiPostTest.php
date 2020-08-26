@@ -99,7 +99,6 @@ class ApiPostTest extends TestCase
 
         /// get post with ID via api
         $re22 = get_api("post.get&guid=$re[guid]");
-        print($re22);
         $this->assertSame($re2['post_title'], $re22['post_title']);
 
 
@@ -130,8 +129,6 @@ class ApiPostTest extends TestCase
         $this->assertTrue( $re['post_title'] != $re2['post_title'] );
         $this->assertTrue( $re2['post_title']=== 'title2' );
 
-        print_r($user2['ID']);
-
 
         /// other user should not be able to edit other post
         $re3 = get_api("post.edit&session_id=$sid2&ID=$re[ID]&post_title=title different user");
@@ -147,13 +144,14 @@ class ApiPostTest extends TestCase
         $sid1 = $user1['session_id'];
         $sid2 = $user2['session_id'];
         /// success
-        $re = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title1");
-        $this->assertTrue( isBackendSuccess($re) );
+        $re1 = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title to delete");
+        $this->assertTrue( isBackendSuccess($re1) );
+//        print_r($re1);
 
-        $re = get_api("post.delete&session_id=$sid1&ID=$re[ID]");
-        $this->assertTrue( isBackendSuccess($re) );
-        print($re);
-
+        $re2 = get_api("post.delete&session_id=$sid1&ID=$re1[ID]");
+        print_r($re2);
+//        $this->assertTrue( $re1['ID'] === $re2 );
+//
 
     }
 
