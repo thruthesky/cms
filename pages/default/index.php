@@ -64,6 +64,7 @@ if ( localhost() ) {
 <?php widget('footer')?>
 
 
+
 <!-- Optional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="<?php theme_path()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
