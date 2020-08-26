@@ -59,6 +59,12 @@ class ApiPostTest extends TestCase
         /// success
         $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1");
         $this->assertTrue( isBackendSuccess($re) );
+
+
+        /// success
+        $re = get_api("post.edit&session_id=$sid&slug=uncategorized&post_title=title1&extra=with extra field");
+        $this->assertTrue( isBackendSuccess($re) );
+        $this->assertSame($re['extra'], "with extra field");
     }
 
     public function testGet()
@@ -109,6 +115,15 @@ class ApiPostTest extends TestCase
         $re = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title1");
         $this->assertTrue( isBackendSuccess($re) );
 
+        /// success adding extradata
+        $re = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title1&extradata=metadata");
+        $this->assertTrue( isBackendSuccess($re) );
+        $this->assertSame($re['extradata'] , "metadata");
+
+        /// success adding extradata
+        $re = get_api("post.edit&session_id=$sid1&slug=uncategorized&post_title=title1&extradata=editedmetadata");
+        $this->assertTrue( isBackendSuccess($re) );
+        $this->assertSame($re['extradata'] , "editedmetadata");
 
         $re2 = get_api("post.edit&session_id=$sid1&ID=$re[ID]&post_title=title2");
         $this->assertTrue( isBackendSuccess($re2) );

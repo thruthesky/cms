@@ -19,9 +19,6 @@ class ApiCommentTest extends TestCase
     private $libPost;
 
 
-    private $user;
-
-
     public function __construct(string $name = null, array $data = [], $dataName = '')
     {
         $this->libLib = new ApiLibrary();
