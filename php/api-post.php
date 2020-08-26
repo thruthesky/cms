@@ -17,7 +17,7 @@ class ApiPost extends ApiLibrary
      * @param array $in
      * - $in['slug'] is the category slug to search posts with.
      * - See [WP_Query::parse_query](https://developer.wordpress.org/reference/classes/wp_query/parse_query/) to see avaiable options.
-     * @return array
+     * @return array|string
      */
     function postSearch($in=[])
     {
@@ -26,8 +26,15 @@ class ApiPost extends ApiLibrary
 
         if ( $in['slug'] ) {
             $cat = get_category_by_slug($in['slug']);
+            if ( $cat == false ) {
+                return ERROR_WRONG_SLUG;
+            }
             $in['category'] = $cat->term_id;
+            unset($in['slug']);
         }
+
+
+
         $posts = get_posts($in);
         $returns = [];
         foreach ($posts as $p) {

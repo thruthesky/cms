@@ -30,13 +30,15 @@ include_once 'php/api-comment.php';
  */
 
 $apiLib = new ApiLibrary();
+$apiPost = new ApiPost();
+
 
 
 
 /**
  * Initialization for theme and api.
  */
-if ( defined('API_CALL') || isCommandLineInterface() ) {}
+if ( API_CALL || isCommandLineInterface() ) {}
 else {
     if ( localhost() ) live_reload();;
 }
@@ -329,4 +331,11 @@ function get_nested_comments_with_meta($comment, $args, $depth)
         'comment_ID' => $comment->comment_ID,
         'depth' => $depth
     ];
+}
+
+
+function dog($obj) {
+    echo '<xmp>';
+    print_r($obj);
+    echo '</xmp>';
 }
