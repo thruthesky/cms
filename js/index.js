@@ -60,7 +60,7 @@ function setLogout() {
  * @returns {boolean}
  */
 function loggedIn() {
-    var sid = getCookie('session_id');
+    var sid = getUserSessionId();
     if ( sid ) {
         /**
          * There must be '_' in session_id.
@@ -70,6 +70,9 @@ function loggedIn() {
     return false;
 }
 
+function getUserSessionId() {
+    return getCookie('session_id');
+}
 function getUserPhotoUrl() {
     var url = getCookie('photoURL');
     if ( !url ) return themePath + '/img/anonymous/anonymous.jpg';

@@ -79,7 +79,15 @@ EOH;
  * https://domain.com/?page=abc.def_ghi => pages/abc/def_ghi.php
  */
 function page_path() {
-    $page = in('page', 'home');
+
+
+    /**
+     * Detect if the user is on a post view page.
+     * @TODO: need to double check on it.
+     */
+    if ( in('page') == null && $_SERVER['REQUEST_URI'] != '/' ) {
+        $page = 'post.view';
+    } else    $page = in('page', 'home');
     $path = 'error/path-not-found.php';
     if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
         $path = 'error/wrong-input.php';

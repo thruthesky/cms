@@ -6,11 +6,15 @@ $slug = in('slug');
 <script>
     function onPostEditFormSubmit(form) {
 
+        var data = objectifyForm(form);
+
+        data['session_id'] = getUserSessionId();
+
 
         $.ajax( {
             method: 'POST',
             url: apiUrl,
-            data: objectifyForm(form)
+            data: data
         } )
             .done(function(re) {
                 if ( isBackendError(re) ) {
@@ -34,7 +38,6 @@ $slug = in('slug');
 <form onsubmit="return onPostEditFormSubmit(this);">
     <input type="hidden" name="route" value="post.edit">
     <input type="hidden" name="slug" value="<?=$slug?>">
-    <input type="hidden" name="session_id" value="<?=sessionId()?>">
     <div class="form-group">
         <label for="post-create-title">Title</label>
         <input type="text" class="form-control" name="post_title" id="post-create-title" aria-describedby="Title" placeholder="Enter title">
