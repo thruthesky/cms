@@ -71,13 +71,16 @@ class ApiCommentTest extends TestCase
         $this->assertTrue(isBackendSuccess($re2));
         $this->assertSame($comment['comment_ID'], $re2['comment_ID']);
 
-        $comment2 = get_api("comment.edit&session_id=$user2[session_id]&comment_content=$content 2&comment_post_ID=$post[ID]");
-        $comment3 = get_api("comment.edit&session_id=$user3[session_id]&comment_content=$content 3&comment_post_ID=$post[ID]");
-        $comment4 = get_api("comment.edit&session_id=$user4[session_id]&comment_content=$content 4&comment_post_ID=$post[ID]");
+        createTestComment($user2['session_id'], $post['ID']);
+        createTestComment($user3['session_id'], $post['ID']);
+        createTestComment($user4['session_id'], $post['ID']);
 
         $post = $this->libPost->postGet(['ID' => $post['ID']]);
         $this->assertSame(count($post['comments']), 3);
 
     }
+
+
+
 
 }

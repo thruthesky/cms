@@ -62,3 +62,13 @@ function createTestPost($session_id = null) {
 
     return get_api("post.edit&session_id=$session_id&slug=uncategorized&post_title=title1");
 }
+
+function createTestComment($session_id = null, $comment_post_ID = 0) {
+
+    if ( $session_id == null ) {
+        $user = createTestUser('testpost');
+        $session_id = $user['session_id'];
+    }
+    $content = "comment content " . time();
+    return get_api("comment.edit&session_id=$session_id&comment_content=$content&comment_post_ID=$comment_post_ID");
+}
