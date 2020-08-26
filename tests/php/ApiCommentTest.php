@@ -47,6 +47,11 @@ class ApiCommentTest extends TestCase
         $this->assertTrue(isBackendSuccess($comment), "Failed on create a comment: $comment");
         $this->assertTrue($comment['user_id'] == $user['ID']);
 
+
+        $comment3 = get_api('comment.edit&session_id=' . $user2['session_id'] . '&comment_content=' . $content . "&comment_post_ID=$post[ID]");
+        $this->assertTrue(isBackendSuccess($comment), "Failed on create a comment: $comment");
+        $this->assertTrue($comment['user_id'] == $user['ID']);
+
         /// Comment update & test
         $comment = get_api('comment.edit&session_id=' . $user['session_id'] . '&comment_content=' . $content . 'new'  . "&comment_ID=$comment[comment_ID]");
         $this->assertTrue(isBackendSuccess($comment));
