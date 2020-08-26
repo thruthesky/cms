@@ -45,7 +45,6 @@ class ApiComment extends ApiPost
             'comment_type' => '',
         ];
         $comment_id = wp_new_comment($commentdata, true);
-
         if (!is_integer($comment_id)) return ERROR_FAILED_TO_CREATE_COMMENT;
 
 
@@ -76,8 +75,11 @@ class ApiComment extends ApiPost
 
     public function commentDelete($in)
     {
-        if (!loggedIn()) return ERROR_LOGIN_FIRST;
-        if ($in['comment_ID']) return ERROR_COMMENT_ID_NOT_PROVIDED;
+        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+        if ( ! is_user_logged_in() ) return ERROR_LOGIN_FIRST;
+
+
+        if (!$in['comment_ID']) return ERROR_COMMENT_ID_NOT_PROVIDED;
         if (!$this->isMyComment($in['comment_ID'])) return ERROR_NOT_YOUR_COMMENT;
         $re = wp_delete_comment($in['comment_ID']);
         if ($re) return ['comment_ID' => $in['comment_ID']];

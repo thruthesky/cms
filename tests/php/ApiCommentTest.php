@@ -33,7 +33,10 @@ class ApiCommentTest extends TestCase
     public function testComment() {
 
         /// Comment create & test
-        $user = createTestUser('create');
+        $user = createTestUser('comment1');
+        $user2 = createTestUser('comment2');
+        $user3 = createTestUser('comment3');
+        $user4 = createTestUser('comment4');
         $content = 'content ' . time();
 
         /// error
@@ -43,12 +46,38 @@ class ApiCommentTest extends TestCase
 
         /// success
         $post = createTestPost();
-        $re = get_api('comment.edit&session_id=' . $user['session_id'] . '&comment_content=' . $content . "&comment_post_ID=$post[ID]", false);
-        $this->assertTrue(isBackendSuccess($re), "Failed on create a comment: $re");
-        $this->assertTrue($re['user_id'] == $user['ID']);
-        $this->assertTrue($re['comment_content'] == $content);
-
+        $comment = get_api('comment.edit&session_id=' . $user['session_id'] . '&comment_content=' . $content . "&comment_post_ID=$post[ID]");
+        $this->assertTrue(isBackendSuccess($comment), "Failed on create a comment: $comment");
+        $this->assertTrue($comment['user_id'] == $user['ID']);
 
         /// Comment update & test
+        $comment = get_api('comment.edit&session_id=' . $user['session_id'] . '&comment_content=' . $content . 'new'  . "&comment_ID=$comment[comment_ID]");
+        $this->assertTrue(isBackendSuccess($comment));
+        $this->assertSame($comment['comment_content'], $content . 'new');
+
+
+        // Comment update & test different user
+        $re1 = get_api('comment.edit&session_id=' . $user2['session_id'] . '&comment_content=' . $content . 'different'  . "&comment_ID=$comment[comment_ID]");
+        $this->assertTrue(isBackendError($re1));
+        $this->assertSame($re1, ERROR_NOT_YOUR_COMMENT);
+
+        /// comment delete by different user
+        $re = get_api("comment.delete&session_id=$user2[session_id]&comment_ID=$comment[comment_ID]");
+        $this->assertTrue(isBackendError($re));
+        $this->assertSame($re, ERROR_NOT_YOUR_COMMENT);
+
+        /// comment delete by post user
+        $re2 = get_api("comment.delete&session_id=$user[session_id]&comment_ID=$comment[comment_ID]");
+        $this->assertTrue(isBackendSuccess($re2));
+        $this->assertSame($comment['comment_ID'], $re2['comment_ID']);
+
+        $comment2 = get_api("comment.edit&session_id=$user2[session_id]&comment_content=$content 2&comment_post_ID=$post[ID]");
+        $comment3 = get_api("comment.edit&session_id=$user3[session_id]&comment_content=$content 3&comment_post_ID=$post[ID]");
+        $comment4 = get_api("comment.edit&session_id=$user4[session_id]&comment_content=$content 4&comment_post_ID=$post[ID]");
+
+        $post = $this->libPost->postGet(['ID' => $post['ID']]);
+        $this->assertSame(count($post['comments']), 3);
+
     }
+
 }

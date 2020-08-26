@@ -136,6 +136,20 @@ class ApiPostTest extends TestCase
 
         $re2 = get_api("post.delete&session_id=$sid1&ID=$re1[ID]");
         $this->assertTrue( $re1['ID'] === $re2['ID'] );
+        /// get post with ID via api
+        $re2 = get_api("post.get&ID=$re1[ID]");
+        $this->assertTrue(isBackendError($re2));
+        $this->assertSame($re2, ERROR_POST_NOT_FOUND);
+
+        $re1 = createTestPost($sid1);
+        $re2 = get_api("post.delete&session_id=$sid2&ID=$re1[ID]");
+        $this->assertSame( $re2, ERROR_NOT_YOUR_POST);
+
+        /// get post with ID via api
+        $re11 = get_api("post.get&ID=$re1[ID]");
+        $this->assertTrue(isBackendSuccess($re11));
+        $this->assertSame($re11['post_title'], $re1['post_title'] );
+
 //
 
     }
@@ -177,9 +191,7 @@ class ApiPostTest extends TestCase
 
 
 
-//    public function testCreateAComment() {}
-//    public function testUpdateAComment() {}
-//    public function testDeleteComment() {}
+
 
 //    public function testUpdateAFile() {}
 //    public function testDeleteAFile() {}
