@@ -32,16 +32,7 @@ class ApiPostTest extends TestCase
 
     private function userRegister($salt='') {
 
-        /// Register
-        $stamp = time();
-        $email = "user$salt$stamp@test.com";
-        $pass = 'PW.test@,*';
-        $this->user = $this->libLib->userRegister([
-            'user_email' => $email,
-            'user_pass' => $pass,
-            'meta1' => 'postTest'
-        ]);
-
+        $this->user = createTestUser($salt);
         return $this->user;
 
     }
@@ -73,7 +64,7 @@ class ApiPostTest extends TestCase
     public function testGet()
     {
 
-        $user = $this->userRegister();
+        $user = $this->userRegister('testGet');
         $sid = $user['session_id'];
 
         $re = $this->libPost->postGet(null);
@@ -100,11 +91,6 @@ class ApiPostTest extends TestCase
         /// get post with ID via api
         $re22 = get_api("post.get&guid=$re[guid]");
         $this->assertSame($re2['post_title'], $re22['post_title']);
-
-
-        /// post get via path
-//        $re2 = $this->libPost->postGet([ 'guid' => $re['guid'] ]);
-//        $this->assertSame($re1['post_title'], $re2['post_title'])
 
 
     }
@@ -149,8 +135,7 @@ class ApiPostTest extends TestCase
 //        print_r($re1);
 
         $re2 = get_api("post.delete&session_id=$sid1&ID=$re1[ID]");
-        print_r($re2);
-//        $this->assertTrue( $re1['ID'] === $re2 );
+        $this->assertTrue( $re1['ID'] === $re2['ID'] );
 //
 
     }
@@ -158,11 +143,34 @@ class ApiPostTest extends TestCase
 
 
 
-    //    public function testGets()
-//    {
-//
-//        $this->assertTrue(true);
-//    }
+    /// post search.
+    ///
+    public function testGets()
+    {
+
+        /// search 5 posts
+        $posts = $this->libPost->postSearch();
+        $this->assertTrue( count($posts) == 5);
+
+
+        /// search 5 posts under 'uncategorized' slug.
+        $posts = $this->libPost->postSearch(['slug' => 'uncategorized']);
+        $this->assertTrue( count($posts) == 5);
+
+        $flag_slug = true;
+        foreach( $posts as $p ) {
+            if ( $p['slug'] != 'uncategorized' ) $flag_slug = false;
+        }
+        $this->assertTrue($flag_slug, 'Slugs should be uncategorized');
+
+
+        /// search posts under a user.
+        $posts = $this->libPost->postSearch(['author' => $this->user['ID']]);
+        $this->assertTrue(count($posts) > 0 );
+        $this->assertTrue($posts[0]['author'] == $this->user['ID']);
+
+
+    }
 
 
 

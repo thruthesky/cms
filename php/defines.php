@@ -28,6 +28,10 @@ define('ERROR_EMPTY_SLUG', 'error_empty_slug');
 define('ERROR_WRONG_SLUG', 'error_wrong_slug');
 define('ERROR_NO_SLUG_NOR_ID', 'one of slug or id is not provided');
 
+
+define('ERROR_COMMENT_POST_ID_IS_EMPTY', 'comment_post_id is empty');
+
+
 /**
  * @todo defines below are not in use. remove on Oct 1st.
  * -----------------------------------

@@ -45,8 +45,8 @@ context('Integration Test', () => {
             cy.get("form.register [data-button='submit']").click();
         })
     })
-    describe('Profile', () => {
-        it('Submit profile', () => {
+    describe('Logout', () => {
+        it('Do logout', () => {
             cy.wait(500);
             cy.get("[data-button='logout']").click();
         })

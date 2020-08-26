@@ -5,14 +5,17 @@ require_once('../../../wp-load.php');
  * @param string $url
  * @return mixed
  */
-function get_api($route = '', $url=null) {
+function get_api($route = '', $debug = false) {
 
-    if ( $url == null ) {
+
         $url = get_home_url() . '/wp-content/themes/cms/api.php';
-    }
 
     $url = "$url?route=$route";
-//    print("\n>>> Request URL: $url\n");
+
+    if ( $debug ) {
+
+        print("\n>>> [DEBUG] Request URL: $url\n");
+    }
 
 
     $re = file_get_contents($url);
@@ -26,9 +29,36 @@ function get_api($route = '', $url=null) {
 
 }
 
-function get_api_error($route = '') {
+//function get_api_error($route = '') {
+//
+//    $re = get_api($route);
+//
+//    return $re;
+//}
 
-    $re = get_api($route);
 
-    return $re;
+
+function createTestUser($salt='') {
+
+    /// Register
+    $stamp = time();
+    $email = "user$salt$stamp@test.com";
+    $pass = 'PW.test@,*';
+    $lib = new ApiLibrary();
+
+    return $lib->userRegister([
+        'user_email' => $email,
+        'user_pass' => $pass,
+        'meta1' => 'postTest'
+    ]);
+}
+
+function createTestPost($session_id = null) {
+
+    if ( $session_id == null ) {
+        $user = createTestUser('testpost');
+        $session_id = $user['session_id'];
+    }
+
+    return get_api("post.edit&session_id=$session_id&slug=uncategorized&post_title=title1");
 }

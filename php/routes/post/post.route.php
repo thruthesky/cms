@@ -23,15 +23,5 @@ class PostRoute extends ApiPost
         $this->response($this->postDelete(in()));
     }
 
-//    public function commentEdit()
-//    {
-//        $this->response($this->commentEdit(in()));
-//    }
-//
-//    public function commentDelete()
-//    {
-//        $this->response($this->commentDelete(in()));
-//    }
-
 }
 

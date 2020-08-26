@@ -590,6 +590,11 @@ class ApiLibrary {
         /// author name
         $post['author_name'] = get_the_author_meta('display_name', $post['post_author']);
 
+        /// @TODO: add author post url.
+        $post['author_photo_url'] = '';
+
+
+
         /// post date
         $post['short_date_time'] = $this->shortDateTime($post['post_date']);
 
@@ -669,7 +674,7 @@ class ApiLibrary {
      *          - For comment, it is COMMENT_ATTACHMENT.
      * @attention
      *          The reason why we use COMMENT_ATTACHMENT as post_type is because comment_ID can be mixed up with wp_posts.ID
-     *          Files that belongs to 50 of wp_posts.ID would belong to 50 of comment_ID.
+     *          Files that belongs to a post (whose post.ID may be 50) may conflict to the comment (whose comment.ID is also 50)
      *          To avoid this problem, we put post_type to COMMENT_ATTACHMENT.
      *          But the problem is wp_delete_attachment can not delete COMMENT_ATTACHMENT.
      *          So, we change it to 'attachment' to delete the comment attachments.
@@ -743,6 +748,7 @@ class ApiLibrary {
 
     public function commentResponse($comment_id)
     {
+        $re = [];
         $comment = get_comment($comment_id, ARRAY_A);
         $ret['comment_ID'] = $comment['comment_ID'];
         $ret['comment_post_ID'] = $comment['comment_post_ID'];
@@ -756,7 +762,7 @@ class ApiLibrary {
         /// post author user profile
         ///
         $u = $this->userResponse($comment['user_id']);
-        $ret['user_photo'] = $u['photo'] ?? '';
+        $ret['author_photo_url'] = $u['photo'] ?? '';
         // date
         $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
         return $ret;

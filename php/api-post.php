@@ -10,17 +10,31 @@ class ApiPost extends ApiLibrary
         parent::__construct();
     }
 
-    function postSearch($in)
-    {
-        if (!$in['category_name']) return ERROR_CATEGORY_NOT_PROVIDED;
 
+    /**
+     * Searches posts
+     *
+     * @param array $in
+     * - $in['slug'] is the category slug to search posts with.
+     * - See [WP_Query::parse_query](https://developer.wordpress.org/reference/classes/wp_query/parse_query/) to see avaiable options.
+     * @return array
+     */
+    function postSearch($in=[])
+    {
+//        if (!$in['category_name']) return ERROR_CATEGORY_NOT_PROVIDED;
+
+
+        if ( $in['slug'] ) {
+            $cat = get_category_by_slug($in['slug']);
+            $in['category'] = $cat->term_id;
+        }
         $posts = get_posts($in);
-        $rets = [];
+        $returns = [];
         foreach ($posts as $p) {
-            $rets[] = $this->postResponse($p, ['with_autop' => true]);
+            $returns[] = $this->postResponse($p, ['with_autop' => $in['autop']]);
         }
 
-        return $rets;
+        return $returns;
     }
 
 
@@ -83,7 +97,6 @@ class ApiPost extends ApiLibrary
 
         if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
-        if (!isset($in['session_id'])) return ERROR_EMPTY_SESSION_ID;
 
         if ( empty($in['slug']) && !isset($in['ID'])) return ERROR_NO_SLUG_NOR_ID;
 
@@ -126,95 +139,24 @@ class ApiPost extends ApiLibrary
 
     public function postDelete($in)
     {
-        if (!loggedIn()) return ERROR_LOGIN_FIRST;
+
+        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+
         if (!$this->isMyPost($in['ID'])) return ERROR_NOT_YOUR_POST;
+
         /**
          * In the official doc, it is stated that attachments are removed or trashed when post is deleted with method.
          */
         $re = wp_delete_post($in['ID']);
+
         if ($re) {
             return ['ID' => $re->ID];
         } else {
             return ERROR_FAILED_TO_DELETE_POST;
         }
+
     }
-
-    /**
-     * Creates or Updates a coment
-     * @param $in
-     * @return string
-     */
-    public function commentEdit($in)
-    {
-
-        if (!loggedIn()) {
-            return ERROR_LOGIN_FIRST;
-        }
-
-        if ($in['comment_ID']) {
-            return $this->commentUpdate();
-        } else {
-            return $this->commentCreate();
-        }
-    }
-
-    private function commentCreate($in)
-    {
-        $user = wp_get_current_user();
-        $commentdata = [
-            'comment_post_ID' => $in['comment_post_ID'],
-            'comment_content' => $in['comment_content'],
-            'comment_parent' => $in['comment_parent'],
-            'user_id' => $user->ID,
-            'comment_author' => $user->nickname,
-            'comment_author_url' => $user->user_url,
-            'comment_author_email' => $user->user_email,
-
-            /// if removed, will cause error: Undefined index: comment_type.
-            'comment_type' => '',
-        ];
-        $comment_id = wp_new_comment($commentdata, true);
-
-        if (!is_integer($comment_id)) {
-//            $this->error(ERROR_FAILED_TO_CREATE_COMMENT, ['reason' => $this->get_first_error_message($comment_id)]);
-            return ERROR_FAILED_TO_CREATE_COMMENT;
-        }
-
-        if ($in['files']) {
-            $this->attachFiles($comment_id, $in['files'], COMMENT_ATTACHMENT);
-        }
-
-        return $this->commentResponse($comment_id);
-    }
-
-
-    private function commentUpdate($in)
-    {
-        if (!$this->isMyComment($in['comment_ID'])) return ERROR_NOT_YOUR_COMMENT;
-
-        /**
-         * There is no error on wp_update_comment.
-         */
-        $re = wp_update_comment([
-            'comment_ID' => $in['comment_ID'],
-            'comment_content' => $in['comment_content']
-        ]);
-        if ($in['files']) {
-            $this->attachFiles($in['comment_ID'], $in['files'], COMMENT_ATTACHMENT);
-        }
-        return $this->commentResponse($in['comment_ID']);
-    }
-
-    public function commentDelete($in)
-    {
-        if (!loggedIn()) return ERROR_LOGIN_FIRST;
-        if ($in['comment_ID']) return ERROR_COMMENT_ID_NOT_PROVIDED;
-        if (!$this->isMyComment($in['comment_ID'])) return ERROR_NOT_YOUR_COMMENT;
-        $re = wp_delete_comment($in['comment_ID']);
-        if ($re) return ['comment_ID' => $in['comment_ID']];
-        else return ERROR_FAILED_TO_DELETE_COMMENT;
-    }
-
 
 
 }

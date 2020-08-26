@@ -22,6 +22,7 @@ include_once 'php/defines.php';
 include_once 'php/library.php';
 include_once 'php/api-library.php';
 include_once 'php/api-post.php';
+include_once 'php/api-comment.php';
 
 
 /**
@@ -209,7 +210,7 @@ function isBackendError($re) {
     return is_string($re);
 }
 function isBackendSuccess($re) {
-    return isBackendError($re) == false;
+    return is_string($re) == false; // isBackendError($re) == false;
 }
 
 

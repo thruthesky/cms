@@ -113,7 +113,7 @@ class ApiUserTest extends TestCase
     }
 
     public function testUserRegisterApi() {
-        $this->assertSame(get_api_error('user.register'), ERROR_EMAIL_IS_EMPTY);
+        $this->assertSame(get_api('user.register'), ERROR_EMAIL_IS_EMPTY);
     }
 
 }

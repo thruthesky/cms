@@ -1,7 +1,7 @@
 <?php
 
 
-class CommentRoute extends ApiPost
+class CommentRoute extends ApiComment
 {
 
     public function edit()
