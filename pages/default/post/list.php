@@ -1,3 +1,3 @@
 <?php
 
-include widget('forum.list');
+include widget('post.list');

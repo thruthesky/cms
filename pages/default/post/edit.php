@@ -32,15 +32,17 @@ $slug = in('slug');
 </script>
 
 <form onsubmit="return onPostEditFormSubmit(this);">
+    <input type="hidden" name="route" value="post.edit">
     <input type="hidden" name="slug" value="<?=$slug?>">
+    <input type="hidden" name="session_id" value="<?=sessionId()?>">
     <div class="form-group">
         <label for="post-create-title">Title</label>
-        <input type="email" class="form-control" id="post-create-title" aria-describedby="Title" placeholder="Enter title">
+        <input type="text" class="form-control" name="post_title" id="post-create-title" aria-describedby="Title" placeholder="Enter title">
     </div>
 
     <div class="form-group">
         <label for="post-create-content">Content</label>
-        <input type="email" class="form-control" id="post-create-content" aria-describedby="Content" placeholder="Enter content">
+        <textarea class="form-control" name="post_content" id="post-create-content" aria-describedby="Content" placeholder="Enter content"></textarea>
     </div>
 
 

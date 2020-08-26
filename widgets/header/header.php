@@ -9,10 +9,10 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Infomation</a>
+                    <a class="nav-link active" aria-current="page" href="#">Information</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">QnA</a>
+                    <a class="nav-link" href="/?page=post.list&slug=qna">QnA</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Discussion</a>
