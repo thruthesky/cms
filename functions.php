@@ -347,3 +347,8 @@ function dog($obj) {
     print_r($obj);
     echo '</xmp>';
 }
+
+
+function uri_to_postID() {
+    return url_to_postid(get_page_uri());
+}
