@@ -47,6 +47,8 @@ if ($ID) {
     }
 </script>
 
+<div class="container py-3">
+
 <form onsubmit="return onPostEditFormSubmit(this);">
     <input type="hidden" name="route" value="post.edit">
     <input type="hidden" name="slug" value="<?=$slug?>">
@@ -67,3 +69,4 @@ if ($ID) {
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
+</div>
