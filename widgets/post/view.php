@@ -3,7 +3,11 @@ $post =  $apiPost->postGet(['ID' => url_to_postid(get_page_uri())]);
 if (!in('slug') && !empty($post)) {
     $slug = $post['slug'];
 }
+
+//dog($post);
 ?>
+
+
 <div class="p-3">
     <a class="btn btn-primary mr-3" href="/?page=post.list&slug=<?=$slug?>">Back</a>
     <a class="btn btn-secondary mr-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>

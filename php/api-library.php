@@ -602,6 +602,8 @@ class ApiLibrary {
         /// If there is no comment, then it will return empty array.
         ///
         $comments = get_nested_comments($post['ID']);
+//        dog($comments);
+
 
         /// Get comment information from the 'nested comments'.
         $updated_comments = [];
