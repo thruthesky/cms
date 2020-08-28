@@ -750,6 +750,8 @@ class ApiLibrary {
 
     public function commentResponse($comment_id)
     {
+
+        if ( empty($comment_id)) return null;
         $re = [];
         $comment = get_comment($comment_id, ARRAY_A);
         $ret['comment_ID'] = $comment['comment_ID'];

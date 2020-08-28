@@ -1,54 +1,26 @@
 <?php
-//print_r($comment)
+
 ?>
-<script>
-    function onCommentDelete(comment_ID) {
 
-        var re = confirm('Are you sure you want to delete this comment?');
+<div id="comment<?=$comment['comment_ID']?>">
 
-        if (!re) return;
-
-        console.log('going to delete');
-        var data = {};
-        data['session_id'] = getUserSessionId();
-        data['route'] = "comment.delete";
-        data['comment_ID'] = comment_ID;
-
-        console.log(data);
-        $.ajax( {
-            method: 'GET',
-            url: apiUrl,
-            data: data
-        } )
-            .done(function(re) {
-                if ( isBackendError(re) ) {
-                    alert(re);
-                }
-                else {
-                    console.log('re', re);
-                    move("<?=$post['guid']?>");
-                }
-            })
-            .fail(function() {
-                alert( "Server error" );
-            });
-    }
-
-</script>
-
-<div data-comment="<?=$comment['comment_ID']?>" data-depth="<?=getDepth($comment['depth'])?>">
-    <div class="card mb-3">
-        <div class="card-body">
-            <div>
-                <?=$comment['comment_ID']?>.
-                <?=$comment['comment_content']?>
+    <div class="display" data-comment-post-id="<?=$comment['comment_post_ID']?>" data-comment-id="<?=$comment['comment_ID']?>" data-comment-parent="<?=$comment['comment_parent']?>" data-depth="<?=getDepth($comment['depth'])?>">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div>
+                    <?=$comment['comment_ID']?>.
+                    <div class="content">
+                        <?=$comment['comment_content']?>
+                    </div>
+                </div>
+                <button class="btn btn-primary mr-3" onclick="addCommentEditForm(0, <?=$comment['comment_ID']?>)">Reply</button>
+                <?php
+                if($comment['user_id'] == userId()) { ?>
+                        <button class="btn btn-primary mr-3" onclick="addCommentEditForm(<?=$comment['comment_ID']?>, 0)">Edit</button>
+                    <button class="btn btn-primary mr-3" onclick="onCommentDelete(<?=$comment['comment_ID']?>)">Delete</button>
+                <?php } ?>
             </div>
-            <button class="btn btn-primary mr-3" onclick="addCommentEditForm(<?=$comment['comment_post_ID']?>, <?=$comment['comment_ID']?>)">Reply</button>
-            <?php
-            if($comment['user_id'] == userId()) { ?>
-                <button class="btn btn-primary mr-3" onclick="onCommentDelete(<?=$comment['comment_ID']?>)">Delete</button>
-            <?php } ?>
         </div>
     </div>
-    <div id="comment<?=$comment['comment_ID']?>"></div>
+
 </div>

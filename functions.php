@@ -31,6 +31,7 @@ include_once 'php/api-comment.php';
 
 $apiLib = new ApiLibrary();
 $apiPost = new ApiPost();
+$apiComment = new ApiComment();
 
 add_filter('comment_flood_filter', '__return_false');
 

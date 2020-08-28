@@ -87,5 +87,21 @@ class ApiComment extends ApiPost
     }
 
 
+    public function commentInputBox($_post, $_comment, $_comment_parent) {
+
+        global $post, $comment, $comment_parent;
+
+        /// Make the variable available on global space.
+        $post = $_post;
+        $comment = $_comment;
+        $comment_parent = $_comment_parent;
+
+        ob_start();
+        include widget('comment.input-box');
+        $html = ob_get_clean();
+        return $html;
+
+    }
+
 
 }
