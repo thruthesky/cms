@@ -1,8 +1,6 @@
 <?php
 $post =  $apiPost->postGet(['ID' => url_to_postid(get_page_uri())]);
-if (!in('slug') && !empty($post)) {
-    $slug = $post['slug'];
-}
+$slug = $post['slug'];
 
 //dog($post);
 ?>

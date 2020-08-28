@@ -32,6 +32,7 @@ include_once 'php/api-comment.php';
 $apiLib = new ApiLibrary();
 $apiPost = new ApiPost();
 
+add_filter('comment_flood_filter', '__return_false');
 
 
 
@@ -351,4 +352,8 @@ function dog($obj) {
 
 function uri_to_postID() {
     return url_to_postid(get_page_uri());
+}
+
+function getDepth($depth) {
+    return $depth <= 10 ? $depth : 10;
 }

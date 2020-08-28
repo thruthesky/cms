@@ -19,7 +19,7 @@ if ($ID) {
         data['session_id'] = getUserSessionId();
 
 
-        console.log(data);
+//        console.log(data);
 
         $.ajax( {
             method: 'POST',
@@ -31,10 +31,16 @@ if ($ID) {
                     alert(re);
                 }
                 else {
-                    console.log('re', re);
+//                    console.log('re', re);
                     var slug = "<?=$slug?>";
                     if (!slug) slug= re['slug'];
-                    move("?page=post.list&slug=" + slug);
+
+                    var guid = "<?=$post['guid']?>";
+                    if(guid) {
+                        move(guid);
+                    } else {
+                        move("?page=post.list&slug=" + slug);
+                    }
                 }
             })
             .fail(function() {

@@ -2,6 +2,7 @@
 if (!isset($post) && empty($post)) return;
 
 //print_r($post);
+
 ?>
 <script>
     function onCommentEditFormSubmit(form) {
@@ -20,6 +21,11 @@ if (!isset($post) && empty($post)) return;
                 else {
                     console.log('re', re);
                     /// @TODO: avoid refresh(reload). add the comment at the right place and scroll there.
+                    /// @todo Q1. The app must display comment with php when post view page is loaded (for better display performance)
+                    /// Q2. If there is new comment, the comment must be added with javascript without refreshing the page for better display expirence.
+                    /// Q3. The HTML & its data must be one codebase. So, when the code edited, it will be applied on PHP & Javascript.
+                    // addTheCommentInRightPlace();
+                    // scrollIntoTheComment();
                     move("<?=$post['guid']?>");
                 }
             })
@@ -28,6 +34,10 @@ if (!isset($post) && empty($post)) return;
             });
         return false;
     }
+
+
+
+
     function addCommentEditForm(comment_post_ID, comment_parent='') {
         var html = '\n'+
 '<form class="my-3" onsubmit="return onCommentEditFormSubmit(this);">\n'+
