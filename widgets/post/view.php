@@ -110,6 +110,84 @@ $slug = $post['slug'];
     }
 
 
+    function onChangeFile($box) {
+        var formData = new FormData();
+
+        formData.append('session_id', '<?=sessionId()?>');
+        formData.append('route', 'file.upload');
+        formData.append('file', $box.files[0]);
+        // Display the key/value pairs
+        for (var pair of formData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]);
+        }
+
+
+//        $('.progress').show();
+        $.ajax({
+            url: apiUrl,
+            data: formData,
+            type: 'POST',
+            enctype: 'multipart/form-data',
+            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+            processData: false, // NEEDED, DON'T OMIT THIS
+            // ... Other options like success and etc
+            cache: false,
+            timeout: 60 * 1000 * 10, /// 10 minutes.
+            success: function (res) {
+                console.log('success', res);
+                var re = JSON.parse(res);
+                if ( re['code'] ) {
+                    alert(re['message']);
+                    return;
+                }
+                var data = re['data'];
+                console.log('data: ', data);
+//                var i = getFileIndexFromFiles(data['code']);
+                if ( i >= 0 ) {
+                    files[i] = data;
+                } else {
+                    files.push(data);
+                }
+
+                $('.progress').hide();
+//                renderUploadedFiles();
+            },
+            xhr: function() {
+                var myXhr = $.ajaxSettings.xhr();
+                if(myXhr.upload){
+                    myXhr.upload.addEventListener('progress',progress, false);
+                }
+                return myXhr;
+            },
+
+            error: function(data){
+                console.error(data);
+            }
+        });
+    }
+
+    function progress(e){
+
+        // console.log('e: ', e);
+
+        if(e.lengthComputable){
+            var max = e.total;
+            var current = e.loaded;
+
+            var Percentage = Math.round((current * 100) / max);
+            console.log(Percentage);
+
+            if(Percentage >= 100)
+            {
+                // process completed
+
+            } else {
+//                $('.progress').width(Percentage+'%')
+            }
+        }
+    }
+
+
     /**
      * For comment create(or reply), [comment_ID] is empty.
      * For comment update, [comment_ID] is set.

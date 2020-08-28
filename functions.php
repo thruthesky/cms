@@ -23,6 +23,7 @@ include_once 'php/library.php';
 include_once 'php/api-library.php';
 include_once 'php/api-post.php';
 include_once 'php/api-comment.php';
+include_once 'php/api-file.php';
 
 
 /**

@@ -23,6 +23,8 @@ class ApiFile extends ApiLibrary
             return ERROR_NO_FILE_PROVIDED;
         }
 
+
+        print_r($_FILES);
         $file = $_FILES['userfile'];
         if ($file['error']) {
             $msg = $this->fileUploadErrorCodeToMessage($file['error']);
