@@ -85,7 +85,7 @@ class ApiComment extends ApiPost
 
         if (!$in['comment_ID']) return ERROR_COMMENT_ID_NOT_PROVIDED;
         if (!$this->isMyComment($in['comment_ID'])) return ERROR_NOT_YOUR_COMMENT;
-        $re = wp_delete_comment($in['comment_ID']);
+        $re = wp_delete_comment($in['comment_ID'], true);
         if ($re) return ['comment_ID' => $in['comment_ID']];
         else return ERROR_FAILED_TO_DELETE_COMMENT;
     }
