@@ -19,13 +19,16 @@ class ApiFile extends ApiLibrary
 
         if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
-        if (empty($_FILES)) {
+        if (empty($_FILES) || empty($_FILES['userfile'])) {
             return ERROR_NO_FILE_PROVIDED;
         }
 
 
-        print_r($_FILES);
+
         $file = $_FILES['userfile'];
+        xlog('userfile: ', $file);
+
+
         if ($file['error']) {
             $msg = $this->fileUploadErrorCodeToMessage($file['error']);
             return ERROR_FILE_UPLOAD_ERROR;

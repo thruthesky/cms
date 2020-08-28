@@ -49,13 +49,13 @@ class ApiComment extends ApiPost
         if (!is_integer($comment_id)) return ERROR_FAILED_TO_CREATE_COMMENT;
 
 
-        if ($in['files']) {
+        if (isset($in['files']) && !empty($in['files'])) {
             $this->attachFiles($comment_id, $in['files'], COMMENT_ATTACHMENT);
         }
         $comment = $this->commentResponse($comment_id);
-        if ($in['depth']) {
-            $comment['depth']= $in['depth'] + 1;
-        }
+//        if ($in['depth']) {
+//            $comment['depth']= $in['depth'] + 1;
+//        }
         return $comment;
     }
 
@@ -108,15 +108,7 @@ class ApiComment extends ApiPost
 
     }
 
-    public function commentViewBox($comment) {
-//        dog($comment);
-
-//        global $post, $comment, $comment_parent;
-//
-//        /// Make the variable available on global space.
-//        $post = $_post;
-//        $comment = $_comment;
-//        $comment_parent = $_comment_parent;
+    public function commentView($comment) {
 
         ob_start();
         include widget('comment.view');

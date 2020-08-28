@@ -8,7 +8,7 @@ class CommentRoute extends ApiComment
     {
         $comment = $this->commentEdit(in());
         if (is_string($comment)) $this->response($comment);
-        $this->response($this->commentViewBox($comment));
+        $this->response($this->commentView($comment));
     }
 
     public function delete()

@@ -60,12 +60,12 @@ class ApiPost extends ApiLibrary
          */
 
         $ID = $in['ID'];
-        if ($in['path']) {
+        if (isset($in['path']) && !empty($in['path'])) {
             $ID = get_page_by_path($in['path'], OBJECT, 'post');
             print_r($ID);
             if (!$ID) return ERROR_POST_NOT_FOUND_BY_THAT_PATH;
         }
-        else if ($in['guid']) {
+        else if (isset($in['guid']) && !empty($in['guid'])) {
             $p = $this->getPostFromGUID($in['guid']);
 //            $p = $this->getPostFromGUID(getCompleteGUID($in['guid']));
             if (!$p) return ERROR_POST_NOT_FOUND_BY_THAT_GUID;

@@ -50,28 +50,33 @@ if ( $post ) {
 
 
 </style>
+<div class="input-box">
 
-<form data-form-comment-parent="<?=$comment_parent_ID?>" class="comment-input-box" onsubmit="return onCommentEditFormSubmit(this);">
-    <input type="hidden" name="route" value="comment.edit">
-    <input type="hidden" name="comment_post_ID" value="<?=$comment_post_ID?>">
-    <input type="hidden" name="comment_parent" value="<?=$comment_parent_ID?>">
-    <input type="hidden" name="comment_ID" value="<?=$comment_ID?>">
-    <input type="hidden" name="depth" value="<?=$depth?>">
+    <form data-form-comment-parent="<?=$comment_parent_ID?>" class="comment-input-box" onsubmit="return onCommentEditFormSubmit(this);">
+        <input type="hidden" name="route" value="comment.edit">
+        <input type="hidden" name="comment_post_ID" value="<?=$comment_post_ID?>">
+        <input type="hidden" name="comment_parent" value="<?=$comment_parent_ID?>">
+        <input type="hidden" name="comment_ID" value="<?=$comment_ID?>">
+        <!--    <input type="hidden" name="depth" value="--><?//=$depth?><!--">-->
 
-    <div class="form-group row no-gutters">
-        <div class="upload-photo-box">
-            <input type="file" name="file" onchange="onChangeFile(this)">
-            <i class="fa fa-camera fs-lg"></i>
-        </div>
-        <div class="col mr-3">
-            <textarea class="form-control" name="comment_content" id="post-create-title" aria-describedby="Title" placeholder="Enter comment"><?=$comment_content?></textarea>
-        </div>
-        <div class="col-1">
+        <div class="form-group row no-gutters">
+            <div class="upload-photo-box">
+                <input type="file" name="file" onchange="onChangeFile(this, $(this).parents('.input-box'))">
+                <i class="fa fa-camera fs-lg"></i>
+            </div>
+            <div class="col mr-3">
+                <textarea class="form-control" name="comment_content" id="post-create-title" aria-describedby="Title" placeholder="Enter comment"><?=$comment_content?></textarea>
+            </div>
+            <div class="col-1">
                 <button type="submit" class="btn btn-outline-dark">
                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </button>
+            </div>
         </div>
+    </form>
+    <div class="files">
+        <!-- uploaded files -->
     </div>
-</form>
 
 
+</div>

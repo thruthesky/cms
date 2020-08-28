@@ -357,6 +357,10 @@ function uri_to_postID() {
     return url_to_postid(get_page_uri());
 }
 
-function getDepth($depth) {
-    return $depth <= 10 ? $depth : 10;
-}
+//function getDepth($depth) {
+//    return $depth <= 10 ? $depth : 10;
+//}
+
+
+
+

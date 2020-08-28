@@ -110,17 +110,21 @@ $slug = $post['slug'];
     }
 
 
-    function onChangeFile($box) {
+    function onChangeFile($box, $inputBox) {
         var formData = new FormData();
+
+        console.log('inputBox', $inputBox.html());
+
 
         formData.append('session_id', '<?=sessionId()?>');
         formData.append('route', 'file.upload');
-        formData.append('file', $box.files[0]);
+        formData.append('userfile', $box.files[0]);
         // Display the key/value pairs
-        for (var pair of formData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]);
-        }
+        // for (var pair of formData.entries()) {
+        //     console.log(pair[0]+ ', ' + pair[1]);
+        // }
 
+// console.log($box.files[0]);
 
 //        $('.progress').show();
         $.ajax({
@@ -134,20 +138,28 @@ $slug = $post['slug'];
             cache: false,
             timeout: 60 * 1000 * 10, /// 10 minutes.
             success: function (res) {
-                console.log('success', res);
-                var re = JSON.parse(res);
-                if ( re['code'] ) {
-                    alert(re['message']);
+                if ( isBackendError(res) ) {
+                    alert(res);
                     return;
                 }
-                var data = re['data'];
-                console.log('data: ', data);
-//                var i = getFileIndexFromFiles(data['code']);
-                if ( i >= 0 ) {
-                    files[i] = data;
-                } else {
-                    files.push(data);
-                }
+                console.log('success', res);
+                // var re = JSON.parse(res);
+                // if ( re['code'] ) {
+                //     alert(re['message']);
+                //     return;
+                // }
+//                 var data = re['data'];
+//                 console.log('data: ', data);
+// //                var i = getFileIndexFromFiles(data['code']);
+//                 if ( i >= 0 ) {
+//                     files[i] = data;
+//                 } else {
+//                     files.push(data);
+//                 }
+
+
+                $inputBox.find('.files').append("<div class='photo'><img src='"+ res.thumbnail_url +"'></div>");
+
 
                 $('.progress').hide();
 //                renderUploadedFiles();
