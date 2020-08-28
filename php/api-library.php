@@ -752,7 +752,7 @@ class ApiLibrary {
     {
 
         if ( empty($comment_id)) return null;
-        $re = [];
+        $ret = [];
         $comment = get_comment($comment_id, ARRAY_A);
         $ret['comment_ID'] = $comment['comment_ID'];
         $ret['comment_post_ID'] = $comment['comment_post_ID'];

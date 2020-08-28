@@ -21,7 +21,7 @@ class ApiComment extends ApiPost
         if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
         if ( ! is_user_logged_in() ) return ERROR_LOGIN_FIRST;
 
-        if ($in['comment_ID']) {
+        if ($in['comment_ID'] && !empty($in['comment_ID'])) {
             return $this->commentUpdate($in);
         } else {
             return $this->commentCreate($in);
@@ -45,14 +45,18 @@ class ApiComment extends ApiPost
             'comment_type' => '',
         ];
         $comment_id = wp_new_comment($commentdata, true);
+//        dog($comment_id);
         if (!is_integer($comment_id)) return ERROR_FAILED_TO_CREATE_COMMENT;
 
 
         if ($in['files']) {
             $this->attachFiles($comment_id, $in['files'], COMMENT_ATTACHMENT);
         }
-
-        return $this->commentResponse($comment_id);
+        $comment = $this->commentResponse($comment_id);
+        if ($in['depth']) {
+            $comment['depth']= $in['depth'] + 1;
+        }
+        return $comment;
     }
 
 
@@ -81,25 +85,43 @@ class ApiComment extends ApiPost
 
         if (!$in['comment_ID']) return ERROR_COMMENT_ID_NOT_PROVIDED;
         if (!$this->isMyComment($in['comment_ID'])) return ERROR_NOT_YOUR_COMMENT;
-        $re = wp_delete_comment($in['comment_ID']);
+        $re = wp_delete_comment($in['comment_ID'], true);
         if ($re) return ['comment_ID' => $in['comment_ID']];
         else return ERROR_FAILED_TO_DELETE_COMMENT;
     }
 
 
-    public function commentInputBox($_post, $_comment, $_comment_parent) {
+    public function commentInputBox($_post, $_comment, $_comment_parent, $_depth) {
 
-        global $post, $comment, $comment_parent;
+        global $post, $comment, $comment_parent, $depth;
 
         /// Make the variable available on global space.
         $post = $_post;
         $comment = $_comment;
         $comment_parent = $_comment_parent;
+        $depth = $_depth;
 
         ob_start();
         include widget('comment.input-box');
         $html = ob_get_clean();
         return $html;
+
+    }
+
+    public function commentViewBox($comment) {
+//        dog($comment);
+
+//        global $post, $comment, $comment_parent;
+//
+//        /// Make the variable available on global space.
+//        $post = $_post;
+//        $comment = $_comment;
+//        $comment_parent = $_comment_parent;
+
+        ob_start();
+        include widget('comment.view');
+        $comment['html']= ob_get_clean();
+        return $comment;
 
     }
 

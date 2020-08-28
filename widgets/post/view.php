@@ -58,11 +58,19 @@ $slug = $post['slug'];
                     /// @todo Q1. The app must display comment with php when post view page is loaded (for better display performance)
                     /// Q2. If there is new comment, the comment must be added with javascript without refreshing the page for better display expirence.
                     /// Q3. The HTML & its data must be one codebase. So, when the code edited, it will be applied on PHP & Javascript.
-                    // addTheCommentInRightPlace();
-                    // scrollIntoTheComment();
-                    //move("<?//=$post['guid']?>//");
 
                     console.log('re: after comment', re);
+                    var commentBox = $('#comment' + data['comment_ID']);
+                    if (commentBox.length) {
+                        commentBox.replaceWith(re['html']);
+                    } else if ( re['comment_parent'] === "0" ) {
+                        $('#newcomment' + data['comment_post_ID']).after(re['html']);
+                    } else {
+                        $('#comment' + re['comment_parent']).after(re['html']);
+                    }
+
+                    $(form).find("textarea").val("");
+                    // scrollIntoTheComment();
                 }
             })
             .fail(function() {
@@ -71,8 +79,13 @@ $slug = $post['slug'];
         return false;
     }
 
-    function addCommentEditForm(comment_ID, comment_parent) {
-        var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
+    function addCommentEditForm(comment_ID, comment_parent, depth) {
+
+        var fcp= $("[data-form-comment-parent=" + comment_parent + "]").length;
+        console.log(fcp);
+        if(fcp) return;
+
+        var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent, depth: depth};
         console.log(data);
         $.ajax( {
             method: 'POST',
@@ -116,6 +129,9 @@ $slug = $post['slug'];
             <p class="card-text"><?=$post['post_content']?></p>
             <?php
             include widget('comment.edit');
+            ?>
+            <div id="newcomment<?=$post['ID']?>"></div>
+            <?php
             include widget('comment.list');
             ?>
         </div>

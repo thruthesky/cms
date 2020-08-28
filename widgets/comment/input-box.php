@@ -7,9 +7,7 @@
  * var $comment is the comment of editing. This must be null if it's not for updating.
  * var $comment_parent is the parent comment for new comment. This must null of it's not for creating a comment under another comment.
  */
-global $post, $comment, $comment_parent;
-
-
+global $post, $comment, $comment_parent, $depth;
 
 $comment_parent_ID = '';
 $comment_ID = '';
@@ -34,11 +32,12 @@ if ( $post ) {
 
 ?>
 
-<form class="comment-input-box" onsubmit="return onCommentEditFormSubmit(this);">
+<form data-form-comment-parent="<?=$comment_parent_ID?>" class="comment-input-box" onsubmit="return onCommentEditFormSubmit(this);">
     <input type="hidden" name="route" value="comment.edit">
     <input type="hidden" name="comment_post_ID" value="<?=$comment_post_ID?>">
     <input type="hidden" name="comment_parent" value="<?=$comment_parent_ID?>">
     <input type="hidden" name="comment_ID" value="<?=$comment_ID?>">
+    <input type="hidden" name="depth" value="<?=$depth?>">
 
     <div class="form-group row no-gutters">
         <div class="col mr-3">

@@ -33,8 +33,9 @@ $apiLib = new ApiLibrary();
 $apiPost = new ApiPost();
 $apiComment = new ApiComment();
 
+// @Note Comment properties
 add_filter('comment_flood_filter', '__return_false');
-
+add_filter('duplicate_comment_id', '__return_false');
 
 
 /**

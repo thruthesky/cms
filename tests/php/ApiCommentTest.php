@@ -52,6 +52,8 @@ class ApiCommentTest extends TestCase
         $this->assertTrue(isBackendSuccess($comment), "Failed on create a comment: $comment");
         $this->assertTrue($comment['user_id'] == $user['ID']);
 
+
+
         /// Comment update & test
         $comment = get_api('comment.edit&session_id=' . $user['session_id'] . '&comment_content=' . $content . 'new'  . "&comment_ID=$comment[comment_ID]");
         $this->assertTrue(isBackendSuccess($comment));
@@ -68,17 +70,22 @@ class ApiCommentTest extends TestCase
         $this->assertTrue(isBackendError($re));
         $this->assertSame($re, ERROR_NOT_YOUR_COMMENT);
 
+
+
         /// comment delete by post user
         $re2 = get_api("comment.delete&session_id=$user[session_id]&comment_ID=$comment[comment_ID]");
+//        print_r($re2);
         $this->assertTrue(isBackendSuccess($re2));
         $this->assertSame($comment['comment_ID'], $re2['comment_ID']);
+
 
         createTestComment($user2['session_id'], $post['ID']);
         createTestComment($user3['session_id'], $post['ID']);
         createTestComment($user4['session_id'], $post['ID']);
 
         $post = $this->libPost->postGet(['ID' => $post['ID']]);
-        $this->assertSame(count($post['comments']), 3);
+//        print_r($post);
+        $this->assertSame(count($post['comments']), 4);
 
     }
 
