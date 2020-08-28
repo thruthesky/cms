@@ -13,7 +13,7 @@
                         <?=$comment['comment_content']?>
                     </div>
                 </div>
-                <button class="btn btn-primary mr-3" onclick="addCommentEditForm(0, <?=$comment['comment_ID']?>)">Reply</button>
+                <button class="btn btn-primary mr-3" onclick="addCommentEditForm(0, <?=$comment['comment_ID']?>, <?=getDepth($comment['depth'])?>)">Reply</button>
                 <?php
                 if($comment['user_id'] == userId()) { ?>
                         <button class="btn btn-primary mr-3" onclick="addCommentEditForm(<?=$comment['comment_ID']?>, 0)">Edit</button>
