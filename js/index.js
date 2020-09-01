@@ -137,7 +137,7 @@ function initServiceWorker() {
 }
 
 
-function scrollIntoView(element, duration = 1000) {
+function scrollIntoView(element, duration = 100) {
     $('body').animate({
         scrollTop: $(element).offset().top
     }, duration);
