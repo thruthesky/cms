@@ -2,6 +2,13 @@
   background-color: #fefefe !important;
 }
 
+.top {
+  top: 0 !important;
+}
+.right {
+  right: 0 !important;
+}
+
 .circle {
   border-radius: 50%;
 }
@@ -25,38 +32,39 @@
 }
 
 
-.input-box, .post-form {
+//.input-box, .post-form {
+//
+//  .files {
+//    overflow: hidden;
+//    display: flex;
+//    flex-wrap: wrap;
+//    justify-items: start;
+//    .photo {
+//      position: relative;
+//      margin: 0 1em 1em 0;
+//       img {
+//         width: 8em;
+//         max-width: 100%;
+//       }
+//        .fa-trash {
+//          position: absolute;
+//          right:.5em;
+//          top: .5em;
+//        }
+//    }
+//
+//  }
+//}
 
-  .files {
-    overflow: hidden;
-    display: flex;
-    flex-wrap: wrap;
-    justify-items: start;
-    .photo {
-      position: relative;
-      margin: 0 1em 1em 0;
-       img {
-         width: 8em;
-         max-width: 100%;
-       }
-        .fa-trash {
-          position: absolute;
-          right:.5em;
-          top: .5em;
-        }
-    }
-
-  }
-}
-
-.post {
-  .photo {
-    img {
-      max-width: 100%;
-    }
-  }
-
-}
+//
+//.post {
+//  .photo {
+//    img {
+//      max-width: 100%;
+//    }
+//  }
+//
+//}
 
 
 

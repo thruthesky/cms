@@ -43,9 +43,9 @@ $slug = $post['slug'];
 
         var files = $(form).parent().children('.files');
 
-        if (files.children('.photo').length) {
+        if (files.children('.' + uploadedFileClass).length) {
             var file_ids = [];
-            $.each(files.children('.photo'),function(index, item) {
+            $.each(files.children('.' + uploadedFileClass),function(index, item) {
                 file_ids.push( $(item).data('file-id'));
             });
             data['files'] = file_ids.join();
@@ -64,7 +64,7 @@ $slug = $post['slug'];
                 else {
                     console.log(re);
                     var commentBox = $('#comment' + data['comment_ID']);
-                    if (commentBox.length) {
+                    if (commentBox.length) { // Update
                         commentBox.replaceWith(re['html']);
                     } else if ( re['comment_parent'] === "0" ) {
                         $('#newcomment' + data['comment_post_ID']).after(re['html']);
@@ -75,10 +75,12 @@ $slug = $post['slug'];
                         var html = re['html'].replace('data-depth="1"', 'data-depth="' + depth + '"');
                         parent_comment.after(html);
 
+                        // TODO: it's not working.
                         scrollIntoView('#comment' + re['comment_ID']);
                     }
-                    $(form).find("textarea").val("");
-                    files.empty()
+                    // $(form).find("textarea").val("");
+                    // files.empty()
+                    $(form).parent().remove();
                 }
             })
             .fail(function() {
@@ -90,18 +92,18 @@ $slug = $post['slug'];
     function addCommentEditForm(comment_ID, comment_parent) {
 
         var fcp= $("[data-form-comment-parent=" + comment_parent + "]").length;
-        console.log(fcp);
+        // console.log(fcp);
         if(fcp) return;
 
         var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
-        console.log(data);
+        // console.log(data);
         $.ajax( {
             method: 'POST',
             url: apiUrl,
             data: data
         } )
             .done(function(re) {
-                console.log('re', re);
+                // console.log('re', re);
                 var cmt;
                 if ( comment_ID ) {
                     cmt = $('#comment' + comment_ID);
@@ -143,15 +145,22 @@ $slug = $post['slug'];
         <div class="card-body mb-3">
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
-            <div class="files py-3">
-                <?php foreach ($post['files'] as $file) {?>
-                    <div data-file-id="<?=$file['ID']?>" class="photo">
-                        <img src="<?=$file['thumbnail_url']?>">
-                    </div>
-                <?php } ?>
+
+            <div class="post-view-files row py-3">
+
+                <script>
+                    var files = <?=json_encode($post['files']);?>;
+                    $$(function() {
+                        for ( var file of files ) {
+                            $('.post-view-files').append(getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'}));
+                        }
+                    });
+                </script>
+
             </div>
+
             <?php
-            include widget('comment.edit');
+            include widget('comment.input-box');
             ?>
             <div id="newcomment<?=$post['ID']?>"></div>
             <?php

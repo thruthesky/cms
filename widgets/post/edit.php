@@ -26,9 +26,9 @@ if ($ID) {
 
         var files = $(form).children('.files');
 
-        if (files.children('.photo').length) {
+        if (files.children('.' + uploadedFileClass).length) {
             var file_ids = [];
-            $.each(files.children('.photo'),function(index, item) {
+            $.each(files.children('.' + uploadedFileClass),function(index, item) {
                 file_ids.push( $(item).data('file-id'));
             });
             data['files'] = file_ids.join();
@@ -61,12 +61,11 @@ if ($ID) {
             });
 
 
-
         return false;
     }
 </script>
 
-<div class="container py-3">
+<div class="edit container py-3">
 
 <form class="post-form" onsubmit="return onPostEditFormSubmit(this);">
     <input type="hidden" name="route" value="post.edit">
@@ -84,18 +83,21 @@ if ($ID) {
         <textarea class="form-control" name="post_content" id="post-create-content" aria-describedby="Content" placeholder="Enter content"><?=$post['post_content']?></textarea>
     </div>
     <div class="upload-photo-box">
-        <input type="file" name="file" onchange="onChangeFile(this, $(this).parent().parent())">
+        <input type="file" name="file" onchange="onChangeFile(this, {where: $('.files'), extraClasses: 'col-4 col-sm-3'})">
         <i role="button" class="fa fa-camera"></i>
     </div>
 
     <div class="files">
+        <script>
+            var files = <?=json_encode($post['files']);?>;
+                $$(function() {
+                    for ( var file of files ) {
+                        $('.edit form .files').append(getUploadedFileHtml(file, {deleteButton: true, extraClasses: 'col-4 col-sm-3'}));
+                    }
+                });
+        </script>
         <!-- uploaded files -->
-        <?php foreach ($post['files'] as $file) {?>
-            <div id="file<?=$file['ID']?>" data-file-id="<?=$file['ID']?>" class="photo">
-                <img src="<?=$file['thumbnail_url']?>">
-                <i role="button" class="fa fa-trash" onclick="onClickDeleteFile('<?=$file['ID']?>')"></i>
-            </div>
-        <?php } ?>
+
     </div>
 
 
