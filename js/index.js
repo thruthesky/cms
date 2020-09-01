@@ -5,6 +5,8 @@
  * Definitions
  */
 const theme_path = '/wp-content/themes/cms';
+const uploadedFileClass = 'uploaded-file';
+
 
 
 
@@ -144,23 +146,28 @@ function scrollIntoView(element, duration = 100) {
 }
 
 
-function onChangeFile($box, $inputBox) {
+function getUploadedFileHtml(file, options = {}) {
+
+    console.log(options);
+    if ( !options['extraClasses'] ) options['extraClasses'] = '';
+    if ( typeof options['deleteButton'] == 'undefined' ) options['deleteButton'] = false;
+
+    var html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative d-inline-block "+options['extraClasses']+"'>";
+        html += "<img class='w-100' src='"+ file.thumbnail_url +"'>";
+        if ( options['deleteButton'] ) html += "<i role='button' class='fa fa-trash position-absolute top right' onclick='onClickDeleteFile(" + file['ID'] + ")'></i>";
+        html += "</div>";
+    return html;
+}
+
+function onChangeFile($box, options={}) {
     var formData = new FormData();
 
-    console.log('inputBox', $inputBox.html());
 
 
     formData.append('session_id', getUserSessionId());
     formData.append('route', 'file.upload');
     formData.append('userfile', $box.files[0]);
-    // Display the key/value pairs
-    // for (var pair of formData.entries()) {
-    //     console.log(pair[0]+ ', ' + pair[1]);
-    // }
 
-// console.log($box.files[0]);
-
-//        $('.progress').show();
     $.ajax({
         url: apiUrl,
         data: formData,
@@ -176,17 +183,14 @@ function onChangeFile($box, $inputBox) {
                 alert(res);
                 return;
             }
-            console.log('success', res);
+            // console.log('success', res);
 
-            var html = "<div id='file" + res['ID'] + "' data-file-id='" + res['ID'] + "' class='photo'>" +
-                "<img src='"+ res.thumbnail_url +"'>" +
-                "<i role='button' class='fa fa-trash' onclick='onClickDeleteFile(" + res['ID'] + ")'></i>" +
-                "</div>";
-            $inputBox.find('.files').append(html);
+            options['deleteButton'] = true;
+            var html = getUploadedFileHtml(res, options);
+            options['where'].append(html);
 
 
             $('.progress').hide();
-//                renderUploadedFiles();
         },
         xhr: function() {
             var myXhr = $.ajaxSettings.xhr();

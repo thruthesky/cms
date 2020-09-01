@@ -43,9 +43,9 @@ $slug = $post['slug'];
 
         var files = $(form).children('.files');
 
-        if (files.children('.photo').length) {
+        if (files.children('.' + uploadedFileClass).length) {
             var file_ids = [];
-            $.each(files.children('.photo'),function(index, item) {
+            $.each(files.children('.' + uploadedFileClass),function(index, item) {
                 file_ids.push( $(item).data('file-id'));
             });
             data['files'] = file_ids.join();
@@ -142,15 +142,27 @@ $slug = $post['slug'];
         <div class="card-body mb-3">
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
-            <div class="files py-3">
-                <?php foreach ($post['files'] as $file) {?>
-                    <div data-file-id="<?=$file['ID']?>" class="photo">
-                        <img src="<?=$file['thumbnail_url']?>">
-                    </div>
-                <?php } ?>
+
+            <div class="post-view-files row py-3">
+
+                <script>
+                    var files = <?=json_encode($post['files']);?>;
+                    $$(function() {
+                        for ( var file of files ) {
+                            $('.post-view-files').append(getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'}));
+                        }
+                    });
+                </script>
+
+<!--                --><?php //foreach ($post['files'] as $file) {?>
+<!--                    <div data-file-id="--><?//=$file['ID']?><!--" class="col photo">-->
+<!--                        <img src="--><?//=$file['thumbnail_url']?><!--">-->
+<!--                    </div>-->
+<!--                --><?php //} ?>
             </div>
+
             <?php
-            include widget('comment.edit');
+            include widget('comment.input-box');
             ?>
             <div id="newcomment<?=$post['ID']?>"></div>
             <?php
