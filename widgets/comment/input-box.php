@@ -7,7 +7,7 @@
  * var $comment is the comment of editing. This must be null if it's not for updating.
  * var $comment_parent is the parent comment for new comment. This must null of it's not for creating a comment under another comment.
  */
-global $post, $comment, $comment_parent, $depth;
+global $post, $comment, $comment_parent;
 
 $comment_parent_ID = '';
 $comment_ID = '';
@@ -32,24 +32,6 @@ if ( $post ) {
 
 ?>
 
-<style>
-    .upload-photo-box  input[type=file] {
-        position: absolute;
-            font-size: 40em;
-        opacity: 0.01;
-    }
-
-    .upload-photo-box {
-        position: relative;
-        overflow: hidden;
-        width: 2em;
-        height: 2em;
-    }
-
-
-
-
-</style>
 <div class="input-box">
 
     <form data-form-comment-parent="<?=$comment_parent_ID?>" class="comment-input-box" onsubmit="return onCommentEditFormSubmit(this);">

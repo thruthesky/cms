@@ -19,7 +19,7 @@ class CommentRoute extends ApiComment
     public function inputBox() {
         $comment = $this->commentResponse(in('comment_ID'));
         $comment_parent = $this->commentResponse(in('comment_parent'));
-        $this->response( $this->commentInputBox( null, $comment, $comment_parent, in('depth', 1) ) );
+        $this->response( $this->commentInputBox( null, $comment, $comment_parent) );
     }
 }
 

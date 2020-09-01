@@ -37,8 +37,14 @@ class ApiPost extends ApiLibrary
 
         $posts = get_posts($in);
         $returns = [];
+        $options = [];
+
+        if (isset($in['autop']) && !empty($in['autop'])) {
+            $options['with_autop'] = $in['autop'];
+        }
+
         foreach ($posts as $p) {
-            $returns[] = $this->postResponse($p, ['with_autop' => $in['autop']]);
+            $returns[] = $this->postResponse($p, $options);
         }
 
         return $returns;

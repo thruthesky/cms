@@ -52,11 +52,7 @@ class ApiComment extends ApiPost
         if (isset($in['files']) && !empty($in['files'])) {
             $this->attachFiles($comment_id, $in['files'], COMMENT_ATTACHMENT);
         }
-        $comment = $this->commentResponse($comment_id);
-//        if ($in['depth']) {
-//            $comment['depth']= $in['depth'] + 1;
-//        }
-        return $comment;
+        return $this->commentResponse($comment_id);
     }
 
 
@@ -71,7 +67,7 @@ class ApiComment extends ApiPost
             'comment_ID' => $in['comment_ID'],
             'comment_content' => $in['comment_content']
         ]);
-        if ($in['files']) {
+        if (isset($in['files']) && !empty($in['files'])) {
             $this->attachFiles($in['comment_ID'], $in['files'], COMMENT_ATTACHMENT);
         }
         return $this->commentResponse($in['comment_ID']);
@@ -91,15 +87,14 @@ class ApiComment extends ApiPost
     }
 
 
-    public function commentInputBox($_post, $_comment, $_comment_parent, $_depth) {
+    public function commentInputBox($_post, $_comment, $_comment_parent) {
 
-        global $post, $comment, $comment_parent, $depth;
+        global $post, $comment, $comment_parent;
 
         /// Make the variable available on global space.
         $post = $_post;
         $comment = $_comment;
         $comment_parent = $_comment_parent;
-        $depth = $_depth;
 
         ob_start();
         include widget('comment.input-box');

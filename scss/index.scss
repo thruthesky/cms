@@ -23,3 +23,19 @@
 .fs-lg {
   font-size: 1.25rem!important;
 }
+
+
+
+.upload-photo-box {
+  position: relative;
+  overflow: hidden;
+  width: 2em;
+  height: 2em;
+
+  input[type=file] {
+    position: absolute;
+    font-size: 40em;
+    opacity: 0.01;
+  }
+
+}

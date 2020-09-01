@@ -135,3 +135,10 @@ function initServiceWorker() {
         console.log('service worker is not supported');
     }
 }
+
+
+function scrollIntoView(element, duration = 1000) {
+    $('body').animate({
+        scrollTop: $(element).offset().top
+    }, duration);
+}

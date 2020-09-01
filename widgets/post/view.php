@@ -12,8 +12,6 @@ $slug = $post['slug'];
         var re = confirm('Are you sure you want to delete this comment?');
 
         if (!re) return;
-
-        console.log('going to delete');
         var data = {};
         data['session_id'] = getUserSessionId();
         data['route'] = "comment.delete";
@@ -53,24 +51,22 @@ $slug = $post['slug'];
                     alert(re);
                 }
                 else {
-                    console.log('re', re);
-                    /// @TODO: avoid refresh(reload). add the comment at the right place and scroll there.
-                    /// @todo Q1. The app must display comment with php when post view page is loaded (for better display performance)
-                    /// Q2. If there is new comment, the comment must be added with javascript without refreshing the page for better display expirence.
-                    /// Q3. The HTML & its data must be one codebase. So, when the code edited, it will be applied on PHP & Javascript.
-
-                    console.log('re: after comment', re);
+                    console.log(re);
                     var commentBox = $('#comment' + data['comment_ID']);
                     if (commentBox.length) {
                         commentBox.replaceWith(re['html']);
                     } else if ( re['comment_parent'] === "0" ) {
                         $('#newcomment' + data['comment_post_ID']).after(re['html']);
                     } else {
-                        $('#comment' + re['comment_parent']).after(re['html']);
-                    }
+                        var comment_id = '#comment' + re['comment_parent'];
+                        var parent_comment = $(comment_id);
+                        var depth = parent_comment.find('.display').data('depth') + 1;
+                        var html = re['html'].replace('data-depth="1"', 'data-depth="' + depth + '"');
+                        parent_comment.after(html);
 
+                        scrollIntoView('#comment' + re['comment_ID']);
+                    }
                     $(form).find("textarea").val("");
-                    // scrollIntoTheComment();
                 }
             })
             .fail(function() {
