@@ -44,10 +44,10 @@ if ( $post ) {
         <div class="form-group row no-gutters">
             <div class="upload-photo-box">
                 <input type="file" name="file" onchange="onChangeFile(this, $(this).parents('.input-box'))">
-                <i class="fa fa-camera fs-lg"></i>
+                <i role="button" class="fa fa-camera"></i>
             </div>
             <div class="col mr-3">
-                <textarea class="form-control" name="comment_content" id="post-create-title" aria-describedby="Title" placeholder="Enter comment"><?=$comment_content?></textarea>
+                <textarea onkeydown="onCommentEditText(this)" class="form-control" name="comment_content" id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"><?=$comment_content?></textarea>
             </div>
             <div class="col-1">
                 <button type="submit" class="btn btn-outline-dark">
@@ -56,8 +56,14 @@ if ( $post ) {
             </div>
         </div>
     </form>
-    <div class="files">
+    <div class="files d-flex justify-content-start">
         <!-- uploaded files -->
+<!--        <div class="photo position-relative">-->
+<!--            <img src="http://work.katalkenglish.com/wp-content/uploads/2020/09/b3cea63d21333876a05afbc3f166a4d5.png">-->
+<!--            <i role="button" class="fa fa-trash position-absolute" style="right: 0; top: 0;" onclick="onClickDeleteFile()"></i>-->
+<!--        </div>-->
+<!--        <div class="photo"><img src="http://work.katalkenglish.com/wp-content/uploads/2020/09/2629c01ed1cd24a41dc5f47ca749ad09.png"></div>-->
+<!--        <div class="photo"><img src="http://work.katalkenglish.com/wp-content/uploads/2020/09/2629c01ed1cd24a41dc5f47ca749ad09.png"></div>-->
     </div>
 
 

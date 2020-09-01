@@ -75,13 +75,13 @@ $slug = $post['slug'];
         return false;
     }
 
-    function addCommentEditForm(comment_ID, comment_parent, depth) {
+    function addCommentEditForm(comment_ID, comment_parent) {
 
         var fcp= $("[data-form-comment-parent=" + comment_parent + "]").length;
         console.log(fcp);
         if(fcp) return;
 
-        var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent, depth: depth};
+        var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
         console.log(data);
         $.ajax( {
             method: 'POST',
@@ -89,15 +89,17 @@ $slug = $post['slug'];
             data: data
         } )
             .done(function(re) {
-                    console.log('re', re);
-                    if ( comment_ID ) {
-                        var cmt = $('#comment' + comment_ID);
-                        cmt.find('.display').after(re);
-                        cmt.find('.display').hide();
-                    } else {
-                        $('#comment' + comment_parent).find('.display').after(re);
-                    }
-
+                console.log('re', re);
+                var cmt;
+                if ( comment_ID ) {
+                    cmt = $('#comment' + comment_ID);
+                    cmt.find('.display').after(re);
+                    cmt.find('.display').hide();
+                } else {
+                    cmt = $('#comment' + comment_parent);
+                    cmt.find('.display').after(re);
+                }
+                cmt.find('.input-box textarea').focus();
             })
             .fail(function() {
                 alert( "Server error" );
@@ -139,22 +141,12 @@ $slug = $post['slug'];
                     return;
                 }
                 console.log('success', res);
-                // var re = JSON.parse(res);
-                // if ( re['code'] ) {
-                //     alert(re['message']);
-                //     return;
-                // }
-//                 var data = re['data'];
-//                 console.log('data: ', data);
-// //                var i = getFileIndexFromFiles(data['code']);
-//                 if ( i >= 0 ) {
-//                     files[i] = data;
-//                 } else {
-//                     files.push(data);
-//                 }
 
-
-                $inputBox.find('.files').append("<div class='photo'><img src='"+ res.thumbnail_url +"'></div>");
+                var html = "<div id='file" + res['ID'] + "' class='photo position-relative'>" +
+                    "<img class='pb-3 pr-3' src='"+ res.thumbnail_url +"'>" +
+                    "<i role='button' class='fa fa-trash position-absolute' style='right: 0; top: 0;'  onclick='onClickDeleteFile(" + res['ID'] + ")'></i>" +
+                    "</div>";
+                $inputBox.find('.files').append(html);
 
 
                 $('.progress').hide();
@@ -195,66 +187,32 @@ $slug = $post['slug'];
         }
     }
 
+    function onClickDeleteFile(ID) {
+        console.log(ID);
+        var data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
+        console.log(data);
+        $.ajax( {
+            method: 'GET',
+            url: apiUrl,
+            data: data
+        } )
+            .done(function(re) {
+                console.log('re', re);
+                if (re['ID'] === ID) {
+                    $('#file'+ ID).remove();
+                }
+            })
+            .fail(function() {
+                alert( "Server error" );
+            });
+    }
 
-    /**
-     * For comment create(or reply), [comment_ID] is empty.
-     * For comment update, [comment_ID] is set.
-     * For creating a comment right under the post, [comment_parent] is empty.
-     * For creating a comment under another comment, [comment_parent] is set.
-     *
-     * @param comment_ID
-     * @param comment_parent
-     * @returns {string}
-     */
-    // function addCommentEditForm(comment_ID, comment_parent) {
-    //     var comment = $('#comment' + comment_ID);
-    //     var display = comment.find('.display');
-    //     var isCreate = !comment_ID && comment_parent;
-    //     var isCommentOfPost = !comment_ID && !comment_parent;
-    //     var isCommentOfComment = !comment_ID && comment_parent;
-    //     var isUpdate = comment_ID;
-    //
-    //     var comment_post_ID = display.attr('data-comment-post-id');
-    //     var comment_content = '';
-    //     if ( isCreate ) {
-    //
-    //     } if (isCommentOfPost) {
-    //
-    //     }
-    //     else {
-    //         comment_parent = display.attr('data-comment-parent');
-    //         comment_content = display.find('.content').html();
-    //     }
-    //
-    //
-    //
-    //     var html = '\n'+
-    //         '<form class="my-3" onsubmit="return onCommentEditFormSubmit(this);">\n'+
-    //         '    <input type="hidden" name="route" value="comment.edit">\n'+
-    //         '    <input type="hidden" name="comment_post_ID" value="'+comment_post_ID+'">\n' +
-    //         '    <input type="hidden" name="comment_parent" value="'+comment_parent+'">\n' +
-    //         '    <input type="hidden" name="comment_ID" value="'+comment_ID+'">\n' +
-    //
-    //         '    <div class="form-group row no-gutters">\n'+
-    //         '        <textarea class="form-control col" name="comment_content" id="post-create-title" aria-describedby="Title" placeholder="Enter comment">'+comment_content+'</textarea>\n'+
-    //         '        <button type="submit" class="btn btn-outline-dark col-1">\n'+
-    //         '            <i class="fa fa-paper-plane" aria-hidden="true"></i>\n'+
-    //         '        </button>\n'+
-    //         '    </div>\n'+
-    //         '</form>';
-    //
-    //     /// if [comment_ID] has value, then it's editing.
-    //     if ( comment_ID ) {
-    //         display.hide();
-    //         comment.html(html);
-    //     }
-    //     else if ( comment_parent ) {
-    //         $('#comment' + comment_parent).html(html);
-    //     }
-    //     else {
-    //         return html;
-    //     }
-    // }
+
+    function onCommentEditText($this) {
+        $($this).attr('rows', 4);
+    }
+
+
 </script>
 
 
@@ -263,7 +221,7 @@ $slug = $post['slug'];
     <a class="btn btn-primary mr-3" href="/?page=post.list&slug=<?=$slug?>">Back</a>
     <a class="btn btn-secondary mr-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
     <? if ($post['post_author'] == userId()) {?>
-    <a class="btn btn-dark" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
+        <a class="btn btn-dark" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
     <?php }?>
 </div>
 

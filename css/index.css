@@ -27,8 +27,12 @@
 .upload-photo-box {
   position: relative;
   overflow: hidden;
-  width: 2em;
-  height: 2em;
+  width: 2.25em;
+  height: 2.25em;
+}
+.upload-photo-box .fa-camera {
+  padding: 0.25em;
+  font-size: 1.5em;
 }
 .upload-photo-box input[type=file] {
   position: absolute;

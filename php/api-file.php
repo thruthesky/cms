@@ -96,7 +96,7 @@ class ApiFile extends ApiLibrary
     {
         if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
-        if (!$in['ID']) return ERROR_FILE_ID_NOT_PROVIDED;
+        if (!isset($in['ID']) || empty($in['ID'])) return ERROR_FILE_ID_NOT_PROVIDED;
 
         if (admin() || $this->isMyFile(in('ID'))) {
             // pass
