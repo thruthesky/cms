@@ -138,9 +138,11 @@ function initServiceWorker() {
 
 
 function scrollIntoView(element, duration = 100) {
-    $('body').animate({
-        scrollTop: $(element).offset().top
-    }, duration);
+    var anchor = document.querySelector(element);
+    anchor.scrollIntoView({behavior: 'smooth'});
+    // $('body').animate({
+    //     scrollTop: $(element).offset().top
+    // }, duration);
 }
 
 
