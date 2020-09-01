@@ -41,7 +41,7 @@ $slug = $post['slug'];
         var data = objectifyForm(form);
         data['session_id'] = getUserSessionId();
 
-        var files = $(form).children('.files');
+        var files = $(form).parent().children('.files');
 
         if (files.children('.photo').length) {
             var file_ids = [];
@@ -50,7 +50,7 @@ $slug = $post['slug'];
             });
             data['files'] = file_ids.join();
         }
-        
+
         console.log(data);
         $.ajax( {
             method: 'POST',
@@ -78,6 +78,7 @@ $slug = $post['slug'];
                         scrollIntoView('#comment' + re['comment_ID']);
                     }
                     $(form).find("textarea").val("");
+                    files.empty()
                 }
             })
             .fail(function() {
