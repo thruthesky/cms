@@ -13,6 +13,10 @@ $comment_parent_ID = '';
 $comment_ID = '';
 $comment_content = '';
 $files = [];
+/**
+ * Becomes true only on update.
+ */
+$_update = false;
 
 //        dog($comment_parent);/
 /// create right under a post
@@ -24,13 +28,13 @@ if ( $post ) {
     $comment_post_ID = $comment_parent['comment_post_ID'];
 } else {
     /// update
+    $_update = true;
     $comment_ID = $comment['comment_ID'];
     $comment_parent_ID = $comment['comment_parent'];
     $comment_content = $comment['comment_content'];
     $comment_post_ID = $comment['comment_post_ID'];
     $files = $comment['files'];
 }
-
 
 ?>
 
@@ -45,7 +49,7 @@ if ( $post ) {
 
         <div class="form-group row no-gutters">
             <div class="upload-photo-box">
-                <input type="file" name="file" onchange="onChangeFile(this, $(this).parents('.input-box'))">
+                <input type="file" name="file" onchange="onChangeFile(this, {where: $(this).parents('.input-box').find('.files'), extraClasses: 'col-4 col-sm-3'})">
                 <i role="button" class="fa fa-camera"></i>
             </div>
             <div class="col mr-3">
@@ -58,17 +62,22 @@ if ( $post ) {
             </div>
         </div>
     </form>
-    <div class="files">
+
+    <div class="files row">
         <!-- uploaded files -->
-
-<!--        --><?php //foreach ($post['files'] as $file) {?>
-<!--            <div id="file--><?//=$file['ID']?><!--" data-file-id="--><?//=$file['ID']?><!--" class="photo">-->
-<!--                <img src="--><?//=$file['thumbnail_url']?><!--">-->
-<!--                <i role="button" class="fa fa-trash" onclick="onClickDeleteFile(689)"></i>-->
-<!--            </div>-->
-<!--        --><?php //} ?>
-
     </div>
+
+    <?php
+    /**
+     * If it's update, it is being called through Ajax. So, no need to call after load.
+     * If it's not updating, then, it is being called from PHP and the `$comment` variable is a WP_Comment object.
+     */
+    if ( $_update) { ?>
+    <script>
+            attachUploadedFilesTo($('#comment<?=$comment['comment_ID']?> .files'), <?=json_encode($files ?? []);?>, {extraClasses: 'col-4 col-sm-3', deleteButton: true});
+    </script>
+    <?php } ?>
+
 
 
 </div>

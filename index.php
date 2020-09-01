@@ -24,7 +24,8 @@ $_head_script =<<<EOH
         var rootDomain = "$_root_domain";
         
         function $$(fn) {
-            window.addEventListener('load', fn);
+            if ( document.readyState === "complete" ) fn(); // for calling it after Ajax load.
+            else window.addEventListener('load', fn); // for calling after load.
         }
     </script>
 EOH;

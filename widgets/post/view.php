@@ -64,7 +64,7 @@ $slug = $post['slug'];
                 else {
                     console.log(re);
                     var commentBox = $('#comment' + data['comment_ID']);
-                    if (commentBox.length) {
+                    if (commentBox.length) { // Update
                         commentBox.replaceWith(re['html']);
                     } else if ( re['comment_parent'] === "0" ) {
                         $('#newcomment' + data['comment_post_ID']).after(re['html']);
@@ -75,10 +75,12 @@ $slug = $post['slug'];
                         var html = re['html'].replace('data-depth="1"', 'data-depth="' + depth + '"');
                         parent_comment.after(html);
 
+                        // TODO: it's not working.
                         scrollIntoView('#comment' + re['comment_ID']);
                     }
-                    $(form).find("textarea").val("");
-                    files.empty()
+                    // $(form).find("textarea").val("");
+                    // files.empty()
+                    $(form).parent().remove();
                 }
             })
             .fail(function() {
@@ -90,18 +92,18 @@ $slug = $post['slug'];
     function addCommentEditForm(comment_ID, comment_parent) {
 
         var fcp= $("[data-form-comment-parent=" + comment_parent + "]").length;
-        console.log(fcp);
+        // console.log(fcp);
         if(fcp) return;
 
         var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
-        console.log(data);
+        // console.log(data);
         $.ajax( {
             method: 'POST',
             url: apiUrl,
             data: data
         } )
             .done(function(re) {
-                console.log('re', re);
+                // console.log('re', re);
                 var cmt;
                 if ( comment_ID ) {
                     cmt = $('#comment' + comment_ID);
@@ -155,11 +157,6 @@ $slug = $post['slug'];
                     });
                 </script>
 
-<!--                --><?php //foreach ($post['files'] as $file) {?>
-<!--                    <div data-file-id="--><?//=$file['ID']?><!--" class="col photo">-->
-<!--                        <img src="--><?//=$file['thumbnail_url']?><!--">-->
-<!--                    </div>-->
-<!--                --><?php //} ?>
             </div>
 
             <?php

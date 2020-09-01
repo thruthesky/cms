@@ -160,9 +160,9 @@ function getUploadedFileHtml(file, options = {}) {
 }
 
 function onChangeFile($box, options={}) {
+
+    console.log('options', options);
     var formData = new FormData();
-
-
 
     formData.append('session_id', getUserSessionId());
     formData.append('route', 'file.upload');
@@ -188,6 +188,7 @@ function onChangeFile($box, options={}) {
             options['deleteButton'] = true;
             var html = getUploadedFileHtml(res, options);
             options['where'].append(html);
+
 
 
             $('.progress').hide();
@@ -245,4 +246,12 @@ function onClickDeleteFile(ID) {
         .fail(function() {
             alert( "Server error" );
         });
+}
+
+
+function attachUploadedFilesTo($el, files, options) {
+        for ( var file of files ) {
+            $el.append(getUploadedFileHtml(file, options));
+        }
+
 }
