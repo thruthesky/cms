@@ -12,6 +12,7 @@ global $post, $comment, $comment_parent;
 $comment_parent_ID = '';
 $comment_ID = '';
 $comment_content = '';
+$files = [];
 
 //        dog($comment_parent);/
 /// create right under a post
@@ -27,6 +28,7 @@ if ( $post ) {
     $comment_parent_ID = $comment['comment_parent'];
     $comment_content = $comment['comment_content'];
     $comment_post_ID = $comment['comment_post_ID'];
+    $files = $comment['files'];
 }
 
 
@@ -58,12 +60,14 @@ if ( $post ) {
     </form>
     <div class="files">
         <!-- uploaded files -->
+
 <!--        --><?php //foreach ($post['files'] as $file) {?>
 <!--            <div id="file--><?//=$file['ID']?><!--" data-file-id="--><?//=$file['ID']?><!--" class="photo">-->
 <!--                <img src="--><?//=$file['thumbnail_url']?><!--">-->
 <!--                <i role="button" class="fa fa-trash" onclick="onClickDeleteFile(689)"></i>-->
 <!--            </div>-->
 <!--        --><?php //} ?>
+
     </div>
 
 

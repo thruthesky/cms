@@ -18,6 +18,12 @@
                 if($comment['user_id'] == userId()) { ?>
                         <button class="btn btn-primary mr-3" onclick="addCommentEditForm(<?=$comment['comment_ID']?>, 0)">Edit</button>
                     <button class="btn btn-primary mr-3" onclick="onCommentDelete(<?=$comment['comment_ID']?>)">Delete</button>
+                <?php }
+                foreach ($comment['files'] as $file) {
+                    ?>
+                    <div id="file<?=$file['ID']?>" data-file-id="<?=$file['ID']?>" class="photo">
+                        <img src="<?=$file['thumbnail_url']?>">
+                    </div>
                 <?php } ?>
             </div>
         </div>
