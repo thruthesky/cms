@@ -58,6 +58,12 @@ if ( $post ) {
     </form>
     <div class="files">
         <!-- uploaded files -->
+        <?php foreach ($post['files'] as $file) {?>
+            <div id="file<?=$file['ID']?>" data-file-id="<?=$file['ID']?>" class="photo">
+                <img src="<?=$file['thumbnail_url']?>">
+                <i role="button" class="fa fa-trash" onclick="onClickDeleteFile(689)"></i>
+            </div>
+        <?php } ?>
     </div>
 
 

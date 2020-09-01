@@ -40,6 +40,17 @@ $slug = $post['slug'];
     function onCommentEditFormSubmit(form) {
         var data = objectifyForm(form);
         data['session_id'] = getUserSessionId();
+
+        var files = $(form).children('.files');
+
+        if (files.children('.photo').length) {
+            var file_ids = [];
+            $.each(files.children('.photo'),function(index, item) {
+                file_ids.push( $(item).data('file-id'));
+            });
+            data['files'] = file_ids.join();
+        }
+        
         console.log(data);
         $.ajax( {
             method: 'POST',
