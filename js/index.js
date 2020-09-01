@@ -142,3 +142,103 @@ function scrollIntoView(element, duration = 1000) {
         scrollTop: $(element).offset().top
     }, duration);
 }
+
+
+function onChangeFile($box, $inputBox) {
+    var formData = new FormData();
+
+    console.log('inputBox', $inputBox.html());
+
+
+    formData.append('session_id', getUserSessionId());
+    formData.append('route', 'file.upload');
+    formData.append('userfile', $box.files[0]);
+    // Display the key/value pairs
+    // for (var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]);
+    // }
+
+// console.log($box.files[0]);
+
+//        $('.progress').show();
+    $.ajax({
+        url: apiUrl,
+        data: formData,
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+        processData: false, // NEEDED, DON'T OMIT THIS
+        // ... Other options like success and etc
+        cache: false,
+        timeout: 60 * 1000 * 10, /// 10 minutes.
+        success: function (res) {
+            if ( isBackendError(res) ) {
+                alert(res);
+                return;
+            }
+            console.log('success', res);
+
+            var html = "<div id='file" + res['ID'] + "' data-file-id='" + res['ID'] + "' class='photo'>" +
+                "<img src='"+ res.thumbnail_url +"'>" +
+                "<i role='button' class='fa fa-trash' onclick='onClickDeleteFile(" + res['ID'] + ")'></i>" +
+                "</div>";
+            $inputBox.find('.files').append(html);
+
+
+            $('.progress').hide();
+//                renderUploadedFiles();
+        },
+        xhr: function() {
+            var myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload){
+                myXhr.upload.addEventListener('progress',progress, false);
+            }
+            return myXhr;
+        },
+
+        error: function(data){
+            console.error(data);
+        }
+    });
+}
+
+function progress(e){
+
+    // console.log('e: ', e);
+
+    if(e.lengthComputable){
+        var max = e.total;
+        var current = e.loaded;
+
+        var Percentage = Math.round((current * 100) / max);
+        console.log(Percentage);
+
+        if(Percentage >= 100)
+        {
+            // process completed
+
+        } else {
+//                $('.progress').width(Percentage+'%')
+        }
+    }
+}
+
+function onClickDeleteFile(ID) {
+    console.log(ID);
+    var data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
+    console.log(data);
+    $.ajax( {
+        method: 'GET',
+        url: apiUrl,
+        data: data
+    } )
+        .done(function(re) {
+            console.log('re', re);
+            if (re['ID'] === ID) {
+                $('#file'+ ID).remove();
+            }
+        })
+        .fail(function() {
+            alert( "Server error" );
+        });
+}

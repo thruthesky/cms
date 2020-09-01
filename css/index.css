@@ -24,6 +24,30 @@
   font-size: 1.25rem !important;
 }
 
+.input-box .files, .post-form .files {
+  overflow: hidden;
+  display: flex;
+  flex-wrap: wrap;
+  justify-items: start;
+}
+.input-box .files .photo, .post-form .files .photo {
+  position: relative;
+  margin: 0 1em 1em 0;
+}
+.input-box .files .photo img, .post-form .files .photo img {
+  width: 8em;
+  max-width: 100%;
+}
+.input-box .files .photo .fa-trash, .post-form .files .photo .fa-trash {
+  position: absolute;
+  right: 0.5em;
+  top: 0.5em;
+}
+
+.post .photo img {
+  max-width: 100%;
+}
+
 .upload-photo-box {
   position: relative;
   overflow: hidden;

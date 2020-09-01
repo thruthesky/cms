@@ -2,12 +2,18 @@
 $ID = in('ID');
 $slug = in('slug');
 
-$post = [];
+$post = [
+        'ID' => '',
+        'guid' => '',
+        'post_title' => '',
+        'post_content' => '',
+        'files' => []
+];
 if ($ID) {
     $post =  $apiPost->postGet(['ID' => $ID]);
-
-
 }
+//
+//dog($post);
 ?>
 
 
@@ -18,8 +24,15 @@ if ($ID) {
 
         data['session_id'] = getUserSessionId();
 
+        var files = $(form).children('.files');
 
-//        console.log(data);
+        if (files.children('.photo').length) {
+            var file_ids = [];
+            $.each(files.children('.photo'),function(index, item) {
+                file_ids.push( $(item).data('file-id'));
+            });
+            data['files'] = file_ids.join();
+        }
 
         $.ajax( {
             method: 'POST',
@@ -55,7 +68,7 @@ if ($ID) {
 
 <div class="container py-3">
 
-<form onsubmit="return onPostEditFormSubmit(this);">
+<form class="post-form" onsubmit="return onPostEditFormSubmit(this);">
     <input type="hidden" name="route" value="post.edit">
     <input type="hidden" name="slug" value="<?=$slug?>">
 
@@ -69,6 +82,20 @@ if ($ID) {
     <div class="form-group">
         <label for="post-create-content">Content</label>
         <textarea class="form-control" name="post_content" id="post-create-content" aria-describedby="Content" placeholder="Enter content"><?=$post['post_content']?></textarea>
+    </div>
+    <div class="upload-photo-box">
+        <input type="file" name="file" onchange="onChangeFile(this, $(this).parent().parent())">
+        <i role="button" class="fa fa-camera"></i>
+    </div>
+
+    <div class="files">
+        <!-- uploaded files -->
+        <?php foreach ($post['files'] as $file) {?>
+            <div id="file<?=$file['ID']?>" data-file-id="<?=$file['ID']?>" class="photo">
+                <img src="<?=$file['thumbnail_url']?>">
+                <i role="button" class="fa fa-trash" onclick="onClickDeleteFile(689)"></i>
+            </div>
+        <?php } ?>
     </div>
 
 

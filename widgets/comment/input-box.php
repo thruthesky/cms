@@ -56,14 +56,8 @@ if ( $post ) {
             </div>
         </div>
     </form>
-    <div class="files d-flex justify-content-start">
+    <div class="files">
         <!-- uploaded files -->
-<!--        <div class="photo position-relative">-->
-<!--            <img src="http://work.katalkenglish.com/wp-content/uploads/2020/09/b3cea63d21333876a05afbc3f166a4d5.png">-->
-<!--            <i role="button" class="fa fa-trash position-absolute" style="right: 0; top: 0;" onclick="onClickDeleteFile()"></i>-->
-<!--        </div>-->
-<!--        <div class="photo"><img src="http://work.katalkenglish.com/wp-content/uploads/2020/09/2629c01ed1cd24a41dc5f47ca749ad09.png"></div>-->
-<!--        <div class="photo"><img src="http://work.katalkenglish.com/wp-content/uploads/2020/09/2629c01ed1cd24a41dc5f47ca749ad09.png"></div>-->
     </div>
 
 

@@ -108,105 +108,6 @@ $slug = $post['slug'];
     }
 
 
-    function onChangeFile($box, $inputBox) {
-        var formData = new FormData();
-
-        console.log('inputBox', $inputBox.html());
-
-
-        formData.append('session_id', '<?=sessionId()?>');
-        formData.append('route', 'file.upload');
-        formData.append('userfile', $box.files[0]);
-        // Display the key/value pairs
-        // for (var pair of formData.entries()) {
-        //     console.log(pair[0]+ ', ' + pair[1]);
-        // }
-
-// console.log($box.files[0]);
-
-//        $('.progress').show();
-        $.ajax({
-            url: apiUrl,
-            data: formData,
-            type: 'POST',
-            enctype: 'multipart/form-data',
-            contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-            processData: false, // NEEDED, DON'T OMIT THIS
-            // ... Other options like success and etc
-            cache: false,
-            timeout: 60 * 1000 * 10, /// 10 minutes.
-            success: function (res) {
-                if ( isBackendError(res) ) {
-                    alert(res);
-                    return;
-                }
-                console.log('success', res);
-
-                var html = "<div id='file" + res['ID'] + "' class='photo position-relative'>" +
-                    "<img class='pb-3 pr-3' src='"+ res.thumbnail_url +"'>" +
-                    "<i role='button' class='fa fa-trash position-absolute' style='right: 0; top: 0;'  onclick='onClickDeleteFile(" + res['ID'] + ")'></i>" +
-                    "</div>";
-                $inputBox.find('.files').append(html);
-
-
-                $('.progress').hide();
-//                renderUploadedFiles();
-            },
-            xhr: function() {
-                var myXhr = $.ajaxSettings.xhr();
-                if(myXhr.upload){
-                    myXhr.upload.addEventListener('progress',progress, false);
-                }
-                return myXhr;
-            },
-
-            error: function(data){
-                console.error(data);
-            }
-        });
-    }
-
-    function progress(e){
-
-        // console.log('e: ', e);
-
-        if(e.lengthComputable){
-            var max = e.total;
-            var current = e.loaded;
-
-            var Percentage = Math.round((current * 100) / max);
-            console.log(Percentage);
-
-            if(Percentage >= 100)
-            {
-                // process completed
-
-            } else {
-//                $('.progress').width(Percentage+'%')
-            }
-        }
-    }
-
-    function onClickDeleteFile(ID) {
-        console.log(ID);
-        var data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
-        console.log(data);
-        $.ajax( {
-            method: 'GET',
-            url: apiUrl,
-            data: data
-        } )
-            .done(function(re) {
-                console.log('re', re);
-                if (re['ID'] === ID) {
-                    $('#file'+ ID).remove();
-                }
-            })
-            .fail(function() {
-                alert( "Server error" );
-            });
-    }
-
 
     function onCommentEditText($this) {
         $($this).attr('rows', 4);
@@ -226,11 +127,17 @@ $slug = $post['slug'];
 </div>
 
 <div class="container pb-3">
-
-    <div class="card mb-3">
+    <div class="post card mb-3">
         <div class="card-body mb-3">
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
+            <div class="files py-3">
+                <?php foreach ($post['files'] as $file) {?>
+                    <div data-file-id="<?=$file['ID']?>" class="photo">
+                        <img src="<?=$file['thumbnail_url']?>">
+                    </div>
+                <?php } ?>
+            </div>
             <?php
             include widget('comment.edit');
             ?>
