@@ -45,7 +45,6 @@ if ( $post ) {
         <input type="hidden" name="comment_post_ID" value="<?=$comment_post_ID?>">
         <input type="hidden" name="comment_parent" value="<?=$comment_parent_ID?>">
         <input type="hidden" name="comment_ID" value="<?=$comment_ID?>">
-        <!--    <input type="hidden" name="depth" value="--><?//=$depth?><!--">-->
 
         <div class="form-group row no-gutters">
             <div class="upload-photo-box">
@@ -63,7 +62,7 @@ if ( $post ) {
         </div>
     </form>
 
-    <div class="files row">
+    <div class="files edit row">
         <!-- uploaded files -->
     </div>
 

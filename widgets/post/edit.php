@@ -87,7 +87,7 @@ if ($ID) {
         <i role="button" class="fa fa-camera"></i>
     </div>
 
-    <div class="files">
+    <div class="files edit">
         <script>
             var files = <?=json_encode($post['files']);?>;
                 $$(function() {

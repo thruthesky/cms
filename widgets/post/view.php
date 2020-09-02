@@ -37,6 +37,36 @@ $slug = $post['slug'];
             });
     }
 
+    function onPostDelete(ID) {
+
+        var re = confirm('Are you sure you want to delete this post?');
+
+        if (!re) return;
+        var data = {};
+        data['session_id'] = getUserSessionId();
+        data['route'] = "post.delete";
+        data['ID'] = ID;
+
+        console.log(data);
+        $.ajax( {
+            method: 'GET',
+            url: apiUrl,
+            data: data
+        } )
+            .done(function(re) {
+                if ( isBackendError(re) ) {
+                    alert(re);
+                }
+                else {
+                    console.log('re', re);
+                    move("/?page=post.list&slug=<?=$post['slug']?>");
+                }
+            })
+            .fail(function() {
+                alert( "Server error" );
+            });
+    }
+
     function onCommentEditFormSubmit(form) {
         var data = objectifyForm(form);
         data['session_id'] = getUserSessionId();
@@ -65,22 +95,20 @@ $slug = $post['slug'];
                     console.log(re);
                     var commentBox = $('#comment' + data['comment_ID']);
                     if (commentBox.length) { // Update
-                        commentBox.replaceWith(re['html']);
+                        commentBox.replaceWith(onCommentCreateOrUpdateApplyDepth(re['html'], commentBox));
+                        $(form).parent().remove();
                     } else if ( re['comment_parent'] === "0" ) {
                         $('#newcomment' + data['comment_post_ID']).after(re['html']);
+                        $(form).find('textarea').val('');
+                        $(form).parent().find('files').empty();
                     } else {
-                        var comment_id = '#comment' + re['comment_parent'];
-                        var parent_comment = $(comment_id);
-                        var depth = parent_comment.find('.display').data('depth') + 1;
-                        var html = re['html'].replace('data-depth="1"', 'data-depth="' + depth + '"');
-                        parent_comment.after(html);
+                        var parent_comment = $('#comment' + re['comment_parent']);
+                        parent_comment.after(onCommentCreateOrUpdateApplyDepth(re['html'], parent_comment, 1));
+                        $(form).parent().remove();
 
                         // TODO: it's not working.
                         scrollIntoView('#comment' + re['comment_ID']);
                     }
-                    // $(form).find("textarea").val("");
-                    // files.empty()
-                    $(form).parent().remove();
                 }
             })
             .fail(function() {
@@ -88,6 +116,12 @@ $slug = $post['slug'];
             });
         return false;
     }
+
+    function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0) {
+        var depth = parentElement.find('.display').data('depth') + incrementBy;
+        return html.replace('data-depth="1"', 'data-depth="' + depth + '"');
+    }
+
 
     function addCommentEditForm(comment_ID, comment_parent) {
 
@@ -135,17 +169,18 @@ $slug = $post['slug'];
 <div class="p-3">
     <a class="btn btn-primary mr-3" href="/?page=post.list&slug=<?=$slug?>">Back</a>
     <a class="btn btn-secondary mr-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
-    <? if ($post['post_author'] == userId()) {?>
-        <a class="btn btn-dark" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
-    <?php }?>
 </div>
 
 <div class="container pb-3">
     <div class="post card mb-3">
         <div class="card-body mb-3">
+            <div>
+                <span><?=$post['author_name']?></span>
+                <span>Date: <?=$post['short_date_time']?></span>
+                <span>View: <?=$post['author_name']?></span>
+            </div>
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
-
             <div class="post-view-files row py-3">
 
                 <script>
@@ -158,7 +193,13 @@ $slug = $post['slug'];
                 </script>
 
             </div>
-
+            <div class="mb-3">
+                <?php
+                if($post['post_author'] == userId()) { ?>
+                    <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
+                    <button class="btn btn-primary mr-3" onclick="onPostDelete(<?=$post['ID']?>)">Delete</button>
+                <?php } ?>
+            </div>
             <?php
             include widget('comment.input-box');
             ?>

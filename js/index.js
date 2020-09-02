@@ -241,8 +241,11 @@ function onClickDeleteFile(ID) {
     } )
         .done(function(re) {
             console.log('re', re);
+            console.log(re['ID'] === ID);
             if (re['ID'] === ID) {
-                $('#file'+ ID).remove();
+                console.log('onClickDeleteFile');
+                console.log($('#file'+ ID));
+                $('.files.edit #file'+ ID).remove();
             }
         })
         .fail(function() {
