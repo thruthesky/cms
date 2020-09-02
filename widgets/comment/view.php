@@ -20,7 +20,6 @@
                 </div>
                 <div class="files mb-3"></div>
                 <script>
-
                     $$(function() {
                         attachUploadedFilesTo($('#comment<?=$comment['comment_ID']?> .files'), <?=json_encode($comment['files']);?>, {extraClasses: 'col-4 col-sm-3'});
                     });

@@ -21,5 +21,13 @@ class CommentRoute extends ApiComment
         $comment_parent = $this->commentResponse(in('comment_parent'));
         $this->response( $this->commentInputBox( null, $comment, $comment_parent) );
     }
+
+    public function vote($in=null)
+    {
+        $this->response($this->commentVote(in()));
+    }
+
+
+
 }
 

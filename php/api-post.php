@@ -188,32 +188,105 @@ class ApiPost extends ApiLibrary
         }
         update_post_meta($ID, 'view_count', $views);
     }
+//
+//    public function postLike($in) {
+//        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+//        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+//
+//        $user_ID = wp_get_current_user()->ID;
+//
+//        $ID = $in['ID'];
+//
+//        // get count meta
+////        get_user_meta( $user_ID, $ID, true);
+//
+//        $likes = get_post_meta($ID, 'post_like', true);
+//        if (!$likes) {
+//            $likes = 1;
+//        } else {
+//            $likes++;
+//        }
+//        update_post_meta($ID, 'post_like', $likes);
+//        return $this->postResponse($ID, ['with_autop' => true]);
+//    }
+//
+//    public function postDislike($in) {
+//        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+//        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+//
+//    }
 
-    public function postLike($in) {
-        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
-        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
-        $user_ID = wp_get_current_user()->ID;
 
-        $ID = $in['ID'];
+    public function getVote($post_id, $user_id) {
 
-        // get count meta
-//        get_user_meta( $user_ID, $ID, true);
-
-        $likes = get_post_meta($ID, 'post_like', true);
-        if (!$likes) {
-            $likes = 1;
-        } else {
-            $likes++;
-        }
-        update_post_meta($ID, 'post_like', $likes);
-        return $this->postResponse($ID, ['with_autop' => true]);
+        global $wpdb;
+return        $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$post_id AND user_id=$user_id", ARRAY_A);
     }
 
-    public function postDislike($in) {
+
+    public function deleteVote($idxLog, $postId, $choice) {
+
+        global $wpdb;
+
+        // then, delete the vote
+        $wpdb->delete("x_like_log", ['idx' => $idxLog]);
+        decrease_post_meta( $postId, $choice );
+    }
+
+    public function increaseVote($post_id, $user_id, $choice) {
+
+        global $wpdb;
+        $wpdb->insert("x_like_log", [ 'post_id' => $post_id, 'user_id'=>$user_id, 'choice' => $choice]);
+        increase_post_meta( $post_id, $choice );
+    }
+
+    /**
+     * @see https://docs.google.com/document/d/1m3-wYZOaZQGbAzXeVlIpJNSdTIt3HCUiIt9UTmZUgXo/edit#heading=h.xu1fddfek3v
+     *
+     */
+    public function vote($in) {
         if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
         if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
+
+
+        if ( in('choice') != 'like' && in('choice') != 'dislike' ) return ERROR_CHOICE_MUST_BE_LIKE_OR_DISLIKE;
+
+
+
+
+        $post = get_post( $in['ID'] );
+        if ( ! $post ) return ERROR_POST_NOT_FOUND;
+
+        $post_id = $post->ID;
+        $user_id = wp_get_current_user()->ID;
+        $choice = $in['choice'];
+
+
+        if ( $post->post_author == $user_id ) return ERROR_CANNOT_VOTE_YOUR_OWN_POST;
+
+        $re = $this->getVote($post_id, $user_id);
+        if ( $re ) { // already vote?
+
+            // then, delete the vote
+            $this->deleteVote($re['idx'], $post_id, $re['choice']);
+
+            if ( $re['choice'] != $choice ) { // vote for the other?
+                $this->increaseVote($post_id, $user_id, $choice);
+            }
+        }
+        else { // didn't vote yet.
+            $this->increaseVote($post_id, $user_id, $choice);
+        }
+
+        $like = get_post_meta( $post_id, 'like', true);
+        $dislike = get_post_meta( $post_id, 'dislike', true);
+        return [
+            'ID' => $post_id,
+            'like' => $like,
+            'dislike' => $dislike
+        ];
     }
 
 

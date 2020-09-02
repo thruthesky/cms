@@ -141,10 +141,7 @@ function initServiceWorker() {
 
 function scrollIntoView(element, duration = 100) {
     var anchor = document.querySelector(element);
-    anchor.scrollIntoView({behavior: 'smooth'});
-    // $('body').animate({
-    //     scrollTop: $(element).offset().top
-    // }, duration);
+    anchor.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
 
 
@@ -190,8 +187,6 @@ function onChangeFile($box, options={}) {
             options['deleteButton'] = true;
             var html = getUploadedFileHtml(res, options);
             options['where'].append(html);
-
-
 
             $('.progress').hide();
         },
@@ -255,8 +250,10 @@ function onClickDeleteFile(ID) {
 
 
 function attachUploadedFilesTo($el, files, options) {
+
         for ( var file of files ) {
             $el.append(getUploadedFileHtml(file, options));
         }
+
 
 }
