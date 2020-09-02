@@ -68,7 +68,7 @@ class ApiPost extends ApiLibrary
         $ID = $in['ID'];
         if (isset($in['path']) && !empty($in['path'])) {
             $ID = get_page_by_path($in['path'], OBJECT, 'post');
-            print_r($ID);
+//            print_r($ID);
             if (!$ID) return ERROR_POST_NOT_FOUND_BY_THAT_PATH;
         }
         else if (isset($in['guid']) && !empty($in['guid'])) {
@@ -79,12 +79,17 @@ class ApiPost extends ApiLibrary
         }
 
         /**
-         * If there is no posd ID, return error.
+         * If there is no post ID, return error.
          */
         if (!$ID) return ERROR_ID_NOT_PROVIDED;
 
         $post_status = get_post_status($ID);
         if ($post_status == 'publish') {
+
+            /// update count
+            ///
+            $this->updatePostViewCount($ID);
+
             return $this->postResponse($ID, $in);
 
         } else {
@@ -170,6 +175,44 @@ class ApiPost extends ApiLibrary
         } else {
             return ERROR_FAILED_TO_DELETE_POST;
         }
+
+    }
+
+    private function updatePostViewCount($ID)
+    {
+        $views = get_post_meta($ID, 'view_count', true);
+        if (!$views) {
+            $views = 1;
+        } else {
+            $views++;
+        }
+        update_post_meta($ID, 'view_count', $views);
+    }
+
+    public function postLike($in) {
+        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+
+        $user_ID = wp_get_current_user()->ID;
+
+        $ID = $in['ID'];
+
+        // get count meta
+//        get_user_meta( $user_ID, $ID, true);
+
+        $likes = get_post_meta($ID, 'post_like', true);
+        if (!$likes) {
+            $likes = 1;
+        } else {
+            $likes++;
+        }
+        update_post_meta($ID, 'post_like', $likes);
+        return $this->postResponse($ID, ['with_autop' => true]);
+    }
+
+    public function postDislike($in) {
+        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
     }
 

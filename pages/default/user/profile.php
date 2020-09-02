@@ -1,5 +1,7 @@
 <?php
 $user = $apiLib->userResponse(sessionID());
+
+//dog($user);
 ?>
 
 

@@ -161,6 +161,36 @@ $slug = $post['slug'];
         $($this).attr('rows', 4);
     }
 
+    function onClickLike(ID){
+        console.log('like');
+
+        var data = {};
+        data['session_id'] = getUserSessionId();
+        data['route'] = "post.like";
+        data['ID'] = ID;
+        $.ajax( {
+            method: 'GET',
+            url: apiUrl,
+            data: data
+        } )
+            .done(function(re) {
+                if ( isBackendError(re) ) {
+                    alert(re);
+                }
+                else {
+                    console.log('re', re);
+                }
+            })
+            .fail(function() {
+                alert( "Server error" );
+            });
+    }
+
+
+    function onClickDislike(ID){
+
+        console.log('dislike');
+    }
 
 </script>
 
@@ -174,10 +204,19 @@ $slug = $post['slug'];
 <div class="container pb-3">
     <div class="post card mb-3">
         <div class="card-body mb-3">
-            <div>
-                <span><?=$post['author_name']?></span>
-                <span>Date: <?=$post['short_date_time']?></span>
-                <span>View: <?=$post['author_name']?></span>
+            <div class="row no-gutters">
+                <div class="mr-3">
+                    <?php if (!empty($post['author_photo_url'])) {
+                        echo "<img class='userPhoto circle' style='width: 50px' src='$post[author_photo_url]' alt='user photo'>";
+                    } else {
+                        echo "<img class='userPhoto circle' style='width: 50px' src='/wp-content/themes/cms/img/anonymous/anonymous.jpg' alt='user photo'>";
+                    }  ?>
+                </div>
+                <div class="col">
+                    <div><?=$post['author_name']?></div>
+                    <span>Date: <?=$post['short_date_time']?></span>
+                    <span>View: <?=$post['view_count']?></span>
+                </div>
             </div>
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
@@ -194,6 +233,8 @@ $slug = $post['slug'];
 
             </div>
             <div class="mb-3">
+                <button class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>)">Like</button>
+                <button class="btn btn-primary mr-3" onclick="onClickDislike(<?=$post['ID']?>)">Dislike</button>
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
