@@ -116,17 +116,13 @@ class ApiComment extends ApiPost
 
     public function deleteCommentVote($idxLog, $postId, $choice) {
 
-        global $wpdb;
 
-        // then, delete the vote
-        $wpdb->delete("x_like_log", ['idx' => $idxLog]);
+        $this->deleteVoteRecord($idxLog);
         decrease_comment_meta( $postId, $choice );
     }
 
     public function increaseCommentVote($post_id, $user_id, $choice) {
-
-        global $wpdb;
-        $wpdb->insert("x_like_log", [ 'post_id' => $post_id, 'user_id'=>$user_id, 'choice' => $choice]);
+        $this->insertVoteRecord($post_id, $user_id, $choice);
         increase_comment_meta( $post_id, $choice );
     }
 

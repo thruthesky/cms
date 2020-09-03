@@ -225,19 +225,26 @@ return        $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$p
     }
 
 
-    public function deleteVote($idxLog, $postId, $choice) {
+    public function deleteVoteRecord($idxLog) {
 
         global $wpdb;
 
         // then, delete the vote
         $wpdb->delete("x_like_log", ['idx' => $idxLog]);
+    }
+    public function insertVoteRecord($post_id, $user_id, $choice) {
+
+        global $wpdb;
+        $wpdb->insert("x_like_log", [ 'post_id' => $post_id, 'user_id'=>$user_id, 'choice' => $choice]);
+    }
+
+    public function deleteVote($idxLog, $postId, $choice) {
+        $this->deleteVoteRecord($idxLog);
         decrease_post_meta( $postId, $choice );
     }
 
     public function increaseVote($post_id, $user_id, $choice) {
-
-        global $wpdb;
-        $wpdb->insert("x_like_log", [ 'post_id' => $post_id, 'user_id'=>$user_id, 'choice' => $choice]);
+        $this->insertVoteRecord($post_id, $user_id, $choice);
         increase_post_meta( $post_id, $choice );
     }
 
