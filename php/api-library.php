@@ -375,8 +375,10 @@ class ApiLibrary {
             $userdata['display_name'] = $in['nickname'];
             $userdata['nickname'] = $in['nickname'];
         }
-
+        /// photo URL
         if (isset($in['photoUrl'])) $userdata['photoURL'] = $in['photoURL'];
+
+
         if (isset($in['first_name'])) $userdata['first_name'] = $in['first_name'];
         if (isset($in['last_name'])) $userdata['last_name'] = $in['last_name'];
 

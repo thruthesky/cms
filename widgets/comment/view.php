@@ -12,7 +12,6 @@
                     <div>
                         <span><?=$comment['comment_author']?></span>
                         <span>Date: <?=$comment['short_date_time']?></span>
-                        <span>View: <?=$comment['view'] ?? ''?></span>
                     </div>
                     <div class="content">
                         <?=$comment['comment_content']?>
