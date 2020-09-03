@@ -624,7 +624,7 @@ class ApiLibrary {
         foreach ($metas as $k => $v) {
             $singles[$k] = $v[0];
         }
-        $post = array_merge($singles, $post);
+        $post = array_merge($post,$singles);
 
 
         // get post slug as category name and pass
@@ -794,8 +794,7 @@ class ApiLibrary {
         foreach ($metas as $k => $v) {
             $singles[$k] = $v[0];
         }
-        $ret = array_merge($singles, $ret);
-//        dog($ret);
+        $ret = array_merge($ret,$singles);
         return $ret;
     }
 
