@@ -9,6 +9,7 @@ define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
  */
 $_theme_path = '/wp-content/themes/cms';
 define('THEME_PATH', $_theme_path);
+define('ANONYMOUS_PROFILE_PHOTO', '/wp-content/themes/cms/img/anonymous/anonymous.jpg');
 
 
 define('ERROR_ROUTE_IS_EMPTY', 'route is empty');

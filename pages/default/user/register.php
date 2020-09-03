@@ -7,33 +7,44 @@ $user = [
     'middle_name' => '',
     'last_name' => '',
     'nickname' => '',
-    'mobile' => ''
+    'mobile' => '',
+    'photoURL' => ''
 ];
 if ( loggedIn()) {
     $user = $apiLib->userResponse(sessionId());
 }
-
-
 ?>
 
 <script>
 
-    function registerUrl(form) {
-        const method = "<?= loggedIn() ? 'update' : 'register'?>";
-        return apiUrl + '?route=user.' + method + '&' + $( form ).serialize();
-    }
+//    function registerUrl(form) {
+//        const method = "<?//= loggedIn() ? 'update' : 'register'?>//";
+//        return apiUrl + '?route=user.' + method + '&' + $( form ).serialize();
+//    }
 
     function onRegisterFormSubmit(form) {
 
-        $.ajax( registerUrl(form) )
-            .done(function(re) {
+        const method = "<?= loggedIn() ? 'update' : 'register'?>";
+
+        let data = objectifyForm(form);
+        data['route'] = 'user.' + method;
+
+        if ($(form).find('.userPhoto').attr('src') !== "<?=ANONYMOUS_PROFILE_PHOTO?>") {
+            data['photoURL'] = $(form).find('.userPhoto').attr('src')
+        }
+
+        $.ajax( {
+            method: 'GET',
+            url: apiUrl,
+            data: data
+        }).done(function(re) {
                 if ( isBackendError(re) ) {
                     alert(re);
                 }
                 else {
                     console.log('re', re);
                     setLogin(re);
-                    move(homePage);
+//                    move(homePage);
                 }
             })
             .fail(function() {
@@ -46,6 +57,15 @@ if ( loggedIn()) {
 <div class="container py-3">
 
     <form class="register" onsubmit="return onRegisterFormSubmit(this)">
+        <div class="d-flex justify-content-center">
+            <div class="upload-profile-box circle wh120x120">
+                <input type="file" name="file" onchange="onChangeUserPhoto(this, {where: $(this).parents().find('.userPhoto'), progress: $(this).parents().find('.progress')})">
+                <img class="userPhoto w-100" src="<?=$user['photoURL'] ?? ANONYMOUS_PROFILE_PHOTO?>" alt="user photo">
+                <div class="progress mt-2" style="display: none">
+                    <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+        </div>
 
         <? if (loggedIn()) { ?>
             <input type="hidden" name="session_id" value="<?=$user['session_id']?>">

@@ -341,7 +341,7 @@ class ApiLibrary {
         $user = wp_get_current_user();
 
         $userdata = [
-            'ID' => $user->ID
+            'ID' => $user->ID,
         ];
 
 
@@ -375,8 +375,10 @@ class ApiLibrary {
             $userdata['display_name'] = $in['nickname'];
             $userdata['nickname'] = $in['nickname'];
         }
+
         /// photo URL
-        if (isset($in['photoUrl'])) $userdata['photoURL'] = $in['photoURL'];
+
+        if (isset($in['photoURL'])) $userdata['photoURL'] = $in['photoURL'];
 
 
         if (isset($in['first_name'])) $userdata['first_name'] = $in['first_name'];

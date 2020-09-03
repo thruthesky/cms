@@ -2,6 +2,11 @@
   background-color: #fefefe !important;
 }
 
+.wh120x120 {
+  width: 120px!important;
+  height: 120px!important;
+}
+
 .top {
   top: 0 !important;
 }
@@ -83,5 +88,14 @@
     font-size: 40em;
     opacity: 0.01;
   }
+}
 
+.upload-profile-box {
+  position: relative;
+  overflow: hidden;
+  input[type=file] {
+    position: absolute;
+    font-size: 40em;
+    opacity: 0.01;
+  }
 }

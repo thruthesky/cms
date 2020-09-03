@@ -2,7 +2,7 @@
 <div class="card border-success mb-3 login-information" style="display: none;">
     <div class="card-header bg-transparent border-success">Blog title</div>
     <div class="card-body text-success">
-        <img class="userPhoto circle" src="" alt="user photo">
+        <img class="userPhoto circle wh120x120" src="" alt="user photo">
         <h5 class="card-title nickname"></h5>
         <p class="card-text">Blog description. In the long history of the world, only a few generation have been granted the role of </p>
     </div>

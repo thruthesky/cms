@@ -6,6 +6,7 @@
  */
 const theme_path = '/wp-content/themes/cms';
 const uploadedFileClass = 'uploaded-file';
+const anonymousUserPhoto  = '/wp-content/themes/cms/img/anonymous/anonymous.jpg';
 
 
 
@@ -207,6 +208,55 @@ function onChangeFile($box, options={}) {
         }
     });
 }
+
+function onChangeUserPhoto($box, options={}) {
+
+    console.log('options', options);
+    let formData = new FormData();
+
+    formData.append('session_id', getUserSessionId());
+    formData.append('route', 'file.upload');
+    formData.append('userfile', $box.files[0]);
+
+
+    const $progress = options.progress;
+    $progress.show();
+
+    $.ajax({
+        url: apiUrl,
+        data: formData,
+        type: 'POST',
+        enctype: 'multipart/form-data',
+        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+        processData: false, // NEEDED, DON'T OMIT THIS
+        // ... Other options like success and etc
+        cache: false,
+        timeout: 60 * 1000 * 10, /// 10 minutes.
+        success: function (res) {
+            if ( isBackendError(res) ) {
+                alert(res);
+                return;
+            }
+
+            options['where'].attr("src", res.thumbnail_url);
+            $progress.hide();
+        },
+        xhr: function() {
+            let myXhr = $.ajaxSettings.xhr();
+            if(myXhr.upload){
+                myXhr.upload.addEventListener('progress',progress.bind(null, $progress), false);
+            }
+            return myXhr;
+        },
+
+        error: function(data){
+            console.error(data);
+            $progress.hide();
+        }
+    });
+}
+
+
 
 function progress(progress,e){
 

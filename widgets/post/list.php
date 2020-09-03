@@ -1,7 +1,6 @@
 <?php
 $slug = in('slug');
 $posts =  $apiPost->postSearch(['slug' => $slug]);
-
 ?>
 <a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
 <div class="container pb-3">
@@ -24,7 +23,7 @@ $posts =  $apiPost->postSearch(['slug' => $slug]);
 
                             <span><?=$post['author_name']?></span>
                             <span>Date: <?=$post['short_date_time']?></span>
-                            <span>View: <?=$post['view']?? 1?></span>
+                            <span>View: <?=$post['view_count']??''?></span>
                         </div>
                         <a class="card-title fs-lg" href="<?=$post['guid']?>"><?=$post['post_title']?></a>
                     </div>

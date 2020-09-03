@@ -248,8 +248,8 @@ $slug = $post['slug'];
 
             </div>
             <div class="mb-3">
-                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')"><?=$post['like']!=="0" ?? '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?></button>
-                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')"><?=$post['dislike']!=="0" ?? '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
+                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')"><?=isset($post['like']) && $post['like']!=="0" ?? '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?></button>
+                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')"><?=isset($post['dislike'])&&$post['dislike']!=="0" ?? '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>

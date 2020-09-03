@@ -2,6 +2,11 @@
   background-color: #fefefe !important;
 }
 
+.wh120x120 {
+  width: 120px !important;
+  height: 120px !important;
+}
+
 .top {
   top: 0 !important;
 }
@@ -43,6 +48,16 @@
   font-size: 1.5em;
 }
 .upload-photo-box input[type=file] {
+  position: absolute;
+  font-size: 40em;
+  opacity: 0.01;
+}
+
+.upload-profile-box {
+  position: relative;
+  overflow: hidden;
+}
+.upload-profile-box input[type=file] {
   position: absolute;
   font-size: 40em;
   opacity: 0.01;
