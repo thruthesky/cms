@@ -164,3 +164,53 @@ function admin()
     return current_user_can('manage_options');
 }
 
+
+
+
+function increase_post_meta( $post_id, $key ) {
+    $re = get_post_meta( $post_id, $key, true );
+    $re ++;
+    update_post_meta( $post_id, $key, $re );
+    return $re;
+}
+function decrease_post_meta( $post_id, $key ) {
+    $re = get_post_meta( $post_id, $key, true );
+    $re --;
+    update_post_meta( $post_id, $key, $re );
+    return $re;
+}
+
+function increase_comment_meta( $comment_id, $key ) {
+    $re = get_comment_meta( $comment_id, $key, true );
+    $re ++;
+    update_comment_meta( $comment_id, $key, $re );
+    return $re;
+}
+function decrease_comment_meta( $comment_id, $key ) {
+    $re = get_comment_meta( $comment_id, $key, true );
+    $re --;
+    update_comment_meta( $comment_id, $key, $re );
+    return $re;
+}
+
+
+
+/**
+ *
+ * Since posts.post_parent only related the post_ID,
+ *      - When an attachment posted, we cannot attach it to a comment,
+ *      - So, We make a special ID for comment_ID to save posts.post_parent
+ *          If the posts.post_parent is bigger than 100000000, then it is a comment_ID.
+ *
+ *      - When you display a comment, you need to check if there is any post for that comment_ID.
+ * @see attach_comment_files()
+ *
+ * @param $comment_ID
+ * @return int
+ */
+function getCommentPostParent( $comment_ID ) {
+    return 100000000 + $comment_ID;
+}
+function get_converted_post_id_from_comment_id( $comment_ID ) {
+    return getCommentPostParent( $comment_ID );
+}

@@ -34,6 +34,10 @@ define('ERROR_COMMENT_POST_ID_IS_EMPTY', 'comment_post_id is empty');
 
 define('CUSTOM_UPLOAD_DIR', ABSPATH . 'wp-content/custom-uploads');
 
+define('ERROR_CHOICE_MUST_BE_LIKE_OR_DISLIKE', 'choice_must_be_like_or_dislike');
+define('ERROR_CANNOT_VOTE_YOUR_OWN_POST', 'cannot_vote_your_own_post');
+
+
 
 /**
  * @todo defines below are not in use. remove on Oct 1st.
@@ -116,6 +120,7 @@ define('ERROR_CATEGORY_NOT_PROVIDED', 'category_is_not_provided');
 define('ERROR_WRONG_CATEGORY_NAME', 'error_wrong_category_name');
 define('ERROR_FAILED_TO_EDIT_POST', 'failed_to_edit_post');
 define('ERROR_LOGIN_FIRST', 'login_first');
+
 define('ERROR_POST_NOT_FOUND_BY_THAT_PATH', 'post_not_found_by_that_path');
 define('ERROR_POST_NOT_FOUND_BY_THAT_GUID', 'post_not_found_by_that_gid');
 define('ERROR_ID_NOT_PROVIDED', 'post_id_is_not_provided');
@@ -163,3 +168,4 @@ define('ERROR_COMMENT_ID_NOT_PROVIDED', 'comment_id_not_provided');
 define('ERROR_FILE_ID_NOT_PROVIDED', 'file_id_not_provided');
 
 define('ERROR_USER_UPDATE', 'user_update_failed');
+

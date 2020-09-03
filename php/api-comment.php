@@ -113,4 +113,62 @@ class ApiComment extends ApiPost
     }
 
 
+
+    public function deleteCommentVote($idxLog, $postId, $choice) {
+
+        global $wpdb;
+
+        // then, delete the vote
+        $wpdb->delete("x_like_log", ['idx' => $idxLog]);
+        decrease_comment_meta( $postId, $choice );
+    }
+
+    public function increaseCommentVote($post_id, $user_id, $choice) {
+
+        global $wpdb;
+        $wpdb->insert("x_like_log", [ 'post_id' => $post_id, 'user_id'=>$user_id, 'choice' => $choice]);
+        increase_comment_meta( $post_id, $choice );
+    }
+
+
+    public function commentVote($in) {
+        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
+        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
+
+
+        if ( in('choice') != 'like' && in('choice') != 'dislike' ) return ERROR_CHOICE_MUST_BE_LIKE_OR_DISLIKE;
+
+        $user_id = wp_get_current_user()->ID;
+        $choice = $in['choice'];
+
+            $comment = get_comment($in['comment_ID']);
+            if ( $comment->user_id == $user_id ) return ERROR_CANNOT_VOTE_YOUR_OWN_POST;
+            $post_id = get_converted_post_id_from_comment_id( $comment->comment_ID );
+
+        $re = $this->getVote($post_id, $user_id);
+
+        if ( $re ) { // already vote?
+            // then, delete the vote
+            $this->deleteCommentVote($re['idx'], $post_id, $re['choice']);
+
+            if ( $re['choice'] != $choice ) { // vote for the other?
+                $this->increaseCommentVote($post_id, $user_id, $choice);
+            }
+        }
+        else { // didn't vote yet.
+            $this->increaseCommentVote($post_id, $user_id, $choice);
+        }
+
+
+        $like = get_comment_meta( $in['comment_ID'], 'like', true);
+        $dislike = get_comment_meta( $in['comment_ID'], 'dislike', true);
+        return [
+            'comment_ID' => $in['comment_ID'],
+            'like' => $like,
+            'dislike' => $dislike
+        ];
+    }
+
+
+
 }

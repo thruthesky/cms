@@ -1,18 +1,14 @@
 <?php
 $post =  $apiPost->postGet(['ID' => url_to_postid(get_page_uri())]);
 $slug = $post['slug'];
-
-//dog($post);
 ?>
-
-
 <script>
     function onCommentDelete(comment_ID) {
 
-        var re = confirm('Are you sure you want to delete this comment?');
+        const re = confirm('Are you sure you want to delete this comment?');
 
         if (!re) return;
-        var data = {};
+        let data = {};
         data['session_id'] = getUserSessionId();
         data['route'] = "comment.delete";
         data['comment_ID'] = comment_ID;
@@ -97,14 +93,14 @@ $slug = $post['slug'];
                     if (commentBox.length) { // Update
                         commentBox.replaceWith(onCommentCreateOrUpdateApplyDepth(re['html'], commentBox));
                         $(form).parent().remove();
-                    } else if ( re['comment_parent'] === "0" ) {
+                    } else if ( re['comment_parent'] === "0" ) { // Reply on the post.
                         $('#newcomment' + data['comment_post_ID']).after(re['html']);
                         $(form).find('textarea').val('');
-                        $(form).parent().find('files').empty();
-                    } else {
-                        var parent_comment = $('#comment' + re['comment_parent']);
+                        $(form).parent().find('.files').empty();
+                    } else { // Reply under a comment.
+                        const parent_comment = $('#comment' + re['comment_parent']);
                         parent_comment.after(onCommentCreateOrUpdateApplyDepth(re['html'], parent_comment, 1));
-                        $(form).parent().remove();
+                        $(form).parent().remove(); // Remove the form.
 
                         // TODO: it's not working.
                         scrollIntoView('#comment' + re['comment_ID']);
@@ -117,28 +113,40 @@ $slug = $post['slug'];
         return false;
     }
 
+    /**
+     * Patch depth based on the parent's comment. or the comment itself if it's for update.
+     */
     function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0) {
         var depth = parentElement.find('.display').data('depth') + incrementBy;
         return html.replace('data-depth="1"', 'data-depth="' + depth + '"');
     }
 
 
+    /**
+     * Attach comment input box on comment create & update.
+     *
+     * Get comment input box `html` from Server through Ajax call, then attach it at the bottom of the comment.
+     *
+     *
+     * @param comment_ID
+     * @param comment_parent
+     * @returns {boolean}
+     */
     function addCommentEditForm(comment_ID, comment_parent) {
 
-        var fcp= $("[data-form-comment-parent=" + comment_parent + "]").length;
-        // console.log(fcp);
-        if(fcp) return;
+        /// Prevent not to add multiple input box.
+        const fomCommentParent = $("[data-form-comment-parent=" + comment_parent + "]").length;
+        if(fomCommentParent) return false;
 
-        var data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
-        // console.log(data);
+        /// Get comment input box from server.
+        const data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
         $.ajax( {
             method: 'POST',
             url: apiUrl,
             data: data
         } )
             .done(function(re) {
-                // console.log('re', re);
-                var cmt;
+                let cmt;
                 if ( comment_ID ) {
                     cmt = $('#comment' + comment_ID);
                     cmt.find('.display').after(re);
@@ -148,6 +156,7 @@ $slug = $post['slug'];
                     cmt.find('.display').after(re);
                 }
                 cmt.find('.input-box textarea').focus();
+                return true;
             })
             .fail(function() {
                 alert( "Server error" );
@@ -161,13 +170,14 @@ $slug = $post['slug'];
         $($this).attr('rows', 4);
     }
 
-    function onClickLike(ID){
+    function onClickLike(ID, choice){
         console.log('like');
 
         var data = {};
         data['session_id'] = getUserSessionId();
-        data['route'] = "post.like";
+        data['route'] = "post.vote";
         data['ID'] = ID;
+        data['choice'] = choice;
         $.ajax( {
             method: 'GET',
             url: apiUrl,
@@ -186,11 +196,6 @@ $slug = $post['slug'];
             });
     }
 
-
-    function onClickDislike(ID){
-
-        console.log('dislike');
-    }
 
 </script>
 
@@ -223,18 +228,15 @@ $slug = $post['slug'];
             <div class="post-view-files row py-3">
 
                 <script>
-                    var files = <?=json_encode($post['files']);?>;
                     $$(function() {
-                        for ( var file of files ) {
-                            $('.post-view-files').append(getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'}));
-                        }
+                    attachUploadedFilesTo($('.post-view-files'), <?=json_encode($post['files']);?>, {extraClasses: 'col-4 col-sm-3'});
                     });
                 </script>
 
             </div>
             <div class="mb-3">
-                <button class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>)">Like</button>
-                <button class="btn btn-primary mr-3" onclick="onClickDislike(<?=$post['ID']?>)">Dislike</button>
+                <button class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')">Like</button>
+                <button class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">Dislike</button>
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>

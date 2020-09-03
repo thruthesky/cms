@@ -23,15 +23,11 @@ class PostRoute extends ApiPost
         $this->response($this->postDelete(in()));
     }
 
-    public function like()
+    public function vote($in=null)
     {
-        $this->response($this->postLike(in()));
+        $this->response(parent::vote(in()));
     }
 
-    public function dislike()
-    {
-        $this->response($this->postDislike(in()));
-    }
 
 }
 
