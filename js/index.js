@@ -168,7 +168,6 @@ function onChangeFile($box, options={}) {
     formData.append('route', 'file.upload');
     formData.append('userfile', $box.files[0]);
 
-
     const $progress = options.progress;
     $progress.show();
 
@@ -209,6 +208,7 @@ function onChangeFile($box, options={}) {
     });
 }
 
+
 function onChangeUserPhoto($box, options={}) {
 
     console.log('options', options);
@@ -217,7 +217,6 @@ function onChangeUserPhoto($box, options={}) {
     formData.append('session_id', getUserSessionId());
     formData.append('route', 'file.upload');
     formData.append('userfile', $box.files[0]);
-
 
     const $progress = options.progress;
     $progress.show();

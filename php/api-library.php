@@ -594,8 +594,9 @@ class ApiLibrary {
         /// author name
         $post['author_name'] = get_the_author_meta('display_name', $post['post_author']);
 
-        /// @TODO: add author post url.
-        $post['author_photo_url'] = '';
+
+        /// Get User Author then get photoURL.
+        $post['author_photo_url'] = get_user_meta($post['post_author'], 'photoURL', true);
 
 
 
@@ -782,8 +783,9 @@ class ApiLibrary {
         $ret['files'] = $this->get_uploaded_files($comment_id, COMMENT_ATTACHMENT);
         /// post author user profile
         ///
-        $u = $this->userResponse($comment['user_id']);
-        $ret['author_photo_url'] = $u['photo'] ?? '';
+//        $u = $this->userResponse($comment['user_id']);
+//        dog($comment);
+        $ret['author_photo_url'] = get_user_meta($comment['user_id'], 'photoURL', true);;
         // date
         $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
         $ret['user_vote'] = $this->getUserVoteChoice(get_converted_post_id_from_comment_id($comment_id), $options);

@@ -17,11 +17,6 @@ if ( loggedIn()) {
 
 <script>
 
-    //    function registerUrl(form) {
-    //        const method = "<?//= loggedIn() ? 'update' : 'register'?>//";
-    //        return apiUrl + '?route=user.' + method + '&' + $( form ).serialize();
-    //    }
-
     function onRegisterFormSubmit(form) {
 
         const method = "<?= loggedIn() ? 'update' : 'register'?>";
@@ -42,7 +37,6 @@ if ( loggedIn()) {
                 alert(re);
             }
             else {
-                console.log('re', re);
                 setLogin(re);
                 move(homePage);
             }
