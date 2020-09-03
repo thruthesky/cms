@@ -2,10 +2,11 @@
 $user = $apiLib->userResponse(sessionID());
 
 ?>
-<div class="container pb-3">
-    <h1>Profile</h1>
-    <div class="card no-gutters mb-3">
+<div class="container py-3">
+    <div class="card">
         <div class="card-body">
+
+            <h1>User Profile</h1>
         <div class="d-flex justify-content-center mb-3">
             <img class="userPhoto circle w-100 wh120x120" src="<?=!empty($user['photoURL']) ? $user['photoURL'] : ANONYMOUS_PROFILE_PHOTO?>" alt="user photo">
         </div>
@@ -33,11 +34,13 @@ $user = $apiLib->userResponse(sessionID());
                 <input type="text" readonly class="form-control-plaintext" id="staticEmail" value="<?=$user['mobile']?>">
             </div>
         </div>
+
+            <div class="d-flex justify-content-between">
+                <a class="btn btn-secondary" data-button="profile-update" href="/?page=user.update">Update Profile</a>
+                <a class="btn btn-danger" href="/?page=user.resign">Resign</a>
+            </div>
         </div>
-    </div>
-    <div class="d-flex justify-content-between pb-3">
-        <a class="btn btn-secondary" data-button="profile-update" href="/?page=user.update">Update Profile</a>
-        <a class="btn btn-danger" href="/?page=user.resign">Resign</a>
+
     </div>
 </div>
 
