@@ -767,6 +767,8 @@ class ApiLibrary {
         if ( empty($comment_id)) return null;
         $ret = [];
         $comment = get_comment($comment_id, ARRAY_A);
+
+
         $ret['comment_ID'] = $comment['comment_ID'];
         $ret['comment_post_ID'] = $comment['comment_post_ID'];
         $ret['comment_parent'] = $comment['comment_parent'];
@@ -783,6 +785,15 @@ class ApiLibrary {
         // date
         $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
         $ret['user_vote'] = $this->getUserVoteChoice(get_converted_post_id_from_comment_id($comment_id), $options);
+
+        // Add meta data and merge into comment.
+        $metas = get_comment_meta($comment['comment_ID'], '', true);
+        $singles = [];
+        foreach ($metas as $k => $v) {
+            $singles[$k] = $v[0];
+        }
+        $ret = array_merge($singles, $ret);
+//        dog($ret);
         return $ret;
     }
 

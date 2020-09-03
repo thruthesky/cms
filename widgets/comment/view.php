@@ -24,8 +24,8 @@
                     });
                 </script>
                 <div>
-                    <button id="like<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'like', 'comment')"><?=$comment['user_vote']== 'like'?'Liked':'Like'?></button>
-                    <button id="dislike<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'dislike', 'comment')"><?=$comment['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
+                    <button id="like<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'like', 'comment')"><?=$comment['like']!== "0" ?? '' ?> <?=$comment['user_vote']== 'like'?'Liked':'Like'?></button>
+                    <button id="dislike<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'dislike', 'comment')"><?=$comment['dislike']!== "0" ?? '' ?> <?=$comment['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
                     <button class="btn btn-primary mr-3" onclick="addCommentEditForm(0, <?=$comment['comment_ID']?>)">Reply</button>
                     <?php
                     if($comment['user_id'] == userId()) { ?>

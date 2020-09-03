@@ -48,7 +48,7 @@ if ( $post ) {
 
         <div class="form-group row no-gutters">
             <div class="upload-photo-box">
-                <input type="file" name="file" onchange="onChangeFile(this, {where: $(this).parents('.input-box').find('.files'), extraClasses: 'col-4 col-sm-3'})">
+                <input type="file" name="file" onchange="onChangeFile(this, {where: $(this).parents('.input-box').find('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.input-box').find('.progress')})">
                 <i role="button" class="fa fa-camera"></i>
             </div>
             <div class="col mr-3">
@@ -59,6 +59,10 @@ if ( $post ) {
                     <i class="fa fa-paper-plane" aria-hidden="true"></i>
                 </button>
             </div>
+        </div>
+
+        <div class="progress" style="display: none">
+            <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
         </div>
     </form>
 

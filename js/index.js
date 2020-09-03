@@ -161,11 +161,15 @@ function getUploadedFileHtml(file, options = {}) {
 function onChangeFile($box, options={}) {
 
     console.log('options', options);
-    var formData = new FormData();
+    let formData = new FormData();
 
     formData.append('session_id', getUserSessionId());
     formData.append('route', 'file.upload');
     formData.append('userfile', $box.files[0]);
+
+
+    const $progress = options.progress;
+    $progress.show();
 
     $.ajax({
         url: apiUrl,
@@ -185,28 +189,30 @@ function onChangeFile($box, options={}) {
             // console.log('success', res);
 
             options['deleteButton'] = true;
-            var html = getUploadedFileHtml(res, options);
+            let html = getUploadedFileHtml(res, options);
             options['where'].append(html);
-
-            $('.progress').hide();
+            $progress.hide();
         },
         xhr: function() {
-            var myXhr = $.ajaxSettings.xhr();
+            let myXhr = $.ajaxSettings.xhr();
             if(myXhr.upload){
-                myXhr.upload.addEventListener('progress',progress, false);
+                myXhr.upload.addEventListener('progress',progress.bind(null, $progress), false);
             }
             return myXhr;
         },
 
         error: function(data){
             console.error(data);
+            $progress.hide();
         }
     });
 }
 
-function progress(e){
+function progress(progress,e){
 
-    // console.log('e: ', e);
+    console.log('progress: ', progress);
+
+    console.log('e: ', e);
 
     if(e.lengthComputable){
         var max = e.total;
@@ -218,9 +224,10 @@ function progress(e){
         if(Percentage >= 100)
         {
             // process completed
+            progress.find('.progress-bar').width(0+'%');
 
         } else {
-//                $('.progress').width(Percentage+'%')
+            progress.find('.progress-bar').width(Percentage+'%')
         }
     }
 }

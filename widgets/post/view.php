@@ -4,6 +4,7 @@ $post =  $apiPost->postGet([
         'session_id' => sessionId()
 ]);
 $slug = $post['slug'];
+//dog($post);
 ?>
 <script>
     function onCommentDelete(comment_ID) {
@@ -191,8 +192,16 @@ $slug = $post['slug'];
                 }
                 else {
                     console.log(re);
-                    $('#like' + re['ID']).html(re['user_vote'] === "like"? 'Liked':'Like');
-                    $('#dislike' + re['ID']).html(re['user_vote'] === "dislike"? 'Disliked':'Dislike');
+                    let like = re['user_vote'] === "like"? 'Liked':'Like';
+                    if (re['like']!=="0") {
+                       like = re['like'] + " " + like;
+                    }
+                    let dislike = re['user_vote'] === "dislike"? 'Disliked':'Dislike';
+                    if (re['dislike']!=="0") {
+                        dislike = re['dislike'] + " " + dislike;
+                    }
+                    $('#like' + re['ID']).html(like);
+                    $('#dislike' + re['ID']).html(dislike);
                 }
             })
             .fail(function() {
@@ -239,8 +248,8 @@ $slug = $post['slug'];
 
             </div>
             <div class="mb-3">
-                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')"><?=$post['user_vote']== 'like'?'Liked':'Like'?></button>
-                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')"><?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
+                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')"><?=$post['like']!=="0" ?? '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?></button>
+                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')"><?=$post['dislike']!=="0" ?? '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
