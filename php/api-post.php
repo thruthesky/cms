@@ -60,7 +60,6 @@ class ApiPost extends ApiLibrary
      */
     public function postGet($in)
     {
-
         /**
          * Get post ID.
          */
@@ -86,9 +85,13 @@ class ApiPost extends ApiLibrary
         $post_status = get_post_status($ID);
         if ($post_status == 'publish') {
 
-            /// update count
-            ///
-            $this->updatePostViewCount($ID);
+
+            /**
+             * it count by default every time this method is called.
+             */
+            $count = true;
+            if (isset($in['post_count'])) $count = $in['post_count'];
+            if ($count) $this->updatePostViewCount($ID);
 
             return $this->postResponse($ID, $in);
 
@@ -188,42 +191,6 @@ class ApiPost extends ApiLibrary
         }
         update_post_meta($ID, 'view_count', $views);
     }
-//
-//    public function postLike($in) {
-//        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
-//        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
-//
-//        $user_ID = wp_get_current_user()->ID;
-//
-//        $ID = $in['ID'];
-//
-//        // get count meta
-////        get_user_meta( $user_ID, $ID, true);
-//
-//        $likes = get_post_meta($ID, 'post_like', true);
-//        if (!$likes) {
-//            $likes = 1;
-//        } else {
-//            $likes++;
-//        }
-//        update_post_meta($ID, 'post_like', $likes);
-//        return $this->postResponse($ID, ['with_autop' => true]);
-//    }
-//
-//    public function postDislike($in) {
-//        if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
-//        if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
-//
-//    }
-
-
-
-    public function getVote($post_id, $user_id) {
-
-        global $wpdb;
-return        $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$post_id AND user_id=$user_id", ARRAY_A);
-    }
-
 
     public function deleteVoteRecord($idxLog) {
 
@@ -256,12 +223,7 @@ return        $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$p
         if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
         if (!is_user_logged_in()) return ERROR_LOGIN_FIRST;
 
-
-
         if ( in('choice') != 'like' && in('choice') != 'dislike' ) return ERROR_CHOICE_MUST_BE_LIKE_OR_DISLIKE;
-
-
-
 
         $post = get_post( $in['ID'] );
         if ( ! $post ) return ERROR_POST_NOT_FOUND;
@@ -269,7 +231,6 @@ return        $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$p
         $post_id = $post->ID;
         $user_id = wp_get_current_user()->ID;
         $choice = $in['choice'];
-
 
         if ( $post->post_author == $user_id ) return ERROR_CANNOT_VOTE_YOUR_OWN_POST;
 
@@ -292,7 +253,8 @@ return        $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$p
         return [
             'ID' => $post_id,
             'like' => $like,
-            'dislike' => $dislike
+            'dislike' => $dislike,
+            'user_vote' => $this->getVoteChoice($post_id, $user_id)
         ];
     }
 

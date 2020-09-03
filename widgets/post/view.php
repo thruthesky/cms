@@ -1,5 +1,8 @@
 <?php
-$post =  $apiPost->postGet(['ID' => url_to_postid(get_page_uri())]);
+$post =  $apiPost->postGet([
+        'ID' => url_to_postid(get_page_uri()),
+        'session_id' => sessionId()
+]);
 $slug = $post['slug'];
 ?>
 <script>
@@ -170,12 +173,11 @@ $slug = $post['slug'];
         $($this).attr('rows', 4);
     }
 
-    function onClickLike(ID, choice){
-        console.log('like');
-
-        var data = {};
+    function onClickLike(ID, choice , route = 'post'){
+        console.log('choice:' + choice);
+        let data = {};
         data['session_id'] = getUserSessionId();
-        data['route'] = "post.vote";
+        data['route'] = route + ".vote";
         data['ID'] = ID;
         data['choice'] = choice;
         $.ajax( {
@@ -188,7 +190,9 @@ $slug = $post['slug'];
                     alert(re);
                 }
                 else {
-                    console.log('re', re);
+                    console.log(re);
+                    $('#like' + re['ID']).html(re['user_vote'] === "like"? 'Liked':'Like');
+                    $('#dislike' + re['ID']).html(re['user_vote'] === "dislike"? 'Disliked':'Dislike');
                 }
             })
             .fail(function() {
@@ -235,8 +239,8 @@ $slug = $post['slug'];
 
             </div>
             <div class="mb-3">
-                <button class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')">Like</button>
-                <button class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">Dislike</button>
+                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')"><?=$post['user_vote']== 'like'?'Liked':'Like'?></button>
+                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')"><?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>

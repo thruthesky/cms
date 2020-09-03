@@ -147,7 +147,7 @@ function scrollIntoView(element, duration = 100) {
 
 function getUploadedFileHtml(file, options = {}) {
 
-    console.log(options);
+    // console.log(options);
     if ( !options['extraClasses'] ) options['extraClasses'] = '';
     if ( typeof options['deleteButton'] == 'undefined' ) options['deleteButton'] = false;
 

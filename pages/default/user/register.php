@@ -1,6 +1,14 @@
 <?php
 //
-$user = [];
+$user = [
+    'session_id' => '',
+    'user_email' => '',
+    'first_name' => '',
+    'middle_name' => '',
+    'last_name' => '',
+    'nickname' => '',
+    'mobile' => ''
+];
 if ( loggedIn()) {
     $user = $apiLib->userResponse(sessionId());
 }
@@ -11,11 +19,8 @@ if ( loggedIn()) {
 <script>
 
     function registerUrl(form) {
-        var method = "<?= loggedIn() ? 'update' : 'register'?>";
-
-        var url = apiUrl + '?route=user.' + method + '&' + $( form ).serialize();
-        console.log(url);
-        return url;
+        const method = "<?= loggedIn() ? 'update' : 'register'?>";
+        return apiUrl + '?route=user.' + method + '&' + $( form ).serialize();
     }
 
     function onRegisterFormSubmit(form) {

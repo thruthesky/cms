@@ -132,7 +132,7 @@ class ApiLibrary {
      *      - WP_User 객체를 리턴한다.
      * @param $session_id
      *
-     * @return mixed|WP_User|void
+     * @return mixed|WP_User
      *      - Returns WP_User instance on success
      *      - Error object if error.
      * @code
@@ -610,7 +610,7 @@ class ApiLibrary {
         /// Get comment information from the 'nested comments'.
         $updated_comments = [];
         foreach ($comments as $comment) {
-            $cmt = $this->commentResponse($comment['comment_ID']);
+            $cmt = $this->commentResponse($comment['comment_ID'], $options);
             $cmt['depth'] = $comment['depth'];
             $updated_comments[] = $cmt;
         }
@@ -631,7 +631,18 @@ class ApiLibrary {
             $post['slug'] = $cat->slug;
         }
 
+        // Check if user voted on this post
+        $post['user_vote'] = $this->getUserVoteChoice($post['ID'], $options);
+
         return $post;
+    }
+
+    function getUserVoteChoice($ID, $options) {
+        $user = $this->get_user_by_session_id($options);
+        if ($user) {
+            return $this->getVoteChoice($ID, $user->ID);
+        }
+        return null;
     }
 
 
@@ -750,7 +761,7 @@ class ApiLibrary {
         return ['method', 'session_id', 'category', 'slug', 'fid', 'files', 'meta'];
     }
 
-    public function commentResponse($comment_id)
+    public function commentResponse($comment_id, $options = [])
     {
 
         if ( empty($comment_id)) return null;
@@ -771,6 +782,7 @@ class ApiLibrary {
         $ret['author_photo_url'] = $u['photo'] ?? '';
         // date
         $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
+        $ret['user_vote'] = $this->getUserVoteChoice(get_converted_post_id_from_comment_id($comment_id), $options);
         return $ret;
     }
 
@@ -919,6 +931,39 @@ class ApiLibrary {
     public function isMyFile($file_ID)
     {
         return $this->isMyPost($file_ID);
+    }
+
+    /**
+     *  Return like log record
+     */
+    public function getVote($post_id, $user_id) {
+        global $wpdb;
+        return $wpdb->get_row("SELECT idx,choice FROM x_like_log WHERE post_id=$post_id AND user_id=$user_id", ARRAY_A);
+    }
+
+    /**
+     *  Return user vote
+     * @param $post_id
+     * @param $user_id
+     * @return null/string
+     */
+    public function getVoteChoice($post_id, $user_id) {
+        global $wpdb;
+        return $wpdb->get_var("SELECT choice FROM x_like_log WHERE post_id=$post_id AND user_id=$user_id");
+    }
+
+    /**
+     * get user by session id
+     * @param $in
+     * @return null|WP_User
+     */
+    function get_user_by_session_id($in) {
+        if ( isset($in['session_id']) && !empty($in['session_id']) ) {
+            $user = $this->authenticate($in);
+            if ( $user instanceof WP_User ) return $user;
+            else return null;
+        }
+        else return null;
     }
 
 

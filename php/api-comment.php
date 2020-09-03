@@ -52,7 +52,7 @@ class ApiComment extends ApiPost
         if (isset($in['files']) && !empty($in['files'])) {
             $this->attachFiles($comment_id, $in['files'], COMMENT_ATTACHMENT);
         }
-        return $this->commentResponse($comment_id);
+        return $this->commentResponse($comment_id, $in);
     }
 
 
@@ -70,7 +70,7 @@ class ApiComment extends ApiPost
         if (isset($in['files']) && !empty($in['files'])) {
             $this->attachFiles($in['comment_ID'], $in['files'], COMMENT_ATTACHMENT);
         }
-        return $this->commentResponse($in['comment_ID']);
+        return $this->commentResponse($in['comment_ID'], $in);
     }
 
     public function commentDelete($in)
@@ -114,16 +114,14 @@ class ApiComment extends ApiPost
 
 
 
-    public function deleteCommentVote($idxLog, $postId, $choice) {
-
-
+    public function deleteCommentVote($idxLog, $comment_ID, $choice) {
         $this->deleteVoteRecord($idxLog);
-        decrease_comment_meta( $postId, $choice );
+        decrease_comment_meta( $comment_ID, $choice );
     }
 
-    public function increaseCommentVote($post_id, $user_id, $choice) {
-        $this->insertVoteRecord($post_id, $user_id, $choice);
-        increase_comment_meta( $post_id, $choice );
+    public function increaseCommentVote($comment_ID, $user_id, $choice) {
+        $this->insertVoteRecord(get_converted_post_id_from_comment_id($comment_ID), $user_id, $choice);
+        increase_comment_meta( $comment_ID, $choice );
     }
 
 
@@ -137,31 +135,35 @@ class ApiComment extends ApiPost
         $user_id = wp_get_current_user()->ID;
         $choice = $in['choice'];
 
-            $comment = get_comment($in['comment_ID']);
-            if ( $comment->user_id == $user_id ) return ERROR_CANNOT_VOTE_YOUR_OWN_POST;
-            $post_id = get_converted_post_id_from_comment_id( $comment->comment_ID );
+        $comment = get_comment($in['ID']);
+        $comment_ID = $comment->comment_ID;
+        if ( $comment->user_id == $user_id ) return ERROR_CANNOT_VOTE_YOUR_OWN_POST;
 
-        $re = $this->getVote($post_id, $user_id);
+        $converted_post_id = get_converted_post_id_from_comment_id( $comment_ID );
+        $re = $this->getVote($converted_post_id, $user_id);
 
         if ( $re ) { // already vote?
             // then, delete the vote
-            $this->deleteCommentVote($re['idx'], $post_id, $re['choice']);
+            $this->deleteCommentVote($re['idx'], $comment_ID, $re['choice']);
 
             if ( $re['choice'] != $choice ) { // vote for the other?
-                $this->increaseCommentVote($post_id, $user_id, $choice);
+                $this->increaseCommentVote($comment_ID, $user_id, $choice);
             }
         }
         else { // didn't vote yet.
-            $this->increaseCommentVote($post_id, $user_id, $choice);
+            $this->increaseCommentVote($comment_ID, $user_id, $choice);
         }
 
 
-        $like = get_comment_meta( $in['comment_ID'], 'like', true);
-        $dislike = get_comment_meta( $in['comment_ID'], 'dislike', true);
+//        dog($in);
+
+        $like = get_comment_meta( $comment_ID, 'like', true);
+        $dislike = get_comment_meta($comment_ID, 'dislike', true);
         return [
-            'comment_ID' => $in['comment_ID'],
+            'ID' => $comment_ID,
             'like' => $like,
-            'dislike' => $dislike
+            'dislike' => $dislike,
+            'user_vote' => $this->getUserVoteChoice($converted_post_id, $in)
         ];
     }
 
