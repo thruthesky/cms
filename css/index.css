@@ -7,6 +7,11 @@
   height: 50px !important;
 }
 
+.wh50x50 {
+  width: 50px !important;
+  height: 50px !important;
+}
+
 .wh120x120 {
   width: 120px !important;
   height: 120px !important;
@@ -14,6 +19,10 @@
 
 .w-120 {
   width: 120px !important;
+}
+
+.mw-100 {
+  max-width: 100%;
 }
 
 .top {
@@ -82,8 +91,14 @@
   opacity: 0.01;
 }
 
-.mw-100 {
-  max-width: 100%;
+.cursor {
+  cursor: pointer;
+}
+
+input[type=file],
+input[type=file]::-webkit-file-upload-button {
+  /* chromes and blink button */
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=index.css.map */

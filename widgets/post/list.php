@@ -13,7 +13,7 @@ $posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
             <div class="card-body">
                 <div class="row">
                     <div class="circle overflow-hidden wh50x50">
-                        <img class='userPhoto' src="<?=!empty($post['author_photo_url']) ? $post['author_photo_url'] : ANONYMOUS_PROFILE_PHOTO ?>" alt='user photo'>
+                        <img class='mw-100' src="<?=!empty($post['author_photo_url']) ? $post['author_photo_url'] : ANONYMOUS_PROFILE_PHOTO ?>" alt='user photo'>
                     </div>
                     <div class="col">
                         <div>
