@@ -3,8 +3,6 @@
 class UserRoute extends ApiLibrary
 {
 
-
-
     public function register()
     {
         $this->response($this->userRegister(in()));

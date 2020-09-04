@@ -146,6 +146,14 @@ function scrollIntoView(element, duration = 100) {
 }
 
 
+/**
+ *
+ * @param file
+ * @param options
+ *          'deleteButton' if true then show delete button for deleting the image
+ *          'extraClasses' to be added inside the id="file"
+ * @returns {string}
+ */
 function getUploadedFileHtml(file, options = {}) {
 
     // console.log(options);
@@ -159,17 +167,27 @@ function getUploadedFileHtml(file, options = {}) {
     return html;
 }
 
+
+/**
+ * onChangeFile it save the data in to server and return file information
+ *
+ *
+ * @param $box `this` as input type=file
+ * @param options
+ *      'progress' - progress-bar parent element
+ *      'success' -  success callback
+ */
 function onChangeFile($box, options={}) {
 
-    console.log('options', options);
+    // console.log('options', options);
     let formData = new FormData();
 
     formData.append('session_id', getUserSessionId());
     formData.append('route', 'file.upload');
     formData.append('userfile', $box.files[0]);
 
-    const $progress = options.progress;
-    $progress.show();
+    const $progress = options['progress'];
+    if ($progress) { $progress.show(); }
 
     $.ajax({
         url: apiUrl,
@@ -189,11 +207,11 @@ function onChangeFile($box, options={}) {
             // console.log('success', res);
 
             options['success'](res, options);
-            $progress.hide();
+            if ($progress) { $progress.hide(); }
         },
         xhr: function() {
             let myXhr = $.ajaxSettings.xhr();
-            if(myXhr.upload){
+            if(myXhr.upload && $progress){
                 myXhr.upload.addEventListener('progress',progress.bind(null, $progress), false);
             }
             return myXhr;
@@ -201,7 +219,7 @@ function onChangeFile($box, options={}) {
 
         error: function(data){
             console.error(data);
-            $progress.hide();
+            if ($progress) { $progress.hide(); }
         }
     });
 }
@@ -210,6 +228,7 @@ function onChangeFile($box, options={}) {
  * File upload success callback get the html from the response and append it to `where` which is $(element)
  * @param res
  * @param options
+ *      'where' element where to append the uploaded file html
  */
 function onUploadFile( res, options ) {
     options['deleteButton'] = true;
@@ -228,8 +247,15 @@ function onUploadUserPhoto( res, options) {
 
 
 /**
+ * Show apply the progress percentage into .progress bar
  *
- * @param progress
+ * Example
+ ````
+ <div class="progress" style="display: none">
+    <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+ </div>
+ ````
+ * @param progress $('progress') as parent element. must have a .progress-bar child.
  * @param e
  */
 function progress(progress,e){
