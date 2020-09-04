@@ -256,6 +256,8 @@ function getCompleteGUID($guid)
 }
 
 
+
+
 /**
  * Returns image size, width, height and extra information.
  * @param $path

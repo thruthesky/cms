@@ -12,6 +12,16 @@ $user = [
 ];
 if ( loggedIn()) {
     $user = $apiLib->userResponse(sessionId());
+    if ( $user['photoURL'] ) {
+        ?>
+        <script>
+            $$(function() {
+                $('.user-update-profile-photo')
+                    .html(getUploadedFileHtml(<?=json_encode($apiLib->get_user_profile_photo_file($user));?>));
+            });
+        </script>
+        <?php
+    }
 }
 ?>
 
@@ -24,8 +34,9 @@ if ( loggedIn()) {
         let data = objectifyForm(form);
         data['route'] = 'user.' + method;
 
-        if ($(form).find('.userPhoto').attr('src') !== "<?=ANONYMOUS_PROFILE_PHOTO?>") {
-            data['photoURL'] = $(form).find('.userPhoto').attr('src')
+        var src = $('.user-update-profile-photo').find('img').attr('src');
+        if (src !== "<?=ANONYMOUS_PROFILE_PHOTO?>") {
+            data['photoURL'] = src;
         }
 
         $.ajax( {
@@ -47,7 +58,11 @@ if ( loggedIn()) {
 
         return false;
     }
+
+
 </script>
+
+
 <div class="container py-3">
     <div class="card">
         <div class="card-body">
@@ -56,13 +71,22 @@ if ( loggedIn()) {
 
                 <? if (loggedIn()) { ?>
                     <div class="d-flex justify-content-center">
-                        <div class="upload-profile-box circle wh120x120">
-                            <input type="file" name="file"
-                                   onchange="onChangeUserPhoto(this, {where: $(this).parents().find('.userPhoto'), progress: $(this).parents().find('.progress'), success: onUploadUserPhoto})">
-                            <img class="userPhoto w-100" src="<?=!empty($user['photoURL']) ? $user['photoURL'] : ANONYMOUS_PROFILE_PHOTO?>" alt="user photo">
-                            <div class="progress mt-2" style="display: none">
-                                <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+                        <div class="wh120x120 position-relative overflow-hidden pointer">
+
+                            <i class="fa fa-camera position-absolute z-index-middle fs-xxl right bottom"></i>
+                            <input
+                                    class="position-absolute z-index-high fs-xxxl opacity-01"
+                                    type="file" name="file"
+                                    onchange="onChangeFile(this, {html: $('.user-update-profile-photo'), deleteButton: true, progress: $(this).parents().find('.progress'), })">
+
+                            <div class="user-update-profile-photo position-relative z-index-low circle wh120x120 overflow-hidden">
+                                <img src="<?=ANONYMOUS_PROFILE_PHOTO?>">
                             </div>
+
+                        </div>
+
+                        <div class="progress mt-2" style="display: none">
+                            <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
                         </div>
                     </div>
 

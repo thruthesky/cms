@@ -11,10 +11,23 @@
   height: 120px!important;
 }
 
+.w-120 {
+  width: 120px !important;
+}
+
+
 .top {
   top: 0 !important;
 }
 .right {
+  right: 0 !important;
+}
+
+.bottom {
+  top: 0 !important;
+}
+
+.left {
   right: 0 !important;
 }
 
@@ -41,69 +54,32 @@
 }
 
 
-//.input-box, .post-form {
-//
-//  .files {
-//    overflow: hidden;
-//    display: flex;
-//    flex-wrap: wrap;
-//    justify-items: start;
-//    .photo {
-//      position: relative;
-//      margin: 0 1em 1em 0;
-//       img {
-//         width: 8em;
-//         max-width: 100%;
-//       }
-//        .fa-trash {
-//          position: absolute;
-//          right:.5em;
-//          top: .5em;
-//        }
-//    }
-//
-//  }
-//}
+.fs-xl {
+  font-size: 1.5rem!important;
+}
+.fs-xxl {
+  font-size: 2rem!important;
+}
+.fs-xxxl {
+  font-size: 10rem!important;
+}
+.z-index-high {
+  z-index: 1000;
+}
+.z-index-middle {
+  z-index: 500;
+}
+.z-index-low {
+  z-index: 0;
+}
 
-//
-//.post {
-//  .photo {
-//    img {
-//      max-width: 100%;
-//    }
-//  }
-//
-//}
+.opacity-01 {
+  opacity: 0.01;
+}
 
-.userPhoto {
+.mw-100 {
   max-width: 100%;
 }
 
 
 
-.upload-photo-box {
-  position: relative;
-  overflow: hidden;
-  width: 2.25em;
-  height: 2.25em;
-  .fa-camera {
-    padding: .25em;
-    font-size: 1.5em;
-  }
-
-  input[type=file] {
-    position: absolute;
-    font-size: 40em;
-    opacity: 0.01;
-  }
-}
-
-.upload-profile-box {
-  position: relative;
-  overflow: hidden;
-  input[type=file] {
-    position: absolute;
-    font-size: 40em;
-    opacity: 0.01;
-  }
-}

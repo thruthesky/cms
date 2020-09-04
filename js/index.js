@@ -176,10 +176,13 @@ function getUploadedFileHtml(file, options = {}) {
  * @param options
  *      'progress' - progress-bar parent element
  *      'success' -  success callback
+ *      'append' - where the result will be appended.
+ *      'html' - where the result will be replace.
+ *
  */
 function onChangeFile($box, options={}) {
 
-    // console.log('options', options);
+    console.log('options', options);
     let formData = new FormData();
 
     formData.append('session_id', getUserSessionId());
@@ -204,9 +207,13 @@ function onChangeFile($box, options={}) {
                 alert(res);
                 return;
             }
-            // console.log('success', res);
+            console.log('Complete. success: ', res);
 
-            options['success'](res, options);
+
+            let html = getUploadedFileHtml(res, options);
+            if ( typeof options['append'] !== 'undefined') options['append'].append(html);
+            if ( typeof options['html'] !== 'undefined') options['html'].html(html);
+
             if ($progress) { $progress.hide(); }
         },
         xhr: function() {
@@ -222,27 +229,6 @@ function onChangeFile($box, options={}) {
             if ($progress) { $progress.hide(); }
         }
     });
-}
-
-/**
- * File upload success callback get the html from the response and append it to `where` which is $(element)
- * @param res
- * @param options
- *      'where' element where to append the uploaded file html
- */
-function onUploadFile( res, options ) {
-    options['deleteButton'] = true;
-    let html = getUploadedFileHtml(res, options);
-    options['where'].append(html);
-}
-
-/**
- * UserPhoto upload success callback. options[`where`] must be an img element $(img)
- * @param res
- * @param options
- */
-function onUploadUserPhoto( res, options) {
-    options['where'].attr("src", res.thumbnail_url);
 }
 
 

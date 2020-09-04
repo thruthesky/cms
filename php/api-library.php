@@ -856,6 +856,8 @@ class ApiLibrary {
         return $ret;
     }
 
+
+
     /**
      * Returns a single file information.
      * @note this returns upload photo information
@@ -886,6 +888,19 @@ class ApiLibrary {
         /// Add image size, width, height
         $ret['exif'] = image_exif_details(image_path_from_url($ret['url']));
         return $ret;
+    }
+
+    /**
+     * @param $user - is the return data of 'userResponse()'
+     * @return array - is the file information which is the same of 'get_uploaded_file()'
+     */
+    function get_user_profile_photo_file($user) {
+
+
+        $_post_file = $this->getPostFromGUID($user['photoURL']);
+        $_user_profile_file = $this->get_uploaded_file($_post_file->ID);
+        return $_user_profile_file;
+
     }
 
 

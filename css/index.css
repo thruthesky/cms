@@ -12,11 +12,23 @@
   height: 120px !important;
 }
 
+.w-120 {
+  width: 120px !important;
+}
+
 .top {
   top: 0 !important;
 }
 
 .right {
+  right: 0 !important;
+}
+
+.bottom {
+  top: 0 !important;
+}
+
+.left {
   right: 0 !important;
 }
 
@@ -42,34 +54,36 @@
   font-size: 1.25rem !important;
 }
 
-.userPhoto {
+.fs-xl {
+  font-size: 1.5rem !important;
+}
+
+.fs-xxl {
+  font-size: 2rem !important;
+}
+
+.fs-xxxl {
+  font-size: 10rem !important;
+}
+
+.z-index-high {
+  z-index: 1000;
+}
+
+.z-index-middle {
+  z-index: 500;
+}
+
+.z-index-low {
+  z-index: 0;
+}
+
+.opacity-01 {
+  opacity: 0.01;
+}
+
+.mw-100 {
   max-width: 100%;
-}
-
-.upload-photo-box {
-  position: relative;
-  overflow: hidden;
-  width: 2.25em;
-  height: 2.25em;
-}
-.upload-photo-box .fa-camera {
-  padding: 0.25em;
-  font-size: 1.5em;
-}
-.upload-photo-box input[type=file] {
-  position: absolute;
-  font-size: 40em;
-  opacity: 0.01;
-}
-
-.upload-profile-box {
-  position: relative;
-  overflow: hidden;
-}
-.upload-profile-box input[type=file] {
-  position: absolute;
-  font-size: 40em;
-  opacity: 0.01;
 }
 
 /*# sourceMappingURL=index.css.map */
