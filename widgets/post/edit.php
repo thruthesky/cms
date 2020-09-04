@@ -83,7 +83,8 @@ if ($ID) {
             <textarea class="form-control" name="post_content" id="post-create-content" aria-describedby="Content" placeholder="Enter content"><?=$post['post_content']?></textarea>
         </div>
         <div class="upload-photo-box">
-            <input type="file" name="file" onchange="onChangeFile(this, {where: $('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.post-edit').find('.progress')})">
+            <input type="file" name="file"
+                   onchange="onChangeFile(this, {where: $('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.post-edit').find('.progress'), success: onUploadFile})">
             <i role="button" class="fa fa-camera"></i>
         </div>
         <div class="progress mb-3" style="display: none">

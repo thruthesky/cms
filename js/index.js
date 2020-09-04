@@ -141,7 +141,7 @@ function initServiceWorker() {
 
 
 function scrollIntoView(element, duration = 100) {
-    var anchor = document.querySelector(element);
+    const anchor = document.querySelector(element);
     anchor.scrollIntoView({behavior: 'smooth', block: 'center'});
 }
 
@@ -152,7 +152,7 @@ function getUploadedFileHtml(file, options = {}) {
     if ( !options['extraClasses'] ) options['extraClasses'] = '';
     if ( typeof options['deleteButton'] == 'undefined' ) options['deleteButton'] = false;
 
-    var html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative d-inline-block "+options['extraClasses']+"'>";
+    let html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative d-inline-block "+options['extraClasses']+"'>";
         html += "<img class='w-100' src='"+ file.thumbnail_url +"'>";
         if ( options['deleteButton'] ) html += "<i role='button' class='fa fa-trash position-absolute top right' onclick='onClickDeleteFile(" + file['ID'] + ")'></i>";
         html += "</div>";
@@ -188,9 +188,7 @@ function onChangeFile($box, options={}) {
             }
             // console.log('success', res);
 
-            options['deleteButton'] = true;
-            let html = getUploadedFileHtml(res, options);
-            options['where'].append(html);
+            options['success'](res, options);
             $progress.hide();
         },
         xhr: function() {
@@ -208,67 +206,43 @@ function onChangeFile($box, options={}) {
     });
 }
 
+/**
+ * File upload success callback get the html from the response and append it to `where` which is $(element)
+ * @param res
+ * @param options
+ */
+function onUploadFile( res, options ) {
+    options['deleteButton'] = true;
+    let html = getUploadedFileHtml(res, options);
+    options['where'].append(html);
+}
 
-function onChangeUserPhoto($box, options={}) {
-
-    console.log('options', options);
-    let formData = new FormData();
-
-    formData.append('session_id', getUserSessionId());
-    formData.append('route', 'file.upload');
-    formData.append('userfile', $box.files[0]);
-
-    const $progress = options.progress;
-    $progress.show();
-
-    $.ajax({
-        url: apiUrl,
-        data: formData,
-        type: 'POST',
-        enctype: 'multipart/form-data',
-        contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
-        processData: false, // NEEDED, DON'T OMIT THIS
-        // ... Other options like success and etc
-        cache: false,
-        timeout: 60 * 1000 * 10, /// 10 minutes.
-        success: function (res) {
-            if ( isBackendError(res) ) {
-                alert(res);
-                return;
-            }
-
-            options['where'].attr("src", res.thumbnail_url);
-            $progress.hide();
-        },
-        xhr: function() {
-            let myXhr = $.ajaxSettings.xhr();
-            if(myXhr.upload){
-                myXhr.upload.addEventListener('progress',progress.bind(null, $progress), false);
-            }
-            return myXhr;
-        },
-
-        error: function(data){
-            console.error(data);
-            $progress.hide();
-        }
-    });
+/**
+ * UserPhoto upload success callback. options[`where`] must be an img element $(img)
+ * @param res
+ * @param options
+ */
+function onUploadUserPhoto( res, options) {
+    options['where'].attr("src", res.thumbnail_url);
 }
 
 
-
+/**
+ *
+ * @param progress
+ * @param e
+ */
 function progress(progress,e){
 
-    console.log('progress: ', progress);
-
-    console.log('e: ', e);
+    // console.log('progress: ', progress);
+    // console.log('e: ', e);
 
     if(e.lengthComputable){
-        var max = e.total;
-        var current = e.loaded;
+        const max = e.total;
+        const current = e.loaded;
 
-        var Percentage = Math.round((current * 100) / max);
-        console.log(Percentage);
+        let Percentage = Math.round((current * 100) / max);
+        // console.log(Percentage);
 
         if(Percentage >= 100)
         {
@@ -282,20 +256,14 @@ function progress(progress,e){
 }
 
 function onClickDeleteFile(ID) {
-    console.log(ID);
-    var data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
-    console.log(data);
+    let data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
     $.ajax( {
         method: 'GET',
         url: apiUrl,
         data: data
     } )
         .done(function(re) {
-            console.log('re', re);
-            console.log(re['ID'] === ID);
             if (re['ID'] === ID) {
-                console.log('onClickDeleteFile');
-                console.log($('#file'+ ID));
                 $('.files.edit #file'+ ID).remove();
             }
         })

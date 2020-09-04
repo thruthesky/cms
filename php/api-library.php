@@ -782,9 +782,8 @@ class ApiLibrary {
         $ret['comment_date'] = $comment['comment_date'];
         $ret['files'] = $this->get_uploaded_files($comment_id, COMMENT_ATTACHMENT);
         /// post author user profile
-        ///
-//        $u = $this->userResponse($comment['user_id']);
-//        dog($comment);
+
+        /// author photo url
         $ret['author_photo_url'] = get_user_meta($comment['user_id'], 'photoURL', true);;
         // date
         $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);

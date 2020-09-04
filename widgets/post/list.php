@@ -1,6 +1,6 @@
 <?php
 $slug = in('slug');
-$posts =  $apiPost->postSearch(['slug' => $slug]);
+$posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
 
 //dog($posts);
 ?>
@@ -12,12 +12,8 @@ $posts =  $apiPost->postSearch(['slug' => $slug]);
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row">
-                    <div>
-                        <?php if (!empty($post['author_photo_url'])) {
-                            echo "<img class='userPhoto circle' style='width: 50px' src='$post[author_photo_url]' alt='user photo'>";
-                        } else {
-                            echo "<img class='userPhoto circle' style='width: 50px' src='/wp-content/themes/cms/img/anonymous/anonymous.jpg' alt='user photo'>";
-                        }  ?>
+                    <div class="circle overflow-hidden wh50x50">
+                        <img class='userPhoto' src="<?=!empty($post['author_photo_url']) ? $post['author_photo_url'] : ANONYMOUS_PROFILE_PHOTO ?>" alt='user photo'>
                     </div>
                     <div class="col">
                         <div>

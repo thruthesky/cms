@@ -1,3 +1,4 @@
+<div class="container py-3">
 
     <div class="bg-dark text-white">
         <h1>Sonub</h1>
@@ -33,3 +34,4 @@
     <h3>
         Push
     </h3>
+</div>

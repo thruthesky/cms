@@ -57,7 +57,8 @@ if ( loggedIn()) {
                 <? if (loggedIn()) { ?>
                     <div class="d-flex justify-content-center">
                         <div class="upload-profile-box circle wh120x120">
-                            <input type="file" name="file" onchange="onChangeUserPhoto(this, {where: $(this).parents().find('.userPhoto'), progress: $(this).parents().find('.progress')})">
+                            <input type="file" name="file"
+                                   onchange="onChangeUserPhoto(this, {where: $(this).parents().find('.userPhoto'), progress: $(this).parents().find('.progress'), success: onUploadUserPhoto})">
                             <img class="userPhoto w-100" src="<?=!empty($user['photoURL']) ? $user['photoURL'] : ANONYMOUS_PROFILE_PHOTO?>" alt="user photo">
                             <div class="progress mt-2" style="display: none">
                                 <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
