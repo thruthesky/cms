@@ -10,8 +10,10 @@ $_appVersion = Config::$appVersion;
 $_apiUrl = Config::$apiUrl;
 $_registerPage = Config::$registerPage;
 $_root_domain = getRootDomain();
+$_theme_url = THEME_URL;
 
 if (localhost()) $_localhost = 'true'; else $_localhost = 'false';
+
 
 $_head_script =<<<EOH
     <script>
@@ -19,7 +21,7 @@ $_head_script =<<<EOH
         var appVersion = "$_appVersion";
         var apiUrl = "$_apiUrl";
         var homePage = "/";
-        var themePath = "$_theme_path";
+        var themePath = "$_theme_url";
         var registerPage = "$_registerPage";
         var rootDomain = "$_root_domain";
         

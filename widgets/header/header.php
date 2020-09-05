@@ -12,6 +12,13 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/?page=user.profile">Profile</a>
                 </li>
+
+                <?php if ( admin() ) { ?>
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/?page=admin.user.list">Admin Page</a>
+                </li>
+                <?php } ?>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/?page=post.list&slug=qna">QnA</a>
                 </li>

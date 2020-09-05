@@ -988,6 +988,7 @@ class ApiLibrary {
      * @return null|WP_User
      */
     function get_user_by_session_id($in) {
+
         if ( isset($in['session_id']) && !empty($in['session_id']) ) {
             $user = $this->authenticate($in);
             if ( $user instanceof WP_User ) return $user;

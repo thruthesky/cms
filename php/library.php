@@ -55,7 +55,7 @@ if ( function_exists('in') == false ) {
         if ($name === null) {
             return $_REQUEST;
         }
-        if (isset($_REQUEST[$name])) {
+        if (isset($_REQUEST[$name]) && $_REQUEST[$name]) {
             return $_REQUEST[$name];
         } else {
             return $default;

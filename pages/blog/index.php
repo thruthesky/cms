@@ -11,7 +11,7 @@ if ( localhost() ) {
 
     <meta name="description" content="소셜 네트워크 허브. 모든 소셜 서비스를 모았습니다.">
 
-    <link rel="manifest" href="<?php theme_path()?>/manifest.json">
+    <link rel="manifest" href="<?php theme_url()?>/manifest.json">
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -25,19 +25,19 @@ if ( localhost() ) {
 
 
     <meta name="theme-color" content="#4285f4">
-    <link rel="apple-touch-icon" href="<?php theme_path()?>/img/pwa/Icon-192.png">
+    <link rel="apple-touch-icon" href="<?php theme_url()?>/img/pwa/Icon-192.png">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="<?php theme_path()?>/css/bootstrap-4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<?php theme_url()?>/css/bootstrap-4.5.2/css/bootstrap.min.css">
     <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="<?php theme_path();?>/css/fontawesome/css/all.css">
+    <link rel="stylesheet" href="<?php theme_url();?>/css/fontawesome/css/all.css">
 
     <!-- Index CSS compiled from index.scss -->
-    <link rel="stylesheet" href="<?php theme_path()?>/css/index.css?v=<?php echo Config::$appVersion?>">
+    <link rel="stylesheet" href="<?php theme_url()?>/css/index.css?v=<?php echo Config::$appVersion?>">
 
 
-    <link rel="shortcut icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="<?php theme_path()?>/favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
     <script>
@@ -45,7 +45,7 @@ if ( localhost() ) {
         var appVersion = "<?php echo Config::$appVersion?>";
         var apiUrl = "<?php echo home_url() . Config::$apiUrl?>";
         var homePage = "/";
-        var themePath = "<?php echo THEME_PATH ?>";
+        var themePath = "<?php echo THEME_URL ?>";
         var registerPage = "<?php echo Config::$registerPage?>";
     </script>
 </head>
@@ -73,9 +73,9 @@ if ( localhost() ) {
 
 <!-- Optional JavaScript -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="<?php theme_path()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
-<script src="<?php theme_path()?>/js/js.cookie.min.js"></script>
-<script src="<?php theme_path()?>/js/index.js?v=<?php echo Config::$appVersion?>"></script>
+<script src="<?php theme_url()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
+<script src="<?php theme_url()?>/js/js.cookie.min.js"></script>
+<script src="<?php theme_url()?>/js/index.js?v=<?php echo Config::$appVersion?>"></script>
 
 </body>
 </html>

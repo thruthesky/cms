@@ -1,7 +1,7 @@
 <?php
 $post =  $apiPost->postGet([
         'ID' => url_to_postid(get_page_uri()),
-        'session_id' => sessionId()
+//        'session_id' => sessionId() // @bug. It produce - invalid session id.
 ]);
 $slug = $post['slug'];
 ?>

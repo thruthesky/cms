@@ -7,8 +7,8 @@ define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 /**
  * Theme relative path for URL.
  */
-$_theme_path = '/wp-content/themes/cms';
-define('THEME_PATH', $_theme_path);
+define('THEME_PATH', ABSPATH . 'wp-content/themes/cms');
+define('THEME_URL', '/wp-content/themes/cms');
 define('ANONYMOUS_PROFILE_PHOTO', '/wp-content/themes/cms/img/anonymous/anonymous.jpg');
 
 

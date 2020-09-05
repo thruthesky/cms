@@ -7,6 +7,10 @@ class Config {
     static public $resignResultPage = '/?page=user.resign_result';
 }
 
+
+/**
+ * Get host name
+ */
 if (isset($_SERVER['HTTP_HOST'])) {
     $_host = $_SERVER['HTTP_HOST'];
 } else {
@@ -14,7 +18,9 @@ if (isset($_SERVER['HTTP_HOST'])) {
 }
 
 
-
+/**
+ * Match host name to page.
+ */
 if ($_host == 'wp-blog.philgo.com' ) {
     Config::$domain = 'blog';
 } else if ($_host == 'wp-realestate.philgo.com' ) {

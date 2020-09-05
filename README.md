@@ -32,7 +32,7 @@ $ phprun vendor/bin/phpunit tests
 $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 ```
 
-## Development View
+## Development Overview
 
 ### Browser Support
 
@@ -51,8 +51,8 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 * PHP unit test.\
   See `PHP Unit Test` section.
 
-### Dev Environment, Tools & Components
 
+### Dev Environment, Tools & Components
 
 ​* Everything is saved in `cms` theme.
   * The PHP Restful Api is saved under `cms` theme folder to avoid multiple setup.
@@ -89,6 +89,19 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
     * The `cms/js/service-worker.php` file is the service worker.
     It's a PHP script that wraps Javascript for `service worker scope`.
 * PWA start_url is pointing `cms/pwa-start.html` to avoid caching on the first page.
+
+
+## Minimum Javascript functionality & Ajax Call
+
+* `Ajax calls` could go complicated.
+    * So, use `Ajax calls` only for **some creating & updating**.
+        * For instance, register, login, profile update, post/comment create, update, delete, like/dislike, file upload
+    * Other create or update may not do `Ajax calls` because they are not important.
+        * For instance, no need to do `Ajax calls` for admin pages.
+
+
+* When admin logs in as `Ajax call`, the menu does not need to be update in real time because it is needed only for admin.
+    * If the user is admin, then you may simply refresh the site.
 
 
 
@@ -173,13 +186,39 @@ function onLoginFormSubmit(form) {
   It is included at the bottom of `index.php` and available on all pages .
 
   
-  
-  
-  ### Pages & Widgets
+
+## Themes
+
+* Themes are saved in `pages` folder.
+* Each folder under `pages` is the theme folder that include everything for the theme.
+
+### Domain
+
+* A theme(or theme folder) will be chosen by domain.
+* You can connect a theme to domain(s) in `config.php`. [@see issues]()
+
+
+### Pages  
+
+* `default` theme will be used by default.
+* If a page script is missing on a theme, then it will look for the page script in default.
+  * For instance, When `blog` theme is used, a user wants to access `a.php` page.
+  But the `pages/blog/a.php` does not exists in the blog theme.
+  Then, it will look for `pages/defualt/a.php` and if it exists, it will show it to user.
+ 
+* If the URL is not request uri is not `/` and the URL does not have `page` variable,
+  then it is considered that the request is for accessing a post view page.
+
+### Pages & Widgets
   
   * Each domain can have a different theme.
     * Pages as theme design are saved under 'pages/[domain]' folder.
     * You can update the domain settings in `Config` folder.
+
+
+### Error pages
+
+* If there is an error on HTTP input like `/?page=..user.list`, then `error/wrong-input.php` will be shown.
 
 ## I18N
 
@@ -193,3 +232,9 @@ function onLoginFormSubmit(form) {
 ```html
 <?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?>
 ```
+
+
+## Admin
+
+* Admin can enter admin page only on web browser. There is no API call for admin.
+* When the user is accessing admin page when he is not an admin, `error.you-are-not-admin.php` will be opened.

@@ -23,8 +23,8 @@ class Api extends ApiLibrary
             sleep($_REQUEST['sleep']);
         }
 
-
         if (in('session_id')) {
+
             $this->authenticate(in());
         } /**
          * The client didn't send user's session_id.

@@ -46,7 +46,8 @@ $__user = $apiLib->userResponse(sessionID());
  * Set the user logged into Wordpress if the user logged in with cookie.
  *
  */
-if ( !$__user ) {
+
+if ( $__user && isset($__user['ID']) ) {
     wp_set_current_user($__user['ID']);
 }
 
@@ -54,7 +55,7 @@ if ( !$__user ) {
 /**
  * i18n json text.
  */
-$__i18n = json_decode(file_get_contents(ABSPATH . THEME_PATH . '/etc/i18n.json'), true);
+$__i18n = json_decode(file_get_contents(ABSPATH . THEME_URL . '/etc/i18n.json'), true);
 
 // @Note Comment properties
 add_filter('comment_flood_filter', '__return_false');
@@ -70,12 +71,19 @@ else {
 }
 
 
+/**
+ * ------------------------ Check Security ---------------------------
+ */
+require 'security.php';
+
+
+
 
 /**
  * echo theme path
  */
-function theme_path() {
-    echo THEME_PATH;
+function theme_url() {
+    echo THEME_URL;
 }
 
 
@@ -109,24 +117,46 @@ function page_path() {
 
     /**
      * Detect if the user is on a post view page.
-     * @TODO: need to double check on it.
+     * @see README ## Pages
      */
-    if ( in('page') == null && $_SERVER['REQUEST_URI'] != '/' ) {
+
+    if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' ) {
         $page = 'post.view';
-    } else    $page = in('page', 'home');
-    $path = 'error/path-not-found.php';
+    } else {
+        $page = in('page', 'home');
+
+    }
+
     if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
         $path = 'error/wrong-input.php';
     } else {
         $arr = explode('.', $page, 2);
+
         if ( count($arr) == 1 ) {
             $path = "$arr[0]/$arr[0].php";
         }
         else if ( count($arr) == 2 ) {
             $path = "$arr[0]/$arr[1].php";
         }
+
     }
-    return ABSPATH . THEME_PATH . '/pages/'. Config::$domain . '/' . $path;
+
+    $file = THEME_PATH . '/pages/'. Config::$domain . '/' . $path;
+    $default_file = THEME_PATH . '/pages/default/' . $path;
+
+    if ( file_exists($file) ) return $file;
+    else if ( file_exists($default_file)) {
+        return $default_file;
+    }
+    else { // File not found
+
+        $name = 'error/file-not-found.php';
+        $file = THEME_PATH . '/pages/'. Config::$domain . '/' . $name;
+        $default_file = THEME_PATH . '/pages/default/' . $name;
+
+        // return file not found on the theme.
+        return file_exists($file) ? $file : $default_file;
+    }
 }
 
 
@@ -147,11 +177,11 @@ function widget($name) {
     } else {
         $rel_path = "/widgets/$name/$name.php";
     }
-    $p = ABSPATH . THEME_PATH . "/pages/$domain$rel_path";
+    $p = ABSPATH . THEME_URL . "/pages/$domain$rel_path";
     if ( file_exists($p) ) {
         $widget_path = $p;
     } else {
-        $widget_path = ABSPATH . THEME_PATH . $rel_path;
+        $widget_path = ABSPATH . THEME_URL . $rel_path;
     }
 
 
@@ -197,7 +227,7 @@ function login($key)
      * Check if the value of the key exists on user's API profile.
      * For instance, photoURL is only exists on user's API profile.
      */
-    if ( isset($__user[$key]) && !empty($__user[$key])) {
+    if ( isset($__user[$key]) && $__user[$key]) {
         return $__user[$key];
     }
 
@@ -211,7 +241,7 @@ function login($key)
      $user = wp_get_current_user();
      if ($user) {
          $userdata = $user->to_array();
-         return $userdata[$key];
+         return $userdata && isset($userdata[$key]) && $userdata[$key];
      }
      return null;
 }
@@ -259,7 +289,7 @@ function userPhotoUrl() {
 }
 function getUserPhotoUrl() {
     $re = $_COOKIE['photoURL'];
-    if ( !$re ) return THEME_PATH . '/img/anonymous/anonymous.jpg';
+    if ( !$re ) return THEME_URL . '/img/anonymous/anonymous.jpg';
     return $re;
 }
 function isBackendError($re) {
