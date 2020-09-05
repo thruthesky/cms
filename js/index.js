@@ -225,7 +225,7 @@ function onChangeFile($box, options={}) {
         },
 
         error: function(data){
-            console.error(data);
+            console.error(data.responseText);
             if ($progress) { $progress.hide(); }
         }
     });

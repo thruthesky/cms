@@ -1,8 +1,9 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-0">
-        <a class="navbar-brand" href="/">Sonub</a>
-        <a class="d-lg-none" href="/?page=post.list&slug=qna">QnA</a>
+        <a class="navbar-brand" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
+        <a class="d-lg-none" href="/?page=post.list&slug=qna"><?=tr(['ko'=>'질문과답변', 'en' => 'QnA'])?></a>
+        <a class="d-lg-none " href="/?page=user.profile"><img class="icon-size circle" src="<?=userProfilePhotoUrl()?>"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

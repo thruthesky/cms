@@ -2,6 +2,11 @@
   background-color: #fefefe !important;
 }
 
+.icon-size {
+  width: 40px !important;
+  height: 40px !important;
+}
+
 .wh50x50 {
   width: 50px !important;
   height: 50px !important;

@@ -414,6 +414,8 @@ class ApiLibrary {
      * @param $ID - User ID. Admin can update user's photo with this ID.
      * @param $k - it must be 'photoURL' to update user's photo.
      * @param $v - GUID of the photo.
+     *
+     * @note resize the user profile to 100x100
      */
     public function updateField($ID, $k, $v)
     {
@@ -423,7 +425,7 @@ class ApiLibrary {
                 $path = get_attached_file($file['id']);
                 $image = wp_get_image_editor($path);
                 if (!is_wp_error($image)) {
-                    $image->resize(100, 120, true);
+                    $image->resize(100, 100, true);
                     $image->save($path);
                 }
             }

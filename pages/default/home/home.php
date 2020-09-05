@@ -19,12 +19,18 @@
         </div>
     </div>
 
+
+    <?=get_browser_language()?>
+    <?=tr('appName')?>
+
     <h2>
         User management is done!
     </h2>
     <h2>
         PWA is done!
     </h2>
+
+
 
     <h2>Working on</h2>
 

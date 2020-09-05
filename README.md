@@ -180,3 +180,16 @@ function onLoginFormSubmit(form) {
   * Each domain can have a different theme.
     * Pages as theme design are saved under 'pages/[domain]' folder.
     * You can update the domain settings in `Config` folder.
+
+## I18N
+
+* For language internalization, you can do one of the following ways.
+
+* Update `etc/i18n.json`. and use it with `tr()` method in `functions.php`.
+```html
+<?=tr('appName')?>
+```
+* Or call `tr()` method with an associative array (without updating `etc/i18n.json`).
+```html
+<?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?>
+```

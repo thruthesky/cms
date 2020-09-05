@@ -17,13 +17,15 @@ if ( isset($_REQUEST['route'])) {
 }
 
 
-include_once 'config.php';
-include_once 'php/defines.php';
-include_once 'php/library.php';
-include_once 'php/api-library.php';
-include_once 'php/api-post.php';
-include_once 'php/api-comment.php';
-include_once 'php/api-file.php';
+require 'config.php';
+require 'php/defines.php';
+require 'php/library.php';
+require 'php/api-library.php';
+require 'php/api-post.php';
+require 'php/api-comment.php';
+require 'php/api-file.php';
+
+
 
 
 /**
@@ -33,6 +35,26 @@ include_once 'php/api-file.php';
 $apiLib = new ApiLibrary();
 $apiPost = new ApiPost();
 $apiComment = new ApiComment();
+
+/**
+ * Global user's API profile information.
+ * This is the login user's profile information that should be used for profile update.
+ */
+$__user = $apiLib->userResponse(sessionID());
+
+/**
+ * Set the user logged into Wordpress if the user logged in with cookie.
+ *
+ */
+if ( !$__user ) {
+    wp_set_current_user($__user['ID']);
+}
+
+
+/**
+ * i18n json text.
+ */
+$__i18n = json_decode(file_get_contents(ABSPATH . THEME_PATH . '/etc/i18n.json'), true);
 
 // @Note Comment properties
 add_filter('comment_flood_filter', '__return_false');
@@ -169,8 +191,19 @@ function sessionId() {
  */
 function login($key)
 {
+    global $__user;
 
     /**
+     * Check if the value of the key exists on user's API profile.
+     * For instance, photoURL is only exists on user's API profile.
+     */
+    if ( isset($__user[$key]) && !empty($__user[$key])) {
+        return $__user[$key];
+    }
+
+    /**
+     * If the value of the key does not exist on API profile, then get it from Wordpress profile.
+     *
      * Error => Undefined index: ID
      *
      * `$user->to_array()` return empty even if `$user` is not empty.
@@ -181,6 +214,15 @@ function login($key)
          return $userdata[$key];
      }
      return null;
+}
+
+/**
+ * returns user's profile photo if available. Or return anonymous photo url.
+ */
+function userProfilePhotoUrl() {
+     $url = login('photoURL');
+    if ($url) return $url;
+    else return ANONYMOUS_PROFILE_PHOTO;
 }
 
 /**
@@ -364,5 +406,30 @@ function uri_to_postID() {
 //}
 
 
+
+/**
+ * Returns browser language in two letters like 'en', 'ko'
+ *
+ * @return bool|string
+ */
+function get_browser_language() {
+    if ( isset($_SERVER['HTTP_ACCEPT_LANGUAGE']) ) return substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2);
+    else return 'en';
+}
+
+function tr($code) {
+    global $__i18n;
+    $ln = get_browser_language();
+    if ( is_string($code) || is_numeric($code) ) {
+        if ( isset($__i18n[$code]) && isset($__i18n[$code][$ln] ) ) {
+            $str = $__i18n[$code][$ln];
+            return $str;
+        }
+    } else if ( is_array($code) ) {
+        $str = $code[$ln];
+        return $str;
+    }
+    return $code;
+}
 
 
