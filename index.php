@@ -14,16 +14,23 @@ $_theme_url = THEME_URL;
 
 if (localhost()) $_localhost = 'true'; else $_localhost = 'false';
 
-
+$_nickname = login('nickname');
+$_photo_ID = login('photo_ID');
+$_photo_url = login('photo_url');
 $_head_script =<<<EOH
     <script>
         var isLocalhost = $_localhost;
-        var appVersion = "$_appVersion";
-        var apiUrl = "$_apiUrl";
-        var homePage = "/";
-        var themePath = "$_theme_url";
-        var registerPage = "$_registerPage";
-        var rootDomain = "$_root_domain";
+        const appVersion = "$_appVersion";
+        const apiUrl = "$_apiUrl";
+        const homePage = "/";
+        const themePath = "$_theme_url";
+        const registerPage = "$_registerPage";
+        const rootDomain = "$_root_domain";
+        const __user = {
+            nickname: "$_nickname",
+            photo_ID: "$_photo_ID",
+            photo_url: "$_photo_url",
+        };
         
         function $$(fn) {
             if ( document.readyState === "complete" ) fn(); // for calling it after Ajax load.

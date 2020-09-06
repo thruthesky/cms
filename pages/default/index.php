@@ -58,7 +58,7 @@ if ( localhost() ) {
             </main>
         </div>
         <div class="col-lg-3 d-none d-lg-block">
-            <?php include widget('login')?>
+            <?php include widget('sidebar-login')?>
         </div>
     </div>
 </div>

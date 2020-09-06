@@ -238,3 +238,53 @@ function onLoginFormSubmit(form) {
 
 * Admin can enter admin page only on web browser. There is no API call for admin.
 * When the user is accessing admin page when he is not an admin, `error.you-are-not-admin.php` will be opened.
+
+
+## Javascript load
+
+* The loading order of javascript files is like below.
+  * jquery.js
+  * bootstrap.js
+  * js.cookie
+  * themes/cms/js/index.js
+  * themes/cms/pages/[theme-name]/first.js
+  * page javascript file.
+  * widget javascript files.
+  * themes/cms/pages/[theme-name]/last.js
+  
+* `jQuery` is loaded first. so, you can use `$` in any of javascript file.
+  * But you cannot use `$` if you do `inline Javascript`.
+    * For `inline Javascript`, you can use `$$` instead.
+    
+* `page Javascript files` and `widget Javascript files` are loaded automatically by PHP.
+
+
+
+## Lifecyle and properties
+
+* /wp-content/themes/cms/functions.php will be loaded first,
+  * global PHP variable `$__user` is available if the user is logged in. the content of $__user is following
+```josn
+Array
+(
+    [nickname] => nick
+    [first_name] => f
+    [last_name] => l
+    [user_email] => user23@gmail.com
+    [middle_name] => 2
+    [mobile] => 008
+    [route] => user.update
+    [photo_url] => https://wordpress.philgo.com/wp-content/uploads/2020/09/881c87be67fc4fff52acc16ba0f06d88.jpg
+    [ID] => 264
+    [user_login] => user23@gmail.com
+    [user_registered] => 2020-09-06 07:54:48
+    [session_id] => 264_b13a4489fe2f0909046aea6e957264cc
+    [photo_ID] => 172
+)
+```
+  * global Javascript variable `__user` has `nickname`, `photo_url`, `photo_ID` properties.
+  
+  * `login()` is available in both PHP and Javascript to get value of global user variable.
+* /wp-content/themes/cms/index.php will be followed,
+* then, pages/`theme-name`/index.php will be loaded
+

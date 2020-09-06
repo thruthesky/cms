@@ -6,5 +6,9 @@
   "appName": {
     "ko": "소너브",
     "en": "Sonub"
+  },
+  "emailAddress": {
+    "ko": "이메일 주소",
+    "en": "Email Address"
   }
 }

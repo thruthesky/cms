@@ -7,6 +7,10 @@
   height: 40px !important;
 }
 
+.profile-photo-size {
+  width: 120px !important;
+  height: 120px !important;
+}
 .wh50x50 {
   width: 50px!important;
   height: 50px!important;
@@ -45,6 +49,8 @@
 }
 
 .circle {
+  display: block;
+  overflow: hidden;
   border-radius: 50%;
 }
 

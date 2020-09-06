@@ -1,22 +1,9 @@
 <?php
 
-if ( loggedIn()) {
-    if ( $__user['photoURL'] ) {
-        ?>
-        <script>
-            $$(function() {
-                $('.user-update-profile-photo')
-                    .html(getUploadedFileHtml(<?=json_encode($apiLib->get_user_profile_photo_file($__user));?>));
-            });
-        </script>
-        <?php
-    }
-}
 ?>
 
 
-
-<div class="container py-3">
+<div id="register-page" class="container py-3">
     <div class="card">
         <div class="card-body">
             <h1><?= loggedIn() ? "User Update" : "User Registration"  ?></h1>

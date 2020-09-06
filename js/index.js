@@ -9,6 +9,13 @@ const uploadedFileClass = 'uploaded-file';
 const anonymousUserPhoto  = '/wp-content/themes/cms/img/anonymous/anonymous.jpg';
 
 
+/**
+ * jQuery object defines
+ */
+
+const $profile_photo = $('.user-update-profile-photo');
+
+
 
 
 /**
@@ -30,7 +37,24 @@ function isBackendError(obj) {
 function move(url) {
     document.location.href = url;
 }
+function openHome() {
+    document.location.href = '/';
+}
 
+
+function login(name) {
+    if ( typeof __user[name] !== 'undefined' ) return __user[name];
+    else return undefined;
+}
+
+function userProfilePhotoUrl() {
+    const url = login('photo_url');
+    if ( url ) {
+        return url;
+    } else {
+        return anonymousUserPhoto;
+    }
+}
 
 function setCookie(name, value, options = {expires: 365}) {
     Cookies.set(name, value, options);
@@ -43,19 +67,21 @@ function getCookie(name) {
 
 function setLogin(re) {
     setCookie('session_id', re['session_id'], { expires: 365 });
-    setCookie('nickname', re['nickname'], { expires: 365 });
-    setCookie('photoURL', re['photoURL'], { expires: 365 });
     setCookie('session_id', re['session_id'], { expires: 365, domain: rootDomain });
-    setCookie('nickname', re['nickname'], { expires: 365, domain: rootDomain });
-    setCookie('photoURL', re['photoURL'], { expires: 365, domain: rootDomain });
+
+    // setCookie('nickname', re['nickname'], { expires: 365 });
+    // setCookie('photo_url', re['photo_url'], { expires: 365 });
+    // setCookie('nickname', re['nickname'], { expires: 365, domain: rootDomain });
+    // setCookie('photo_url', re['photo_url'], { expires: 365, domain: rootDomain });
 }
 function setLogout() {
     Cookies.remove('session_id');
-    Cookies.remove('nickname');
-    Cookies.remove('photoURL');
     Cookies.remove('session_id', { domain: rootDomain });
-    Cookies.remove('nickname', { domain: rootDomain });
-    Cookies.remove('photoURL', { domain: rootDomain });
+
+    // Cookies.remove('nickname');
+    // Cookies.remove('photo_url');
+    // Cookies.remove('nickname', { domain: rootDomain });
+    // Cookies.remove('photo_url', { domain: rootDomain });
 }
 
 /**
@@ -77,7 +103,7 @@ function getUserSessionId() {
     return getCookie('session_id');
 }
 function getUserPhotoUrl() {
-    var url = getCookie('photoURL');
+    var url = getCookie('photo_url');
     if ( !url ) return themePath + '/img/anonymous/anonymous.jpg';
     return url;
 }
@@ -147,6 +173,8 @@ function scrollIntoView(element, duration = 100) {
 
 
 /**
+ * Uploaded File Html
+ *
  *
  * @param file
  * @param options
@@ -293,3 +321,40 @@ function attachUploadedFilesTo($el, files, options) {
 
 
 }
+
+/**
+ * Move to login page if the user is not logged in. Otherwise move to profile page.
+ */
+function loginOrProfile() {
+    if ( loggedIn() ) move('/?page=user.profile');
+    else move('/?page=user.login');
+}
+
+/**
+ * return the API url of login from the form.
+ * @param form
+ * @returns {string}
+ */
+function loginUrl(form) {
+    var url = apiUrl + '?route=user.login&' + $( form ).serialize();
+    console.log(url);
+    return url;
+}
+
+
+function apiUserLogin(form, success) {
+    $.ajax( loginUrl(form) )
+        .done(function(re) {
+            if ( isBackendError(re) ) {
+                alert(re);
+            }
+            else {
+                setLogin(re);
+                success(re);
+            }
+        })
+        .fail(function() {
+            alert( "Server error" );
+        });
+}
+

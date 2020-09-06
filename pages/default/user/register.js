@@ -3,12 +3,12 @@ function onRegisterFormSubmit(form) {
 
     const method = loggedIn() ? 'update' : 'register';
 
-    let data = objectifyForm(form);
+    const data = objectifyForm(form);
     data['route'] = 'user.' + method;
+    const src = $profile_photo.find('img').attr('src');
 
-    var src = $('.user-update-profile-photo').find('img').attr('src');
     if (src !== "<?=ANONYMOUS_PROFILE_PHOTO?>") {
-        data['photoURL'] = src;
+        data['photo_url'] = src;
     }
 
     $.ajax( {
@@ -33,3 +33,4 @@ function onRegisterFormSubmit(form) {
         });
     return false;
 }
+

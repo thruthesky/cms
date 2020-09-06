@@ -241,12 +241,17 @@ function sessionId() {
 /**
  * Returns login user's information from his wp_users table.
  * @param $key
+ *  if $key is null, then it return the same of `loggedIn()` method.
  * @return mixed
  * @example login('nickname')
  */
-function login($key)
+function login($key = null)
 {
     global $__user;
+
+    if ( $key === null ) {
+        return loggedIn();
+    }
 
     /**
      * Check if the value of the key exists on user's API profile.
@@ -275,7 +280,7 @@ function login($key)
  * returns user's profile photo if available. Or return anonymous photo url.
  */
 function userProfilePhotoUrl() {
-     $url = login('photoURL');
+     $url = login('photo_url');
     if ($url) return $url;
     else return ANONYMOUS_PROFILE_PHOTO;
 }
@@ -313,7 +318,7 @@ function userPhotoUrl() {
     echo getUserPhotoUrl();
 }
 function getUserPhotoUrl() {
-    $re = $_COOKIE['photoURL'];
+    $re = $_COOKIE['photo_url'];
     if ( !$re ) return THEME_URL . '/img/anonymous/anonymous.jpg';
     return $re;
 }

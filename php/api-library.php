@@ -103,8 +103,11 @@ class ApiLibrary {
             $data['admin'] = true;
         }
 
-
-        $data['photoURL'] = $user->photoURL;
+        if ( $user->photo_url ) {
+            $data['photo_url'] = $user->photo_url;
+            $photo = $this->get_file_from_url($user->photo_url);
+            $data['photo_ID'] = $photo['ID'];
+        }
         unset($data['user_pass']);
 
         return $data;
@@ -378,7 +381,7 @@ class ApiLibrary {
 
         /// photo URL
 
-        if (isset($in['photoURL'])) $userdata['photoURL'] = $in['photoURL'];
+        if (isset($in['photo_url'])) $userdata['photo_url'] = $in['photo_url'];
 
 
         if (isset($in['first_name'])) $userdata['first_name'] = $in['first_name'];
@@ -419,7 +422,7 @@ class ApiLibrary {
      */
     public function updateField($ID, $k, $v)
     {
-        if ($k == 'photoURL') {
+        if ($k == 'photo_url') {
             $file = $this->getAttachmentFromGUID($v);
             if ($file) {
                 $path = get_attached_file($file['id']);
@@ -598,7 +601,7 @@ class ApiLibrary {
 
 
         /// Get User Author then get photoURL.
-        $post['author_photo_url'] = get_user_meta($post['post_author'], 'photoURL', true);
+        $post['author_photo_url'] = get_user_meta($post['post_author'], 'photo_url', true);
 
 
 
@@ -786,7 +789,7 @@ class ApiLibrary {
         /// post author user profile
 
         /// author photo url
-        $ret['author_photo_url'] = get_user_meta($comment['user_id'], 'photoURL', true);;
+        $ret['author_photo_url'] = get_user_meta($comment['user_id'], 'photo_url', true);;
         // date
         $ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
         $ret['user_vote'] = $this->getUserVoteChoice(get_converted_post_id_from_comment_id($comment_id), $options);
@@ -896,12 +899,12 @@ class ApiLibrary {
      * @param $user - is the return data of 'userResponse()'
      * @return array - is the file information which is the same of 'get_uploaded_file()'
      */
-    function get_user_profile_photo_file($user) {
+    function get_file_from_url($url) {
 
-
-        $_post_file = $this->getPostFromGUID($user['photoURL']);
-        $_user_profile_file = $this->get_uploaded_file($_post_file->ID);
-        return $_user_profile_file;
+        $_post_file = $this->getPostFromGUID($url);
+        if ($_post_file == null) return null;
+        $file = $this->get_uploaded_file($_post_file->ID);
+        return $file;
 
     }
 
