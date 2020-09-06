@@ -28,9 +28,9 @@ EOH;
 EOH;
     }
 
-    $path_url = THEME_PATH . '/pages/'. Config::$domain . '/last.js';
+    $path_url = THEME_PATH . '/pages/'. Config::$domain . '/init.js';
     if ( file_exists($path_url)) {
-        $path_url = $url . '/pages/'. Config::$domain . '/last.js';
+        $path_url = $url . '/pages/'. Config::$domain . '/init.js';
         $scripts .= <<<EOH
 <script src="$path_url?v=$v"></script>
 EOH;

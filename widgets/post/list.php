@@ -1,8 +1,9 @@
 <?php
 $slug = in('slug');
 $posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
-
-//dog($posts);
+if ( isBackendError($posts) ) {
+    return include page('error.wrong-input', $posts);
+}
 ?>
 <a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
 <div class="container pb-3">

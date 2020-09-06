@@ -1,3 +1,8 @@
+/**
+ * @file init.js
+ */
+
+initServiceWorker();
 
 
 $profile_photo

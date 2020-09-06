@@ -1,47 +1,23 @@
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container px-0">
-        <a class="navbar-brand" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
-        <a class="d-lg-none" href="/?page=post.list&slug=qna"><?=tr(['ko'=>'질문과답변', 'en' => 'QnA'])?></a>
-        <a class="d-lg-none user-update-profile-photo icon-size circle" href="#" onclick="loginOrProfile()"></a>
+        <a class="navbar-brand" href="/"><?=tr(['ko'=> '관리자 홈', 'en'=> 'Admin Panel'])?></a>
+        <a class="d-lg-none" href="/?page=admin.user.list"><?=tr(['ko'=>'사용자', 'en' => 'Users'])?></a>
+        <a class="d-lg-none" href="/?page=admin.forum.list"><?=tr(['ko'=>'게시판', 'en' => 'Forum'])?></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto mb-2 mb-lg-0">
-                <?php if ( login() ) { ?>
 
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?page=user.profile">Profile</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#" onclick="setLogout(); move('/');">Logout</a>
-                    </li>
-                <?php } else { ?>
-
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?page=user.login">Login</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?page=user.register">Register</a>
-                    </li>
-
-                    <?php
-                }
-                ?>
-                <?php if ( admin() ) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?page=admin.index">Admin Page</a>
-                    </li>
-                <?php } ?>
 
                 <li class="nav-item">
-                    <a class="nav-link" href="/?page=post.list&slug=qna">QnA</a>
+                    <a class="nav-link" href="/?page=admin.user.list"><?=tr(['ko'=>'사용자', 'en' => 'Users'])?></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/?page=post.list&slug=discussion">Discussion</a>
+                    <a class="nav-link" href="/?page=admin.forum.list"><?=tr(['ko'=>'게시판', 'en' => 'Forum'])?></a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/?page=post.list&slug=jobs">Jobs</a>
                 </li>

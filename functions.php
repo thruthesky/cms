@@ -108,6 +108,16 @@ EOH;
 }
 
 
+$__page_options = null;
+function set_page_options($options) {
+    global $__page_options;
+    $__page_options = $options;
+}
+function get_page_options() {
+    global $__page_options;
+    return $__page_options;
+}
+
 /**
  * Return PHP script path based on the URL input `page`.
  *
@@ -123,8 +133,8 @@ EOH;
  *  include page('user.register'); /// will include 'pages/theme-name/user/register.php'
  * @endcode
  */
-function page($page = null) {
-
+function page($page = null, $options = null) {
+    set_page_options($options);
 
         /**
          * Detect if the user is on a post view page.
@@ -140,6 +150,8 @@ function page($page = null) {
             }
         }
 
+        if ( strpos($page, 'admin.') === 0 ) $page = str_replace('admin.', '', $page);
+
 
         if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
             $path = 'error/wrong-input.php';
@@ -147,7 +159,11 @@ function page($page = null) {
             $arr = explode('.', $page, 2);
 
             if ( count($arr) == 1 ) {
-                $path = "$arr[0]/$arr[0].php";
+                if ( $arr[0] == 'index' ) {
+                    $path = 'error/wrong-input.php';
+                } else {
+                    $path = "$arr[0].php";
+                }
             }
             else if ( count($arr) == 2 ) {
                 $path = "$arr[0]/$arr[1].php";
@@ -167,12 +183,18 @@ function page($page = null) {
     }
     else { // File not found
 
+
+        set_page_options($file);
+
         $name = 'error/file-not-found.php';
         $file = THEME_PATH . '/pages/'. Config::$domain . '/' . $name;
         $default_file = THEME_PATH . '/pages/default/' . $name;
 
+
+
         // return file not found on the theme.
         $script_file =  file_exists($file) ? $file : $default_file;
+
     }
 
     global $__included_files;
@@ -190,7 +212,20 @@ function page($page = null) {
  * @param $name
  * @return string
  */
-function widget($name) {
+$__widget_options = null;
+
+function set_widget_options($options) {
+    global $__widget_options;
+    $__widget_options = $options;
+}
+function get_widget_options() {
+    global $__widget_options;
+    return $__widget_options;
+}
+
+function widget($name, $options = null) {
+
+    set_widget_options($options);
 
     $domain = Config::$domain;
 
@@ -492,4 +527,15 @@ function tr($code) {
     return $code;
 }
 
+
+function jsAlert($str) {
+    echo <<<EOH
+<script>
+alert("$str");
+</script>
+EOH;
+
+    return null;
+
+}
 

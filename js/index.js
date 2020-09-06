@@ -17,13 +17,6 @@ const $profile_photo = $('.user-update-profile-photo');
 
 
 
-
-/**
- * Initialization
- */
-initServiceWorker();
-
-
 /**
  * Returns true if the input is an error of backend.
  */

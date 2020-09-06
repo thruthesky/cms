@@ -10,5 +10,9 @@
   "emailAddress": {
     "ko": "이메일 주소",
     "en": "Email Address"
+  },
+  "error_wrong_slug": {
+    "ko": "게시판 아이디가 올바르지 않습니다.",
+    "en": "Wrong forum ID."
   }
 }

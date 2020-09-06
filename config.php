@@ -21,7 +21,10 @@ if (isset($_SERVER['HTTP_HOST'])) {
 /**
  * Match host name to page.
  */
-if ($_host == 'wp-blog.philgo.com' ) {
+if ( isset($_REQUEST['page']) && strpos($_REQUEST['page'], 'admin.') !== false ) { // if 'page' HTTP variable has 'admin', then it uses 'admin' theme.
+    Config::$domain = 'admin';
+}
+else if ($_host == 'wp-blog.philgo.com' ) {
     Config::$domain = 'blog';
 } else if ($_host == 'wp-realestate.philgo.com' ) {
     Config::$domain = 'realestate';

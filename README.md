@@ -208,6 +208,43 @@ function onLoginFormSubmit(form) {
  
 * If the URL is not request uri is not `/` and the URL does not have `page` variable,
   then it is considered that the request is for accessing a post view page.
+  
+* You can load another page from a page by calling `page()` function.
+  * First argument of `page()` is the same value of `page` http variable.
+  * Second argument of `page()` is the option value to the page.
+  * You can call `get_page_options()` inside the page.
+  * For instance, you can call an error page like `page('error.wrong-input', 'error-code')`.
+    * And get the option by calling `get_page_options()` inside the `error/wrong-input.php`.
+
+* If the value of `page` has no comma(.) in the middle, then it only load the script in root folder of the theme.
+  * For instance, `/?page=home` will load `pages/[theme-name]/home.php`.
+  * `page` cannot have `index` as value since `index.php` is including the page. It will do load `index.php` inifinitely
+  If `page` is 'index'.
+  * `home` is recommended for its starting page.
+    * For admin page, `/?page=admin.home` will do.
+
+
+### Widgets
+
+* widget has same concept of passing options from page to widget.
+  * Call `include widget(..., $options)` and use `get_widget_options()` to get the options.
+
+### Admin page
+
+* If the HTTP variable `page` has 'admin' in its value, then it uses admin theme.
+  * `pages/admin/index.php` will be loaded for its starter script.
+  * 'admin.' will be removed from `page` value before locating the page script.
+    * That means, `/?page=admin.user.list` was given as HTTP variable,
+        it will determine to use `admin` theme, then remove 'admin.' from its value.
+        So it is acting as if `/?page=user.list` was given after choosing 'admin' theme.
+        
+        And it causes to load `/pages/admin/user/list.php`.
+        
+
+* Admin can enter admin page only on web browser. There is no API call for admin.
+* When the user is accessing admin page when he is not an admin, `error.you-are-not-admin.php` will be opened.
+
+
 
 ### Pages & Widgets
   
@@ -234,11 +271,6 @@ function onLoginFormSubmit(form) {
 ```
 
 
-## Admin
-
-* Admin can enter admin page only on web browser. There is no API call for admin.
-* When the user is accessing admin page when he is not an admin, `error.you-are-not-admin.php` will be opened.
-
 
 ## Javascript load
 
@@ -250,7 +282,7 @@ function onLoginFormSubmit(form) {
   * themes/cms/pages/[theme-name]/first.js
   * page javascript file.
   * widget javascript files.
-  * themes/cms/pages/[theme-name]/last.js
+  * themes/cms/pages/[theme-name]/init.js
   
 * `jQuery` is loaded first. so, you can use `$` in any of javascript file.
   * But you cannot use `$` if you do `inline Javascript`.
@@ -260,7 +292,7 @@ function onLoginFormSubmit(form) {
 
 
 
-## Lifecyle and properties
+## Lifecycle and properties
 
 * /wp-content/themes/cms/functions.php will be loaded first,
   * global PHP variable `$__user` is available if the user is logged in. the content of $__user is following
@@ -288,3 +320,5 @@ Array
 * /wp-content/themes/cms/index.php will be followed,
 * then, pages/`theme-name`/index.php will be loaded
 
+
+* `pages/[theme-name]/init.js` will be loaded after all other Javascript is loaded. It is a good place to put initialization.
