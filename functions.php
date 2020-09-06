@@ -37,6 +37,12 @@ $apiPost = new ApiPost();
 $apiComment = new ApiComment();
 
 /**
+ * List of included files.
+ */
+$__included_files = [];
+
+
+/**
  * Global user's API profile information.
  * This is the login user's profile information that should be used for profile update.
  */
@@ -105,48 +111,59 @@ EOH;
 /**
  * Return PHP script path based on the URL input `page`.
  *
+ * @param null $page
  * @return string
  *
  * http://domain.com/ => pages/home/home.php
  * http://domain.com/?page=abc => pages/abc/abc.php
  * http://domain.com/?page=abc.def => pages/abc/def.php
  * https://domain.com/?page=abc.def_ghi => pages/abc/def_ghi.php
+ *
+ * @code
+ *  include page('user.register'); /// will include 'pages/theme-name/user/register.php'
+ * @endcode
  */
-function page_path() {
+function page($page = null) {
 
 
-    /**
-     * Detect if the user is on a post view page.
-     * @see README ## Pages
-     */
+        /**
+         * Detect if the user is on a post view page.
+         * @see README ## Pages
+         */
 
-    if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' ) {
-        $page = 'post.view';
-    } else {
-        $page = in('page', 'home');
+        if ( $page == null ) {
+            if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' ) {
+                $page = 'post.view';
+            } else {
+                $page = in('page', 'home');
 
-    }
-
-    if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
-        $path = 'error/wrong-input.php';
-    } else {
-        $arr = explode('.', $page, 2);
-
-        if ( count($arr) == 1 ) {
-            $path = "$arr[0]/$arr[0].php";
-        }
-        else if ( count($arr) == 2 ) {
-            $path = "$arr[0]/$arr[1].php";
+            }
         }
 
-    }
+
+        if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
+            $path = 'error/wrong-input.php';
+        } else {
+            $arr = explode('.', $page, 2);
+
+            if ( count($arr) == 1 ) {
+                $path = "$arr[0]/$arr[0].php";
+            }
+            else if ( count($arr) == 2 ) {
+                $path = "$arr[0]/$arr[1].php";
+            }
+
+        }
+
 
     $file = THEME_PATH . '/pages/'. Config::$domain . '/' . $path;
     $default_file = THEME_PATH . '/pages/default/' . $path;
 
-    if ( file_exists($file) ) return $file;
+
+
+    if ( file_exists($file) ) $script_file = $file;
     else if ( file_exists($default_file)) {
-        return $default_file;
+        $script_file =  $default_file;
     }
     else { // File not found
 
@@ -155,8 +172,12 @@ function page_path() {
         $default_file = THEME_PATH . '/pages/default/' . $name;
 
         // return file not found on the theme.
-        return file_exists($file) ? $file : $default_file;
+        $script_file =  file_exists($file) ? $file : $default_file;
     }
+
+    global $__included_files;
+    $__included_files[] = $script_file;
+    return $script_file;
 }
 
 
@@ -167,8 +188,10 @@ function page_path() {
  * Or it will look for the widget script under `cms/widgets` folder.
  *
  * @param $name
+ * @return string
  */
 function widget($name) {
+
     $domain = Config::$domain;
 
     if ( strpos( $name, '.') !== false ) {
@@ -185,8 +208,10 @@ function widget($name) {
     }
 
 
+    global $__included_files;
+    $__included_files[] = $widget_path;
+
     return $widget_path;
-//    include "widgets/$name/$name.php";
 }
 
 

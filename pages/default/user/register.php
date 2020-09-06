@@ -1,23 +1,12 @@
 <?php
-//
-$user = [
-    'session_id' => '',
-    'user_email' => '',
-    'first_name' => '',
-    'middle_name' => '',
-    'last_name' => '',
-    'nickname' => '',
-    'mobile' => '',
-    'photoURL' => ''
-];
+
 if ( loggedIn()) {
-    $user = $apiLib->userResponse(sessionId());
-    if ( $user['photoURL'] ) {
+    if ( $__user['photoURL'] ) {
         ?>
         <script>
             $$(function() {
                 $('.user-update-profile-photo')
-                    .html(getUploadedFileHtml(<?=json_encode($apiLib->get_user_profile_photo_file($user));?>));
+                    .html(getUploadedFileHtml(<?=json_encode($apiLib->get_user_profile_photo_file($__user));?>));
             });
         </script>
         <?php
@@ -25,39 +14,6 @@ if ( loggedIn()) {
 }
 ?>
 
-<script>
-
-    function onRegisterFormSubmit(form) {
-
-        const method = "<?= loggedIn() ? 'update' : 'register'?>";
-
-        let data = objectifyForm(form);
-        data['route'] = 'user.' + method;
-
-        var src = $('.user-update-profile-photo').find('img').attr('src');
-        if (src !== "<?=ANONYMOUS_PROFILE_PHOTO?>") {
-            data['photoURL'] = src;
-        }
-
-        $.ajax( {
-            method: 'GET',
-            url: apiUrl,
-            data: data
-        }).done(function(re) {
-            if ( isBackendError(re) ) {
-                alert(re);
-            }
-            else {
-                setLogin(re);
-                move(homePage);
-            }
-        })
-            .fail(function() {
-                alert( "Server error" );
-            });
-        return false;
-    }
-</script>
 
 
 <div class="container py-3">
@@ -87,12 +43,12 @@ if ( loggedIn()) {
                         </div>
                     </div>
 
-                    <input type="hidden" name="session_id" value="<?=$user['session_id']?>">
+                    <input type="hidden" name="session_id" value="<?=login('session_id')?>">
                 <?}?>
 
                 <div class="mb-3">
                     <label  class="form-label">Email address</label>
-                    <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=$user['user_email']?>">
+                    <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
                 </div>
 
                 <? if (!loggedIn()) { ?>
@@ -108,21 +64,21 @@ if ( loggedIn()) {
                         <div class="col">
                             <div class="mb-3">
                                 <label  class="form-label">First name</label>
-                                <input type="text" class="form-control" name="first_name" value="<?=$user['first_name']?>">
+                                <input type="text" class="form-control" name="first_name" value="<?=login('first_name')?>">
                             </div>
                         </div>
                         <div class="col">
 
                             <div class="mb-3">
                                 <label class="form-label">Middle name</label>
-                                <input type="text" class="form-control" name="middle_name" maxlength="1" value="<?=$user['middle_name']?>">
+                                <input type="text" class="form-control" name="middle_name" maxlength="1" value="<?=login('middle_name')?>">
                             </div>
                         </div>
                         <div class="col">
 
                             <div class="mb-3">
                                 <label class="form-label">Last name</label>
-                                <input type="text" class="form-control" name="last_name" value="<?=$user['last_name']?>">
+                                <input type="text" class="form-control" name="last_name" value="<?=login('last_name')?>">
                             </div>
 
                         </div>
@@ -132,12 +88,12 @@ if ( loggedIn()) {
 
                 <div class="mb-3">
                     <label class="form-label">Nickname</label>
-                    <input type="text" class="form-control" name="nickname"  value="<?=$user['nickname']?>">
+                    <input type="text" class="form-control" name="nickname"  value="<?=login('nickname')?>">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label">Mobile number</label>
-                    <input type="text" class="form-control" name="mobile"  value="<?=$user['mobile']?>">
+                    <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
                 </div>
 
                 <button type="submit" class="btn btn-primary" data-button="submit">Submit</button>

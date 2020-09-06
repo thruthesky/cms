@@ -37,4 +37,11 @@ EOH;
 /**
  * Load theme based on domain.
  */
+ob_start();
 include 'pages/' . Config::$domain . '/index.php';
+$output = ob_get_clean();
+
+include 'etc/patch.php';
+$output = patch_javascript_into_output($output);
+
+echo $output;

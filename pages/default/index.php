@@ -53,7 +53,7 @@ if ( localhost() ) {
         <div class="col">
             <main class="mr-lg-4 bg-info">
                 <?php
-                include page_path();
+                include page();
                 ?>
             </main>
         </div>
