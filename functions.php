@@ -26,6 +26,19 @@ require 'php/api-comment.php';
 require 'php/api-file.php';
 
 
+/**
+ * Filter 404 response code to 200.
+ * @return bool
+ */
+function wpd_do_stuff_on_404(){
+    if( is_404() ){
+        global $wp_query;
+        status_header( 200 );
+        $wp_query->is_404=false;
+        return false;
+    }
+}
+add_action( 'template_redirect', 'wpd_do_stuff_on_404' );
 
 
 /**
@@ -35,6 +48,9 @@ require 'php/api-file.php';
 $apiLib = new ApiLibrary();
 $apiPost = new ApiPost();
 $apiComment = new ApiComment();
+
+/// Javascript that will be added into head tag.
+$__head_script = '';
 
 /**
  * List of included files.
@@ -94,7 +110,8 @@ function theme_url() {
 
 
 function live_reload() {
-    echo <<<EOH
+    global $__head_script;
+    $__head_script .= <<<EOH
 <script src="http://127.0.0.1:12345/socket.io/socket.io.js"></script>
    <script>
        var socket = io('http://127.0.0.1:12345');
@@ -103,6 +120,7 @@ function live_reload() {
            location.reload();
        });
    </script>
+
 EOH;
 
 }
@@ -142,7 +160,7 @@ function page($page = null, $options = null) {
          */
 
         if ( $page == null ) {
-            if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' ) {
+            if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?' ) {
                 $page = 'post.view';
             } else {
                 $page = in('page', 'home');
@@ -534,8 +552,14 @@ function jsAlert($str) {
 alert("$str");
 </script>
 EOH;
-
     return null;
-
+}
+function jsGo($url) {
+    echo <<<EOH
+<script>
+location.href="$url";
+</script>
+EOH;
+    return null;
 }
 

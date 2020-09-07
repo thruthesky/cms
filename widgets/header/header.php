@@ -32,7 +32,7 @@
                 ?>
                 <?php if ( admin() ) { ?>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?page=admin.index">Admin Page</a>
+                        <a class="nav-link active" aria-current="page" href="/?page=admin.home">Admin Page</a>
                     </li>
                 <?php } ?>
 

@@ -35,6 +35,7 @@ foreach ($cats as $cat) {
     <div class="col"><?=$cat->name?></div>
     <div class="col"><?=$cat->count?></div>
     <div class="col buttons">
+        <a href="/?page=admin.forum.setting&slug=<?=$cat->slug?>">Setting</a>
         <a href="/?page=post.list&slug=<?=$cat->slug?>">Open</a>
     </div>
 </div>

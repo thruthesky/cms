@@ -42,7 +42,7 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-<?=$_head_script?>
+<?=$__head_script?>
 </head>
 <body data-page="<?=in('page', 'home')?>">
 

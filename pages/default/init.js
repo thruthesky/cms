@@ -2,7 +2,7 @@
  * @file init.js
  */
 
-initServiceWorker();
+if ( ! isLocalhost ) initServiceWorker();
 
 
 $profile_photo

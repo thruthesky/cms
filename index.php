@@ -17,7 +17,7 @@ if (localhost()) $_localhost = 'true'; else $_localhost = 'false';
 $_nickname = login('nickname');
 $_photo_ID = login('photo_ID');
 $_photo_url = login('photo_url');
-$_head_script =<<<EOH
+$__head_script .=<<<EOH
     <script>
         var isLocalhost = $_localhost;
         const appVersion = "$_appVersion";

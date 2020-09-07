@@ -1,4 +1,9 @@
 <?php
+/**
+ * @file list.php
+ * @widget-type list
+ * @widget-name Gallery
+ */
 $slug = in('slug');
 $posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
 if ( isBackendError($posts) ) {
