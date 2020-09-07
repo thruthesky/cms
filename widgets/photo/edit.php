@@ -2,21 +2,24 @@
 /**
  * @file edit.php
  * @widget-type post_edit_theme
- * @widget-name Default post edit
+ * @widget-name Photo edit theme
  */
+?>
+<h1>photo Edit</h1>
 
+<?php
 $ID = in('ID');
 $slug = in('slug');
 
 $post = [
-    'ID' => '',
-    'guid' => '',
-    'post_title' => '',
-    'post_content' => '',
-    'files' => []
+'ID' => '',
+'guid' => '',
+'post_title' => '',
+'post_content' => '',
+'files' => []
 ];
 if ($ID) {
-    $post =  $apiPost->postGet(['ID' => $ID, 'post_count' => false]);
+$post =  $apiPost->postGet(['ID' => $ID, 'post_count' => false]);
 }
 //
 //dog($post);

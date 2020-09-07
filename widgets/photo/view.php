@@ -2,14 +2,17 @@
 /**
  * @file view.php
  * @widget-type post_view_theme
- * @widget-name Default post view
+ * @widget-name Photo post view
  */
+
+
 $post =  $apiPost->postGet([
         'ID' => url_to_postid(get_page_uri()),
 //        'session_id' => sessionId() // @bug. It produce - invalid session id.
 ]);
 $slug = $post['slug'];
 ?>
+<h1>photo view</h1>
 <script>
     function onCommentDelete(comment_ID) {
 

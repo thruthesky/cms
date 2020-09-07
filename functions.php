@@ -563,3 +563,107 @@ EOH;
     return null;
 }
 
+
+/**
+ * Recursive glob
+ *
+ * Searches files under subdirectories.
+ *
+ * @param $pattern
+ * @param int $flags
+ * @return array|false
+ */
+function rglob($pattern, $flags = 0) {
+    $files = glob($pattern, $flags);
+    foreach (glob(dirname($pattern).'/*', GLOB_ONLYDIR|GLOB_NOSORT) as $dir) {
+        $files = array_merge($files, rglob($dir.'/'.basename($pattern), $flags));
+    }
+    return $files;
+}
+
+/**
+ * Get widget list of the type
+ * @param $type
+ * @return array
+ */
+function get_wiget_list($type) {
+    $files = rglob(THEME_PATH . '/widgets/*.php');
+    $res = [];
+    foreach( $files as $file ) {
+        $content = file_get_contents($file);
+
+        $arr = explode('@widget-type', $content);
+        if ( count($arr) == 1 ) continue;
+        $arr = explode("\n", $arr[1]);
+        $widget_type = trim($arr[0]);
+
+        if ( $type != $widget_type) continue;
+
+        $arr = explode('@widget-name', $content);
+        if ( count($arr) == 1 ) continue;
+        $arr = explode("\n", $arr[1]);
+        $name = $arr[0];
+
+        $arr = explode('/widgets/', $file);
+        $arr = explode('.php', $arr[1]);
+        $widget_path = str_replace('/', '.', $arr[0]);
+        $res[$widget_path] = $name;
+    }
+    return $res;
+}
+
+
+/**
+ * Generate Bootstrap Options.
+ * @param $options
+ * @param null $selected
+ * @return string
+ */
+function generate_options($options, $selected=null) {
+    $ret = '';
+    foreach( $options as $k => $v ) {
+        if ( $k == $selected ) $_selected = ' selected';
+        else $_selected = '';
+
+        $ret .= "<OPTION VALUE=\"$k\"$_selected>$v</OPTION>";
+    }
+    return $ret;
+}
+
+/**
+ * Generate Bootstrap Select Form Group
+ * @note use it as child tag of form tag.
+ * @param $options
+ * @return string
+ */
+function generate_select($options) {
+
+    return <<<EOH
+
+    <div class="form-group">
+        <label for="form-description">{$options['description']}</label>
+
+        <div class="form-group">
+            <label for="{$options['name']}">{$options['default_select']}</label>
+            <select class="form-control" id="{$options['name']}" name="{$options['name']}">
+                {$options['options']}
+            </select>
+        </div>
+    </div>
+EOH;
+
+}
+
+
+/**
+ * Get category meta
+ * @param $cat_ID
+ * @param $key
+ * @param null $default_value
+ * @return mixed
+ */
+function get_category_meta($cat_ID, $key, $default_value=null) {
+    $re = get_term_meta($cat_ID, $key, true);
+    if ( !$re ) $re = $default_value;
+    return $re;
+}

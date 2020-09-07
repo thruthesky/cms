@@ -1,8 +1,8 @@
 <?php
 /**
  * @file list.php
- * @widget-type list
- * @widget-name Gallery
+ * @widget-type post_list_theme
+ * @widget-name Default post list
  */
 $slug = in('slug');
 $posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);

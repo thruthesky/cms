@@ -11,9 +11,9 @@ wp_update_category([
     'cat_description' => in('description'),
 ]);
 
-update_term_meta($cat->cat_ID, 'list_theme', in('list_theme'));
-update_term_meta($cat->cat_ID, 'view_theme', in('view_theme'));
-update_term_meta($cat->cat_ID, 'edit_theme', in('edit_theme'));
+update_term_meta($cat->cat_ID, 'post_list_theme', in('post_list_theme'));
+update_term_meta($cat->cat_ID, 'post_view_theme', in('post_view_theme'));
+update_term_meta($cat->cat_ID, 'post_edit_theme', in('post_edit_theme'));
 update_term_meta($cat->cat_ID, 'post_list_under_view', in('post_list_under_view'));
 
 
