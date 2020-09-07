@@ -338,6 +338,16 @@ function userProfilePhotoUrl() {
     else return ANONYMOUS_PROFILE_PHOTO;
 }
 
+
+/**
+ * returns user's profile photo if available. Or return anonymous photo url.
+ */
+function getUserProfilePhotoUrl($user) {
+    $url = $user['photo_url'];
+    if ($url) return $url;
+    else return ANONYMOUS_PROFILE_PHOTO;
+}
+
 /**
  * @param $user_ID mixed  - user_login or session_id
  * @param $field string - field name to get the user's property.

@@ -283,7 +283,7 @@ function progress(progress,e){
             progress.find('.progress-bar').width(0+'%');
 
         } else {
-            console.log(Percentage);
+            // console.log(Percentage);
             progress.find('.progress-bar').width(Percentage+'%')
         }
     }

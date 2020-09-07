@@ -5,10 +5,11 @@ if ( in('page_no', 1) < 1 ) $page_no = 1;
 
 $users = get_users( [ 'fields' => 'all_with_meta', 'number' => $no_of_records_per_page, 'paged' => $page_no] );
 foreach($users as $user){
+    $ln = "?page=admin.user.edit&ID=" . $user->ID;
     echo <<<EOH
-<div>
+<a class="d-block" href="$ln">
 {$user->nickname}
-</div>
+</a>
 EOH;
 }
 
