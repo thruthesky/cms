@@ -93,7 +93,7 @@ $post =  $apiPost->postGet(['ID' => $ID, 'post_count' => false]);
         </div>
         <div class="upload-photo-box">
             <input type="file" name="file"
-                   onchange="onChangeFile(this, {append: $('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.post-edit').find('.progress'), success: onUploadFile})">
+                   onchange="onChangeFile(this, {append: $('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.post-edit').find('.progress')})">
             <i role="button" class="fa fa-camera"></i>
         </div>
         <div class="progress mb-3" style="display: none">

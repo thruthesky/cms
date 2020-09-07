@@ -49,7 +49,7 @@ if ( $post ) {
         <div class="form-group row no-gutters">
             <div class="position-relative overflow-hidden">
                 <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file"
-                       onchange="onChangeFile(this, {append: $(this).parents('.input-box').find('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.input-box').find('.progress'), 'deleteButton': false})">
+                       onchange="onChangeFile(this, {append: $(this).parents('.input-box').find('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.input-box').find('.progress'), 'deleteButton': true})">
                 <i class="fa fa-camera fs-xl cursor p-2"></i>
             </div>
             <div class="col mr-3">
@@ -67,7 +67,7 @@ if ( $post ) {
         </div>
     </form>
 
-    <div class="files edit row">
+    <div class="files edit row mb-3">
         <!-- uploaded files -->
     </div>
 
