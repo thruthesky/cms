@@ -44,14 +44,14 @@ if ( localhost() ) {
     <title>Hello, world!</title>
 <?=$_head_script?>
 </head>
-<body class="bg-warning" data-page="<?=in('page', 'home')?>">
+<body data-page="<?=in('page', 'home')?>">
 
 <?php include widget('header')?>
 
 <div class="container px-0">
     <div class="row no-gutters">
         <div class="col">
-            <main class="mr-lg-4 bg-info">
+            <main class="mr-lg-4">
                 <?php
                 include page();
                 ?>

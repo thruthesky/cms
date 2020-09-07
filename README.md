@@ -216,12 +216,12 @@ function onLoginFormSubmit(form) {
   * For instance, you can call an error page like `page('error.wrong-input', 'error-code')`.
     * And get the option by calling `get_page_options()` inside the `error/wrong-input.php`.
 
-* If the value of `page` has no comma(.) in the middle, then it only load the script in root folder of the theme.
-  * For instance, `/?page=home` will load `pages/[theme-name]/home.php`.
-  * `page` cannot have `index` as value since `index.php` is including the page. It will do load `index.php` inifinitely
-  If `page` is 'index'.
-  * `home` is recommended for its starting page.
-    * For admin page, `/?page=admin.home` will do.
+* If the value of `page` has no comma(.) in the middle, then it loads `pages/[theme-name]/[name-folder]/[name]`.
+  * For instance, `/?page=home` will load `pages/[theme-name]/home/home.php`.
+  
+#### Admin page
+
+* Admin home page should be access as `/?page=admin.home` and loads scripts in `pages/admin/home/home.php`.
 
 
 ### Widgets
@@ -322,3 +322,8 @@ Array
 
 
 * `pages/[theme-name]/init.js` will be loaded after all other Javascript is loaded. It is a good place to put initialization.
+
+
+## Known Bugs & Problems
+
+* To login as Wordpress admin panel, you must logout from the site first because `session_id` will remain in the cookie if you don't log out and it will make you to login only as a user not an admin.

@@ -162,7 +162,7 @@ function page($page = null, $options = null) {
                 if ( $arr[0] == 'index' ) {
                     $path = 'error/wrong-input.php';
                 } else {
-                    $path = "$arr[0].php";
+                    $path = "$arr[0]/$arr[0].php";
                 }
             }
             else if ( count($arr) == 2 ) {

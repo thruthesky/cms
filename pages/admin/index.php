@@ -40,7 +40,7 @@ if ( localhost() ) {
         </div>
 
         <div class="col">
-            <main class="bg-info">
+            <main class="">
                 <?php
                 include page();
                 ?>
