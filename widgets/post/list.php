@@ -4,8 +4,15 @@
  * @widget-type post_list_theme
  * @widget-name Default post list
  */
-$slug = in('slug');
+$slug = null;
+if (in('slug')) $slug = in('slug');
+else {
+    $options = get_widget_options();
+    if(isset($options['slug']) && $options['slug']) $slug = $options['slug'];
+}
+
 $posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
+
 if ( isBackendError($posts) ) {
     return include page('error.wrong-input', $posts);
 }

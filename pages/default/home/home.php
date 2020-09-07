@@ -40,4 +40,5 @@
     <h3>
         Push
     </h3>
+    <?php include widget( 'post.list', ['slug' => 'qna'] ); ?>
 </div>
