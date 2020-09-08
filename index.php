@@ -17,6 +17,8 @@ if (localhost()) $_localhost = 'true'; else $_localhost = 'false';
 $_nickname = login('nickname');
 $_photo_ID = login('photo_ID');
 $_photo_url = login('photo_url');
+
+global $__head_script;
 $__head_script .=<<<EOH
     <script>
         var isLocalhost = $_localhost;
@@ -38,6 +40,7 @@ $__head_script .=<<<EOH
         }
     </script>
 EOH;
+
 
 
 

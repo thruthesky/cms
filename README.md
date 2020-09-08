@@ -9,6 +9,8 @@ CMS for community projects
 ## Installation
 
 * Install wordpress with `https` supported domain. Or PWA and other things may not work.
+  * You can register host in `hosts` file.
+  * And set webserver with some SSL for the domain.
 
 * git clone `cms` theme inti `wp-content/themes` folder.
 ```text
@@ -16,8 +18,9 @@ $ cd wp-content/themes/
 $ git clone https://github.com/thruthesky/cms
 ```
 
-* activate the theme on admin panel.
+* activate the `cms` theme on admin panel.
 
+* Access the site and finish setup.
 
 
 ## Tests

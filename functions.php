@@ -42,6 +42,28 @@ add_action( 'template_redirect', 'wpd_do_stuff_on_404' );
 
 
 /**
+ * Theme activation hook
+ *
+ * Do some extra installation and initialization here.
+ */
+add_action('after_switch_theme', 'cms_theme_activation');
+function cms_theme_activation () {
+    if ( get_option(INSTALL) == INSTALL_YES ) return;
+    $sql = file_get_contents(THEME_PATH . '/tmp/x_vote_log.schema.sql');
+    $qs = explode(';', $sql);
+    global $wpdb;
+    foreach( $qs as $q ) {
+        $q = trim($q);
+        if ( !$q) continue;
+        $wpdb->query($q);
+    }
+    update_option(INSTALL, INSTALL_YES, true);
+}
+
+
+
+
+/**
  * Global Variables
  */
 
@@ -89,8 +111,11 @@ add_filter('duplicate_comment_id', '__return_false');
  */
 if ( API_CALL || isCommandLineInterface() ) {}
 else {
-    if ( localhost() ) live_reload();;
+    if ( localhost() ) live_reload();
+//    if ( ! installed() ) $_REQUEST['page'] = 'error.install';
 }
+
+
 
 
 /**
@@ -100,6 +125,10 @@ require 'security.php';
 
 
 
+//function installed() {
+//    if ( get_option(INSTALL) == INSTALL_YES ) return true;
+//    return false;
+//}
 
 /**
  * echo theme path
