@@ -1,8 +1,16 @@
 <?php
-$cat = get_category_by_slug(in('slug'));
-
-
-
+if (in('slug')) {
+    $cat = get_category_by_slug(in('slug'));
+//    dog($cat);
+} else {
+    $cat = (object)[
+        'cat_ID' => '',
+        'name' => 'abc',
+        'slug' => 'def',
+        'description' => 'ghi',
+        'count' => '',
+    ];
+}
 
 ?>
 <h4>Forum Settings</h4>
@@ -15,10 +23,13 @@ $cat = get_category_by_slug(in('slug'));
 <form action="?" method="post">
     <input type="hidden" name="page" value="admin.forum.setting.submit">
     <input type="hidden" name="cat_ID" value="<?=$cat->cat_ID?>">
-
     <div class="form-group">
-        <label for="form-name">Name</label>
+        <label for="form-name">Display Name</label>
         <input type="text" name="name" class="form-control" id="form-name" value="<?=$cat->name?>">
+    </div>
+    <div class="form-group">
+        <label for="form-name">Slug</label>
+        <input type="text" name="slug" class="form-control" id="form-slug" value="<?=$cat->slug?>">
     </div>
 
     <div class="form-group">

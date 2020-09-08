@@ -5,6 +5,7 @@ class Config {
     static public $apiUrl = '/wp-content/themes/cms/api.php';
     static public $registerPage = '/?page=user.register';
     static public $resignResultPage = '/?page=user.resign_result';
+    static public $adminUserList = '/?page=admin.user.list';
 }
 
 

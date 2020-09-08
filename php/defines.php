@@ -28,6 +28,9 @@ define('ERROR_ROUTE_NOT_EXIST', 'route_not_exist');
 define('ERROR_USER_NOT_FOUND_BY_THAT_SESSION_ID', 'user_not_found_by_that_session_id');
 
 
+define('ERROR_EMPTY_PARAMS', 'error_empty_PARAMS');
+define('ERROR_EMPTY_NAME', 'error_empty_name');
+define('ERROR_SLUG_EXIST', 'error_slug_exist');
 define('ERROR_EMPTY_SLUG', 'error_empty_slug');
 define('ERROR_WRONG_SLUG', 'error_wrong_slug');
 define('ERROR_NO_SLUG_NOR_ID', 'one of slug or id is not provided');
@@ -172,4 +175,5 @@ define('ERROR_COMMENT_ID_NOT_PROVIDED', 'comment_id_not_provided');
 define('ERROR_FILE_ID_NOT_PROVIDED', 'file_id_not_provided');
 
 define('ERROR_USER_UPDATE', 'user_update_failed');
+
 
