@@ -368,9 +368,11 @@ function login($key = null)
 }
 
 /**
- * returns user's profile photo if available. Or return anonymous photo url.
+ * returns login user's photo
+ *
+ * user's profile photo if available. Or return anonymous photo url.
  */
-function userProfilePhotoUrl() {
+function myProfilePhotoUrl() {
      $url = login('photo_url');
     if ($url) return $url;
     else return ANONYMOUS_PROFILE_PHOTO;
@@ -378,6 +380,8 @@ function userProfilePhotoUrl() {
 
 
 /**
+ * Return other user's photo
+ *
  * returns user's photo_url if available. Or return anonymous photo url.
  * @param $user $apiLib->userResponse
  * @return string

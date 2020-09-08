@@ -40,7 +40,7 @@ function login(name) {
     else return undefined;
 }
 
-function userProfilePhotoUrl() {
+function myProfilePhotoUrl() {
     const url = login('photo_url');
     if ( url ) {
         return url;

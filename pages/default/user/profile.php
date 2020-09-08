@@ -8,7 +8,7 @@ $user = $apiLib->userResponse(sessionID());
 
             <h1>User Profile</h1>
             <div class="d-flex justify-content-center mb-3">
-                <img class="userPhoto circle w-100 wh120x120" src="<?=userProfilePhotoUrl()?>" alt="user photo">
+                <img class="userPhoto circle w-100 wh120x120" src="<?=myProfilePhotoUrl()?>" alt="user photo">
             </div>
             <div class="form-group row">
                 <label for="user_email" class="col-sm-2 col-form-label">Email</label>
