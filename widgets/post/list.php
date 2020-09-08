@@ -13,6 +13,7 @@ else {
 
 $posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
 
+
 if ( isBackendError($posts) ) {
     return include page('error.wrong-input', $posts);
 }
@@ -26,7 +27,7 @@ if ( isBackendError($posts) ) {
             <div class="card-body">
                 <div class="row">
                     <div class="circle overflow-hidden wh50x50">
-                        <img class='mw-100' src="<?=!empty($post['author_photo_url']) ? $post['author_photo_url'] : ANONYMOUS_PROFILE_PHOTO ?>" alt='user photo'>
+                        <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
                     </div>
                     <div class="col">
                         <div>

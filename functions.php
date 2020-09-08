@@ -340,10 +340,36 @@ function userProfilePhotoUrl() {
 
 
 /**
- * returns user's profile photo if available. Or return anonymous photo url.
+ * returns user's photo_url if available. Or return anonymous photo url.
+ * @param $user $apiLib->userResponse
+ * @return string
  */
 function getUserProfilePhotoUrl($user) {
-    $url = $user['photo_url'];
+    return getPhotoUrl($user, 'photo_url');
+}
+
+
+/**
+ * returns post's author_photo_url if available. Or return anonymous photo url.
+ * @param $post $apiPost->postResponse
+ * @return string
+ */
+function getPostProfilePhotoUrl($post) {
+    return getPhotoUrl($post, 'author_photo_url');
+}
+
+/**
+ * returns post's author_photo_url if available. Or return anonymous photo url.
+ * @param $comment $apiPost->commentResponse
+ * @return string
+ */
+function getCommentProfilePhotoUrl($comment) {
+    return getPostProfilePhotoUrl($comment);
+}
+
+function getPhotoUrl($data, $key) {
+    if (!$key) ANONYMOUS_PROFILE_PHOTO;
+    $url = $data[$key];
     if ($url) return $url;
     else return ANONYMOUS_PROFILE_PHOTO;
 }
