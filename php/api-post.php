@@ -53,7 +53,9 @@ class ApiPost extends ApiLibrary
 
 
     /**
-     * Get a post.
+     * Return post for API call or displaying it to view.
+     *
+     * @note This prepares the attached files & comments.
      *
      * @see wordpress-api.service.ts::postGet() for more details.
      *

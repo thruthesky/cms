@@ -4,8 +4,13 @@
  * @widget-type post_view_theme
  * @widget-name Default post view
  */
+
+global $apiPost;
+
+$_post = get_post();
+
 $post =  $apiPost->postGet([
-        'ID' => url_to_postid(get_page_uri()),
+        'ID' => $_post->ID,
 //        'session_id' => sessionId() // @bug. It produce - invalid session id.
 ]);
 $slug = $post['slug'];

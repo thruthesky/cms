@@ -18,7 +18,9 @@ $ cd wp-content/themes/
 $ git clone https://github.com/thruthesky/cms
 ```
 
-* activate the `cms` theme on admin panel.
+* Activate the `cms` theme on admin panel.
+
+* Enable `permalink` to `post name`.
 
 * Access the site and finish setup.
 

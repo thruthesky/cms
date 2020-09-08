@@ -2,6 +2,7 @@
 
 require_once (ABSPATH . "/wp-admin/includes/taxonomy.php");
 
+
 $category = [
     'cat_ID' => in('cat_ID'),
     'cat_name' => in('name'),
@@ -25,6 +26,7 @@ if ( in('cat_ID') ) {
 
     $ID = wp_update_category($category);
 } else {
+    $category['category_nicename'] = in('slug');
     if (in('slug') ) {
         if ( get_category_by_slug(in('slug') ) )  {
             jsAlert('Category Already Exist');
@@ -39,6 +41,7 @@ if (is_wp_error($ID)) {
     jsGo("/?page=admin.forum.list");
 }
 
+update_term_meta($ID , NO_OF_POSTS_PER_PAGE, in(NO_OF_POSTS_PER_PAGE));
 update_term_meta($ID , 'post_list_theme', in('post_list_theme'));
 update_term_meta($ID , 'post_view_theme', in('post_view_theme'));
 update_term_meta($ID , 'post_edit_theme', in('post_edit_theme'));
@@ -47,6 +50,6 @@ update_term_meta($ID , 'post_list_under_view', in('post_list_under_view'));
 $cat = get_category($ID);
 
 
-jsAlert(in('cat_ID') ? "Update Success" : "Create Success");
-jsGo("/?page=admin.forum.setting&slug=" . $cat->slug);
+
+jsGo("/?page=admin.forum.setting&slug=" . $cat->slug, in('cat_ID') ? "Update Success" : "Create Success");
 

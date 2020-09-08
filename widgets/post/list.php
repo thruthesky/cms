@@ -4,21 +4,17 @@
  * @widget-type post_list_theme
  * @widget-name Default post list
  */
-$slug = null;
-if (in('slug')) $slug = in('slug');
-else {
-    $options = get_widget_options();
-    if(isset($options['slug']) && $options['slug']) $slug = $options['slug'];
-}
 
-$posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
+$forum = get_forum_setting();
+
+$posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[NO_OF_POSTS_PER_PAGE]]);
 
 
 if ( isBackendError($posts) ) {
     return include page('error.wrong-input', $posts);
 }
 ?>
-<a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
+<a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$forum['slug']?>">Create</a>
 <div class="container pb-3">
     <?php
     foreach($posts as $post){

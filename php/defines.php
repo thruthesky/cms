@@ -7,6 +7,9 @@ define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 define('INSTALL', 'cms_install');
 define('INSTALL_YES', 'cms_install_yes');
 
+define('NO_OF_POSTS_PER_PAGE', 'no_of_posts_per_page');
+
+
 /**
  * Theme relative path for URL.
  */

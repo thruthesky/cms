@@ -38,7 +38,7 @@ if ( function_exists('in') == false ) {
      *
      * @param $name
      * @param null $default
-     * @return null
+     * @return mixed
      *
      */
     function in($name = null, $default = null)

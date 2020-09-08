@@ -72,6 +72,14 @@ $apiLib = new ApiLibrary();
 $apiPost = new ApiPost();
 $apiComment = new ApiComment();
 
+/**
+ * @return ApiPost
+ */
+function post() {
+    global $apiPost;
+    return $apiPost;
+}
+
 /// Javascript that will be added into head tag.
 $__head_script = '';
 
@@ -620,7 +628,10 @@ alert("$str");
 EOH;
     return null;
 }
-function jsGo($url) {
+function jsGo($url, $msg = '') {
+    if ( $msg ) {
+        jsAlert($msg);
+    }
     echo <<<EOH
 <script>
 location.href="$url";
@@ -732,4 +743,50 @@ function get_category_meta($cat_ID, $key, $default_value=null) {
     $re = get_term_meta($cat_ID, $key, true);
     if ( !$re ) $re = $default_value;
     return $re;
+}
+
+/**
+ * Return settings of a forum
+ * @note it can detect the right forum if the input $cat_ID_or_slug is omitted.
+ * @param null $cat_ID_or_slug
+ * @return array
+ */
+function get_forum_setting($cat_ID_or_slug = null) {
+    $cat = null;
+    if ( $cat_ID_or_slug && is_numeric($cat_ID_or_slug) ) {
+        $cat = get_category($cat_ID_or_slug);
+    }
+    else if ( in('slug') ) {
+        $cat = get_category_by_slug( in('slug') );
+    } else if ( get_the_category() ) {
+        $cats = get_the_category();
+        if ($cats) $cat = $cats[0];
+    }
+
+
+    if ( $cat ) {
+        $re['cat_ID'] = $cat->cat_ID;
+        $re['name'] = $cat->name;
+        $re['description'] = $cat->description;
+        $re['parent'] = $cat->parent;
+        $re['count'] = $cat->count;
+        $re['slug'] = $cat->slug;
+
+        $meta = get_term_meta($cat->cat_ID);
+        if ( $meta ) {
+            foreach( $meta as $k => $v ) {
+                $re[$k] = $v[0];
+            }
+        }
+    }
+    return $re;
+}
+function form_input($options) {
+    if ( !isset($options['value']) ) $options['value'] = '';
+    return <<<EOH
+    <div class="form-group">
+        <label for="{$options['name']}">{$options['label']}</label>
+        <input type="text" name="{$options['name']}" class="form-control" id="{$options['name']}" value="{$options['value']}">
+    </div>
+EOH;
 }
