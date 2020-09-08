@@ -24,6 +24,7 @@ require 'php/api-library.php';
 require 'php/api-post.php';
 require 'php/api-comment.php';
 require 'php/api-file.php';
+require 'php/api-category.php';
 
 
 /**
