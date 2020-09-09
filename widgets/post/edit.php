@@ -18,8 +18,6 @@ $post = [
 if ($ID) {
     $post =  $apiPost->postGet(['ID' => $ID, 'post_count' => false]);
 }
-//
-//dog($post);
 ?>
 
 
