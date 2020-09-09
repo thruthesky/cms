@@ -11,8 +11,6 @@ $post = [];
 if ($ID) {
     $post =  post()->postGet(['ID' => $ID, 'post_count' => false]);
 }
-////
-//dog($post);
 ?>
 
 <script>
