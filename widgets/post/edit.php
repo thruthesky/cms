@@ -54,9 +54,11 @@ if ($ID) {
             </div>
         </div>
     </div>
-    <div class="progress mb-3" data-bind="style: {display: progressLoader}">
+    <!-- ko if: progressLoader -->
+    <div class="progress mb-3">
         <div class="progress-bar progress-bar-striped" role="progressbar" data-bind="style: { width: progressBar}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
+    <!-- /ko -->
 
     <div class="mt-3">
         <button class="btn btn-primary mr-3" type="submit" form="post-form">Submit</button>

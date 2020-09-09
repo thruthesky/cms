@@ -9,15 +9,6 @@
  */
 global $post, $comment, $comment_parent;
 
-$comment_parent_ID = '';
-$comment_ID = '';
-$comment_content = '';
-$files = [];
-/**
- * Becomes true only on update.
- */
-$_update = false;
-
 //        dog($comment_parent);/
 /// create right under a post
 if ( $post ) {
@@ -28,60 +19,19 @@ if ( $post ) {
     $comment_post_ID = $comment_parent['comment_post_ID'];
 } else {
     /// update
-    $_update = true;
     $comment_ID = $comment['comment_ID'];
     $comment_parent_ID = $comment['comment_parent'];
     $comment_content = $comment['comment_content'];
     $comment_post_ID = $comment['comment_post_ID'];
     $files = $comment['files'];
 }
-
 ?>
 
-<div class="input-box">
-
-    <form data-form-comment-parent="<?=$comment_parent_ID?>" class="comment-input-box" onsubmit="return onCommentEditFormSubmit(this);">
-        <input type="hidden" name="route" value="comment.edit">
-        <input type="hidden" name="comment_post_ID" value="<?=$comment_post_ID?>">
-        <input type="hidden" name="comment_parent" value="<?=$comment_parent_ID?>">
-        <input type="hidden" name="comment_ID" value="<?=$comment_ID?>">
-
-        <div class="form-group row no-gutters">
-            <div class="position-relative overflow-hidden">
-                <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file"
-                       onchange="onChangeFile(this, {append: $(this).parents('.input-box').find('.files'), extraClasses: 'col-4 col-sm-3', progress: $(this).parents('.input-box').find('.progress'), 'deleteButton': true})">
-                <i class="fa fa-camera fs-xl cursor p-2"></i>
-            </div>
-            <div class="col mr-3">
-                <textarea onkeydown="onCommentEditText(this)" class="form-control" name="comment_content" id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"><?=$comment_content?></textarea>
-            </div>
-            <div class="col-1">
-                <button type="submit" class="btn btn-outline-dark">
-                    <i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>
-                </button>
-            </div>
-        </div>
-
-        <div class="progress" style="display: none">
-            <div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
-        </div>
-    </form>
-
-    <div class="files edit row mb-3">
-        <!-- uploaded files -->
-    </div>
-
-    <?php
-    /**
-     * If it's update, it is being called through Ajax. So, no need to call after load.
-     * If it's not updating, then, it is being called from PHP and the `$comment` variable is a WP_Comment object.
-     */
-    if ( $_update) { ?>
-        <script>
-            attachUploadedFilesTo($('#comment<?=$comment['comment_ID']?> .files'), <?=json_encode($files ?? []);?>, {extraClasses: 'col-4 col-sm-3', deleteButton: true});
-        </script>
-    <?php } ?>
-
-
-
-</div>
+<comment-input-box params="value: {
+    comment_post_ID: <?=$comment_post_ID??0?>,
+    comment_parent_ID: <?=$comment_parent_ID??0?>,
+    comment_ID: <?=$comment_ID??0?>,
+    comment_content: '<?=$comment_content??''?>',
+    files: [],
+    always: true
+}"></comment-input-box>

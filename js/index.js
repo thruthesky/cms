@@ -358,7 +358,7 @@ function ajaxFailure() {
     alert('Ajax and server failure');
 }
 
-function alertBackendError(obj) {
-    alert(obj);
+function alertBackendError(res) {
+    alert(res);
     return undefined;
 }

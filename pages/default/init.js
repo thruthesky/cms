@@ -19,9 +19,7 @@ function AppViewModel() {
     self.removeProfilePhoto = function() {
         self.userProfilePhotoSrc(null);
     };
-    const NONE = 'none';
-    const FLEX = 'flex';
-    self.progressLoader = ko.observable(NONE);
+    self.progressLoader = ko.observable(false);
     self.progressBar = ko.observable('0%');
 
 
@@ -63,6 +61,8 @@ function AppViewModel() {
             .done(submitPostEditDone)
             .fail(ajaxFailure);
     };
+
+
     self.changeFilePostEdit = function(input) {
         console.log(input.files[0]);
         let formData = new FormData();
@@ -70,7 +70,7 @@ function AppViewModel() {
         formData.append('route', 'file.upload');
         formData.append('userfile', input.files[0]);
 
-        self.progressLoader(FLEX);
+        self.progressLoader(true);
 
         $.ajax({
             url: apiUrl,
@@ -84,18 +84,17 @@ function AppViewModel() {
             timeout: 60 * 1000 * 10, /// 10 minutes.
             success: function (res) {
                 if ( isBackendError(res) ) {
-                    alert(res);
-                    return;
+                    return alertBackendError(res);
                 }
                 self.filesInEdit.push(res);
-                self.progressLoader(NONE);
+                self.progressLoader(false);
                 self.progressBar(0+'%');
             },
             xhr: function() {
                 let myXhr = $.ajaxSettings.xhr();
-                if(myXhr.upload){
+                if(myXhr.upload) {
                     myXhr.upload.addEventListener('progress',function (e){
-                        if(e.lengthComputable){
+                        if(e.lengthComputable) {
                             const max = e.total;
                             const current = e.loaded;
                             let Percentage = Math.round((current * 100) / max);
@@ -113,14 +112,144 @@ function AppViewModel() {
 
             error: function(data){
                 console.error(data.responseText);
-                self.progressLoader(NONE);
+                self.progressLoader(false);
             }
         });
 
     }
+
+    self.showCommentInputBox = ko.observable(0);
+    self.toggleCommentInputBox = function(comment_ID) {
+        console.log(comment_ID);
+        self.showCommentInputBox(comment_ID);
+    }
+
 }
+
+
+// components.register() must come before applyBindings()
+ko.components.register('comment-input-box', {
+    viewModel: function(value) {
+        console.log(value.value);
+        const self = this;
+        self.params = value.value;
+        self.files = ko.observableArray(self.params.files);
+        self.deleteCommentFile = function(data) {
+            console.log('this');
+        }
+        self.progressLoader = ko.observable(false);
+        self.fileUpload = function(box) {
+            let formData = new FormData();
+            formData.append('session_id', getUserSessionId());
+            formData.append('route', 'file.upload');
+            formData.append('userfile', box.files[0]);
+
+            // console.log(box.files[0]);
+            self.progressLoader(true);
+            self.progressBar = ko.observable('0%');
+
+            $.ajax({
+                url: apiUrl,
+                data: formData,
+                type: 'POST',
+                enctype: 'multipart/form-data',
+                contentType: false, // NEEDED, DON'T OMIT THIS (requires jQuery 1.6+)
+                processData: false, // NEEDED, DON'T OMIT THIS
+                cache: false,
+                timeout: 60 * 1000 * 10, /// 10 minutes.
+                success: function (res) {
+                    if ( isBackendError(res) ) {
+                        return alertBackendError(res);
+                    }
+                    self.files.push(res);
+                    self.progressLoader(false);
+                    self.progressBar(0+'%');
+                },
+                xhr: function() {
+                    let myXhr = $.ajaxSettings.xhr();
+                    if(myXhr.upload) {
+                        myXhr.upload.addEventListener('progress',function (e){
+                            if(e.lengthComputable) {
+                                const max = e.total;
+                                const current = e.loaded;
+                                let Percentage = Math.round((current * 100) / max);
+                                if(Percentage >= 100) {
+                                    self.progressBar(100+'%');
+                                } else {
+                                    self.progressBar(Percentage+'%');
+                                }
+                            }
+                        });
+                    }
+                    return myXhr;
+                },
+                error: function(data){
+                    console.error(data.responseText);
+                    self.progressLoader(false);
+                }
+            });
+        }
+        self.submit = function(form) {
+            const data = objectifyForm(form);
+            data['session_id'] = getUserSessionId();
+            data['files'] = self.files().reduce(function(acc, v, i, arr) {
+                return acc += v.ID + ',';
+            }, '');
+
+            console.log(data);
+            
+        }
+    },
+    /// Inside the template, $root is the .... what?
+    /// $parent is the viewModel of the widget.
+    template: '' +
+        '<div class="input-box" data-bind="if: params.always || $root.showCommentInputBox() == params.comment_ID">' +
+            '<form data-bind="submit: submit">' +
+        '<input type="hidden" name="route" value="comment.edit">' +
+        '<input type="hidden" name="comment_post_ID" data-bind="value: params.comment_post_ID">' +
+        '<input type="hidden" name="comment_parent" data-bind="value: params.comment_parent">' +
+        '<input type="hidden" name="comment_ID" data-bind="value: params.comment_ID">' +
+        '<div class="form-group row no-gutters">' +
+            '<div class="upload-button position-relative overflow-hidden">' +
+            '<input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" data-bind="event: {change: function() { fileUpload($element); }}">' +
+            '<i class="fa fa-camera fs-xl cursor p-2"></i>' +
+        '</div><!--/.uploda-button-->' +
+        '<div class="col mr-3">' +
+            '<textarea onkeydown="onCommentEditText(this)" class="form-control" name="comment_content" id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">...</textarea>' +
+        '</div>' +
+        '<div class="send-button col-1">' +
+            '<button type="submit" class="btn btn-outline-dark">' +
+                '<i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
+            '</button>' +
+        '</div><!--/.send-button-->' +
+        '</div><!--/.form-group-->' +
+        '</form>' +
+
+                '<div class="container">' +
+                    '<div class="row" data-bind="foreach: files">' +
+                        '<div class="col-4">' +
+                            '<div class="photo position-relative">' +
+                                '<div class="delete-button position-absolute top right fs-lg" role="button"><i class="fa fa-trash" data-bind="click: $parent.deleteCommentFile"></i></div>' +
+                                '<img class="w-100" src="" data-bind="attr: {src: url}">' +
+                            '</div>' +
+                        '</div>' +
+                    '</div><!--/.row-->' +
+                '</div><!--/.container-->' +
+        '<!--ko if: progressLoader-->' +
+        '<div class="progress">' +
+        '<div class="progress-bar progress-bar-striped" role="progressbar"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>' +
+        '</div><!--/.progress-->' +
+        '<!--/ko-->' +
+        '' +
+
+        '</div><!--/.input-box-->'
+});
+
+
 $app = new AppViewModel();
 ko.applyBindings($app);
+
+
 
 
 function submitPostEditDone(re) {
@@ -155,4 +284,6 @@ function progress(progress,e){
         }
     }
 }
+
+
 
