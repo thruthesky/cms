@@ -197,7 +197,7 @@ ko.components.register('comment-input-box', {
             }, '');
 
             console.log(data);
-            
+
         }
     },
     /// Inside the template, $root is the .... what?
