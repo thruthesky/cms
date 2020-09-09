@@ -353,3 +353,12 @@ function apiUserLogin(form, success) {
         });
 }
 
+
+function ajaxFailure() {
+    alert('Ajax and server failure');
+}
+
+function alertBackendError(obj) {
+    alert(obj);
+    return undefined;
+}
