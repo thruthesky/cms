@@ -5,11 +5,11 @@
  * @widget-name Default post view
  */
 
-global $apiPost;
+
+$forum = get_forum_setting();
 
 $_post = get_post();
-
-$post =  $apiPost->postGet([
+$post = post()->postGet([
         'ID' => $_post->ID,
 //        'session_id' => sessionId() // @bug. It produce - invalid session id.
 ]);
@@ -223,6 +223,7 @@ $slug = $post['slug'];
 
 
 
+<h3><?=$forum['name']?></h3>
 <div class="p-3">
     <a class="btn btn-primary mr-3" href="/?page=post.list&slug=<?=$slug?>">Back</a>
     <a class="btn btn-secondary mr-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>

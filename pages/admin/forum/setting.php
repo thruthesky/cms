@@ -3,25 +3,27 @@
 //if (in('slug')) {
 //    $cat = get_category_by_slug(in('slug'));
 //}
-$forum = get_forum_setting();
+
+
+
 ?>
 <h4>Forum Settings</h4>
 
-<?php if ( $forum ) { ?>
-<h1><?=$forum['slug']?></h1>
-<p>ID: <?=$forum['cat_ID']?>, <?=$forum['name']?></p>
-<p><?=$forum['description']?></p>
-<p>No of posts: <?=$forum['count']?></p>
+<?php if ( forum('cat_ID') ) { ?>
+<h1><?=forum('slug')?></h1>
+<p>ID: <?=forum('cat_ID')?>, <?=forum('name')?></p>
+<p><?=forum('description')?></p>
+<p>No of posts: <?=forum('count')?></p>
 <?php } ?>
 
 
 <form action="?" method="post">
     <input type="hidden" name="page" value="admin.forum.setting.submit">
-    <input type="hidden" name="cat_ID" value="<?=$forum['cat_ID']??''?>">
+    <input type="hidden" name="cat_ID" value="<?=forum('cat_ID')?>">
 
     <?php
     if ( empty($cat) ) {
-        echo form_input(['label' => 'Slug', 'name' => 'slug', 'value' => $forum['slug'] ?? '']);
+        echo form_input(['label' => 'Slug', 'name' => 'slug', 'value' => forum('slug')]);
     }
     ?>
 
@@ -38,9 +40,9 @@ $forum = get_forum_setting();
 
 
 
-    <?=form_input(['label' => 'Display Name', 'name' => 'name', 'value' => $forum['name']?? ''])?>
-    <?=form_input(['label' => 'Description', 'name' => 'description', 'value' => $forum['description'] ?? ''])?>
-    <?=form_input(['label' => 'No of posts in list page', 'name' => NO_OF_POSTS_PER_PAGE, 'value' => $forum['no_of_posts_per_page'] ?? 0])?>
+    <?=form_input(['label' => 'Display Name', 'name' => 'name', 'value' => forum('name')])?>
+    <?=form_input(['label' => 'Description', 'name' => 'description', 'value' => forum('description')])?>
+    <?=form_input(['label' => 'No of posts in list page', 'name' => NO_OF_POSTS_PER_PAGE, 'value' => forum(NO_OF_POSTS_PER_PAGE)])?>
 
 
 
@@ -48,7 +50,7 @@ $forum = get_forum_setting();
         'description' => 'List Theme',
         'default_select' => 'Select list theme',
         'name' => 'post_list_theme',
-        'options' => generate_options(get_wiget_list('post_list_theme'), $forum['post_list_theme'] ?? 'post.list'),
+        'options' => generate_options(get_wiget_list('post_list_theme'), forum(POST_LIST_ROUTE, 'post.list')),
         ])?>
 
 
@@ -56,7 +58,7 @@ $forum = get_forum_setting();
         'description' => 'View Theme',
         'default_select' => 'Select view theme',
         'name' => 'post_view_theme',
-        'options' =>     $_options = generate_options(get_wiget_list('post_view_theme'), $forum['post_view_theme'] ?? 'post.view'),
+        'options' =>     $_options = generate_options(get_wiget_list('post_view_theme'), forum(POST_VIEW_THEME, 'post.view')),
     ])?>
 
 
@@ -65,14 +67,14 @@ $forum = get_forum_setting();
         'description' => 'Edit Theme',
         'default_select' => 'Select edit theme',
         'name' => 'post_edit_theme',
-        'options' =>     $_options = generate_options(get_wiget_list('post_edit_theme'), $forum['post_edit_theme'] ?? 'post.edit'),
+        'options' =>     $_options = generate_options(get_wiget_list('post_edit_theme'), forum(POST_EDIT_THEME, 'post.edit')),
     ])?>
 
 
     <div class="form-group form-check">
         <input name="post_list_under_view" value="Y" type="checkbox" class="form-check-input" id="form-list-under-view"
 
-        <?php if ( isset($forum['post_list_under_view']) && $forum['post_list_under_view'] == 'Y' ) echo 'checked'?>
+        <?php if ( forum('post_list_under_view') == 'Y' ) echo 'checked'?>
         >
         <label class="form-check-label" for="form-list-under-view">Display post list under post view page.</label>
     </div>

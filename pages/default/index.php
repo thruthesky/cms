@@ -71,6 +71,7 @@ if ( localhost() ) {
 <script src="<?php theme_url()?>/js/jquery-3.5.1-min.js"></script>
 <script src="<?php theme_url()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="<?php theme_url()?>/js/js.cookie.min.js"></script>
+<script src="<?php theme_url()?>/js/knockout-3.5.1.js"></script>
 <script src="<?php theme_url()?>/js/index.js?v=<?php echo Config::$appVersion?>"></script>
 
 </body>

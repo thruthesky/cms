@@ -17,7 +17,10 @@
                             <input
                                     class="position-absolute z-index-high fs-xxxl opacity-01"
                                     type="file" name="file"
-                                    onchange="onChangeFile(this, {html: $('.user-update-profile-photo'), deleteButton: true, progress: $(this).parents('.register').find('.progress') })">
+                                    onchange="onChangeFile(this, {html: $('.user-update-profile-photo'), deleteButton: true, progress: $(this).parents('.register').find('.progress'),
+                                     success: function(res) {
+                                        $app.userProfilePhotoSrc(res.url);
+                                     }})">
 
                             <div class="user-update-profile-photo position-relative z-index-low circle wh120x120 overflow-hidden">
                                 <img src="<?=ANONYMOUS_PROFILE_PHOTO?>">

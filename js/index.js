@@ -228,7 +228,7 @@ function onChangeFile($box, options={}) {
                 alert(res);
                 return;
             }
-            console.log('Complete. success: ', res);
+            // console.log('Complete. success: ', res);
 
 
             let html = getUploadedFileHtml(res, options);
@@ -236,6 +236,7 @@ function onChangeFile($box, options={}) {
             if ( typeof options['html'] !== 'undefined') options['html'].html(html);
 
             if ($progress) { $progress.hide(); }
+            if ( typeof options['success'] == 'function' ) options['success'](res);
         },
         xhr: function() {
             let myXhr = $.ajaxSettings.xhr();
