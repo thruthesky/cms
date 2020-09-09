@@ -43,4 +43,4 @@
 <!--    --><?php //include widget( 'post.list', ['slug' => 'qna'] ); ?>
 </div>
 
-
+<button type="button" data-bind="click: removeProfilePhoto">Remove profile photo</button>
