@@ -1,4 +1,8 @@
 <?php
-$cat = get_category_by_slug(in('slug'));
-include widget(get_category_meta($cat->cat_ID, 'post_list_theme', 'post.list'));
+
+if ( !forum('cat_ID') ) {
+	return include page('error.wrong-input');
+}
+
+include widget(forum(POST_LIST_THEME));
 

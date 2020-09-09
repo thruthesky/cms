@@ -760,11 +760,11 @@ EOH;
  * @param null $default_value
  * @return mixed
  */
-function get_category_meta($cat_ID, $key, $default_value=null) {
-    $re = get_term_meta($cat_ID, $key, true);
-    if ( !$re ) $re = $default_value;
-    return $re;
-}
+//function get_category_meta($cat_ID, $key, $default_value=null) {
+//    $re = get_term_meta($cat_ID, $key, true);
+//    if ( !$re ) $re = $default_value;
+//    return $re;
+//}
 
 /**
  * Return settings of a forum
@@ -786,6 +786,13 @@ function get_forum_setting() {
     } else if ( get_the_category() ) {
         $cats = get_the_category();
         if ($cats) $cat = $cats[0];
+    } else {
+    	if ( in('ID') ) $post_ID = in('ID');
+	    else $post_ID = url_to_postid($_SERVER['REQUEST_URI']);
+	    if ( $post_ID ) {
+		    $categories = get_the_category($post_ID);
+		    $cat = $categories[0];
+	    }
     }
 
     $re = [];

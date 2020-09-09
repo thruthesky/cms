@@ -16,7 +16,7 @@ $post = [
     'files' => []
 ];
 if ($ID) {
-    $post =  $apiPost->postGet(['ID' => $ID, 'post_count' => false]);
+    $post =  post()->postGet(['ID' => $ID, 'post_count' => false]);
 }
 //
 //dog($post);
