@@ -10,8 +10,7 @@ $forum = get_forum_setting();
 
 $_post = get_post();
 $post = post()->postGet([
-        'ID' => $_post->ID,
-//        'session_id' => sessionId() // @bug. It produce - invalid session id.
+        'ID' => $_post->ID
 ]);
 $slug = $post['slug'];
 ?>
