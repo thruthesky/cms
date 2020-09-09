@@ -10,3 +10,15 @@ $profile_photo
         ID: login('photo_ID'),
         thumbnail_url: myProfilePhotoUrl()
     }));
+
+
+
+function appViewModel() {
+    this.userProfilePhotoSrc = ko.observable(myProfilePhotoUrl());
+}
+$app = new appViewModel();
+ko.applyBindings($app);
+
+
+
+

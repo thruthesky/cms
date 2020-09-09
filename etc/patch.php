@@ -19,6 +19,8 @@ EOH;
     }
 
 
+
+
     foreach( $__included_files as $file ) {
         $path = str_replace(".php", ".js", $file);
         $arr = explode('/wp-content/', $path);

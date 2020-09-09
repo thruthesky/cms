@@ -17,6 +17,8 @@ if ( isset($_REQUEST['route'])) {
 }
 
 
+
+
 require 'config.php';
 require 'php/defines.php';
 require 'php/library.php';
@@ -25,6 +27,8 @@ require 'php/api-post.php';
 require 'php/api-comment.php';
 require 'php/api-file.php';
 require 'php/api-category.php';
+
+
 
 
 /**
@@ -73,6 +77,11 @@ $apiPost = new ApiPost();
 $apiComment = new ApiComment();
 
 /**
+ * Temporary global variables
+ */
+$__get_forum_setting = null;
+
+/**
  * @return ApiPost
  */
 function post() {
@@ -118,11 +127,16 @@ add_filter('duplicate_comment_id', '__return_false');
 /**
  * Initialization for theme and api.
  */
-if ( API_CALL || isCommandLineInterface() ) {}
-else {
-    if ( localhost() ) live_reload();
-//    if ( ! installed() ) $_REQUEST['page'] = 'error.install';
+if ( API_CALL || isCommandLineInterface() ) {
+    /** Do Api Call init */
 }
+else {
+    /** Do Website Call init */
+    if ( localhost() ) live_reload();
+    get_forum_setting();
+}
+
+
 
 
 
@@ -164,6 +178,7 @@ EOH;
 }
 
 
+
 $__page_options = null;
 function set_page_options($options) {
     global $__page_options;
@@ -202,7 +217,6 @@ function page($page = null, $options = null) {
                 $page = 'post.view';
             } else {
                 $page = in('page', 'home');
-
             }
         }
 
@@ -581,6 +595,9 @@ function get_nested_comments_with_meta($comment, $args, $depth)
 }
 
 
+function di($obj) {
+    dog($obj);
+}
 function dog($obj) {
     echo '<xmp>';
     print_r($obj);
@@ -751,23 +768,27 @@ function get_category_meta($cat_ID, $key, $default_value=null) {
 
 /**
  * Return settings of a forum
- * @note it can detect the right forum if the input $cat_ID_or_slug is omitted.
+ *
+ * @attention this is called on top of `functions.php` on boot
+ *  since the return category of `get_the_category()` can be changed in the middle of run time.
+ * @note it caches on memory.
  * @param null $cat_ID_or_slug
  * @return array
  */
-function get_forum_setting($cat_ID_or_slug = null) {
-    $cat = null;
-    if ( $cat_ID_or_slug && is_numeric($cat_ID_or_slug) ) {
-        $cat = get_category($cat_ID_or_slug);
+function get_forum_setting() {
+    global $__get_forum_setting;
+    if ( $__get_forum_setting !== null ) {
+        return $__get_forum_setting;
     }
-    else if ( in('slug') ) {
+    $cat = null;
+    if ( in('slug') ) {
         $cat = get_category_by_slug( in('slug') );
     } else if ( get_the_category() ) {
         $cats = get_the_category();
         if ($cats) $cat = $cats[0];
     }
 
-
+    $re = [];
     if ( $cat ) {
         $re['cat_ID'] = $cat->cat_ID;
         $re['name'] = $cat->name;
@@ -782,8 +803,36 @@ function get_forum_setting($cat_ID_or_slug = null) {
                 $re[$k] = $v[0];
             }
         }
+        $re[NO_OF_POSTS_PER_PAGE] = isset($re[NO_OF_POSTS_PER_PAGE]) && $re[NO_OF_POSTS_PER_PAGE] ? $re[NO_OF_POSTS_PER_PAGE] : 10;
     }
+    $__get_forum_setting = $re;
     return $re;
+}
+
+/**
+ * Rest forum setting to null
+ *
+ * @note since `get_forum_settings()` gets a wrong forum settings sometimes(don't know when but whenever it does),
+ *  it should reset the forum settings.
+ */
+//function reset_forum_setting() {
+//    global $__get_forum_setting;
+//    $__get_forum_setting = null;
+//}
+
+/**
+ * Helper functions of get_forum_setting()
+ * @param $key
+ * @param string $default_value
+ * @return array|mixed|string
+ */
+function forum($key, $default_value = '') {
+    $setting = get_forum_setting();
+    if ( $setting ) {
+        return isset($setting[$key]) ? $setting[$key] : $default_value;
+    } else {
+        return $default_value;
+    }
 }
 function form_input($options) {
     if ( !isset($options['value']) ) $options['value'] = '';

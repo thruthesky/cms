@@ -8,6 +8,9 @@ define('INSTALL', 'cms_install');
 define('INSTALL_YES', 'cms_install_yes');
 
 define('NO_OF_POSTS_PER_PAGE', 'no_of_posts_per_page');
+define('POST_LIST_THEME', 'post_list_theme');
+define('POST_VIEW_THEME', 'post_VIEW_theme');
+define('POST_EDIT_THEME', 'post_EDIT_theme');
 
 
 /**
