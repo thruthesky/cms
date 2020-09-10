@@ -405,3 +405,32 @@ Array
 * The token must be saved in Wordpress DB since PHP is the one that's going to send push notification.
 
 
+## To doc
+
+ [code] => auth/unauthorized-domain
+    [message] => This domain (wordpress.philgo.com) is not authorized to run this operation. Add it to the OAuth redirect domains list in the Firebase console -> Auth section -> Sign in method tab.
+    
+
+
+
+  Firebase -> project -> Authentication -> Sign-in method -> Authorised domains -> Add domain
+
+
+
+
+
+For phone auth, reCaptcha is mandatory.
+   You can use an invisible reCAPTCHA
+
+
+
+For Phone Auth, you need admin service account.
+	There is no Firebase service account. The service account is coming from GCP and used it for Firebase.
+
+
+Identity Tookit API -> Credentials -> Service Accounts -> Get Service Account JSON
+
+
+
+
+
