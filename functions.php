@@ -97,6 +97,12 @@ $__head_script = '';
  */
 $__included_files = [];
 
+/**
+ * The content of the variable will be printed at the bottom of HTML page.
+ */
+$__insert_at_the_bottom = '';
+
+
 
 /**
  * Global user's API profile information.
@@ -849,4 +855,10 @@ function form_input($options) {
         <input type="text" name="{$options['name']}" class="form-control" id="{$options['name']}" value="{$options['value']}">
     </div>
 EOH;
+}
+
+
+function insert_at_the_bottom($str) {
+	global $__insert_at_the_bottom;
+	$__insert_at_the_bottom .= $str;
 }

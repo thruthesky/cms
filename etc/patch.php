@@ -38,6 +38,13 @@ EOH;
 EOH;
     }
 
-    return str_ireplace("</body>", "$scripts\n</body>", $output);
+
+
+    global $__insert_at_the_bottom;
+    $_text = $scripts;
+    $_text .= $__insert_at_the_bottom;
+
+    return str_ireplace("</body>", "$_text\n</body>", $output);
+
 }
 

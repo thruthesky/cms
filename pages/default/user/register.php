@@ -83,6 +83,16 @@
                 <div class="mb-3">
                     <label class="form-label">Mobile number</label>
                     <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
+                    <div>
+                        <button type="button" id="recaptcha-container">
+                            Verify Your Phone Number
+                        </button>
+                    </div>
+                    <div>
+                        Input verification Code
+                        <input>
+                        <button type="button">Verify</button>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary" data-button="submit">Submit</button>
@@ -90,3 +100,43 @@
         </div>
     </div>
 </div>
+
+
+
+<?php
+insert_at_the_bottom('
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+    <script src="'.THEME_URL.'/js/firebase-init.js"></script>
+');
+
+$__script = <<<EOS
+
+<script>
+
+    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+        'size': 'invisible',
+        'callback': function(recapchaToken) {
+            console.log("success", recapchaToken);
+            
+            /// from here.
+            /// Refer https://medium.com/google-developer-experts/verifying-phone-numbers-with-firebase-phone-authentication-on-your-backend-for-free-7a9bef326d02
+            /// Send 
+        },
+        'expired-callback': function() {
+            console.log("expired-callback");
+        }
+    });
+
+    recaptchaVerifier.render().then(function(widgetId) {
+        window.recaptchaWidgetId = widgetId;
+    });
+
+</script>
+
+EOS;
+
+insert_at_the_bottom($__script);
+
+?>
+
