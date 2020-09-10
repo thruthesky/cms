@@ -101,6 +101,14 @@
     </div>
 </div>
 
+<hr>
+<div>
+    Or you can login with Social service.
+</div>
+
+<button type="button" onclick="firebaseLoginGoogle()">Login with Facebook</button>
+<button type="button" onclick="firebaseLoginGoogle()">Login with Google</button>
+<button type="button" onclick="firebaseLoginGoogle()">Login with Apple</button>
 
 
 <?php
@@ -108,6 +116,7 @@ insert_at_the_bottom('
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="'.THEME_URL.'/js/firebase-init.js"></script>
+    <script src="'.THEME_URL.'/js/firebase-login.js"></script>
 ');
 
 $__script = <<<EOS
@@ -143,4 +152,6 @@ EOS;
 insert_at_the_bottom($__script);
 
 ?>
+
+
 

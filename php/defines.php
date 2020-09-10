@@ -51,6 +51,8 @@ define('ERROR_CHOICE_MUST_BE_LIKE_OR_DISLIKE', 'choice_must_be_like_or_dislike')
 define('ERROR_CANNOT_VOTE_YOUR_OWN_POST', 'cannot_vote_your_own_post');
 
 
+define('ERROR_SERVICE_ACCOUNT_NOT_EXISTS', 'service account does not exist');
+
 
 /**
  * @todo defines below are not in use. remove on Oct 1st.

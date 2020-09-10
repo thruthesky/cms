@@ -407,14 +407,6 @@ Array
 
 ## To doc
 
- [code] => auth/unauthorized-domain
-    [message] => This domain (wordpress.philgo.com) is not authorized to run this operation. Add it to the OAuth redirect domains list in the Firebase console -> Auth section -> Sign in method tab.
-    
-
-
-
-  Firebase -> project -> Authentication -> Sign-in method -> Authorised domains -> Add domain
-
 
 
 

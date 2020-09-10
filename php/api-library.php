@@ -1008,15 +1008,21 @@ class ApiLibrary {
 
         if (!isset($in['mobile']) && empty($in['mobile']) && !isset($in['token']) && empty($in['token']) ) return ERROR_EMPTY_PARAMS;
 
+        $keyfile = THEME_PATH . '/secrets/sonub-service-account-key.json';
+        if ( ! file_exists($keyfile) ) {
+            return ERROR_SERVICE_ACCOUNT_NOT_EXISTS;
+        }
+        $key = json_decode(file_get_contents($keyfile), true);
 
-        $key = json_decode(file_get_contents(THEME_PATH . '/secrets/server-key.json'));
+        xlog($key);
+
         $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=$key->server_key";
 
         $fields = [
             'phoneNumber' => '+' . $in['mobile'],
             'recaptchaToken' => $in['token']
         ];
-        dog($fields);
+        xlog($fields);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlAuth);
@@ -1026,7 +1032,7 @@ class ApiLibrary {
         $result = curl_exec($ch);
         curl_close($ch);
 
-//        dog($result);
+        xlog($result);
         return $result;
 
     }
