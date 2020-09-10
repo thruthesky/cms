@@ -122,6 +122,10 @@ $__script = <<<EOS
             /// from here.
             /// Refer https://medium.com/google-developer-experts/verifying-phone-numbers-with-firebase-phone-authentication-on-your-backend-for-free-7a9bef326d02
             /// Send 
+            console.log('mobile');
+            const mobile = $("input[name='mobile']").val();
+            if (!mobile) return alertBackendError('Mobile number Empty');
+            requestVerificationCode(mobile, recapchaToken);
         },
         'expired-callback': function() {
             console.log("expired-callback");

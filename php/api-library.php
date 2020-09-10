@@ -1003,5 +1003,44 @@ class ApiLibrary {
 
 
 
+    public function userSendCode($in)
+    {
+
+        if (!isset($in['mobile']) && empty($in['mobile']) && !isset($in['token']) && empty($in['token']) ) return ERROR_EMPTY_PARAMS;
+
+
+        $key = json_decode(file_get_contents(THEME_PATH . '/secrets/server-key.json'));
+        $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=$key->server_key";
+
+        $fields = [
+            'phoneNumber' => '+' . $in['mobile'],
+            'recaptchaToken' => $in['token']
+        ];
+        dog($fields);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $urlAuth);
+        curl_setopt($ch, CURLOPT_HEADER, array('Content-Type:application/json'));
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+//        dog($result);
+        return $result;
+
+    }
+
+    public function verifySendCode($in)
+    {
+
+    }
+
+
+
+
+
+
+
 
 }

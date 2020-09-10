@@ -4,19 +4,13 @@
  * @widget-type post_view_theme
  * @widget-name Default post view
  */
-
-
 $forum = get_forum_setting();
-
 $_post = get_post();
 $post = post()->postGet([
         'ID' => $_post->ID
 ]);
 $slug = $post['slug'];
 ?>
-
-
-
 <h3><?=$forum['name']?></h3>
 <div class="p-3">
     <a class="btn btn-primary mr-3" href="/?page=post.list&slug=<?=$slug?>">Back</a>
@@ -38,18 +32,23 @@ $slug = $post['slug'];
             </div>
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
-            <div class="post-view-files row py-3">
 
-                <script>
-                    $$(function() {
-                    attachUploadedFilesTo($('.post-view-files'), <?=json_encode($post['files']);?>, {extraClasses: 'col-4 col-sm-3'});
-                    });
-                </script>
-
-            </div>
+            <div class="container">
+                <div class="post-view-files row py-3">
+                    <?php foreach ($post['files'] as $file) { ?>
+                        <div class="col-4 col-sm-3">
+                            <img class="w-100" src="<?=$file['thumbnail_url']?>">
+                        </div>
+                    <?php } ?>
+                </div><!--/.row-->
+            </div><!--/.container-->
             <div class="mb-3">
-                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')"><?=isset($post['like']) && $post['like']!=="0" ?$post['like']: '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?></button>
-                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')"><?=isset($post['dislike'])&&$post['dislike']!=="0" ?$post['dislike']: '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
+                <button id="like<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'like')">
+                    <?=isset($post['like']) && $post['like']!=="0" ?$post['like']: '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?>
+                </button>
+                <button id="dislike<?=$post['ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
+                    <?=isset($post['dislike'])&&$post['dislike']!=="0" ?$post['dislike']: '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?>
+                </button>
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary mr-3" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>

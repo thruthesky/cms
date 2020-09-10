@@ -20,12 +20,13 @@ global $comment;
                         </div>
                     </div>
                 </div>
-                <div class="files mb-3"></div>
-                <script>
-                    $$(function() {
-                        attachUploadedFilesTo($('#comment<?=$comment['comment_ID']?> .files'), <?=json_encode($comment['files']);?>, {extraClasses: 'col-4 col-sm-3'});
-                    });
-                </script>
+                <div class="comment-view-files row py-3">
+                    <?php foreach ($comment['files'] as $file) { ?>
+                        <div class="col-4 col-sm-3">
+                            <img class="w-100" src="<?=$file['thumbnail_url']?>">
+                        </div>
+                    <?php } ?>
+                </div><!--/.row-->
                 <div>
                     <button id="like<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'like', 'comment')"><?=isset($comment['like']) && $comment['like']!== "0" ?$comment['like']:  '' ?> <?=$comment['user_vote']== 'like'?'Liked':'Like'?></button>
                     <button id="dislike<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'dislike', 'comment')"><?=isset($comment['dislike']) && $comment['dislike']!== "0" ? $comment['dislike']: '' ?> <?=$comment['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
