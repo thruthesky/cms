@@ -90,8 +90,8 @@
                     </div>
                     <div>
                         Input verification Code
-                        <input>
-                        <button type="button">Verify</button>
+                        <input type="text" name="sms_code">
+                        <button type="button" onclick="verificationSMSCode()">Verify</button>
                     </div>
                 </div>
 

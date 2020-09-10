@@ -54,26 +54,39 @@ function requestVerificationCode(mobile,token) {
                 return alertBackendError(res);
             }
             else {
-
                 console.log('res', res);
+                window['numberVerificationSessionInfo'] = res['sessionInfo'];
+            }
+        })
+        .fail(function() {
+            alert( "Server error" );
+        });
+
+}
 
 
-                // var commentBox = $('#comment' + data['comment_ID']);
-                // if (commentBox.length) { // Update
-                //     commentBox.replaceWith(onCommentCreateOrUpdateApplyDepth(re['html'], commentBox));
-                //     $(form).parent().remove();
-                // } else if ( re['comment_parent'] === "0" ) { // Reply on the post.
-                //     $('#newcomment' + data['comment_post_ID']).after(re['html']);
-                //     $(form).find('textarea').val('');
-                //     $(form).parent().find('.files').empty();
-                // } else { // Reply under a comment.
-                //     const parent_comment = $('#comment' + re['comment_parent']);
-                //     parent_comment.after(onCommentCreateOrUpdateApplyDepth(re['html'], parent_comment, 1));
-                //     $(form).parent().remove(); // Remove the form.
-                //
-                //     // TODO: it's not working.
-                //     scrollIntoView('#comment' + re['comment_ID']);
-                // }
+function verificationSMSCode() {
+
+    const mobile = $("input[name='mobile']").val();
+    const data = {
+        route: 'user.sendCode',
+        mobile: mobile,
+        sessionInfo: window['numberVerificationSessionInfo']
+    };
+
+    console.log('data', data);
+
+    $.ajax( {
+        method: 'POST',
+        url: apiUrl,
+        data: data
+    } )
+        .done(function(res) {
+            if ( isBackendError(res) ) {
+                return alertBackendError(res);
+            }
+            else {
+                console.log('res', res);
             }
         })
         .fail(function() {

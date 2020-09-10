@@ -1008,7 +1008,6 @@ class ApiLibrary {
 
         if (!isset($in['mobile']) && empty($in['mobile']) && !isset($in['token']) && empty($in['token']) ) return ERROR_EMPTY_PARAMS;
 
-
         $key = json_decode(file_get_contents(THEME_PATH . '/secrets/server-key.json'));
         $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=$key->server_key";
 
@@ -1016,23 +1015,49 @@ class ApiLibrary {
             'phoneNumber' => '+' . $in['mobile'],
             'recaptchaToken' => $in['token']
         ];
-        dog($fields);
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $urlAuth);
-        curl_setopt($ch, CURLOPT_HEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
         $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
         curl_close($ch);
 
-//        dog($result);
         return $result;
-
     }
 
     public function verifySendCode($in)
     {
+
+        $key = json_decode(file_get_contents(THEME_PATH . '/secrets/server-key.json'));
+        $url = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPhoneNumber?key=$key->server_key";
+
+        $fields = [
+            'sessionInfo' => '+' . $in['sessionInfo'],
+            'code' => $in['sms_code']
+        ];
+
+        $ch = curl_init();
+
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, "{\n  \"sessionInfo\": \"session_token\",\n  \"code\":\"sms_code\"\n}");
+
+        $headers = array();
+        $headers[] = 'Content-Type: application/json';
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+        $result = curl_exec($ch);
+        if (curl_errno($ch)) {
+            echo 'Error:' . curl_error($ch);
+        }
+        curl_close($ch);
 
     }
 
