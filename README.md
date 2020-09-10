@@ -190,6 +190,22 @@ function onLoginFormSubmit(form) {
 * Javascript cookie is handled with [js-cookie](https://github.com/js-cookie/js-cookie).
   It is included at the bottom of `index.php` and available on all pages .
 
+
+### Inserting Javascript or anything at the bottom of the page.
+
+* Sometime you wish to insert Javascript tag into the page, but the Javascript should be inserted at the bottom,
+  then you can use `insert_at_the_bottom()` function.
+  You can put anything at the bottom like CSS or anything else.
+
+```php
+<?php
+insert_at_the_bottom('
+    <script defer src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script defer src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+');
+?>
+```
+
   
 
 ## Themes
@@ -332,3 +348,60 @@ Array
 ## Known Bugs & Problems
 
 * To login as Wordpress admin panel, you must logout from the site first because `session_id` will remain in the cookie if you don't log out and it will make you to login only as a user not an admin.
+
+
+
+## Login
+
+### Login Overview
+
+* All users must register into Wordpress and Firebase.
+  * Reason;
+    * When we use Firebase Sign-In method only, we may not need to store all user into Firebase Auth.
+        But we may need to use Firebase DB for realtime update or chatting functions,
+            And you need Auth uid in that case.
+
+
+### Integration
+
+* A user may login Social Login with Google, Facebook, or Apple which are supported natively by Firebase,
+    then, the app needs to
+
+    * 1st, Do Phone Auth
+    * 2nd, Register into Wordpress.
+    
+    * Step: Social Login -> Phone Auth -> Wordpress
+    
+  * When the user login with the social login that are NOT supported by Firebase,
+    then, the app needs to
+    
+    * 1st, Do Phone Auth
+    * 2nd, Register Into Wordpress
+    * 3rd, Register Into Firebase Auth using Email/password login.
+    
+    * Step: Social Login -> Phone Auth -> Wordpress -> Firebase
+
+  * Social login supports
+    * Google
+    * Apple
+    * Facebook
+    * Kakaotalk
+    * Naver
+
+  * When social login success, user continue registration to Wordpress by inputting Nickname, phone number.
+    * This means, before registration complete to Wordpress, the user must verify his phone number.
+    * We don't do email verification. (Phone number authentication only.)
+
+* When a user registered with Site Registration from,
+
+  * 1st, Phone Auth
+  * 2nd, Wordpress registration
+  * 3rd, Firebase Email/Password Auth registration.
+  
+  * Step: Phone Auth -> Wordpress -> Firebase
+
+## Push notification
+
+* The token must be saved in Wordpress DB since PHP is the one that's going to send push notification.
+
+

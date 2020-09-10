@@ -83,6 +83,15 @@
                 <div class="mb-3">
                     <label class="form-label">Mobile number</label>
                     <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
+                    <div>
+                        <button type="button">
+                            Verify Your Phone Number
+                        </button>
+                    </div>
+                    <div>
+                        Input verification Code
+                        <input>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn btn-primary" data-button="submit">Submit</button>
@@ -90,3 +99,44 @@
         </div>
     </div>
 </div>
+
+
+
+<?php
+insert_at_the_bottom('
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+    <script src="'.THEME_URL.'/js/firebase-init.js"></script>
+');
+$__script = <<<EOS
+<script>
+// set-up an invisible recaptcha. 'sendCode` is button element id
+// <button id="sendCode">Send Code</button>
+window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('sendCode', {
+  'size': 'invisible',
+  'callback': function (recapchaToken) {
+    // reCAPTCHA solved, send recapchaToken and phone number to backend.
+    
+    // a REST call to your backend
+    request.post({
+      url: 'https://your-rest-api',
+      body: {
+        phoneNumber: document.getElementById('phoneNumber').value,
+        recapchaToken,
+      }
+    });
+  }
+});
+
+// render the rapchaVerifier. 
+window.recaptchaVerifier.render().then(function (widgetId) {
+  window.recaptchaWidgetId = widgetId;
+});
+<script>
+
+EOS;
+
+insert_at_the_bottom($__script);
+
+?>
+
