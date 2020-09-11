@@ -1,5 +1,6 @@
 
-function onCommentDelete(comment_ID) {
+function onCommentDelete(comment_ID, guid) {
+    console.log('post/view::' , guid);
 
     const re = confirm('Are you sure you want to delete this comment?');
 
@@ -21,7 +22,7 @@ function onCommentDelete(comment_ID) {
             }
             else {
                 console.log('re', re);
-                move("<?=$post['guid']?>");
+                move(guid);
             }
         })
         .fail(function() {
@@ -29,7 +30,7 @@ function onCommentDelete(comment_ID) {
         });
 }
 
-function onPostDelete(ID) {
+function onPostDelete(ID, slug) {
 
     var re = confirm('Are you sure you want to delete this post?');
 
@@ -51,7 +52,7 @@ function onPostDelete(ID) {
             }
             else {
                 console.log('re', re);
-                move("/?page=post.list&slug=<?=$post['slug']?>");
+                move("/?page=post.list&slug=" + slug);
             }
         })
         .fail(function() {
@@ -130,6 +131,8 @@ function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0)
  */
 function addCommentEditForm(comment_ID, comment_parent) {
 
+    console.log('addCommentEditForm');
+
     /// Prevent not to add multiple input box.
     const fomCommentParent = $("[data-form-comment-parent=" + comment_parent + "]").length;
     if(fomCommentParent) return false;
@@ -142,6 +145,7 @@ function addCommentEditForm(comment_ID, comment_parent) {
         data: data
     } )
         .done(function(re) {
+            console.log($('#comment' + comment_ID));
             let cmt;
             if ( comment_ID ) {
                 cmt = $('#comment' + comment_ID);
@@ -151,7 +155,9 @@ function addCommentEditForm(comment_ID, comment_parent) {
                 cmt = $('#comment' + comment_parent);
                 cmt.find('.display').after(re);
             }
-            cmt.find('.input-box textarea').focus();
+            const commentView = cmt.find('comment-input-box');
+            ko.applyBindings($app, commentView[0]);
+            cmt.find('comment-input-box textarea').focus();
             return true;
         })
         .fail(function() {

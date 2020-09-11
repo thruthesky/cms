@@ -130,10 +130,12 @@ function AppViewModel() {
 // components.register() must come before applyBindings()
 ko.components.register('comment-input-box', {
     viewModel: function(value) {
-        console.log(value.value);
+        // console.log(value.value);
         const self = this;
         self.params = value.value;
+        self.content = ko.observable(self.params.comment_content);
         self.files = ko.observableArray(self.params.files);
+        console.log(self.files());
         self.deleteCommentFile = function(data) {
             console.log('this');
         };
@@ -212,26 +214,34 @@ ko.components.register('comment-input-box', {
                         return alertBackendError(res);
                     }
                     else {
-
                         console.log(res);
+                            const commentBox = $('#comment' + data['comment_ID']);
+                            if (commentBox.length) { // Update
+                                console.log(res['html']);
+                                commentBox.replaceWith(onCommentCreateOrUpdateApplyDepth(res['html'], commentBox));
+                                $(form).parent().remove();
+                                const commentView = commentBox.find('comment-input-box');
+                                // ko.cleanNode($app, commentView[0]);
+                                // ko.applyBindings($app, commentView[0]);
+                            } else
+                            if ( res['comment_parent'] === "0" ) { // Reply on the post.
+                            const newComment = $('#newcomment' + data['comment_post_ID']);
+                            newComment.after(res['html']);
+                            const commentView = newComment.next('#comment' + res.comment_ID);
+                            ko.applyBindings($app, commentView[0]);
+                            $(form).find('textarea').val('');
+                            $(form).parent().find('.files').empty();
+                        } else { // Reply under a comment.
+                            const parent_comment = $('#comment' + res['comment_parent']);
+                            parent_comment.after(onCommentCreateOrUpdateApplyDepth(res['html'], parent_comment, 1));
+                            const commentView = parent_comment.next('#comment' + res.comment_ID);
+                            ko.applyBindings($app, commentView[0]);
+                            // TODO: it's not working.
+                            scrollIntoView('#comment' + res['comment_ID']);
+                        }
+                        self.content('');
+                        self.files([]);
 
-
-                        // var commentBox = $('#comment' + data['comment_ID']);
-                        // if (commentBox.length) { // Update
-                        //     commentBox.replaceWith(onCommentCreateOrUpdateApplyDepth(re['html'], commentBox));
-                        //     $(form).parent().remove();
-                        // } else if ( re['comment_parent'] === "0" ) { // Reply on the post.
-                        //     $('#newcomment' + data['comment_post_ID']).after(re['html']);
-                        //     $(form).find('textarea').val('');
-                        //     $(form).parent().find('.files').empty();
-                        // } else { // Reply under a comment.
-                        //     const parent_comment = $('#comment' + re['comment_parent']);
-                        //     parent_comment.after(onCommentCreateOrUpdateApplyDepth(re['html'], parent_comment, 1));
-                        //     $(form).parent().remove(); // Remove the form.
-                        //
-                        //     // TODO: it's not working.
-                        //     scrollIntoView('#comment' + re['comment_ID']);
-                        // }
                     }
                 })
                 .fail(function() {
@@ -243,11 +253,11 @@ ko.components.register('comment-input-box', {
     /// Inside the template, $root is the .... what?
     /// $parent is the viewModel of the widget.
     template: '' +
-        '<div class="input-box" data-bind="if: params.always || $root.showCommentInputBox() == params.comment_ID">' +
+        '<div class="input-box" data-bind="if: params.always || $root.showCommentInputBox() == params.comment_ID || $root.showCommentInputBox() == params.comment_parent_ID">' +
             '<form data-bind="submit: submit">' +
                 '<input type="hidden" name="route" value="comment.edit">' +
                 '<input type="hidden" name="comment_post_ID" data-bind="value: params.comment_post_ID">' +
-                '<input type="hidden" name="comment_parent" data-bind="value: params.comment_parent">' +
+                '<input type="hidden" name="comment_parent" data-bind="value: params.comment_parent_ID">' +
                 '<input type="hidden" name="comment_ID" data-bind="value: params.comment_ID">' +
                 '<div class="form-group row no-gutters">' +
                     '<div class="upload-button position-relative overflow-hidden">' +
@@ -255,7 +265,7 @@ ko.components.register('comment-input-box', {
                     '<i class="fa fa-camera fs-xl cursor p-2"></i>' +
                 '</div><!--/.uploda-button-->' +
                 '<div class="col mr-3">' +
-                    '<textarea onkeydown="onCommentEditText(this)" class="form-control" name="comment_content" id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">...</textarea>' +
+                    '<textarea class="form-control" data-bind="value: content" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"></textarea>' +
                 '</div>' +
                 '<div class="send-button col-1">' +
                     '<button type="submit" class="btn btn-outline-dark">' +

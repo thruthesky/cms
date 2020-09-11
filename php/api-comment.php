@@ -103,8 +103,9 @@ class ApiComment extends ApiPost
 
     }
 
-    public function commentView($comment) {
-
+    public function commentView($_comment) {
+        global $comment;
+        $comment = $_comment;
         ob_start();
         include widget('comment.view');
         $comment['html']= ob_get_clean();

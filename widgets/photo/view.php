@@ -14,35 +14,35 @@ $slug = $post['slug'];
 ?>
 <h1>photo view</h1>
 <script>
-    function onCommentDelete(comment_ID) {
-
-        const re = confirm('Are you sure you want to delete this comment?');
-
-        if (!re) return;
-        let data = {};
-        data['session_id'] = getUserSessionId();
-        data['route'] = "comment.delete";
-        data['comment_ID'] = comment_ID;
-
-        console.log(data);
-        $.ajax( {
-            method: 'GET',
-            url: apiUrl,
-            data: data
-        } )
-            .done(function(re) {
-                if ( isBackendError(re) ) {
-                    alert(re);
-                }
-                else {
-                    console.log('re', re);
-                    move("<?=$post['guid']?>");
-                }
-            })
-            .fail(function() {
-                alert( "Server error" );
-            });
-    }
+//    function onCommentDelete(comment_ID) {
+//        console.log('photo/view');
+//        const re = confirm('Are you sure you want to delete this comment?');
+//
+//        if (!re) return;
+//        let data = {};
+//        data['session_id'] = getUserSessionId();
+//        data['route'] = "comment.delete";
+//        data['comment_ID'] = comment_ID;
+//
+//        console.log(data);
+//        $.ajax( {
+//            method: 'GET',
+//            url: apiUrl,
+//            data: data
+//        } )
+//            .done(function(re) {
+//                if ( isBackendError(re) ) {
+//                    alert(re);
+//                }
+//                else {
+//                    console.log('re', re);
+////                    move("<?////=$post['guid']?>////");
+//                }
+//            })
+//            .fail(function() {
+//                alert( "Server error" );
+//            });
+//    }
 
     function onPostDelete(ID) {
 

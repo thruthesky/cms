@@ -1,5 +1,13 @@
 <?php
 global $comment;
+global $post;
+if(!isset($post)) {
+    $post = get_post($comment['comment_post_ID'], ARRAY_A);
+}
+$guid = $post['guid'];
+
+//dog($comment['files']);
+
 ?>
 <div id="comment<?=$comment['comment_ID']?>">
 
@@ -21,11 +29,12 @@ global $comment;
                     </div>
                 </div>
                 <div class="comment-view-files row py-3">
-                    <?php foreach ($comment['files'] as $file) { ?>
+                    <?php if (isset($comment['files']) && !empty($comment['files'])) {
+                        foreach ($comment['files'] as $file) { ?>
                         <div class="col-4 col-sm-3">
                             <img class="w-100" src="<?=$file['thumbnail_url']?>">
                         </div>
-                    <?php } ?>
+                    <?php }} ?>
                 </div><!--/.row-->
                 <div>
                     <button id="like<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'like', 'comment')"><?=isset($comment['like']) && $comment['like']!== "0" ?$comment['like']:  '' ?> <?=$comment['user_vote']== 'like'?'Liked':'Like'?></button>
@@ -35,7 +44,7 @@ global $comment;
 
                     <?php if($comment['user_id'] == userId()) { ?>
                         <button class="btn btn-primary mr-3" onclick="addCommentEditForm(<?=$comment['comment_ID']?>, 0)">Edit</button>
-                        <button class="btn btn-primary mr-3" onclick="onCommentDelete(<?=$comment['comment_ID']?>)">Delete</button>
+                        <button class="btn btn-primary mr-3" onclick="onCommentDelete(<?php echo $comment['comment_ID']?>, '<?=$guid?>')">Delete</button>
                     <?php } ?>
                 </div>
 
@@ -43,13 +52,13 @@ global $comment;
         </div>
     </div>
 
+
+    <comment-input-box params="value: {
+    comment_post_ID: <?=$comment['comment_post_ID']??0?>,
+    comment_parent_ID: <?=$comment['comment_ID']??0?>,
+    comment_ID: null,
+    comment_content: '',
+    files: [],
+}"></comment-input-box>
 </div>
 
-
-<comment-input-box params="value: {
-    comment_post_ID: <?=$comment_post_ID??0?>,
-    comment_parent_ID: <?=$comment_parent_ID??0?>,
-    comment_ID: <?=$comment['comment_ID']?>,
-    comment_content: '<?=$comment_content??''?>',
-    files: []
-}"></comment-input-box>
