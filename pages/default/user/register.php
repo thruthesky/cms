@@ -35,65 +35,65 @@
                     <input type="hidden" name="session_id" value="<?=login('session_id')?>">
                 <?}?>
 
-                <div class="mb-3">
-                    <label  class="form-label">Email address</label>
+                <div class="mt-3">
+                    <label  class="form-label"><?=tr(emailAddress)?></label>
                     <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
 
-                    <small class="form-text text-muted">이메일 주소로 로그인을 하며 각종 인증 및 연락에 사용됩니다.</small>
+                    <small class="form-text text-muted"><?=tr(emailAddressDescription)?></small>
                 </div>
 
                 <? if (!loggedIn()) { ?>
-                    <div class="mb-3">
-                        <label class="form-label">Password</label>
+                    <div class="mt-3">
+                        <label class="form-label"><?=tr('password')?></label>
                         <input type="password" class="form-control" name="user_pass">
                     </div>
                 <?}?>
 
 
-                <div class="container">
-                    <div class="row">
-                        <div class="col">
-                            <div class="mb-3">
-                                <label  class="form-label">First name</label>
-                                <input type="text" class="form-control" name="first_name" value="<?=login('first_name')?>">
-                            </div>
-                        </div>
-                        <div class="col">
 
-                            <div class="mb-3">
-                                <label class="form-label">Middle name</label>
-                                <input type="text" class="form-control" name="middle_name" maxlength="1" value="<?=login('middle_name')?>">
-                            </div>
-                        </div>
-                        <div class="col">
-
-                            <div class="mb-3">
-                                <label class="form-label">Last name</label>
-                                <input type="text" class="form-control" name="last_name" value="<?=login('last_name')?>">
-                            </div>
-
-                        </div>
-                    </div>
+                <div class="mt-3">
+                    <label class="form-label"><?=tr('name')?></label>
+                    <input type="text" class="form-control" name="fullname">
                 </div>
 
 
-                <div class="mb-3">
-                    <label class="form-label">Nickname</label>
+                <div class="mt-3">
+                    <label class="form-label"><?=tr('nickname')?></label>
                     <input type="text" class="form-control" name="nickname"  value="<?=login('nickname')?>">
                 </div>
 
-<div class="mb-3">
-    <label class="form-label">Mobile number</label>
-    <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
-    <div>
-        <button type="button" id="recaptcha-verifier">
-            Send Verification Code To Your Phone
-        </button>
-    </div>
-    <div>
-        Input verification Code
-        <input id="verification-code">
-        <button type="button" onclick="verifyPhoneVerificationCode(
+                <div class="row">
+                    <div class="col-5">
+
+                        <?php
+
+                        $codes = load_country_phone_number_code();
+                        echo generate_select([
+                            'label' => 'Country',
+                            'name' => 'mobile',
+                            'options' => generate_options($codes, '+82'),
+                        ])?>
+                    </div>
+                    <div class="col-7">
+
+                        <label class="form-label"><?=tr(mobileNo)?></label>
+                        <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
+                    </div>
+                </div>
+
+            <div class="mt-3">
+                <div>
+                    <button class="w-100" type="button" id="recaptcha-verifier" onclick="return false;">
+                        Send Verification Code To My Phone
+                    </button>
+                </div>
+
+            </div>
+
+                <div class="mt-3" data-bind="if: register.verificationSent">
+                    Input verification Code
+                    <input id="verification-code">
+                    <button type="button" onclick="verifyPhoneVerificationCode(
             $('#verification-code').val(),
             function() {
                 // success
@@ -104,10 +104,12 @@
                 console.log('error');
             }
         )">Verify</button>
-    </div>
-</div>
+                </div>
 
-                <button type="submit" class="btn btn-primary" data-button="submit">Submit</button>
+                <div class="mt-3" data-bind="if: register.verified">
+                    <button type="submit" class="btn btn-primary w-100" data-button="submit">Submit</button>
+                </div>
+
             </form>
         </div>
     </div>
@@ -118,9 +120,6 @@
     Or you can login with Social service.
 </div>
 
-<button type="button" onclick="firebaseLoginGoogle()">Login with Facebook</button>
-<button type="button" onclick="firebaseLoginGoogle()">Login with Google</button>
-<button type="button" onclick="firebaseLoginGoogle()">Login with Apple</button>
 
 <script>
     /**
@@ -132,7 +131,7 @@
      *  should be customized. Especially the error message must be translated into user language.
      * @returns {*}
      */
-    function recaptcha_verifier_success(recapchaToken) {
+    function send_phone_auth_verfication_code(recapchaToken) {
         console.log('mobile');
         const mobile = $("input[name='mobile']").val();
         if (!mobile) return alertBackendError('<?=tr(ERROR_MOBILE_EMPTY)?>');

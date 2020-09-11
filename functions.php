@@ -736,16 +736,22 @@ function generate_options($options, $selected=null) {
  * @note use it as child tag of form tag.
  * @param $options
  * @return string
+ *
+ * @example
+ *  <?=generate_select([
+        'label' => 'Select list theme',
+        'name' => 'post_list_theme',
+        'options' => generate_options(['a' => 'apple', 'b' => 'banana'], 'b'),
+    ])?>
+ * @end
  */
 function generate_select($options) {
 
     return <<<EOH
 
     <div class="form-group">
-        <label for="form-description">{$options['description']}</label>
-
         <div class="form-group">
-            <label for="{$options['name']}">{$options['default_select']}</label>
+            <label for="{$options['name']}">{$options['label']}</label>
             <select class="form-control" id="{$options['name']}" name="{$options['name']}">
                 {$options['options']}
             </select>
@@ -858,4 +864,17 @@ EOH;
 function insert_at_the_bottom($str) {
 	global $__insert_at_the_bottom;
 	$__insert_at_the_bottom .= $str;
+}
+
+
+function load_country_phone_number_code() {
+    $txt = file_get_contents(THEME_PATH . '/etc/country.code.json');
+    $json = json_decode($txt, true);
+    $codes = [];
+    foreach( $json as $c ) {
+        if ( strpos($c['name'], 'Korea, Democratic') !== false ) continue;
+        if ( strlen($c['name']) > 30 ) $c['name'] = substr($c['name'], 0, 30) . '...';
+        $codes[$c['Iso']] = $c['name'] . '(' . $c['Iso'] . ')';
+    }
+    return $codes;
 }

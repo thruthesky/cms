@@ -41,6 +41,16 @@ function loginFirebaseAuth( provider, domain, name ) {
 }
 
 
+
+/**
+ * [__sessionInfo] is the session info for firebase phone auth.
+ */
+
+const firebaseVerification = {
+    sessionInfo: null,
+    recaptchaToken: null,
+};
+
 /**
  * Phone Auth
  *
@@ -50,9 +60,11 @@ function loginFirebaseAuth( provider, domain, name ) {
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-verifier', {
     'size': 'invisible',
     'callback': function(recapchaToken) {
-        recaptcha_verifier_success(recapchaToken);
+        // recaptcha verifier success
+        send_phone_auth_verfication_code(recapchaToken);
     },
     'expired-callback': function() {
+        /// Response expired. Ask user to solve reCAPTCHA again.
         /// @note User can retry only after 'expired-callback' happens.
         console.log("expired-callback");
     }
@@ -63,12 +75,6 @@ recaptchaVerifier.render().then(function(widgetId) {
 });
 
 
-/**
- * [__sessionInfo] is the session info for firebase phone auth.
- */
-const firebaseVerification = {
-    sessionInfo: '',
-};
 function sendPhoneVerificationCode(mobile, token, success, error) {
     const data = {
         route: 'user.sendPhoneVerificationCode',

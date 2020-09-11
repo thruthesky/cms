@@ -47,16 +47,14 @@
 
 
     <?=generate_select([
-        'description' => 'List Theme',
-        'default_select' => 'Select list theme',
+        'label' => 'Select list theme',
         'name' => 'post_list_theme',
         'options' => generate_options(get_wiget_list('post_list_theme'), forum(POST_LIST_ROUTE, 'post.list')),
         ])?>
 
 
     <?=generate_select([
-        'description' => 'View Theme',
-        'default_select' => 'Select view theme',
+        'label' => 'Select view theme',
         'name' => 'post_view_theme',
         'options' =>     $_options = generate_options(get_wiget_list('post_view_theme'), forum(POST_VIEW_THEME, 'post.view')),
     ])?>
@@ -64,8 +62,7 @@
 
 
     <?=generate_select([
-        'description' => 'Edit Theme',
-        'default_select' => 'Select edit theme',
+        'label' => 'Select edit theme',
         'name' => 'post_edit_theme',
         'options' =>     $_options = generate_options(get_wiget_list('post_edit_theme'), forum(POST_EDIT_THEME, 'post.edit')),
     ])?>

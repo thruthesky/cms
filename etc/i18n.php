@@ -54,3 +54,33 @@ $__i18n = [
         en => INVALID_SESSION_INFO
     ]
 ];
+
+
+define('emailAddressDescription', 'emailAddressDescription');
+$__i18n[emailAddressDescription] = [
+    ko => '이메일 주소로 로그인을 하며 각종 인증 및 연락에 사용됩니다.',
+    en => 'Your email address will be used when you login.'
+];
+
+define('password', 'password');
+$__i18n[password] = [
+    ko => '비밀번호',
+    en => 'Password'
+];
+define('name', 'name');
+$__i18n[name] = [
+    ko => '이름',
+    en => 'Fullname'
+];
+
+define('nickname', 'nickname');
+$__i18n[nickname] = [
+    ko => '닉네임',
+    en => 'Nickname'
+];
+
+define('mobileNo', 'mobileNo');
+$__i18n[mobileNo] = [
+    ko => '휴대폰 번호',
+    en => 'Mobile number'
+];

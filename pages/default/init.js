@@ -285,7 +285,16 @@ ko.components.register('comment-input-box', {
 
 
 $app = new AppViewModel();
+
+$app.register = {
+    verificationSent: ko.observable(false),
+    verified: ko.observable(false),
+};
+
 ko.applyBindings($app);
+
+
+
 
 
 
