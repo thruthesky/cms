@@ -1003,15 +1003,15 @@ class ApiLibrary {
 
 
 
-public function userSendPhoneVerificaionCode($in)
+public function userSendPhoneVerificationCode($in)
 {
-    if ( !isset($in['mobile']) ) return ERROR_MOBILE_EMPTY;
-    if ( $in['mobile'][0] != '+') return ERROR_MOBILE_MUST_BEGIN_WITH_PLUS;
-    if ( !isset($in['token']) ) return ERROR_TOKEN_EMPTY;
+    if ( !isset($in['mobile']) ) return tr(ERROR_MOBILE_EMPTY);
+    if ( $in['mobile'][0] != '+') return tr(ERROR_MOBILE_MUST_BEGIN_WITH_PLUS);
+    if ( !isset($in['token']) ) return tr(ERROR_TOKEN_EMPTY);
 
     $keyfile = THEME_PATH . '/secrets/apikey.txt';
     if ( ! file_exists($keyfile) ) {
-        return ERROR_SERVICE_ACCOUNT_NOT_EXISTS;
+        return tr(ERROR_APIKEY_NOT_EXISTS);
     }
     $key = file_get_contents($keyfile);
 
@@ -1046,7 +1046,8 @@ public function userSendPhoneVerificaionCode($in)
     curl_close($ch);
 
     if ( isset($result['error']) ) {
-        return $result['error']['message'];
+        $msg = $result['error']['message'];
+        return tr($msg);
     } else {
         return ['sessionInfo' => $result['sessionInfo']];
     }
@@ -1063,7 +1064,7 @@ public function userVerifyPhoneVerificationCode($in)
 
     $keyfile = THEME_PATH . '/secrets/apikey.txt';
     if ( ! file_exists($keyfile) ) {
-        return ERROR_SERVICE_ACCOUNT_NOT_EXISTS;
+        return ERROR_APIKEY_NOT_EXISTS;
     }
     $key = file_get_contents($keyfile);
 
@@ -1097,7 +1098,8 @@ public function userVerifyPhoneVerificationCode($in)
     curl_close($ch);
 
     if ( isset($result['error']) ) {
-        return $result['error']['message'];
+        $msg = $result['error']['message'];
+        return tr($msg);
     } else {
         return $result;
 //            return ['sessionInfo' => $result['sessionInfo']];

@@ -50,15 +50,7 @@ function loginFirebaseAuth( provider, domain, name ) {
 window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-verifier', {
     'size': 'invisible',
     'callback': function(recapchaToken) {
-        console.log("success", recapchaToken);
-
-        /// from here.
-        /// Refer https://medium.com/google-developer-experts/verifying-phone-numbers-with-firebase-phone-authentication-on-your-backend-for-free-7a9bef326d02
-        /// Send
-        console.log('mobile');
-        const mobile = $("input[name='mobile']").val();
-        if (!mobile) return alertBackendError('Mobile number Empty');
-        sendPhoneVerificationCode(mobile, recapchaToken);
+        recaptcha_verifier_success(recapchaToken);
     },
     'expired-callback': function() {
         /// @note User can retry only after 'expired-callback' happens.
@@ -77,7 +69,7 @@ recaptchaVerifier.render().then(function(widgetId) {
 const firebaseVerification = {
     sessionInfo: '',
 };
-function sendPhoneVerificationCode(mobile,token) {
+function sendPhoneVerificationCode(mobile, token, success, error) {
     const data = {
         route: 'user.sendPhoneVerificationCode',
         mobile: mobile,
@@ -91,12 +83,10 @@ function sendPhoneVerificationCode(mobile,token) {
         data: data
     })
         .done(function(res) {
-            if ( isBackendError(res) ) {
-                console.log(res);
-                return alertBackendError(res);
-            }
             console.log(res);
+            if ( isBackendError(res) ) return error(res);
             firebaseVerification.sessionInfo = res['sessionInfo'];
+            success();
         })
         .fail(function() {
             alert( "Server error" );

@@ -359,6 +359,10 @@ function ajaxFailure() {
 }
 
 function alertBackendError(res) {
-    alert("Backend Error\n\n" + res);
+    alert("ERROR\n\n" + res);
     return undefined;
+}
+
+function alertError(res) {
+    return alertBackendError(res);
 }

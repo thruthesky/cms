@@ -22,7 +22,7 @@ class UserRoute extends ApiLibrary
     }
     public function sendPhoneVerificationCode()
     {
-        $this->response($this->userSendPhoneVerificaionCode(in()));
+        $this->response($this->userSendPhoneVerificationCode(in()));
     }
     public function verifyPhoneVerificationCode()
     {

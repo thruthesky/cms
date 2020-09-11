@@ -38,6 +38,8 @@
                 <div class="mb-3">
                     <label  class="form-label">Email address</label>
                     <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
+
+                    <small class="form-text text-muted">이메일 주소로 로그인을 하며 각종 인증 및 연락에 사용됩니다.</small>
                 </div>
 
                 <? if (!loggedIn()) { ?>
@@ -120,6 +122,28 @@
 <button type="button" onclick="firebaseLoginGoogle()">Login with Google</button>
 <button type="button" onclick="firebaseLoginGoogle()">Login with Apple</button>
 
+<script>
+    /**
+     * Handles sending verification code after recaptcha sucess
+     *
+     * @note why this code is here?
+     *  reCaptcha verification code should be shared.
+     *  And the handler for getting phone number from user(input box) and displaying error message
+     *  should be customized. Especially the error message must be translated into user language.
+     * @returns {*}
+     */
+    function recaptcha_verifier_success(recapchaToken) {
+        console.log('mobile');
+        const mobile = $("input[name='mobile']").val();
+        if (!mobile) return alertBackendError('<?=tr(ERROR_MOBILE_EMPTY)?>');
+        sendPhoneVerificationCode(mobile, recapchaToken, function(errorCode) {
+            console.log('Success. Input the verification code from your phone.');
+        }, function(errorCode) {
+            console.log('error');
+            alertError(errorCode);
+        });
+    }
+</script>
 
 <?php
 insert_at_the_bottom('

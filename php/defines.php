@@ -51,13 +51,28 @@ define('ERROR_CHOICE_MUST_BE_LIKE_OR_DISLIKE', 'choice_must_be_like_or_dislike')
 define('ERROR_CANNOT_VOTE_YOUR_OWN_POST', 'cannot_vote_your_own_post');
 
 
-define('ERROR_SERVICE_ACCOUNT_NOT_EXISTS', 'service account does not exist');
+define('ERROR_SERVICE_ACCOUNT_NOT_EXISTS', 'Service account does not exist');
+define('ERROR_APIKEY_NOT_EXISTS', 'Apikey does not exist');
 
 define('ERROR_MOBILE_EMPTY', 'mobile empty');
 define('ERROR_MOBILE_MUST_BEGIN_WITH_PLUS', 'mobile number must begin with +');
 define('ERROR_TOKEN_EMPTY', 'token empty');
 define('ERROR_SESSION_INFO_EMPTY', 'sessionInfo empty');
 define('ERROR_CODE_EMPTY', 'code empty');
+
+
+define('PHONE_NUMBER_TOO_SHORT', 'INVALID_PHONE_NUMBER : TOO_SHORT');
+define('PHONE_NUMBER_INVALID', 'INVALID_PHONE_NUMBER : Invalid format.');
+define('PHONE_NUMBER_TOO_LONG', 'INVALID_PHONE_NUMBER : TOO_LONG');
+
+define('INVALID_CODE', 'Verification code is invalid.');
+define('INVALID_SESSION_INFO', 'Verification sessionInfo is invalid.');
+
+define('ko', 'ko');
+define('en', 'en');
+define('Yes', 'yes');
+define('emailAddress', 'emailAddress');
+
 
 
 /**
