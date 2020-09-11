@@ -80,20 +80,30 @@
                     <input type="text" class="form-control" name="nickname"  value="<?=login('nickname')?>">
                 </div>
 
-                <div class="mb-3">
-                    <label class="form-label">Mobile number</label>
-                    <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
-                    <div>
-                        <button type="button" id="recaptcha-container">
-                            Verify Your Phone Number
-                        </button>
-                    </div>
-                    <div>
-                        Input verification Code
-                        <input>
-                        <button type="button">Verify</button>
-                    </div>
-                </div>
+<div class="mb-3">
+    <label class="form-label">Mobile number</label>
+    <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
+    <div>
+        <button type="button" id="recaptcha-verifier">
+            Send Verification Code To Your Phone
+        </button>
+    </div>
+    <div>
+        Input verification Code
+        <input id="verification-code">
+        <button type="button" onclick="verifyPhoneVerificationCode(
+            $('#verification-code').val(),
+            function() {
+                // success
+                console.log('success');
+            },
+            function() {
+                // error
+                console.log('error');
+            }
+        )">Verify</button>
+    </div>
+</div>
 
                 <button type="submit" class="btn btn-primary" data-button="submit">Submit</button>
             </form>
@@ -116,40 +126,8 @@ insert_at_the_bottom('
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="'.THEME_URL.'/js/firebase-init.js"></script>
-    <script src="'.THEME_URL.'/js/firebase-login.js"></script>
+    <script src="'.THEME_URL.'/js/firebase-user-login-registration.js"></script>
 ');
-
-$__script = <<<EOS
-
-<script>
-
-    window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
-        'size': 'invisible',
-        'callback': function(recapchaToken) {
-            console.log("success", recapchaToken);
-            
-            /// from here.
-            /// Refer https://medium.com/google-developer-experts/verifying-phone-numbers-with-firebase-phone-authentication-on-your-backend-for-free-7a9bef326d02
-            /// Send 
-            console.log('mobile');
-            const mobile = $("input[name='mobile']").val();
-            if (!mobile) return alertBackendError('Mobile number Empty');
-            requestVerificationCode(mobile, recapchaToken);
-        },
-        'expired-callback': function() {
-            console.log("expired-callback");
-        }
-    });
-
-    recaptchaVerifier.render().then(function(widgetId) {
-        window.recaptchaWidgetId = widgetId;
-    });
-
-</script>
-
-EOS;
-
-insert_at_the_bottom($__script);
 
 ?>
 

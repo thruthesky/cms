@@ -1003,44 +1003,108 @@ class ApiLibrary {
 
 
 
-    public function userSendCode($in)
-    {
+public function userSendPhoneVerificaionCode($in)
+{
+    if ( !isset($in['mobile']) ) return ERROR_MOBILE_EMPTY;
+    if ( $in['mobile'][0] != '+') return ERROR_MOBILE_MUST_BEGIN_WITH_PLUS;
+    if ( !isset($in['token']) ) return ERROR_TOKEN_EMPTY;
 
-        if (!isset($in['mobile']) && empty($in['mobile']) && !isset($in['token']) && empty($in['token']) ) return ERROR_EMPTY_PARAMS;
+    $keyfile = THEME_PATH . '/secrets/apikey.txt';
+    if ( ! file_exists($keyfile) ) {
+        return ERROR_SERVICE_ACCOUNT_NOT_EXISTS;
+    }
+    $key = file_get_contents($keyfile);
 
-        $keyfile = THEME_PATH . '/secrets/sonub-service-account-key.json';
-        if ( ! file_exists($keyfile) ) {
-            return ERROR_SERVICE_ACCOUNT_NOT_EXISTS;
-        }
-        $key = json_decode(file_get_contents($keyfile), true);
+    xlog($key);
 
-        xlog($key);
+    $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=$key";
 
-        $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=$key->server_key";
+    $fields = [
+        'phoneNumber' => $in['mobile'],
+        'recaptchaToken' => $in['token']
+    ];
+    xlog($fields);
 
-        $fields = [
-            'phoneNumber' => '+' . $in['mobile'],
-            'recaptchaToken' => $in['token']
-        ];
-        xlog($fields);
+    $ch = curl_init($urlAuth);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));// Needs to encode as JSON
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = curl_exec($ch);
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $urlAuth);
-        curl_setopt($ch, CURLOPT_HEADER, array('Content-Type:application/json'));
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $fields);
-        $result = curl_exec($ch);
-        curl_close($ch);
-
+    if(curl_errno($ch)) {
+        $json = curl_error($ch);
+        $err = json_decode($json, true);
+        xlog('Curl error: ' . $err);
+        return $err['error']['message'];
+    }
+    else {
+        xlog('Curl: Operation completed without any errors. Result:');
         xlog($result);
+    }
+    $result = json_decode($result, true);
+
+    curl_close($ch);
+
+    if ( isset($result['error']) ) {
+        return $result['error']['message'];
+    } else {
+        return ['sessionInfo' => $result['sessionInfo']];
+    }
+}
+
+public function userVerifyPhoneVerificationCode($in)
+{
+
+    xlog('------> userVerifyPhoneVerificationCode()');
+
+
+    if ( !in('sessionInfo') ) return ERROR_SESSION_INFO_EMPTY;
+    if ( !in('code') ) return ERROR_CODE_EMPTY;
+
+    $keyfile = THEME_PATH . '/secrets/apikey.txt';
+    if ( ! file_exists($keyfile) ) {
+        return ERROR_SERVICE_ACCOUNT_NOT_EXISTS;
+    }
+    $key = file_get_contents($keyfile);
+
+
+    $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPhoneNumber?key=$key";
+
+    $fields = [
+        'sessionInfo' => $in['sessionInfo'],
+        'code' => $in['code']
+    ];
+    xlog($fields);
+
+    $ch = curl_init($urlAuth);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+    curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));// Needs to encode as JSON
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $result = curl_exec($ch);
+
+    if(curl_errno($ch)) {
+        $json = curl_error($ch);
+        $err = json_decode($json, true);
+        xlog('Curl error: ' . $err);
+        return $err['error']['message'];
+    }
+    else {
+        xlog('Curl: Operation completed without any errors. Result:');
+        xlog($result);
+    }
+    $result = json_decode($result, true);
+
+    curl_close($ch);
+
+    if ( isset($result['error']) ) {
+        return $result['error']['message'];
+    } else {
         return $result;
-
+//            return ['sessionInfo' => $result['sessionInfo']];
     }
 
-    public function verifySendCode($in)
-    {
 
-    }
+}
 
 
 

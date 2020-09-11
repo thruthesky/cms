@@ -21,6 +21,7 @@ if ( isset($_REQUEST['route'])) {
 
 require 'config.php';
 require 'php/defines.php';
+require 'etc/i18n.php';
 require 'php/library.php';
 require 'php/api-library.php';
 require 'php/api-post.php';
@@ -120,10 +121,6 @@ if ( $__user && isset($__user['ID']) ) {
 }
 
 
-/**
- * i18n json text.
- */
-$__i18n = json_decode(file_get_contents(ABSPATH . THEME_URL . '/etc/i18n.json'), true);
 
 // @Note Comment properties
 add_filter('comment_flood_filter', '__return_false');

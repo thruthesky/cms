@@ -24,6 +24,12 @@ $ git clone https://github.com/thruthesky/cms
 
 * Access the site and finish setup.
 
+* To enable Firebase Auth, Phone Auth, and Firebase functionality
+
+  * Add `apikey.txt`, `service-account-key.json` in `secrets` folder.
+  
+    * `apikey.txt` must hold the apikey of the GCP project
+    * `service-account-key.json` must hold the `service-account` json of the firebase project.
 
 ## Tests
 

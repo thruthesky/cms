@@ -20,13 +20,13 @@ class UserRoute extends ApiLibrary
     {
         $this->response($this->userResign(in()));
     }
-    public function sendCode()
+    public function sendPhoneVerificationCode()
     {
-        $this->response($this->userSendCode(in()));
+        $this->response($this->userSendPhoneVerificaionCode(in()));
     }
-    public function verifyCode()
+    public function verifyPhoneVerificationCode()
     {
-        $this->response($this->userVerifyCode(in()));
+        $this->response($this->userVerifyPhoneVerificationCode(in()));
     }
 
 

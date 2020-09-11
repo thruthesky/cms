@@ -53,6 +53,12 @@ define('ERROR_CANNOT_VOTE_YOUR_OWN_POST', 'cannot_vote_your_own_post');
 
 define('ERROR_SERVICE_ACCOUNT_NOT_EXISTS', 'service account does not exist');
 
+define('ERROR_MOBILE_EMPTY', 'mobile empty');
+define('ERROR_MOBILE_MUST_BEGIN_WITH_PLUS', 'mobile number must begin with +');
+define('ERROR_TOKEN_EMPTY', 'token empty');
+define('ERROR_SESSION_INFO_EMPTY', 'sessionInfo empty');
+define('ERROR_CODE_EMPTY', 'code empty');
+
 
 /**
  * @todo defines below are not in use. remove on Oct 1st.

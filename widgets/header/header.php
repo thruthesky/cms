@@ -4,6 +4,7 @@
         <a class="navbar-brand" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
         <a class="d-lg-none" href="/?page=post.list&slug=qna"><?=tr(['ko'=>'질문과답변', 'en' => 'QnA'])?></a>
 
+        <?=tr(YES)?>
 
         <!-- ko if: userProfilePhotoSrc -->
         <a class="d-lg-none icon-size circle" href="#" onclick="loginOrProfile()">
