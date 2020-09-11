@@ -28,9 +28,9 @@ if ( $post ) {
 ?>
 
 <comment-input-box params="value: {
-    comment_post_ID: <?=$comment_post_ID??0?>,
-    comment_parent_ID: <?=$comment_parent_ID??0?>,
-    comment_ID: <?=$comment_ID??0?>,
+    comment_post_ID: '<?=$comment_post_ID??''?>',
+    comment_parent_ID: '<?=$comment_parent_ID??''?>',
+    comment_ID: '<?=$comment_ID??''?>',
     comment_content: '<?=$comment_content??''?>',
     files: [],
     always: true

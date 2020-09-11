@@ -10,6 +10,7 @@ $slug = in('slug');
 $post = [];
 if ($ID) {
     $post =  post()->postGet(['ID' => $ID, 'post_count' => false]);
+    $slug = $post['slug'];
 }
 ?>
 
