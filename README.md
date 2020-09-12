@@ -405,30 +405,35 @@ Array
   * 3rd, Firebase Email/Password Auth registration.
   
   * Step: Phone Auth -> Wordpress -> Firebase
+  
+## Locale, I18N
+
+* The i18n translation file is etc/i18n.php.
+  * This is for both PHP and Javascript.
+  * For Javascript, it needs an extra field - `javascript => true` for the translation to be appear as JSON object
+    at the bottom of the site(page).
+
+```javascript
+    $$(function() {
+        alertError('yo');
+    })
+```
 
 ## Push notification
 
 * The token must be saved in Wordpress DB since PHP is the one that's going to send push notification.
 
 
-## To doc
 
 
 
+## CSS Components
 
+### CSS Loader
 
-For phone auth, reCaptcha is mandatory.
-   You can use an invisible reCAPTCHA
-
-
-
-For Phone Auth, you need admin service account.
-	There is no Firebase service account. The service account is coming from GCP and used it for Firebase.
-
-
-Identity Tookit API -> Credentials -> Service Accounts -> Get Service Account JSON
-
-
-
-
-
+```html
+<div class="d-flex">
+    <div class="spinner"></div>
+    <div class="ml-3">Please wait...</div>
+</div>
+```

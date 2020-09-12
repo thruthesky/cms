@@ -3,8 +3,16 @@
 $__i18n = [
     Yes => [
         ko => '예',
-        en => 'Yes'
+        en => 'Yes',
+        javascript => true
     ],
+
+    Error => [
+        ko => '에러',
+        en => 'ERROR',
+        javascript => true,
+    ],
+
     emailAddress => [
         ko => '이메일 주소',
         en => 'Email Address',
@@ -27,7 +35,8 @@ $__i18n = [
     ],
     ERROR_MOBILE_EMPTY => [
         ko => '핸드폰 번호를 입력해주세요.',
-        en => 'Please input your mobile no.'
+        en => 'Please input your mobile no.',
+        javascript => true
     ],
     ERROR_MOBILE_MUST_BEGIN_WITH_PLUS => [
         ko => '핸드폰 번호는 +로 시작하고 국가 번호로 시작해야하며, 공백, 특수 문자를 입력하면 안됩니다.',
@@ -47,12 +56,24 @@ $__i18n = [
     ],
     INVALID_CODE => [
         ko => '인증 번호가 올바르지 않습니다.',
-        en => INVALID_CODE
+        en => 'Verification code is invalid.'
     ],
     INVALID_SESSION_INFO => [
         ko => '인증 세션이 올바르지 않습니다.',
-        en => INVALID_SESSION_INFO
+        en => 'Verification sessionInfo is invalid.'
+    ],
+    'TOO_MANY_ATTEMPTS_TRY_LATER' => [
+        ko => '전화번호 인증을 너무 많이 시도하였습니다. 나중에 다시 해 주세요.',
+        en => 'You have attempt too many times. Please try later.'
+    ],
+    'Country Code' => [
+        ko => '국가 코드'
+    ],
+    ERROR_EMAIL_IS_EMPTY => [
+        ko => '이메일 주소가 입력되지 않았습니다.',
+        en => 'Email is empty.'
     ]
+
 ];
 
 
@@ -84,3 +105,17 @@ $__i18n[mobileNo] = [
     ko => '휴대폰 번호',
     en => 'Mobile number'
 ];
+
+$__json = [];
+foreach( $__i18n as $k => $v ) {
+    if ( isset($v['javascript']) ) {
+        $__json[$k] = tr($k);
+    }
+}
+global $__insert_at_the_bottom;
+$__json_encoded = json_encode($__json);
+$__insert_at_the_bottom = <<<EOJ
+<script>
+    var __i18n = $__json_encoded;
+</script>
+EOJ;

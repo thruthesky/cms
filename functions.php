@@ -21,6 +21,15 @@ if ( isset($_REQUEST['route'])) {
 
 require 'config.php';
 require 'php/defines.php';
+
+
+/**
+ * The content of the variable will be printed at the bottom of HTML page.
+ *
+ * @attention This is being used by i18n.php. So it must come before i18n.php
+ */
+$__insert_at_the_bottom = '';
+
 require 'etc/i18n.php';
 require 'php/library.php';
 require 'php/api-library.php';
@@ -97,11 +106,6 @@ $__head_script = '';
  * List of included files.
  */
 $__included_files = [];
-
-/**
- * The content of the variable will be printed at the bottom of HTML page.
- */
-$__insert_at_the_bottom = '';
 
 
 
@@ -873,6 +877,7 @@ function load_country_phone_number_code() {
     $codes = [];
     foreach( $json as $c ) {
         if ( strpos($c['name'], 'Korea, Democratic') !== false ) continue;
+        if ( strpos($c['name'], 'Korea, Republic') !== false) $c['name'] = 'Korea';
         if ( strlen($c['name']) > 30 ) $c['name'] = substr($c['name'], 0, 30) . '...';
         $codes[$c['Iso']] = $c['name'] . '(' . $c['Iso'] . ')';
     }

@@ -184,11 +184,14 @@ class ApiLibrary {
      * @param $data
      *  - $data can be a number or array, object. But not a string.
      *  - If $data is a string, it is considered as an error.
+     *
+     * @note When the response is an error string, it is translated with `tr()` function.
      */
     public function response($data)
     {
+        xlog($data);
         if ( is_string($data) ) {
-            echo $data;
+            echo tr($data);
             exit;
         }
         try {
@@ -1005,13 +1008,13 @@ class ApiLibrary {
 
 public function userSendPhoneVerificationCode($in)
 {
-    if ( !isset($in['mobile']) ) return tr(ERROR_MOBILE_EMPTY);
-    if ( $in['mobile'][0] != '+') return tr(ERROR_MOBILE_MUST_BEGIN_WITH_PLUS);
-    if ( !isset($in['token']) ) return tr(ERROR_TOKEN_EMPTY);
+    if ( !isset($in['mobile']) ) return ERROR_MOBILE_EMPTY;
+    if ( $in['mobile'][0] != '+') return ERROR_MOBILE_MUST_BEGIN_WITH_PLUS;
+    if ( !isset($in['token']) ) return ERROR_TOKEN_EMPTY;
 
     $keyfile = THEME_PATH . '/secrets/apikey.txt';
     if ( ! file_exists($keyfile) ) {
-        return tr(ERROR_APIKEY_NOT_EXISTS);
+        return ERROR_APIKEY_NOT_EXISTS;
     }
     $key = file_get_contents($keyfile);
 
@@ -1102,7 +1105,6 @@ public function userVerifyPhoneVerificationCode($in)
         return tr($msg);
     } else {
         return $result;
-//            return ['sessionInfo' => $result['sessionInfo']];
     }
 
 

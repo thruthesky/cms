@@ -42,7 +42,9 @@ EOH;
 
     global $__insert_at_the_bottom;
     $_text = $scripts;
-    $_text .= $__insert_at_the_bottom;
+    $_text = $__insert_at_the_bottom . $_text;
+
+
 
     return str_ireplace("</body>", "$_text\n</body>", $output);
 

@@ -46,7 +46,6 @@ if ( localhost() ) {
         var apiUrl = "<?php echo home_url() . Config::$apiUrl?>";
         var homePage = "/";
         var themePath = "<?php echo THEME_URL ?>";
-        var registerPage = "<?php echo Config::$registerPage?>";
     </script>
 </head>
 <body class="bg-warning">
