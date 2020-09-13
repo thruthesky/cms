@@ -362,10 +362,56 @@ function tr(code) {
     return __i18n[code];
 }
 function alertBackendError(res) {
-    alert(tr('Error') + "\n\n" + res);
+    // alert(tr('Error') + "\n\n" + res);
+
+
+    alertModal(tr('Error'), res);
+
     return false;
 }
 
 function alertError(res) {
     return alertBackendError(res);
+}
+
+function alertModal(title, message) {
+
+    const dialog = $('#alertModal');
+
+    $('#alertModalLabel').text(title);
+    $('#alertModalBody').text(message);
+
+    /**
+     * After `insert_modal()` calling for the first time, it looks DOM is not yet ready,
+     * So, `dialog.modal()` is not working properly.
+     * That is why it needs to mount immediately when Javascript is loaded.
+     */
+    dialog.modal();
+}
+/// Mount it immediately it is loaded.
+insert_modal();
+
+function insert_modal() {
+    var html = '' +
+'<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="ModalLabel" aria-hidden="true">' +
+'        <div class="modal-dialog" role="document">' +
+'        <div class="modal-content">' +
+'        <div class="modal-header">' +
+'        <h5 class="modal-title" id="alertModalLabel">Modal title</h5>' +
+'    <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+'        <span aria-hidden="true">&times;</span>' +
+'    </button>' +
+'    </div>' +
+'    <div id="alertModalBody" class="modal-body">' +
+'' +
+'</div>' +
+'    <div class="modal-footer">' +
+'        <button type="button" class="btn btn-secondary" data-dismiss="modal">'+tr('Close')+'</button>' +
+// '        <button type="button" class="btn btn-primary">Save changes</button>' +
+'    </div>' +
+'    </div>' +
+'    </div>' +
+'    </div>';
+
+    $('body').append(html);
 }

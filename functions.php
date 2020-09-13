@@ -26,9 +26,12 @@ require 'php/defines.php';
 /**
  * The content of the variable will be printed at the bottom of HTML page.
  *
- * @attention This is being used by i18n.php. So it must come before i18n.php
  */
 $__insert_at_the_bottom = '';
+
+/// Javascript that will be added into head tag.
+$__head_script = '';
+
 
 require 'etc/i18n.php';
 require 'php/library.php';
@@ -106,9 +109,6 @@ function lib() {
     global $apiLib;
     return $apiLib;
 }
-
-/// Javascript that will be added into head tag.
-$__head_script = '';
 
 /**
  * List of included files.
@@ -640,17 +640,28 @@ function get_browser_language() {
     else return 'en';
 }
 
+/**
+ * @param $code
+ * @return mixed
+ *
+ * @note if the desired language code does not exist, then it falls back to `en`.
+ */
 function tr($code) {
     global $__i18n;
     $ln = get_browser_language();
     if ( is_string($code) || is_numeric($code) ) {
-        if ( isset($__i18n[$code]) && isset($__i18n[$code][$ln] ) ) {
-            $str = $__i18n[$code][$ln];
-            return $str;
+        if ( isset($__i18n[$code]) ) {
+            if (isset($__i18n[$code][$ln])) {
+                $str = $__i18n[$code][$ln];
+                return $str;
+            } else if (isset($__i18n[$code]['en'])) {
+                return $__i18n[$code]['en'];
+            }
         }
     } else if ( is_array($code) ) {
-        $str = $code[$ln];
-        return $str;
+        if (isset($code[$ln])) return $code[$ln];
+        else if (isset($code['en'])) return $code['en'];
+        else return 'NO_CODE';
     }
     return $code;
 }
@@ -674,6 +685,14 @@ location.href="$url";
 </script>
 EOH;
     return null;
+}
+
+/**
+ * PHP version of 'move()' in naming compatibility of Javascript.
+ * Alias of jsGo()
+ */
+function move($page) {
+    return jsGo($page);
 }
 
 
@@ -759,11 +778,13 @@ function generate_options($options, $selected=null) {
  */
 function generate_select($options) {
 
+    $labelClass = isset($options['labelClass']) ? $options['labelClass'] : '';
+
     return <<<EOH
 
     <div class="form-group">
         <div class="form-group">
-            <label for="{$options['name']}">{$options['label']}</label>
+            <label for="{$options['name']}" class="$labelClass">{$options['label']}</label>
             <select class="form-control" id="{$options['name']}" name="{$options['name']}">
                 {$options['options']}
             </select>

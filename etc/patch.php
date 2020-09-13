@@ -18,9 +18,6 @@ function patch_javascript_into_output($output) {
 EOH;
     }
 
-
-
-
     foreach( $__included_files as $file ) {
         $path = str_replace(".php", ".js", $file);
         $arr = explode('/wp-content/', $path);
@@ -38,13 +35,9 @@ EOH;
 EOH;
     }
 
-
-
     global $__insert_at_the_bottom;
     $_text = $scripts;
     $_text = $__insert_at_the_bottom . $_text;
-
-
 
     return str_ireplace("</body>", "$_text\n</body>", $output);
 

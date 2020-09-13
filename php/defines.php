@@ -27,7 +27,7 @@ define('ERROR_ROUTE_NOT_FOUND', 'route not found');
 define('ERROR_SESSION_ID_MUST_NOT_PROVIDED', 'session_id_must_not_provided_on_registration');
 
 
-define('ERROR_PASSWORD_IS_EMPTY', 'password_is_empty');
+define('ERROR_PASSWORD_IS_EMPTY', 'ERROR_PASSWORD_IS_EMPTY');
 
 define('ERROR_ROUTE_NOT_EXIST', 'route_not_exist');
 
@@ -76,6 +76,7 @@ define('en', 'en');
 define('javascript', 'javascript');
 define('Yes', 'yes');
 define('Error', 'Error');
+define('Close', 'Close');
 define('emailAddress', 'emailAddress');
 
 
@@ -102,12 +103,6 @@ define('COMMENT_ATTACHMENT', 'comment_attachment');
 
 define('MINIMUM_PASSWORD_LENGTH', 6);
 
-define('HOME_PAGE_ROUTE', '/');
-define('REGISTER_PAGE_ROUTE', '?page=register');
-define('LOGIN_PAGE_ROUTE', '?page=login');
-define('LOGOUT_PAGE_ROUTE', '?page=logout');
-define('PROFILE_PAGE_ROUTE', '?page=profile');
-define('POST_LIST_ROUTE', '?page=forum&slug=qna');
 
 define('USER_NOT_ALLOWED_METAS', [
     // 'gender',

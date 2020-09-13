@@ -1,3 +1,7 @@
+.bg-lightgrey {
+  background-color: #efefef !important;
+}
+
 .bg-lighter {
   background-color: #fefefe !important;
 }
@@ -65,6 +69,14 @@
 .no-gutters > [class*=col-] {
   padding-right: 0;
   padding-left: 0;
+}
+
+.fs-xs {
+  font-size: 0.8rem !important;
+}
+
+.fs-sm {
+  font-size: 0.9rem !important;
 }
 
 .fs-md {

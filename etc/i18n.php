@@ -13,6 +13,13 @@ $__i18n = [
         javascript => true,
     ],
 
+    Close => [
+        ko => '닫기',
+        en => 'Close',
+        javascript => true,
+    ],
+
+
     emailAddress => [
         ko => '이메일 주소',
         en => 'Email Address',
@@ -88,7 +95,12 @@ $__i18n = [
     INVALID_PHONE_NUMBER => [
         ko => '핸드폰 번호가 올바르지 않습니다.',
         en => 'The mobile number is invalid.'
-    ]
+    ],
+    ERROR_PASSWORD_IS_EMPTY => [
+        ko => '비밀번호가 입력되지 않았습니다.',
+        en => 'Password is empty.'
+    ],
+
 
 ];
 
@@ -128,9 +140,9 @@ foreach( $__i18n as $k => $v ) {
         $__json[$k] = tr($k);
     }
 }
-global $__insert_at_the_bottom;
+global $__head_script;
 $__json_encoded = json_encode($__json);
-$__insert_at_the_bottom = <<<EOJ
+$__head_script .= <<<EOJ
 <script>
     var __i18n = $__json_encoded;
 </script>

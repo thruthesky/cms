@@ -253,12 +253,12 @@ class ApiLibrary {
         /// TODO mobile number must be unique.
 
         if (!isset($in['mobile']) || empty($in['mobile'])) return ERROR_MOBILE_EMPTY;
-        if ( !$this->already_verified($in['mobile']) ) {
+        if ( !$this->mobile_already_verified($in['mobile']) ) {
             return ERROR_MOBILE_NOT_VERIFIED;
         }
 
-        $users = get_users(array('meta_key' => 'mobile', 'meta_value' => $in['mobile']));
-        if ( $users && count($users) > 0 ) {
+
+        if ( $this->mobile_already_exists($in['mobile']) ) {
             return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
         }
 
@@ -1030,11 +1030,21 @@ public function userSendPhoneVerificationCode($in)
     if ( $in['mobile'][0] != '+') return ERROR_MOBILE_MUST_BEGIN_WITH_PLUS;
     if ( !isset($in['token']) ) return ERROR_TOKEN_EMPTY;
 
+
+
+    if ( $this->mobile_already_exists($in['mobile']) ) {
+        return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
+    }
+
+
+
     $keyfile = THEME_PATH . '/secrets/apikey.txt';
     if ( ! file_exists($keyfile) ) {
         return ERROR_APIKEY_NOT_EXISTS;
     }
     $key = file_get_contents($keyfile);
+
+
 
     xlog($key);
 
@@ -1131,7 +1141,7 @@ public function userVerifyPhoneVerificationCode($in)
 }
     public function insert_verified_mobile($mobile) {
         global $wpdb;
-        if ( $this->already_verified($mobile) ) return;
+        if ( $this->mobile_already_verified($mobile) ) return;
         $wpdb->insert('x_verified_mobile_numbers', ['mobile' => $mobile, 'stamp' => time()]);
     }
 
@@ -1141,11 +1151,25 @@ public function userVerifyPhoneVerificationCode($in)
      * @param $mobile
      * @return string|null
      */
-    public function already_verified($mobile) {
+    public function mobile_already_verified($mobile) {
         global $wpdb;
-        return $wpdb->get_var("SELECT stamp FROM x_verified_mobile_numbers WHERE mobile='$mobile'");
+        $q = "SELECT stamp FROM x_verified_mobile_numbers WHERE mobile='$mobile'";
+        xlog($q);
+        return $wpdb->get_var($q);
     }
 
+    /**
+     * @param $mobile
+     * @return bool
+     */
+    public function mobile_already_exists($mobile) {
+        $users = get_users(array('meta_key' => 'mobile', 'meta_value' => $mobile));
+        if ( $users && count($users) > 0 ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
 

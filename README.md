@@ -368,41 +368,49 @@ Array
             And you need Auth uid in that case.
 
 
-### Integration
+### Registration
 
-* A user may login Social Login with Google, Facebook, or Apple which are supported natively by Firebase,
-    then, the app needs to
-
-    * 1st, Do Phone Auth
-    * 2nd, Register into Wordpress.
-    
-    * Step: Social Login -> Phone Auth -> Wordpress
-    
-  * When the user login with the social login that are NOT supported by Firebase,
-    then, the app needs to
-    
-    * 1st, Do Phone Auth
-    * 2nd, Register Into Wordpress
-    * 3rd, Register Into Firebase Auth using Email/password login.
-    
-    * Step: Social Login -> Phone Auth -> Wordpress -> Firebase
-
-  * Social login supports
+* User must verify their phone number.
+* User must have accounts on both Firebase & Wordpress.
+* Supported social logins
     * Google
     * Apple
     * Facebook
     * Kakaotalk
     * Naver
 
-  * When social login success, user continue registration to Wordpress by inputting Nickname, phone number.
-    * This means, before registration complete to Wordpress, the user must verify his phone number.
-    * We don't do email verification. (Phone number authentication only.)
+#### Registration Logic
 
-* When a user registered with Site Registration from,
+* If a user logs in with Social account that is supported by Firebase like Google, Facebook, or Apple,
+    then, the app needs to
 
-  * 1st, Phone Auth
-  * 2nd, Wordpress registration
-  * 3rd, Firebase Email/Password Auth registration.
+    * 1st, Social login
+    * 2nd, Phone number verification
+    * 3rd, Register into Wordpress (with extra information).
+    
+    * Step: Social Login -> Phone verification -> Wordpress Registration
+    
+* If a user login with the social login that are NOT supported by Firebase like Kakao Login, Naver Login,
+    then, the app needs to
+
+    * 1st, Social login
+    * 2nd, Phone number verification
+    * 3nd, Register into Wordpress (with extra information).
+    * 4th, Register Into Firebase Auth using Email/password login.
+
+    * Step: Social Login -> Phone verification -> Wordpress Registration -> Firebase Registration
+      * Email format: ID[USER_ID]@[provider].com
+        Ex) ID12345@kakao.com
+        Ex) ID56789@naver.com
+
+* If a user registers directly to Wordpress(without social login),
+
+  * 1st, Phone number verification
+  * 2nd, Register into Wordpress (with extra information).
+  * 3rd, Register Into Firebase Auth using Email/password login.
+    * Email format: ID[USER_ID]@wordpress.com
+      Ex) ID12345@wordpress.com
+      
   
   * Step: Phone Auth -> Wordpress -> Firebase
   

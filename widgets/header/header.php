@@ -36,7 +36,7 @@
                         <a class="nav-link active" aria-current="page" href="/?page=user.login">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/?page=user.register">Register</a>
+                        <a class="nav-link active" aria-current="page" href="<?=Config::$registerPage?>">Register</a>
                     </li>
 
                     <?php

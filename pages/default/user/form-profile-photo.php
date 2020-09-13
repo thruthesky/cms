@@ -1,5 +1,6 @@
 
 <? if (loggedIn()) { ?>
+    <input type="hidden" name="photo_url" value="">
     <div class="d-flex flex-column justify-content-center align-items-center">
         <div class="wh120x120 position-relative overflow-hidden pointer">
 
@@ -9,7 +10,7 @@
                     type="file" name="file"
                     onchange="onChangeFile(this, {html: $('.user-update-profile-photo'), deleteButton: true, progress: $(this).parents('.register').find('.progress'),
                                      success: function(res) {
-                                        $app.userProfilePhotoSrc(res.url);
+                        $("[name='photo_url']").val(res['url']);
                                      }})">
 
             <div class="user-update-profile-photo position-relative z-index-low circle wh120x120 overflow-hidden">
