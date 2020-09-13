@@ -1,5 +1,14 @@
 <?php
+
 ?>
+
+@TODO:
+
+1) 이메일과 비밀번호 입력 페이지를 따로 만들고
+
+2) 이름, 닉네임, 전화번호 입력 페이지를 따로 만든다. 여기에서 전화번호 인증을 한다.
+
+이렇게 하면 소셜 로그인을 할 때에도 편해진다.
 
 
 <div id="register-page" class="container py-3">
@@ -53,6 +62,7 @@
                         <input type="tel"
                                minlength="8"
                                maxlength="14"
+                               pattern="[0-9]+"
                                class="form-control" name="mobile"  value="<?=login('mobile')?>">
                     </div>
                 </div>
@@ -67,7 +77,7 @@
                     Input Code
                     <input id="verification-code">
                     <button type="button" onclick="verifyPhoneVerificationCode()">Verify</button>
-                    <button type="button" data-bind="click: register.retry">Or retry</button>
+                    <button type="button" onclick="registerPage.retry()">Or retry</button>
                 </div>
 
 

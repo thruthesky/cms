@@ -99,6 +99,14 @@ function post() {
     return $apiPost;
 }
 
+/**
+ * @return ApiLibrary
+ */
+function lib() {
+    global $apiLib;
+    return $apiLib;
+}
+
 /// Javascript that will be added into head tag.
 $__head_script = '';
 

@@ -248,6 +248,23 @@ class ApiLibrary {
         if ($this->check_email_format($in['user_email']) === false) return ERROR_WRONG_EMAIL_FORMAT;
         if (get_user_by('email', $in['user_email'])) return ERROR_EMAIL_EXISTS;
 
+
+        /// TODO mobile number must be verified.
+        /// TODO mobile number must be unique.
+
+        if (!isset($in['mobile']) || empty($in['mobile'])) return ERROR_MOBILE_EMPTY;
+        if ( !$this->already_verified($in['mobile']) ) {
+            return ERROR_MOBILE_NOT_VERIFIED;
+        }
+
+        $users = get_users(array('meta_key' => 'mobile', 'meta_value' => $in['mobile']));
+        if ( $users && count($users) > 0 ) {
+            return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
+        }
+
+
+
+
         $userdata = [
             'user_login' => trim($in['user_email']),
             'user_pass' => trim($in['user_pass']),
@@ -260,6 +277,7 @@ class ApiLibrary {
         ];
 
         $user_ID = wp_insert_user($userdata);
+
 
         if (is_wp_error($user_ID)) {
             return ERROR_WORDPRESS_ERROR;
@@ -1064,6 +1082,7 @@ public function userVerifyPhoneVerificationCode($in)
 
     if ( !in('sessionInfo') ) return ERROR_SESSION_INFO_EMPTY;
     if ( !in('code') ) return ERROR_CODE_EMPTY;
+    if ( !in('mobile') ) return ERROR_MOBILE_EMPTY;
 
     $keyfile = THEME_PATH . '/secrets/apikey.txt';
     if ( ! file_exists($keyfile) ) {
@@ -1100,15 +1119,32 @@ public function userVerifyPhoneVerificationCode($in)
 
     curl_close($ch);
 
-    if ( isset($result['error']) ) {
+    if ( isset($result['error']) ) { // error
         $msg = $result['error']['message'];
         return tr($msg);
-    } else {
+    } else { // success
+        $this->insert_verified_mobile(in('mobile'));
         return $result;
     }
 
 
 }
+    public function insert_verified_mobile($mobile) {
+        global $wpdb;
+        if ( $this->already_verified($mobile) ) return;
+        $wpdb->insert('x_verified_mobile_numbers', ['mobile' => $mobile, 'stamp' => time()]);
+    }
+
+    /**
+     * Returns the stamp of the time when the mobile number is verified.
+     * You can check the stamp to see if the user verified with in a period of time.
+     * @param $mobile
+     * @return string|null
+     */
+    public function already_verified($mobile) {
+        global $wpdb;
+        return $wpdb->get_var("SELECT stamp FROM x_verified_mobile_numbers WHERE mobile='$mobile'");
+    }
 
 
 

@@ -6,7 +6,16 @@ function RegisterPage() {
         $('.input-verification-code').css('height', 'auto');
         self.sessionInfo = sessionInfo;
     }
-
+    self.retry = function() {
+        self.sessionInfo = '';
+        $('.send-verification-code').css('height', 'auto');
+        $('.input-verification-code').css('height', '0px').css('overflow', 'hidden');
+        reInitReCaptcha();
+    }
+    self.verified = function() {
+        $('.send-verification-code').css('height', '0px').css('overflow', 'hidden');
+        $('.input-verification-code').css('height', '0px').css('overflow', 'hidden');
+    }
 }
 
 const registerPage = new RegisterPage();
@@ -17,6 +26,7 @@ function onRegisterFormSubmit() {
 
     const data = objectifyForm($('#register-form'));
     data['route'] = 'user.' + method;
+    data['mobile'] = get_mobile_number_from_form();
     const src = $profile_photo.find('img').attr('src');
 
     if (src !== "<?=ANONYMOUS_PROFILE_PHOTO?>") {
@@ -24,10 +34,6 @@ function onRegisterFormSubmit() {
     }
 
 
-
-    $('.loader').show();
-    console.log(data);
-    return;
 
     $.ajax( {
         method: 'GET',
@@ -37,7 +43,6 @@ function onRegisterFormSubmit() {
 
         $('.loader').hide();
         if ( isBackendError(re) ) return alertError(re);
-
 
         setLogin(re);
         if ( method === 'register')
@@ -55,7 +60,13 @@ function onRegisterFormSubmit() {
 // setTimeout(function() {
 //     $('.loader').hide();
 // }, 5000);
-// setTimeout(onRegisterFormSubmit, 2000);
+setTimeout(function() {
+    $("[name='user_email']").val((new Date).getTime() + '@gmail.com');
+    $("[name='user_pass']").val((new Date).getTime() + '@gmail.com');
+    $("[name='fullname']").val((new Date).getTime() + '@gmail.com');
+    $("[name='nickname']").val((new Date).getTime() + '@gmail.com');
+    $("[name='mobile']").val((new Date).getTime());
+}, 1000);
 
 
 function get_mobile_number_from_form() {
@@ -64,7 +75,8 @@ function get_mobile_number_from_form() {
     if (!mobile) return alertBackendError(tr('ERROR_MOBILE_EMPTY'));
     const countryCode = $("[name='country_code']").val();
     if ( mobile.charAt(0) === '0' ) mobile = mobile.substring(1);
-    // mobile = mobile.replace(/\-/g, '');
+    mobile = mobile.replace(/\-/g, '');
+    mobile = mobile.replace(/ /g, '');
 
     return countryCode + mobile;
 }
@@ -86,7 +98,7 @@ function send_phone_auth_verfication_code(recapchaToken) {
 
     const data = {
         route: 'user.sendPhoneVerificationCode',
-        mobile: countryCode + mobile,
+        mobile: mobile,
         token: recapchaToken
     };
     console.log('data', data);
@@ -98,29 +110,15 @@ function send_phone_auth_verfication_code(recapchaToken) {
     })
         .done(function(res) {
             console.log(res);
-            if ( isBackendError(res) ) return alertError(res);
+            if ( isBackendError(res) ) {
+                registerPage.retry();
+                return alertError(res);
+            }
             registerPage.verificationCodeSent(res['sessionInfo']);
         })
         .fail(function() {
             alert( "Server error" );
         });
-
-
-
-
-
-
-
-
-
-    ////
-    // sendPhoneVerificationCode(mobile, recapchaToken, function(errorCode) {
-    //     console.log('Success. Input the verification code from your phone.');
-    //     registerPage.verificationCodeSent();
-    // }, function(errorCode) {
-    //     console.log('error');
-    //     alertError(errorCode);
-    // });
 }
 
 
@@ -170,43 +168,20 @@ function reInitReCaptcha() {
 }
 
 
-
-// function sendPhoneVerificationCode(mobile, token, success, error) {
-//     const data = {
-//         route: 'user.sendPhoneVerificationCode',
-//         mobile: mobile,
-//         token: token
-//     };
-//     console.log('data', data);
-//
-//     $.ajax({
-//         method: 'POST',
-//         url: apiUrl,
-//         data: data
-//     })
-//         .done(function(res) {
-//             console.log(res);
-//             if ( isBackendError(res) ) return error(res);
-//             registerPage.sessionInfo = res['sessionInfo'];
-//             success();
-//         })
-//         .fail(function() {
-//             alert( "Server error" );
-//         });
-// }
-
 function verifyPhoneVerificationCode() {
 
-
     var code = $('#verification-code').val();
-
 
     const data = {
         route: 'user.verifyPhoneVerificationCode',
         sessionInfo: registerPage.sessionInfo,
-        code: code
+        code: code,
+        mobile: get_mobile_number_from_form(),
     };
     console.log('data', data);
+
+    $('#verification-code').val('');
+
 
     $.ajax({
         method: 'POST',
@@ -214,8 +189,11 @@ function verifyPhoneVerificationCode() {
         data: data
     })
         .done(function(res) {
-            if ( isBackendError(res) ) return alertError(error);
+            if ( isBackendError(res) ) {
+                return alertError(res);
+            }
             console.log('mobile phone number verificaion success & registration done.');
+            registerPage.verified();
             onRegisterFormSubmit();
         })
         .fail(function() {

@@ -363,7 +363,7 @@ function tr(code) {
 }
 function alertBackendError(res) {
     alert(tr('Error') + "\n\n" + res);
-    return undefined;
+    return false;
 }
 
 function alertError(res) {

@@ -72,6 +72,22 @@ $__i18n = [
     ERROR_EMAIL_IS_EMPTY => [
         ko => '이메일 주소가 입력되지 않았습니다.',
         en => 'Email is empty.'
+    ],
+    ERROR_EMAIL_EXISTS => [
+        ko => '메일 주소가 이미 가입되어져 있습니다.',
+        en => 'The email address is already registered.'
+    ],
+    ERROR_MOBILE_NOT_VERIFIED => [
+        ko => '핸드폰 번호가 인증되지 않았습니다.',
+        en => 'Mobile number is not verified.'
+    ],
+    ERROR_MOBILE_NUMBER_ALREADY_REGISTERED => [
+        ko => '핸드폰 번호가 이미 가입되어져 있습니다.',
+        en => 'The mobile number is already registered.'
+    ],
+    INVALID_PHONE_NUMBER => [
+        ko => '핸드폰 번호가 올바르지 않습니다.',
+        en => 'The mobile number is invalid.'
     ]
 
 ];

@@ -6,6 +6,11 @@ class Config {
     static public $registerPage = '/?page=user.register';
     static public $resignResultPage = '/?page=user.resign_result';
     static public $adminUserList = '/?page=admin.user.list';
+
+    /// If it is set to true, only verified mobile can be registered.
+    static public $verifiedMobileOnly = true;
+    /// If it is set to true, the mobile number becomes unique in Database.
+    static public $uniqueMobile = true;
 }
 
 

@@ -55,6 +55,8 @@ define('ERROR_SERVICE_ACCOUNT_NOT_EXISTS', 'Service account does not exist');
 define('ERROR_APIKEY_NOT_EXISTS', 'Apikey does not exist');
 
 define('ERROR_MOBILE_EMPTY', 'ERROR_MOBILE_EMPTY');
+define('ERROR_MOBILE_NOT_VERIFIED', 'ERROR_MOBILE_NOT_VERIFIED');
+define('ERROR_MOBILE_NUMBER_ALREADY_REGISTERED', 'ERROR_MOBILE_NUMBER_ALREADY_REGISTERED');
 define('ERROR_MOBILE_MUST_BEGIN_WITH_PLUS', 'mobile number must begin with +');
 define('ERROR_TOKEN_EMPTY', 'token empty');
 define('ERROR_SESSION_INFO_EMPTY', 'sessionInfo empty');
@@ -64,6 +66,7 @@ define('ERROR_CODE_EMPTY', 'code empty');
 define('PHONE_NUMBER_TOO_SHORT', 'INVALID_PHONE_NUMBER : TOO_SHORT');
 define('PHONE_NUMBER_INVALID', 'INVALID_PHONE_NUMBER : Invalid format.');
 define('PHONE_NUMBER_TOO_LONG', 'INVALID_PHONE_NUMBER : TOO_LONG');
+define('INVALID_PHONE_NUMBER', 'INVALID_PHONE_NUMBER');
 
 define('INVALID_CODE', 'INVALID_CODE');
 define('INVALID_SESSION_INFO', 'INVALID_SESSION_INFO');
@@ -75,6 +78,9 @@ define('Yes', 'yes');
 define('Error', 'Error');
 define('emailAddress', 'emailAddress');
 
+
+
+define('ERROR_EMAIL_EXISTS', 'ERROR_EMAIL_EXISTS');
 
 
 /**
@@ -140,7 +146,6 @@ define('ERROR_MALFORMED_METHOD_NAME', 'malformed_method_name');
 
 define('ERROR_USER_EXIST', 'user_already_exists');
 
-define('ERROR_EMAIL_EXISTS', 'email_already_exists');
 define('ERROR_EMAIL_IS_EMPTY', 'ERROR_EMAIL_IS_EMPTY');
 define('ERROR_WRONG_EMAIL_FORMAT', 'invalid_email_format');
 
