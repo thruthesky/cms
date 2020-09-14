@@ -261,4 +261,23 @@ class ApiPost extends ApiLibrary
     }
 
 
+    /***
+     * Count the number of post on a category
+     * @param $category - name or ID
+     * @return int
+     */
+    function count_cat_post($category) {
+        if(is_string($category)) {
+            $catID = get_cat_ID($category);
+        }
+        elseif(is_numeric($category)) {
+            $catID = $category;
+        } else {
+            return 0;
+        }
+        $cat = get_category($catID);
+        return $cat->count;
+    }
+
+
 }
