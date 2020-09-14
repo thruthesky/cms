@@ -13,14 +13,27 @@ if (!isset($post) && empty($post)) return;
     [data-depth='9'] { margin-left: 5.5rem; }
     [data-depth='10'] { margin-left: 6rem; }
 </style>
-<div class="pb-3">
+<div id="comment-list" class="pb-3">
     <?php
+//
+//    foreach($post['comments'] as $comment){
+//        include widget('comment.view');
+//    }
 
-    foreach($post['comments'] as $comment){
-        include widget('comment.view');
-    }
+
+
 
     ?>
 
 
 </div>
+
+<script>
+    $$(function() {
+        commentList.init({
+            mount: '#comment-list',
+            comments: <?=json_encode($post['comments']);?>,
+        });
+        commentList.render();
+    })
+</script>

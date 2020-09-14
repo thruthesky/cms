@@ -40,7 +40,7 @@ $guid = $post['guid'];
                     <button id="dislike<?=$comment['comment_ID']?>" class="btn btn-primary mr-3" onclick="onClickLike(<?=$comment['comment_ID']?>, 'dislike', 'comment')"><?=isset($comment['dislike']) && $comment['dislike']!== "0" ? $comment['dislike']: '' ?> <?=$comment['user_vote']== 'dislike'?'Disliked':'Dislike'?></button>
 
 <!--                    <button class="btn btn-primary mr-3" data-bind="click: function() { toggleCommentInputBox(--><?//=$comment['comment_ID']?><!--); }">Reply</button>-->
-                    <button class="btn btn-primary mr-3" onclick='addCommentReplyForm(<?=json_encode($comment)?>)'>Reply</button>
+                    <button class="btn btn-primary mr-3" onclick='commentBox.append("#comment<?=$comment['comment_ID']?> .comment-input-box")'>Reply</button>
 
                     <?php if($comment['user_id'] == userId()) { ?>
                         <button class="btn btn-primary mr-3" onclick='addCommentEditForm(<?=json_encode($comment)?>)'>Edit</button>
@@ -51,14 +51,15 @@ $guid = $post['guid'];
             </div>
         </div>
     </div>
+    <div class="comment-input-box"></div>
 
 
-    <comment-input-box params='value: {
-    comment_post_ID: <?=$comment['comment_post_ID']??0?>,
-    comment_parent_ID: <?=$comment['comment_ID']??0?>,
-    comment_ID: null,
-    comment_content: "",
-    files: <?=json_encode($comment['files'])?>,
-}'></comment-input-box>
+<!--    <comment-input-box params='value: {-->
+<!--    comment_post_ID: --><?//=$comment['comment_post_ID']??0?><!--,-->
+<!--    comment_parent_ID: --><?//=$comment['comment_ID']??0?><!--,-->
+<!--    comment_ID: null,-->
+<!--    comment_content: "",-->
+<!--    files: --><?//=json_encode($comment['files'])?><!--,-->
+<!--}'></comment-input-box>-->
 </div>
 

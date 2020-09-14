@@ -6,9 +6,9 @@ if ( ! isLocalhost ) initServiceWorker();
 
 
 if ( loggedIn() ) {
-    console.log('User logged in');
+    // console.log('User logged in');
 } else {
-    console.log('User logged out');
+    // console.log('User logged out');
 
 }
 $profile_photo

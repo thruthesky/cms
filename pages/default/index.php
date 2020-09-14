@@ -75,9 +75,9 @@ if ( localhost() ) {
 
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-<script src="<?php theme_url()?>/js/firebase.js"></script>
+<script src="<?php theme_url()?>/js/firebase.js?v=<?php echo Config::$appVersion?>"></script>
 
-<script src="<?php theme_url()?>/js/index.js?v=<?php echo Config::$appVersion?>"></script>
+<script src="<?php theme_url()?>/js/common.js?v=<?php echo Config::$appVersion?>"></script>
 
 </body>
 </html>

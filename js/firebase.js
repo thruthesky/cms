@@ -16,14 +16,16 @@ firebase.initializeApp(firebaseConfig);
 
 var firebaseUser = null;
 
+
+
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         // User is signed in.
-        console.log('Firebase signed in', user);
+        // console.log('Firebase signed in', user);
         firebaseUer = user;
     } else {
         // No user is signed in.
-        console.log('Firebase Not signed in');
+        // console.log('Firebase Not signed in');
         firebaseUser = null;
     }
 });
