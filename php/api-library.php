@@ -704,6 +704,11 @@ class ApiLibrary {
         // Check if user voted on this post
         $post['user_vote'] = $this->getUserVoteChoice($post['ID'], $options);
 
+
+	    if ( !isset($post['like']) ) $post['like'] = 0;
+	    if ( !isset($post['dislike']) ) $post['dislike'] = 0;
+
+
         return $post;
     }
 
@@ -863,6 +868,9 @@ class ApiLibrary {
             $singles[$k] = $v[0];
         }
         $ret = array_merge($ret,$singles);
+
+	    if ( !isset($ret['like']) ) $ret['like'] = 0;
+	    if ( !isset($ret['dislike']) ) $ret['dislike'] = 0;
         return $ret;
     }
 

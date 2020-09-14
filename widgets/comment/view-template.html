@@ -1,0 +1,40 @@
+
+<div id="comment{comment_ID}>">
+    <div class="display" data-comment-post-id="{comment_post_ID}" data-comment-id="{comment_ID}" data-comment-parent="{comment_parent}" data-depth="{depth}">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row no-gutters mb-3">
+                    <div class="circle wh50x50 overflow-hidden mr-3">
+                        <img class='mw-100' src="{author_photo_url}" alt='user photo'>";
+                    </div>
+                    <div class="col">
+                        <div>
+                            <span>{comment_author}</span>
+                            <span>Date: {short_date_time}</span>
+                        </div>
+                        <div class="content">
+                            {comment_content}
+                        </div>
+                    </div>
+                </div>
+                <div class="comment-view-files row py-3">
+                    <?php if (isset($comment['files']) && !empty($comment['files'])) {
+                        foreach ($comment['files'] as $file) { ?>
+                    <div class="col-4 col-sm-3">
+                        <img class="w-100" src="<?=$file['thumbnail_url']?>">
+                    </div>
+                    <?php }} ?>
+                </div><!--/.row-->
+                <div>
+                    <button id="like{comment_ID}" class="btn btn-primary mr-3" onclick="onClickLike({comment_ID}, 'like', 'comment')">{like} {like_text}</button>
+                    <button id="dislike{comment_ID}" class="btn btn-primary mr-3" onclick="onClickLike({comment_ID}, 'dislike', 'comment')">{dislike} {dislike_text}</button>
+                    <button class="btn btn-primary mr-3" onclick='commentBox.append("#comment{comment_ID} .comment-input-box")'>Reply</button>
+                    <button class="{other}d-none btn btn-primary mr-3" onclick='addCommentEditForm({comment_ID})'>Edit</button>
+                    <button class="{other}d-none btn btn-primary mr-3" onclick="onCommentDelete({comment_ID}, {comment_post_ID})">Delete</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="comment-input-box"></div>
+</div>

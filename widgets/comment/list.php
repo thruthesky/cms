@@ -1,5 +1,8 @@
 <?php
 if (!isset($post) && empty($post)) return;
+
+$viewTemplate = file_get_contents(__DIR__ . '/view-template.html');
+
 ?>
 <style>
     [data-depth='1'] {}
@@ -15,14 +18,9 @@ if (!isset($post) && empty($post)) return;
 </style>
 <div id="comment-list" class="pb-3">
     <?php
-//
-//    foreach($post['comments'] as $comment){
-//        include widget('comment.view');
-//    }
-
-
-
-
+    foreach($post['comments'] as $comment){
+        include widget('comment.view', ['viewTemplate' => $viewTemplate]);
+    }
     ?>
 
 
@@ -33,7 +31,8 @@ if (!isset($post) && empty($post)) return;
         commentList.init({
             mount: '#comment-list',
             comments: <?=json_encode($post['comments']);?>,
-        });
-        commentList.render();
-    })
+            template: '<?=addslashes(str_replace("\n", ' ', $viewTemplate))?>',
+       });
+       // commentList.render();
+   })
 </script>

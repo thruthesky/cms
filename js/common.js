@@ -547,15 +547,19 @@ function CommentList() {
     const self = this;
     self.mount = null;
     self.comments = [];
+    self.template = null;
     self.init = function(options) {
         self.mount = options.mount;
         self.comments = options.comments;
+        self.template = options.template;
         console.log(self.comments);
+
+        // self.render(); // test
     }
     self.render = function() {
         $(self.mount).empty();
         for(let i = 0; i < self.comments.length; i ++ ) {
-            $(self.mount).append(self.template(self.comments[i]));
+            $(self.mount).append(self.renderTemplate(self.comments[i]));
         }
     }
     self.insert = function(comment) {
@@ -573,20 +577,28 @@ function CommentList() {
         const comment = self.comments[i];
         commentBox.append('#comment' + comment_ID, comment);
     }
-    self.template = function(comment) {
-        return '' +
-        '<div class="comment" id="comment'+comment['comment_ID']+'">' +
-            '<div class="meta">No. '+comment['comment_ID']+'</div>' +
-        '<div class="content">' +
-        comment.comment_content_autop +
-        '</div>' +
-            '<div class="buttons">' +
-            '<button type="button" onclick="commentList.appendCommentBox('+comment['comment_ID']+')">Reply</button>' +
-            '</div>' +
-            '' +
-        '</div>' +
-        '' +
-        '';
+    self.replaceTag = function(tag, value, t) {
+
+        const r = new RegExp('\{' + tag + '\}', 'g');
+
+        return t.replace(r, value);
+    }
+    self.renderTemplate = function(comment) {
+        var t = self.template;
+        t = self.replaceTag('comment_ID', comment['comment_ID'], t);
+        t = self.replaceTag('comment_post_ID', comment['comment_post_ID'], t);
+        t = self.replaceTag('comment_parent', comment['comment_parent'], t);
+        t = self.replaceTag('depth', comment['depth'], t);
+        t = self.replaceTag('author_photo_url', comment['author_photo_url'], t);
+        t = self.replaceTag('comment_author', comment['comment_author'], t);
+        t = self.replaceTag('short_date_time', comment['short_date_time'], t);
+        t = self.replaceTag('comment_content', comment['comment_content'], t);
+        t = self.replaceTag('like', comment['like'], t);
+        t = self.replaceTag('dislike', comment['dislike'], t);
+        t = self.replaceTag('like_text', comment['user_vote'] === 'like'?'Liked':'Like', t);
+        t = self.replaceTag('dislike_text', comment['user_vote'] === 'dislike'?'Disliked':'Dislike', t);
+
+        return t;
     }
 }
 
