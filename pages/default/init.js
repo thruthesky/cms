@@ -130,14 +130,27 @@ function AppViewModel() {
 // components.register() must come before applyBindings()
 ko.components.register('comment-input-box', {
     viewModel: function(value) {
-        // console.log(value.value);
+        console.log(value.value);
         const self = this;
         self.params = value.value;
         self.content = ko.observable(self.params.comment_content);
         self.files = ko.observableArray(self.params.files);
-        console.log(self.files());
         self.deleteCommentFile = function(data) {
-            console.log('this');
+            let req = {route: 'file.delete', ID: data.ID, session_id: getUserSessionId()};
+            $.ajax( {
+                method: 'GET',
+                url: apiUrl,
+                data: req
+            } )
+                .done(function(re) {
+                    if (re['ID'] === data['ID']) {
+                        const index = self.files().findIndex(obj => obj.ID === data['ID']);
+                        self.files.splice(index, 1);
+                    }
+                })
+                .fail(function() {
+                    alert( "Server error" );
+                });
         };
         self.progressLoader = ko.observable(false);
         self.progressBar = ko.observable('0%');
@@ -216,15 +229,20 @@ ko.components.register('comment-input-box', {
                     else {
                         console.log(res);
                             const commentBox = $('#comment' + data['comment_ID']);
-                            if (commentBox.length) { // Update
-                                console.log(res['html']);
-                                commentBox.replaceWith(onCommentCreateOrUpdateApplyDepth(res['html'], commentBox));
-                                $(form).parent().remove();
-                                const commentView = commentBox.find('comment-input-box');
-                                // ko.cleanNode($app, commentView[0]);
-                                // ko.applyBindings($app, commentView[0]);
-                            } else
-                            if ( res['comment_parent'] === "0" ) { // Reply on the post.
+                        if (commentBox.length) { // Update
+                            console.log('update:::');
+                            commentBox.find('.display').find('.content').html(res['comment_content']);
+                            commentBox.find('.display').find('.comment-view-files').empty();
+                            let filesHtml = '';
+                            for (let x=0; x < res['files'].length; x++) {
+                                    filesHtml +=  '<div class="col-4 col-sm-3"><img class="w-100" src="' + res['files'][x].thumbnail_url+ '"></div>';
+                            }
+                            commentBox.find('.display').find('.comment-view-files').append(filesHtml);
+                            commentBox.find('.display').show();
+                            $app.toggleCommentInputBox(0);
+                            return;
+                        } else
+                        if ( res['comment_parent'] === "0" ) { // Reply on the post.
                             const newComment = $('#newcomment' + data['comment_post_ID']);
                             newComment.after(res['html']);
                             const commentView = newComment.next('#comment' + res.comment_ID);
@@ -239,9 +257,9 @@ ko.components.register('comment-input-box', {
                             // TODO: it's not working.
                             scrollIntoView('#comment' + res['comment_ID']);
                         }
+
                         self.content('');
                         self.files([]);
-
                     }
                 })
                 .fail(function() {
@@ -276,8 +294,8 @@ ko.components.register('comment-input-box', {
             '</form>' +
 
             '<div class="container">' +
-                '<div class="row" data-bind="foreach: files">' +
-                    '<div class="col-4">' +
+                '<div class="edit-files row" data-bind="foreach: files">' +
+                    '<div class="col-4" data-bind="if: url">' +
                         '<div class="photo position-relative">' +
                             '<div class="delete-button position-absolute top right fs-lg" role="button"><i class="fa fa-trash" data-bind="click: $parent.deleteCommentFile"></i></div>' +
                             '<img class="w-100" src="" data-bind="attr: {src: url}">' +

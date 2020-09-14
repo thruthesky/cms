@@ -120,49 +120,40 @@ function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0)
 
 
 /**
- * Attach comment input box on comment create & update.
- *
- * Get comment input box `html` from Server through Ajax call, then attach it at the bottom of the comment.
+ * Prepare the Input Comment box for updating a comment
  *
  *
- * @param comment_ID
- * @param comment_parent
+ * @param comment
  * @returns {boolean}
  */
-function addCommentEditForm(comment_ID, comment_parent) {
+function addCommentEditForm(comment) {
+    if (!comment) return false;
+    $app.toggleCommentInputBox(comment['comment_ID']);
+    const cmt = $('#comment' + comment['comment_ID']);
+    cmt.find('.display').hide();
+    cmt.find('textarea').val(comment['comment_content']);
+    cmt.find('[name="comment_ID"]').val(comment['comment_ID']);
+    cmt.find('[name="comment_parent_ID"]').val(comment['comment_parent_ID']);
+    return false;
+}
 
-    console.log('addCommentEditForm');
 
-    /// Prevent not to add multiple input box.
-    const fomCommentParent = $("[data-form-comment-parent=" + comment_parent + "]").length;
-    if(fomCommentParent) return false;
-
-    /// Get comment input box from server.
-    const data = {route: 'comment.inputBox', comment_ID: comment_ID, comment_parent: comment_parent};
-    $.ajax( {
-        method: 'POST',
-        url: apiUrl,
-        data: data
-    } )
-        .done(function(re) {
-            console.log($('#comment' + comment_ID));
-            let cmt;
-            if ( comment_ID ) {
-                cmt = $('#comment' + comment_ID);
-                cmt.find('.display').after(re);
-                cmt.find('.display').hide();
-            } else {
-                cmt = $('#comment' + comment_parent);
-                cmt.find('.display').after(re);
-            }
-            const commentView = cmt.find('comment-input-box');
-            ko.applyBindings($app, commentView[0]);
-            cmt.find('comment-input-box textarea').focus();
-            return true;
-        })
-        .fail(function() {
-            alert( "Server error" );
-        });
+/**
+ * Prepare the Input Comment box for new comment
+ *
+ *
+ * @param comment
+ * @returns {boolean}
+ */
+function addCommentReplyForm(comment) {
+    if (!comment) return false;
+    $app.toggleCommentInputBox(comment['comment_ID']);
+    const cmt = $('#comment' + comment['comment_ID']);
+    cmt.find('textarea').val('');
+    cmt.find('[name="comment_post_ID"]').val(comment['comment_post_ID']);
+    cmt.find('[name="comment_parent_ID"]').val(comment['comment_ID']);
+    cmt.find('[name="comment_ID"]').val(null);
+    cmt.find('.edit-files').empty();
     return false;
 }
 
