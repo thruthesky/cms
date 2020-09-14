@@ -358,9 +358,12 @@ function ajaxFailure() {
     alert('Ajax and server failure');
 }
 
+function tr(code) {
+    return __i18n[code];
+}
 function alertBackendError(res) {
-    alert("ERROR\n\n" + res);
-    return undefined;
+    alert(tr('Error') + "\n\n" + res);
+    return false;
 }
 
 function alertError(res) {

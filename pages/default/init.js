@@ -313,7 +313,24 @@ ko.components.register('comment-input-box', {
 
 
 $app = new AppViewModel();
+
+$app.register = new (function() {
+    var self = this;
+    self.verificationSent = ko.observable(false);
+    self.verified = ko.observable(false);
+    self.expired =  ko.observable(false);
+    self.retry =  function() {
+        reInitReCaptcha();
+        self.verificationSent(false);
+        self.expired(false);
+    }
+});
+
+
 ko.applyBindings($app);
+
+
+
 
 
 

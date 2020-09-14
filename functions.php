@@ -21,6 +21,15 @@ if ( isset($_REQUEST['route'])) {
 
 require 'config.php';
 require 'php/defines.php';
+
+
+/**
+ * The content of the variable will be printed at the bottom of HTML page.
+ *
+ * @attention This is being used by i18n.php. So it must come before i18n.php
+ */
+$__insert_at_the_bottom = '';
+
 require 'etc/i18n.php';
 require 'php/library.php';
 require 'php/api-library.php';
@@ -90,6 +99,14 @@ function post() {
     return $apiPost;
 }
 
+/**
+ * @return ApiLibrary
+ */
+function lib() {
+    global $apiLib;
+    return $apiLib;
+}
+
 /// Javascript that will be added into head tag.
 $__head_script = '';
 
@@ -97,11 +114,6 @@ $__head_script = '';
  * List of included files.
  */
 $__included_files = [];
-
-/**
- * The content of the variable will be printed at the bottom of HTML page.
- */
-$__insert_at_the_bottom = '';
 
 
 
@@ -736,16 +748,22 @@ function generate_options($options, $selected=null) {
  * @note use it as child tag of form tag.
  * @param $options
  * @return string
+ *
+ * @example
+ *  <?=generate_select([
+        'label' => 'Select list theme',
+        'name' => 'post_list_theme',
+        'options' => generate_options(['a' => 'apple', 'b' => 'banana'], 'b'),
+    ])?>
+ * @end
  */
 function generate_select($options) {
 
     return <<<EOH
 
     <div class="form-group">
-        <label for="form-description">{$options['description']}</label>
-
         <div class="form-group">
-            <label for="{$options['name']}">{$options['default_select']}</label>
+            <label for="{$options['name']}">{$options['label']}</label>
             <select class="form-control" id="{$options['name']}" name="{$options['name']}">
                 {$options['options']}
             </select>
@@ -858,4 +876,18 @@ EOH;
 function insert_at_the_bottom($str) {
 	global $__insert_at_the_bottom;
 	$__insert_at_the_bottom .= $str;
+}
+
+
+function load_country_phone_number_code() {
+    $txt = file_get_contents(THEME_PATH . '/etc/country.code.json');
+    $json = json_decode($txt, true);
+    $codes = [];
+    foreach( $json as $c ) {
+        if ( strpos($c['name'], 'Korea, Democratic') !== false ) continue;
+        if ( strpos($c['name'], 'Korea, Republic') !== false) $c['name'] = 'Korea';
+        if ( strlen($c['name']) > 30 ) $c['name'] = substr($c['name'], 0, 30) . '...';
+        $codes[$c['Iso']] = $c['name'] . '(' . $c['Iso'] . ')';
+    }
+    return $codes;
 }

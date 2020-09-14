@@ -26,7 +26,6 @@ $__head_script .=<<<EOH
         const apiUrl = "$_apiUrl";
         const homePage = "/";
         const themePath = "$_theme_url";
-        const registerPage = "$_registerPage";
         const rootDomain = "$_root_domain";
         const __user = {
             nickname: "$_nickname",
