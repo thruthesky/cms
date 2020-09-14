@@ -54,7 +54,7 @@ function _url($no) {
                 if ($counter == $page_no) {
                     echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
                 }else{
-                    echo "<li class='page-item'<a class='page-link' href='". _url($counter) ."'>$counter</a></li>";
+                    echo "<li class='page-item'><a class='page-link' href='". _url($counter) ."'>$counter</a></li>";
                 }
             }
         }
@@ -68,6 +68,7 @@ function _url($no) {
                     if ($counter == $page_no) {
                         echo "<li class='page-item active'><a class='page-link'>$counter</a></li>";
                     }else{
+                        echo "<!----- ----->";
                         echo "<li  class='page-item'><a class='page-link' href='". _url($counter) ."'>$counter</a></li>";
                     }
                 }
@@ -82,7 +83,7 @@ function _url($no) {
         </li>
 
 
-            <li class='page-item'><a class='page-link' href='"<?=_url($total_no_of_pages)?>"'>Last &rsaquo;&rsaquo;</a></li>
+            <li class='page-item'><a class='page-link' href='<?=_url($total_no_of_pages)?>'>Last &rsaquo;&rsaquo;</a></li>
         <?php } ?>
     </ul>
 </nav>

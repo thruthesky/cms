@@ -7,7 +7,11 @@
 
 $forum = get_forum_setting();
 
-$posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[NO_OF_POSTS_PER_PAGE]]);
+$no_of_records_per_page = 20;
+$page_no = in('page_no', 1);
+if ( in('page_no', 1) < 1 ) $page_no = 1;
+
+$posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[NO_OF_POSTS_PER_PAGE], 'paged' => $page_no]);
 
 
 if ( isBackendError($posts) ) {
@@ -42,3 +46,12 @@ if ( isBackendError($posts) ) {
     }
     ?>
 </div>
+
+<?php
+
+include widget('pagination', [
+    'total_rows' => post()->count_cat_post($forum['cat_ID']),
+    'no_of_records_per_page' => $forum[NO_OF_POSTS_PER_PAGE],
+    'url' => '/?page=post.list&slug=' . $forum['slug'] . '&page_no={page_no}',
+    'page_no' => $page_no,
+]);
