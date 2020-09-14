@@ -2,6 +2,10 @@
  * @file index.js
  */
 /**
+ * @description This javascript is a fundamental library for the system.
+ *  - So, it should hold sharable codes only.
+ */
+/**
  * Definitions
  */
 const theme_path = '/wp-content/themes/cms';
@@ -11,8 +15,8 @@ const anonymousUserPhoto  = '/wp-content/themes/cms/img/anonymous/anonymous.jpg'
 
 /**
  * jQuery object defines
+ * TODO Remove this and use Knockoutjs
  */
-
 const $profile_photo = $('.user-update-profile-photo');
 
 
@@ -352,6 +356,29 @@ function apiUserLogin(form, success) {
             alert( "Server error" );
         });
 }
+
+/**
+ * Register or update
+ * @attention it checks if user has logged in or not.
+ * @param formData
+ * @param success
+ * @param error
+ */
+function apiUserRegister(formData, success, error) {
+    const method = loggedIn() ? 'update' : 'register';
+    formData['route'] = 'user.' + method;
+    $.ajax( {
+        method: 'GET',
+        url: apiUrl,
+        data: formData
+    }).done(function(res) {
+        if ( isBackendError(res) ) return error(res);
+        setLogin(res);
+        success(res);
+    })
+        .fail(ajaxFailure);
+}
+
 
 
 function ajaxFailure() {

@@ -18,6 +18,8 @@ if ( isset($_REQUEST['route'])) {
 
 
 
+require __DIR__.'/vendor/autoload.php';
+
 
 require 'config.php';
 require 'php/defines.php';
@@ -59,6 +61,8 @@ function wpd_do_stuff_on_404(){
 add_action( 'template_redirect', 'wpd_do_stuff_on_404' );
 
 
+
+
 /**
  * Theme activation hook
  *
@@ -66,16 +70,24 @@ add_action( 'template_redirect', 'wpd_do_stuff_on_404' );
  */
 add_action('after_switch_theme', 'cms_theme_activation');
 function cms_theme_activation () {
-    if ( get_option(INSTALL) == INSTALL_YES ) return;
-    $sql = file_get_contents(THEME_PATH . '/tmp/x_vote_log.schema.sql');
-    $qs = explode(';', $sql);
-    global $wpdb;
-    foreach( $qs as $q ) {
-        $q = trim($q);
-        if ( !$q) continue;
-        $wpdb->query($q);
-    }
-    update_option(INSTALL, INSTALL_YES, true);
+	global $wpdb;
+	$back = $wpdb->show_errors;
+	$wpdb->show_errors = false;
+	cms_insert_schema(THEME_PATH . '/tmp/x_vote_log.schema.sql');
+	cms_insert_schema(THEME_PATH . '/tmp/x_verified_mobile_numbers.schema.sql');
+	$wpdb->show_errors = $back;
+}
+
+function cms_insert_schema($path) {
+	$sql = file_get_contents($path);
+	$qs = explode(';', $sql);
+	global $wpdb;
+	foreach( $qs as $q ) {
+		$q = trim($q);
+		if ( !$q) continue;
+		$re = $wpdb->query($q);
+		if ( $re === false ) return;
+	}
 }
 
 
@@ -229,6 +241,7 @@ function page($page = null, $options = null) {
 
         if ( $page == null ) {
             if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?' ) {
+
                 $page = 'post.view';
             } else {
                 $page = in('page', 'home');

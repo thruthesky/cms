@@ -4,8 +4,8 @@ define('APP_VERSION', '0.1');
 define('PWA_APP_NAME', '소너브');
 define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 
-define('INSTALL', 'cms_install');
-define('INSTALL_YES', 'cms_install_yes');
+//define('INSTALL', 'cms_install');
+//define('INSTALL_YES', 'cms_install_yes');
 
 define('NO_OF_POSTS_PER_PAGE', 'no_of_posts_per_page');
 define('POST_LIST_THEME', 'post_list_theme');
@@ -109,7 +109,7 @@ define('USER_NOT_ALLOWED_METAS', [
     // 'mobile',
 //  'photoURL',
     // 'address',
-    'method',
+    'route',
     'session_id',
 ]);
 

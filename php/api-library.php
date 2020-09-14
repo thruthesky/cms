@@ -28,6 +28,7 @@ class ApiLibrary {
         'comment_count',
     ];
 
+
     public function __construct()
     {
     }
@@ -110,6 +111,7 @@ class ApiLibrary {
         }
         unset($data['user_pass']);
 
+
         return $data;
     }
 
@@ -180,6 +182,9 @@ class ApiLibrary {
     }
 
 
+
+
+
     /**
      * @param $data
      *  - $data can be a number or array, object. But not a string.
@@ -189,19 +194,23 @@ class ApiLibrary {
      */
     public function response($data)
     {
-        xlog($data);
         if ( is_string($data) ) {
             echo tr($data);
             exit;
         }
         try {
-            $re = json_encode($data);
+        	if ( API_CALL ) {
+        		$data['route'] = in('route');
+	        }
+        	$re = json_encode($data);
             if ($re) {
+
                 // JSON 으로 출
                 header('Content-Type: application/json; charset=utf-8');
 
-                // 강제로 Content-Length 를 추가하니, 서버에서 연결을 끊지 못하고 계속 물고 있다.
-                // 그래서 Client End 에서 timeout 에러가 발생한다.
+                // @attention 강제로 Content-Length 를 추가하니, 서버에서 연결을 끊지 못하고 계속 물고 있다.
+                //      그래서 Client End 에서 timeout 에러가 발생한다.
+	            //      Content-Length 를 추가하지 않는다.
 
                 // 내용 출력
                 echo $re;
@@ -253,12 +262,12 @@ class ApiLibrary {
         /// TODO mobile number must be unique.
 
         if (!isset($in['mobile']) || empty($in['mobile'])) return ERROR_MOBILE_EMPTY;
-        if ( !$this->mobile_already_verified($in['mobile']) ) {
-            return ERROR_MOBILE_NOT_VERIFIED;
+        if ( Config::$verifiedMobileOnly && !$this->mobile_already_verified($in['mobile']) ) {
+        	return ERROR_MOBILE_NOT_VERIFIED;
         }
 
 
-        if ( $this->mobile_already_exists($in['mobile']) ) {
+        if ( Config::$uniqueMobile && $this->mobile_already_exists($in['mobile']) ) {
             return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
         }
 
@@ -286,8 +295,8 @@ class ApiLibrary {
 
         $this->updateUserMeta($user_ID, $in);
 
-        $res = $this->userResponse($user_ID);
 
+        $res = $this->userResponse($user_ID);
         return $res;
     }
 
@@ -1037,18 +1046,9 @@ public function userSendPhoneVerificationCode($in)
     }
 
 
+	if ( !Config::$apikey ) return ERROR_APIKEY_NOT_EXISTS;
 
-    $keyfile = THEME_PATH . '/secrets/apikey.txt';
-    if ( ! file_exists($keyfile) ) {
-        return ERROR_APIKEY_NOT_EXISTS;
-    }
-    $key = file_get_contents($keyfile);
-
-
-
-    xlog($key);
-
-    $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=$key";
+    $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/sendVerificationCode?key=" . Config::$apikey;
 
     $fields = [
         'phoneNumber' => $in['mobile'],
@@ -1094,14 +1094,11 @@ public function userVerifyPhoneVerificationCode($in)
     if ( !in('code') ) return ERROR_CODE_EMPTY;
     if ( !in('mobile') ) return ERROR_MOBILE_EMPTY;
 
-    $keyfile = THEME_PATH . '/secrets/apikey.txt';
-    if ( ! file_exists($keyfile) ) {
-        return ERROR_APIKEY_NOT_EXISTS;
-    }
-    $key = file_get_contents($keyfile);
+    if ( !Config::$apikey ) return ERROR_APIKEY_NOT_EXISTS;
 
 
-    $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPhoneNumber?key=$key";
+
+    $urlAuth = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPhoneNumber?key=" . Config::$apikey;
 
     $fields = [
         'sessionInfo' => $in['sessionInfo'],

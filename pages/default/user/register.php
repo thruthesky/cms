@@ -3,7 +3,7 @@
  * @file register.php
  * @desc See readme
  */
-if ( !in('mobile') ) {
+if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
     return move(Config::$registerAuthPage);
 }
 ?>
@@ -44,6 +44,13 @@ if ( !in('mobile') ) {
                     <input type="text" class="form-control" name="nickname"  value="<?=login('nickname')?>" required>
                 </div>
 
+                <?php if ( Config::$verifyMobileOnRegistration === false ) { ?>
+                <div class="mt-3">
+                    <label class="form-label"><?=tr('mobile')?></label>
+                    <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>" required>
+                </div>
+                <?php } ?>
+
                 <hr>
                 <button class="btn btn-primary mt-3 w-100" type="submit" role="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
             </form>
@@ -61,12 +68,12 @@ if ( !in('mobile') ) {
         </div>
     </div>
 </div>
+
 <?php
 insert_at_the_bottom('
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
     <script src="'.THEME_URL.'/js/firebase-init.js"></script>
-    <script src="'.THEME_URL.'/js/firebase-social-login.js"></script>
 ');
 ?>
 

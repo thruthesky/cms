@@ -19,6 +19,7 @@ $ git clone https://github.com/thruthesky/cms
 ```
 
 * Activate the `cms` theme on admin panel.
+  * When the `cms` theme is enabled, it creates tables that are needed.
 
 * Enable `permalink` to `post name`.
 
@@ -26,10 +27,17 @@ $ git clone https://github.com/thruthesky/cms
 
 * To enable Firebase Auth, Phone Auth, and Firebase functionality
 
-  * Add `apikey.txt`, `service-account-key.json` in `secrets` folder.
+  * Add `apikey`, `service-account-key.json` in `Config` class.
   
-    * `apikey.txt` must hold the apikey of the GCP project
-    * `service-account-key.json` must hold the `service-account` json of the firebase project.
+    * `Config::$apikey` must hold the apikey of the GCP project
+    * `Config::$serviceAccount` must hold the `service-account` json of the firebase project.
+    * It needs to be inside php variable for security reason.
+
+
+### Composer
+
+* All composer modules are included into git source tree.
+
 
 ## Tests
 
@@ -134,17 +142,63 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
   * Ex) `https://wordpress.philgo.com/wp-content/themes/cms/api.php?route=app.version`
   * Note: The API address must be replaced by your own Wordpress site address.
 
-* Get version of API
+### Commons of API Protocol
+
+* If a response is a JSON string, it is a response of success. Otherwise it is an error response.
+
+
+
+### Get version of API
 
 ```html
 route=app.version
 ```
 
-* Registration
+### Registration
+
+* Request through URL
 
 ```html
 route=user.register&user_email=auser1598245597@test.com&user_pass=PW.test@,*&nickname=MyNick&meta_a=Apple
 ```
+
+* Request through Ajax
+```js
+setLogout(); // logout first before register.
+apiUserRegister({
+    user_email: 'user' + (new Date).getTime() + '@gmail.com',
+    user_pass: '12345a,*',
+    mobile: '+82' + (new Date).getTime(),
+}, function(res) {
+    console.log('success:', res);
+}, function(errorCode) {
+    console.log('error:', errorCode);
+});
+```
+
+
+$ Result
+
+```json
+{
+    ID: "3",
+    first_name: "",
+    fullname: "User Full Name",
+    last_name: "",
+    mobile: "+821012341234",
+    nickname: "User Nickname",
+    route: "user.register",
+    session_id: "3_66a092c3d9c050cdf06840bcc40650ea",
+    user_email: "user388@gmail.com",
+    user_login: "user388@gmail.com",
+    user_registered: "2020-09-14 05:13:24",
+    route: "user.register"
+}
+```
+
+
+
+
 
 * Login
 
