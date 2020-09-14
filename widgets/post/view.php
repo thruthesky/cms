@@ -5,6 +5,7 @@
  * @widget-name Default post view
  */
 $forum = get_forum_setting();
+
 $_post = get_post();
 $post = post()->postGet([
         'ID' => $_post->ID
