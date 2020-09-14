@@ -84,7 +84,10 @@ class ApiLibrary {
      */
     public function userResponse($user_ID)
     {
-        if (strpos($user_ID, '_') !== false) {
+
+    	if ( empty($user_ID) ) return null;
+
+	    if (strpos($user_ID, '_') !== false) {
             $arr = explode('_', $user_ID);
             $user_ID = $arr[0];
         }
@@ -103,7 +106,6 @@ class ApiLibrary {
         if (admin()) {
             $data['admin'] = true;
         }
-
         if ( $user->photo_url ) {
             $data['photo_url'] = $user->photo_url;
             $photo = $this->get_file_from_url($user->photo_url);
@@ -111,6 +113,30 @@ class ApiLibrary {
         }
         unset($data['user_pass']);
 
+        if ( Config::$firebaseEnableCustomLogin ) {
+        	if ( isset($data[FIREBASE_UID]) && $data[FIREBASE_UID] ) {
+        		// User exists
+		        xlog('Firebase account exists.');
+	        }
+        	else if ( Config::$firebaseCreateUserIfNotExist ) { // User not exist but create one?
+		        xlog("user_ID: $user_ID");
+		        if ( $firebase_uid = firebaseUserExists($user_ID) ) {
+		        	xlog('$firebaseCreateUserIfNotExist => Firebase account exists');
+		        	$this->updateField($user_ID, FIREBASE_UID, $firebase_uid);
+		        } else {
+			        try {
+				        $data[FIREBASE_UID] = firebaseCreateUser($user_ID);
+				        xlog('userResponse => $firebaseEnableCustomLogin => $firebaseCreateUserIfNotExist. User created.');
+				        xlog($data[FIREBASE_UID]);
+			        } catch(Exception $exception) {
+				        xlog('Failed to create firebase account');
+			        }
+		        }
+	        }
+        	if ( isset($data[FIREBASE_UID]) ) {
+		        $data[FIREBASE_CUSTOM_LOGIN_TOKEN] = firebaseCreateCustomLogin($data[FIREBASE_UID]);
+	        }
+        }
 
         return $data;
     }
@@ -288,6 +314,7 @@ class ApiLibrary {
         $user_ID = wp_insert_user($userdata);
 
 
+
         if (is_wp_error($user_ID)) {
             return ERROR_WORDPRESS_ERROR;
         }
@@ -296,7 +323,12 @@ class ApiLibrary {
         $this->updateUserMeta($user_ID, $in);
 
 
-        $res = $this->userResponse($user_ID);
+	    if ( Config::$firebaseSyncUser ) {
+		    $uid = firebaseCreateUser($user_ID);
+	    }
+
+	    $res = $this->userResponse($user_ID);
+
         return $res;
     }
 

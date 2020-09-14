@@ -37,7 +37,7 @@ $user = $apiLib->userResponse(sessionID());
 
             <div class="d-flex justify-content-between">
                 <a class="btn btn-secondary" data-button="profile-update" href="/?page=user.update">Update Profile</a>
-                <a class="btn btn-secondary" href="#" onclick="setLogout(); move('/')">Logout</a>
+                <a class="btn btn-secondary" href="/?page=user.logout">Logout</a>
                 <a class="btn btn-danger" href="/?page=user.resign">Resign</a>
             </div>
         </div>

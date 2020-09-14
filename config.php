@@ -32,15 +32,19 @@ class Config {
     ];
 
 	/**
-	 * Create accounts on both Wordpress and Firebase.
-	 *
-	 * When a user registers to Wordpress directly, it will create an account on firebase and save `firebase_uid`
-	 *  on the user meta.
-	 * If a user has already created an account by firebase social login,
-	 *  it will pass 'firebase_uid' to backend on registration to Wordpress and save it to user meta.
+	 * @see readme
 	 * @var bool
 	 */
-    static public $firebaseSyncUser = true;
+	static public $firebaseSyncUser = true;
+	static public $firebaseEnableCustomLogin = true;
+
+
+	/**
+	 * Create user in `userResponse()` if the user does not exist on firebase.
+	 * @var bool
+	 */
+	static public $firebaseCreateUserIfNotExist = true;
+
 }
 
 

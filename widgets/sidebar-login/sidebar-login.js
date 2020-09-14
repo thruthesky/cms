@@ -31,24 +31,3 @@ function hideLoginForm() {
         });
         return false;
     }
-
-//
-// function onLoginFormSubmit(form) {
-//     $.ajax( loginUrl(form) )
-//         .done(function(re) {
-//             if ( isBackendError(re) ) {
-//                 alert(re);
-//             }
-//             else {
-//                 console.log('re', re);
-//                 setLogin(re);
-//                 console.log(getCookie('session_id'));
-//                 hideLoginForm();
-//                 showLoginInformation();
-//             }
-//         })
-//         .fail(function() {
-//             alert( "Server error" );
-//         });
-//     return false;
-// }

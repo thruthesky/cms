@@ -4,6 +4,10 @@ define('APP_VERSION', '0.1');
 define('PWA_APP_NAME', '소너브');
 define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 
+
+define('FIREBASE_UID', 'firebase_uid');
+define('FIREBASE_CUSTOM_LOGIN_TOKEN', 'firebase_custom_login_token');
+
 //define('INSTALL', 'cms_install');
 //define('INSTALL_YES', 'cms_install_yes');
 

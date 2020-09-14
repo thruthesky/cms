@@ -10,7 +10,7 @@
         <p class="card-text">Blog description. In the long history of the world, only a few generation have been granted the role of </p>
     </div>
     <div class="card-footer bg-transparent border-success">
-        <button type="button" data-button="logout" onclick="setLogout(); move(homePage);">Logout</button>
+        <a class="btn btn-secondary" href="/?page=user.logout">Logout</a>
         <a class="btn btn-secondary" data-button="profile" href="/?page=user.profile">Profile</a>
     </div>
 </div>

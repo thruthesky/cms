@@ -72,13 +72,15 @@ function setLogin(re) {
     // setCookie('photo_url', re['photo_url'], { expires: 365, domain: rootDomain });
 }
 function setLogout() {
-    Cookies.remove('session_id');
-    Cookies.remove('session_id', { domain: rootDomain });
-
+    move('/?page=user.logout');
     // Cookies.remove('nickname');
     // Cookies.remove('photo_url');
     // Cookies.remove('nickname', { domain: rootDomain });
     // Cookies.remove('photo_url', { domain: rootDomain });
+}
+function setCookieLogout() {
+    Cookies.remove('session_id');
+    Cookies.remove('session_id', { domain: rootDomain });
 }
 
 /**
@@ -343,13 +345,20 @@ function loginUrl(form) {
 
 function apiUserLogin(form, success) {
     $.ajax( loginUrl(form) )
-        .done(function(re) {
-            if ( isBackendError(re) ) {
-                alert(re);
+        .done(function(res) {
+            if ( isBackendError(res) ) {
+                alert(res);
             }
             else {
-                setLogin(re);
-                success(re);
+                setLogin(res);
+                firebaseSignInWithCustomToken(res['firebase_custom_login_token'], function(user) {
+                    console.log('apiUserLogin success');
+                    success(res);
+                }, function(error) {
+                    alertError(error);
+                    hideLoader();
+                });
+
             }
         })
         .fail(function() {
@@ -378,6 +387,8 @@ function apiUserRegister(formData, success, error) {
     })
         .fail(ajaxFailure);
 }
+
+
 
 
 

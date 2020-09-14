@@ -5,6 +5,12 @@
 if ( ! isLocalhost ) initServiceWorker();
 
 
+if ( loggedIn() ) {
+    console.log('User logged in');
+} else {
+    console.log('User logged out');
+
+}
 $profile_photo
     .html(getUploadedFileHtml({
         ID: login('photo_ID'),

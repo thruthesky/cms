@@ -42,6 +42,7 @@ require 'php/api-post.php';
 require 'php/api-comment.php';
 require 'php/api-file.php';
 require 'php/api-category.php';
+require 'php/firebase.php';
 
 
 
@@ -133,6 +134,7 @@ $__included_files = [];
  * Global user's API profile information.
  * This is the login user's profile information that should be used for profile update.
  */
+
 $__user = $apiLib->userResponse(sessionID());
 
 /**

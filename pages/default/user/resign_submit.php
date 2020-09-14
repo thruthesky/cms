@@ -11,7 +11,7 @@ if ($re['session_id'] == sessionId()) {
     <script>
 
         $$(function() {
-            setLogout();
+            setCookieLogout();
             move('<?=Config::$resignResultPage?>');
         });
     </script>

@@ -171,6 +171,10 @@ apiUserRegister({
     mobile: '+82' + (new Date).getTime(),
 }, function(res) {
     console.log('success:', res);
+    /// Login into firebase
+    if ( res['firebase_custom_login_token'] ) {
+        firebaseSignInWithCustomToken(res['firebase_custom_login_token']);
+    }
 }, function(errorCode) {
     console.log('error:', errorCode);
 });
@@ -179,7 +183,7 @@ apiUserRegister({
 
 $ Result
 
-```json
+```text
 {
     ID: "3",
     first_name: "",
@@ -192,10 +196,13 @@ $ Result
     user_email: "user388@gmail.com",
     user_login: "user388@gmail.com",
     user_registered: "2020-09-14 05:13:24",
-    route: "user.register"
+    route: "user.register",
+    firebase_uid: "...",
+    firebase_custom_login: "..."
 }
 ```
 
+If `Config::$firebaseEnableCustomLogin` is set to true, firebase_uid and firebaes_custom_login will be included. 
 
 
 
@@ -422,7 +429,7 @@ Array
             And you need Auth uid in that case.
 
 
-### Registration
+## Registration
 
 * User must verify their phone number.
 * User must have accounts on both Firebase & Wordpress.
@@ -433,7 +440,7 @@ Array
     * Kakaotalk
     * Naver
 
-#### Registration Logic
+### Registration Concept
 
 * If a user logs in with Social account that is supported by Firebase like Google, Facebook, or Apple,
     then, the app needs to
@@ -468,6 +475,16 @@ Array
   
   * Step: Phone Auth -> Wordpress -> Firebase
   
+### Registration Logic
+
+* if `Config::$firebaseSyncUser` is set to true,
+  * Wordpress creates an account on Firebase
+    * And saves the firebase UID on the user meta.
+* Whenever user has `firebase_uid` in his meta and `Config::$firebaseEnableCustomLogin` is set to true,
+  * Wordpress generates a custom token and returns it to user.
+  * Then, the user can login with javascript.
+
+
 ## Locale, I18N
 
 * The i18n translation file is etc/i18n.php.
@@ -499,3 +516,8 @@ Array
     <div class="ml-3">Please wait...</div>
 </div>
 ```
+
+
+## TEST Scripts
+
+* `scripts` folder has test codes.
