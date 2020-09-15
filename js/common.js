@@ -521,7 +521,7 @@ function CommentBox () {
                 '               <img class="w-100" src="">' +
                 '           </div>' +
                 '       </div><!--/.col-->';
-            
+
             $(self.el).find('.files').append(template);
 
         }
