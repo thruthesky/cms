@@ -196,20 +196,23 @@ function getUploadedFileHtml(file, options = {}) {
 
 
 /**
+ * File upload for both post and comment.
+ *
  * onChangeFile it save the data in to server and return file information
  *
  *
  * @param $box `this` as input type=file
  * @param options
- *      'progress' - progress-bar parent element
+ *      'progress' - progress-bar jQuery object.
  *      'success' -  success callback
- *      'append' - where the result will be appended.
- *      'html' - where the result will be replace.
+ *      'append' - jQuery object where the result will be appended.
+ *      'html' - jQuery object where the result will be replace.
  *
  */
 function onChangeFile($box, options={}) {
 
     console.log('options', options);
+
     let formData = new FormData();
 
     formData.append('session_id', getUserSessionId());
@@ -219,6 +222,7 @@ function onChangeFile($box, options={}) {
     const $progress = options['progress'];
     if ($progress) { $progress.show(); }
 
+    console.log('formData:', formData);
     $.ajax({
         url: apiUrl,
         data: formData,
@@ -258,6 +262,8 @@ function onChangeFile($box, options={}) {
         }
     });
 }
+
+
 
 
 /**
@@ -460,10 +466,13 @@ function insert_modal() {
  */
 function CommentBox () {
     const self = this;
+    self.el = null;
 
 
-    self.append = function(el, options) {
-        $(el).append(self.template(options));
+    self.append = function(el, options = []) {
+        self.el = el;
+        $(self.el).append(self.template(options));
+        self.attachFiles([]);
     }
 
 
@@ -493,14 +502,33 @@ function CommentBox () {
             })
             .fail(ajaxFailure);
 
-
-
         return false;
     }
 
+    self.attachFiles = function(files) {
+        console.log('files: ', files);
+        for( var f of files ) {
+
+            var template =
+                '       <div class="col-4">' +
+                '           <div class="photo position-relative">' +
+                '               <div class="delete-button position-absolute top right fs-lg" role="button"><i class="fa fa-trash"></i></div>' +
+                '               <img class="w-100" src="">' +
+                '           </div>' +
+                '       </div><!--/.col-->';
+
+            $(self.el).find('.files').append(template);
+
+
+        }
+
+    }
     self.template = function(options) {
+        // console.log('options', options);
+
+        const id = 'input-box' + (typeof options.comment_parent_ID === 'undefined' ? '0' : options.comment_parent_ID);
         return '' +
-        '<div class="input-box">' +
+        '<div class="input-box" id="'+id+'">' +
         '<form onsubmit="return commentBox.submit(this);">' +
         '<input type="hidden" name="route" value="comment.edit">' +
         '<input type="hidden" name="comment_post_ID" value="'+options['comment_post_ID']+'">' +
@@ -508,35 +536,27 @@ function CommentBox () {
         '<input type="hidden" name="comment_ID" value="">' +
         '<div class="form-group row no-gutters">' +
         '<div class="upload-button position-relative overflow-hidden">' +
-        '<input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file">' +
-        '<i class="fa fa-camera fs-xl cursor p-2"></i>' +
+        '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange="onChangeFile(this, {append: $(\'#'+id+' .files\'), extraClasses: \'col-4 col-sm-3\'})">' +
+        '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
         '</div><!--/.uploda-button-->' +
         '<div class="col mr-3">' +
         '<textarea class="form-control" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"></textarea>' +
         '</div>' +
         '<div class="send-button col-1">' +
         '<button type="submit" class="btn btn-outline-dark">' +
-        '<i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
+        '   <i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
         '</button>' +
         '</div><!--/.send-button-->' +
         '</div><!--/.form-group-->' +
         '</form>' +
 
         '<div class="container">' +
-        '<div class="edit-files row" data-bind="foreach: files">' +
-        '<div class="col-4" data-bind="if: url">' +
-        '<div class="photo position-relative">' +
-        '<div class="delete-button position-absolute top right fs-lg" role="button"><i class="fa fa-trash" data-bind="click: $parent.deleteCommentFile"></i></div>' +
-        '<img class="w-100" src="">' +
-        '</div>' +
-        '</div>' +
-        '</div><!--/.row-->' +
+        '   <div class="row files">' +
+        '   </div><!--/.row-->' +
         '</div><!--/.container-->' +
-        '<!--ko if: progressLoader-->' +
         '<div class="progress mb-3">' +
-        '<div class="progress-bar progress-bar-striped" role="progressbar" data-bind="style: { width: progressBar}"   aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>' +
+        '   <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>' +
         '</div><!--/.progress-->' +
-        '<!--/ko-->' +
         '</div><!--/.input-box-->';
     }
 }
