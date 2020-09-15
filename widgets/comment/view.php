@@ -30,7 +30,9 @@ $view = str_replace('{comment_ID}', $comment['comment_ID'], $view);
 $view = str_replace('{comment_post_ID}', $comment['comment_post_ID'], $view);
 $view = str_replace('{comment_parent}', $comment['comment_parent'], $view);
 $view = str_replace('{depth}', $comment['depth']??1, $view);
-$view = str_replace('{author_photo_url}', $comment['author_photo_url'], $view);
+
+$view = str_replace('{author_photo_url}', getCommentProfilePhotoUrl($comment), $view);
+
 $view = str_replace('{comment_author}', $comment['comment_author'], $view);
 $view = str_replace('{short_date_time}', $comment['short_date_time'], $view);
 $view = str_replace('{comment_content}', $comment['comment_content'], $view);
