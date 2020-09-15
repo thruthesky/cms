@@ -39,7 +39,7 @@ if ( $post ) {
 <div id="comment-input-box-under-post"></div>
 <script>
     $$(function() {
-        commentBox.append('#comment-input-box-under-post', {
+        commentList.appendCommentBox('#comment-input-box-under-post', {
             comment_post_ID: '<?=$comment_post_ID?>',
         });
     })

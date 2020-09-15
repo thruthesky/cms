@@ -519,32 +519,33 @@ function insert_modal() {
     $('body').append(html);
 }
 
+
+
+
+
 /**
- * Comment Input Box for reply(create) and update.
+ * @todo Merge CommentBox with CommentList
  * @constructor
  */
-function CommentBox () {
+function CommentList() {
     const self = this;
-    let depth = 1;
+    self.mount = null;
+    self.comments = [];
+    self.commentViewTemplate = null;
+    self.init = function(options) {
+        self.mount = options.mount;
+        self.comments = options.comments;
+        self.commentViewTemplate = options.template;
+        console.log('CommentList::init', self.comments);
 
-    self.onClickReply = function(comment_ID, comment_post_ID, depth) {
-        self.depth = parseInt(depth);
-        const data = {
-            comment_parent: comment_ID,
-            comment_post_ID: comment_post_ID,
-        };
-        if($("#" + self.id(data)).length) return false;
-        self.append("#comment" + comment_ID + " .comment-input-box", data)
+        // self.render(); // test
     }
-
-
-    self.append = function(el, comment = []) {
-        console.log('append:el:', el);
-        console.log('append:comment:', comment);
-        $(el).append(self.template(comment));
-        // self.attachFiles([]);
+    self.render = function() {
+        $(self.mount).empty();
+        for(let i = 0; i < self.comments.length; i ++ ) {
+            $(self.mount).append(self.renderTemplate(self.comments[i]));
+        }
     }
-
 
 
 
@@ -574,7 +575,8 @@ function CommentBox () {
             .done(function(res) {
                 // console.log(res);
                 if ( isBackendError(res) ) return alertBackendError(res);
-                res['depth'] = self.depth + 1;
+                /// TODO searching dom is not a good way.
+                res['depth'] = $('#comment' + data['comment_parent']).find('.display').data('depth') + 1;
 
                 console.log(res);
                 commentList.insert(res);
@@ -584,22 +586,6 @@ function CommentBox () {
 
         return false;
     }
-
-    // self.attachFiles = function(files) {
-    //     console.log('files: ', files);
-    //     for( var f of files ) {
-    //
-    //         var template =
-    //             '       <div class="col-4">' +
-    //             '           <div class="photo position-relative">' +
-    //             '               <div class="delete-button position-absolute top right fs-lg" role="button"><i class="fa fa-trash"></i></div>' +
-    //             '               <img class="w-100" src="">' +
-    //             '           </div>' +
-    //             '       </div><!--/.col-->';
-    //
-    //         $(self.el).find('.files').append(template);
-    //     }
-    // }
 
     self.onChangeFile = function($box, options) {
         console.log('options: ', options);
@@ -616,67 +602,45 @@ function CommentBox () {
     self.id = function(comment) {
         return 'input-box' + (typeof comment.comment_parent === 'undefined' ? '0' : comment.comment_parent);
     }
-    self.template = function(comment) {
+    self.commentBoxTemplate = function(comment) {
         console.log('comment:', comment);
 
         const temp = '' +
-        '<div class="input-box" id="'+self.id(comment)+'">' +
-        '<form onsubmit="return commentBox.submit(this);">' +
-        '<input type="hidden" name="route" value="comment.edit">' +
-        '<input type="hidden" name="comment_post_ID" value="'+comment['comment_post_ID']+'">' +
-        '<input type="hidden" name="comment_parent" value="'+comment['comment_parent']+'">' +
-        '<input type="hidden" name="comment_ID" value="'+comment['comment_ID']+'">' +
-        '<div class="form-group row no-gutters">' +
-        '<div class="upload-button position-relative overflow-hidden">' +
-        '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentBox.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
-        '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
-        '</div><!--/.uploda-button-->' +
-        '<div class="col mr-3">' +
-        '<textarea class="form-control" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"></textarea>' +
-        '</div>' +
-        '<div class="send-button col-1">' +
-        '<button type="submit" class="btn btn-outline-dark">' +
-        '   <i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
-        '</button>' +
-        '</div><!--/.send-button-->' +
-        '</div><!--/.form-group-->' +
-        '</form>' +
+            '<div class="input-box" id="'+self.id(comment)+'">' +
+            '<form onsubmit="return commentList.submit(this);">' +
+            '<input type="hidden" name="route" value="comment.edit">' +
+            '<input type="hidden" name="comment_post_ID" value="'+comment['comment_post_ID']+'">' +
+            '<input type="hidden" name="comment_parent" value="'+comment['comment_parent']+'">' +
+            '<input type="hidden" name="comment_ID" value="'+comment['comment_ID']+'">' +
+            '<div class="form-group row no-gutters">' +
+            '<div class="upload-button position-relative overflow-hidden">' +
+            '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentBox.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
+            '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
+            '</div><!--/.uploda-button-->' +
+            '<div class="col mr-3">' +
+            '<textarea class="form-control" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"></textarea>' +
+            '</div>' +
+            '<div class="send-button col-1">' +
+            '<button type="submit" class="btn btn-outline-dark">' +
+            '   <i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
+            '</button>' +
+            '</div><!--/.send-button-->' +
+            '</div><!--/.form-group-->' +
+            '</form>' +
 
-        '<div class="container">' +
-        '   <div class="row files">' +
-        '   </div><!--/.row-->' +
-        '</div><!--/.container-->' +
-        '<div class="progress mb-3" style="display: none">' +
-        '   <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>' +
-        '</div><!--/.progress-->' +
-        '</div><!--/.input-box-->';
+            '<div class="container">' +
+            '   <div class="row files">' +
+            '   </div><!--/.row-->' +
+            '</div><!--/.container-->' +
+            '<div class="progress mb-3" style="display: none">' +
+            '   <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>' +
+            '</div><!--/.progress-->' +
+            '</div><!--/.input-box-->';
 
         // console.log('temp: ', temp);
         return temp;
     }
-}
 
-const commentBox = new CommentBox();
-
-function CommentList() {
-    const self = this;
-    self.mount = null;
-    self.comments = [];
-    self.template = null;
-    self.init = function(options) {
-        self.mount = options.mount;
-        self.comments = options.comments;
-        self.template = options.template;
-        console.log('CommentList::init', self.comments);
-
-        // self.render(); // test
-    }
-    self.render = function() {
-        $(self.mount).empty();
-        for(let i = 0; i < self.comments.length; i ++ ) {
-            $(self.mount).append(self.renderTemplate(self.comments[i]));
-        }
-    }
     self.insert = function(comment) {
         console.log(comment);
         if ( comment['comment_parent'] === '0' ) {
@@ -691,12 +655,33 @@ function CommentList() {
         }
         self.render();
     }
-    self.appendCommentBox = function(comment_ID) {
 
+
+
+    self.appendCommentBox = function(el, comment = [], mode) {
+        if ( mode === 'reply' ) {
+            comment = {
+                comment_parent: comment.comment_ID,
+                comment_post_ID: comment.comment_post_ID,
+            };
+        }
+        $(el).append(self.commentBoxTemplate(comment));
+    }
+
+
+    self.getComment = function(comment_ID) {
         /// TODO Performance improvement. This is going to loop the whole array. Make it stop after finding the element.
         const i = self.comments.map(function(e) { return e.comment_ID; }).indexOf(comment_ID + '');
-        const comment = self.comments[i];
-        commentBox.append('#comment' + comment_ID, comment);
+        return self.comments[i];
+    }
+
+    self.appendCommentBoxAt = function(comment_ID) {
+        const comment = self.getComment(comment_ID);
+        self.appendCommentBox('#comment' + comment_ID, comment, 'reply');
+    }
+    self.editComment = function(comment_ID) {
+        const comment = self.getComment(comment_ID);
+        console.log(comment);
     }
     self.replaceTag = function(tag, value, t) {
 
@@ -705,7 +690,7 @@ function CommentList() {
         return t.replace(r, value);
     }
     self.renderTemplate = function(comment) {
-        let t = self.template;
+        let t = self.commentViewTemplate;
 
 
 

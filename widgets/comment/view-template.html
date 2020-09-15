@@ -8,6 +8,7 @@
                     </div>
                     <div class="col">
                         <div>
+                            <span>No. {comment_ID}</span>
                             <span>{comment_author}</span>
                             <span>Date: {short_date_time}</span>
                         </div>
@@ -26,8 +27,8 @@
                 <div>
                     <button id="like{comment_ID}" class="btn btn-primary btn-sm mr-3" onclick="onClickLike({comment_ID}, 'like', 'comment')">{like} {like_text}</button>
                     <button id="dislike{comment_ID}" class="btn btn-primary btn-sm mr-3" onclick="onClickLike({comment_ID}, 'dislike', 'comment')">{dislike} {dislike_text}</button>
-                    <button class="btn btn-primary btn-sm mr-3" onclick='commentBox.onClickReply("{comment_ID}", "{comment_post_ID}", "{depth}")'>Reply</button>
-                    <button class="{other}d-none btn btn-primary btn-sm mr-3" onclick='addCommentEditForm({comment_ID})'>Edit</button>
+                    <button class="btn btn-primary btn-sm mr-3" onclick='commentList.appendCommentBoxAt({comment_ID})'>Reply</button>
+                    <button class="{other}d-none btn btn-primary btn-sm mr-3" onclick='commentList.editComment({comment_ID})'>Edit</button>
                     <button class="{other}d-none btn btn-primary btn-sm mr-3" onclick="onCommentDelete({comment_ID}, {comment_post_ID})">Delete</button>
                 </div>
 
