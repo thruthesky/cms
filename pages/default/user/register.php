@@ -68,6 +68,7 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
                     <input type="text" class="form-control" name="nickname"  value="<?=login('nickname')?>">
                 </div>
 
+                
                 <?php if ( Config::$verifyMobileOnRegistration === false ) { ?>
                 <div class="mt-3">
                     <label class="form-label"><?=tr('mobile')?></label>
