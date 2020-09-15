@@ -523,12 +523,23 @@ function CommentBox () {
         }
 
     }
+
+    self.onChangeFile = function($box, options) {
+        console.log('options: ', options);
+
+        /// Call global `onChangeFile()` routine.
+        onChangeFile($box, {append: $('#'+self.id(options)+' .files'), extraClasses: 'col-4 col-sm-3'});
+
+    }
+    self.id = function(options) {
+        return 'input-box' + (typeof options.comment_parent_ID === 'undefined' ? '0' : options.comment_parent_ID);
+    }
     self.template = function(options) {
         // console.log('options', options);
 
-        const id = 'input-box' + (typeof options.comment_parent_ID === 'undefined' ? '0' : options.comment_parent_ID);
+
         return '' +
-        '<div class="input-box" id="'+id+'">' +
+        '<div class="input-box" id="'+self.id(options)+'">' +
         '<form onsubmit="return commentBox.submit(this);">' +
         '<input type="hidden" name="route" value="comment.edit">' +
         '<input type="hidden" name="comment_post_ID" value="'+options['comment_post_ID']+'">' +
@@ -536,7 +547,7 @@ function CommentBox () {
         '<input type="hidden" name="comment_ID" value="">' +
         '<div class="form-group row no-gutters">' +
         '<div class="upload-button position-relative overflow-hidden">' +
-        '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange="onChangeFile(this, {append: $(\'#'+id+' .files\'), extraClasses: \'col-4 col-sm-3\'})">' +
+        '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentBox.onChangeFile(this, '+JSON.stringify(options)+')\'>' +
         '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
         '</div><!--/.uploda-button-->' +
         '<div class="col mr-3">' +
