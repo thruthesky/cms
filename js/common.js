@@ -197,7 +197,7 @@ function getUploadedFileHtml(file, options = {}) {
 
     let html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative d-inline-block "+options['extraClasses']+"'>";
         html += "<img class='w-100' src='"+ file.thumbnail_url +"'>";
-        if ( options['deleteButton'] ) html += '<i role="button" class="fa fa-trash position-absolute top right" onclick=\'onClickDeleteFile(' + file['ID'] + ','+JSON.stringify(options["parent"])+')\'></i>';
+        if ( options['deleteButton'] ) html += '<i role="button" class="fa fa-trash position-absolute top right" onclick=\'onClickDeleteFile(' + file['ID'] + ')\'></i>';
     html += "</div>";
     return html;
 }
@@ -310,8 +310,7 @@ function progress(progress,e){
     }
 }
 
-function onClickDeleteFile(ID, parent) {
-    console.log('onClickDeleteFile:', parent);
+function onClickDeleteFile(ID) {
     let data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
     $.ajax( {
         method: 'GET',
@@ -320,12 +319,10 @@ function onClickDeleteFile(ID, parent) {
     } )
         .done(function(re) {
             if (re['ID'] === ID) {
-                $(parent + ' .files').find('#file'+ ID).remove();
+                $('#file' + ID).remove();
             }
         })
-        .fail(function() {
-            alert( "Server error" );
-        });
+        .fail(ajaxFailure);
 }
 
 
@@ -380,9 +377,7 @@ function apiUserLogin(form, success) {
                 });
             }
         })
-        .fail(function() {
-            alert( "Server error" );
-        });
+        .fail(ajaxFailure);
 }
 
 /**
@@ -571,7 +566,6 @@ function CommentBox () {
 
         /// Call global `onChangeFile()` routine.
         onChangeFile($box, {
-            parent: self.el,
             append: $('#'+self.id(options)+' .files'),
             extraClasses: 'col-4 col-sm-3',
             progress: $('#'+self.id(options)+' .progress'),
