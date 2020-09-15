@@ -3,8 +3,8 @@
     <div class="card-header bg-transparent border-success">Blog title</div>
     <div class="card-body text-success">
 
-<!--        <img class="userPhoto circle wh120x120" src="" alt="user photo">-->
-        <a class="user-update-profile-photo profile-photo-size circle" href="/?page=user.profile"></a>
+
+        <a class="user-profile-photo profile-photo-size circle" href="/?page=user.profile"></a>
 
         <h5 class="card-title nickname"></h5>
         <p class="card-text">Blog description. In the long history of the world, only a few generation have been granted the role of </p>

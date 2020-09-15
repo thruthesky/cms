@@ -11,6 +11,11 @@
   height: 40px !important;
 }
 
+.icon-md-size {
+  width: 58px !important;
+  height: 58px !important;
+}
+
 .profile-photo-size {
   width: 120px !important;
   height: 120px !important;
@@ -52,7 +57,7 @@
   right: 0 !important;
 }
 
-.circle {
+.circle > div {
   display: block;
   overflow: hidden;
   border-radius: 50%;

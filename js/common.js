@@ -17,7 +17,7 @@ const anonymousUserPhoto  = '/wp-content/themes/cms/img/anonymous/anonymous.jpg'
  * jQuery object defines
  * TODO Remove this and use Knockoutjs
  */
-const $profile_photo = $('.user-update-profile-photo');
+const $profile_photo = $('.user-profile-photo');
 
 
 
@@ -40,8 +40,7 @@ function openHome() {
 
 
 function login(name) {
-    if ( typeof __user[name] !== 'undefined' ) return __user[name];
-    else return undefined;
+    return localStorage.getItem(name);
 }
 
 function myProfilePhotoUrl() {
@@ -82,19 +81,15 @@ function setLogin(re) {
     setCookie('session_id', re['session_id'], { expires: 365 });
     setCookie('session_id', re['session_id'], { expires: 365, domain: rootDomain });
 
-    // setCookie('nickname', re['nickname'], { expires: 365 });
-    // setCookie('photo_url', re['photo_url'], { expires: 365 });
-    // setCookie('nickname', re['nickname'], { expires: 365, domain: rootDomain });
-    // setCookie('photo_url', re['photo_url'], { expires: 365, domain: rootDomain });
+    localStorage.setItem('nickname', re['nickname']);
+    localStorage.setItem('photo_url', re['photo_url']);
 }
 function setLogout() {
     move('/?page=user.logout');
-    // Cookies.remove('nickname');
-    // Cookies.remove('photo_url');
-    // Cookies.remove('nickname', { domain: rootDomain });
-    // Cookies.remove('photo_url', { domain: rootDomain });
 }
 function setCookieLogout() {
+    localStorage.removeItem('nickname');
+    localStorage.removeItem('photo_url');
     Cookies.remove('session_id');
     Cookies.remove('session_id', { domain: rootDomain });
 }
@@ -125,11 +120,10 @@ function getUserId() {
     }
 }
 
-function getUserPhotoUrl() {
-    var url = getCookie('photo_url');
-    if ( !url ) return themePath + '/img/anonymous/anonymous.jpg';
-    return url;
+function getUserNickname() {
+    return localStorage.getItem('nickname');
 }
+
 
 /**
  * Returns the value object of the form.
@@ -359,6 +353,10 @@ function loginOrProfile() {
     else move('/?page=user.login');
 }
 
+
+function onUserLogin() {
+
+}
 /**
  * return the API url of login from the form.
  * @param form
@@ -385,8 +383,8 @@ function apiUserLogin(form, success) {
             else {
                 setLogin(res);
                 firebaseSignInWithCustomToken(res['firebase_custom_login_token'], function(user) {
-                    console.log('apiUserLogin success');
-                    success(res);
+                    if ( success ) success(res);
+                    onUserLogin(res);
                 }, function(error) {
                     alertError(error);
                     hideLoader();
@@ -422,12 +420,13 @@ function apiSocialLogin(uid, email, success, failure) {
     $.ajax( apiUrl + '?route=user.socialLogin&firebase_uid=' + uid + '&email=' + email)
         .done(function(res) {
             if ( isBackendError(res) ) failure(res);
-            else success(res);
+            else {
+                success(res);
+                onUserLogin(res);
+            }
         })
         .fail(ajaxFailure);
 }
-
-
 
 
 
@@ -745,4 +744,10 @@ const commentList = new CommentList();
 
 function onCommentEditText($this) {
     $($this).attr('rows', 4);
+}
+
+
+// create and dispatch the event
+function sendEvent(name, obj) {
+    obj.dispatchEvent(new CustomEvent(name, obj));
 }

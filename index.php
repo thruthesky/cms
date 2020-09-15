@@ -27,12 +27,6 @@ $__head_script .=<<<EOH
         const homePage = "/";
         const themePath = "$_theme_url";
         const rootDomain = "$_root_domain";
-        const __user = {
-            nickname: "$_nickname",
-            photo_ID: "$_photo_ID",
-            photo_url: "$_photo_url",
-        };
-        
         function $$(fn) {
             if ( document.readyState === "complete" ) fn(); // for calling it after Ajax load.
             else window.addEventListener('load', fn); // for calling after load.

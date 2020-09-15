@@ -13,11 +13,10 @@ if ( loggedIn() ) {
 }
 $profile_photo
     .html(getUploadedFileHtml({
-        ID: login('photo_ID'),
         thumbnail_url: myProfilePhotoUrl()
     }));
 
-
+console.log('url:', myProfilePhotoUrl());
 
 function AppViewModel() {
     const self = this;

@@ -14,8 +14,7 @@ function showLoginInformation() {
     var $box = $('.login-information');
     $box.show();
     $box.find('.nickname').text( getCookie('nickname') );
-    $box.find('.userPhoto').attr('src', getUserPhotoUrl());
-
+    $('.user-profile-photo').html('<img src="'+myProfilePhotoUrl()+'">');
 }
 function showLoginForm() {
     $('.login-form').show();
@@ -25,7 +24,8 @@ function hideLoginForm() {
 }
 
     function onLoginFormSubmit(form) {
-        apiUserLogin(form, function() {
+        apiUserLogin(form, function(res) {
+            console.log('res: ', res);
             hideLoginForm();
             showLoginInformation();
         });

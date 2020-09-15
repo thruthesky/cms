@@ -41,17 +41,18 @@ function firebaseAuth(login, notLogin) {
 
 
 
-function firebaseSignInWithCustomToken(token, success, error) {
+function firebaseSignInWithCustomToken(token, success, failure) {
+    // console.log(token, success, failure);
     firebase.auth().signInWithCustomToken(token)
         .then(function(fb) {
             success(fb.user);
         })
         .catch(function(error) {
             // Handle Errors here.
-            var errorCode = error.code;
-            var errorMessage = error.message;
+            const errorCode = error.code;
+            const errorMessage = error.message;
             console.error('error on firebaseSignInWithCustomToken()', errorCode, errorMessage);
-            error(errorCode + ':' + errorMessage);
+            failure(errorCode + ':' + errorMessage);
         });
 }
 
@@ -78,6 +79,7 @@ function loginFirebaseAuth( provider, domain, name ) {
 
 
         apiSocialLogin(user.uid, user.email, function(res) {
+            console.log('res: ', res);
             setLogin(res);
             move('/');
         }, function(res) {

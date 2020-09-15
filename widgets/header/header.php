@@ -4,15 +4,8 @@
         <a class="navbar-brand" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
         <a class="d-lg-none" href="/?page=post.list&slug=qna"><?=tr(['ko'=>'질문과답변', 'en' => 'QnA'])?></a>
 
-        
 
-        <!-- ko if: userProfilePhotoSrc -->
-        <a class="d-lg-none icon-size circle" href="#" onclick="loginOrProfile()">
-            <img class="w-100" src="" data-bind="attr: {src: userProfilePhotoSrc}">
-        </a>
-        <!-- /ko -->
-
-        <a class="d-lg-none user-update-profile-photo icon-size circle" href="#" onclick="loginOrProfile()"></a>
+        <a class="d-lg-none user-profile-photo icon-size circle" href="#" onclick="loginOrProfile()"></a>
 
 
 
@@ -73,6 +66,10 @@
                         <li><a class="dropdown-item" href="#">Create your forum</a></li>
                         <li><a class="dropdown-item" href="/?page=contact">Contact</a></li>
                     </ul>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link user-profile-photo icon-md-size circle" href="#" onclick="loginOrProfile()"></a>
                 </li>
 
             </ul>
