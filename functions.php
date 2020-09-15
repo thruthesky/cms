@@ -323,13 +323,29 @@ function get_widget_options() {
     return $__widget_options;
 }
 
+
+/**
+ * @param $name
+ * @param null $options
+ *
+ * @return string - PHP script path for widget loading
+ *
+ * @code
+ *  <?php include widget('social-login/icons/index') ?>
+ *  <?php include widget('social-login.icons') ?>
+ *  <?php include widget('social-login') ?>
+ * @endcode
+ */
 function widget($name, $options = null) {
 
     set_widget_options($options);
 
     $domain = Config::$domain;
 
-    if ( strpos( $name, '.') !== false ) {
+    if ( strpos($name, '/') !== false ) {
+    	$rel_path = "/widgets/$name.php";
+    }
+    else if ( strpos( $name, '.') !== false ) {
         $arr = explode('.', $name);
         $rel_path = "/widgets/$arr[0]/$arr[1].php";
     } else {

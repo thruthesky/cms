@@ -349,6 +349,11 @@ function loginUrl(form) {
 }
 
 
+/**
+ * Email and Password login to Wordpress.
+ * @param form
+ * @param success
+ */
 function apiUserLogin(form, success) {
     $.ajax( loginUrl(form) )
         .done(function(res) {
@@ -364,13 +369,38 @@ function apiUserLogin(form, success) {
                     alertError(error);
                     hideLoader();
                 });
-
             }
         })
         .fail(function() {
             alert( "Server error" );
         });
 }
+
+/**
+ * Social login first and then login to Wordpress backend.
+ *
+ * /// FROM here.
+ * @param uid
+ * @param email
+ * @param success
+ * @param failure
+ */
+function apiSocialLogin(uid, email, success, failure) {
+    $.ajax( apiUrl + '?route=user.socialLogin&uid' + uid + '&email=' + email)
+        .done(function(res) {
+            if ( isBackendError(res) ) failure(res);
+            else success(res);
+        })
+        .fail(ajaxFailure);
+}
+
+
+apiSocialLogin('user.uid', 'user.user_email', function(res) {
+    console.log('success:', res);
+}, function(res) {
+    console.log('failure: ', res);
+});
+
 
 /**
  * Register or update

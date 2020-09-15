@@ -4,7 +4,7 @@ class Config {
     static public $appVersion = '0.0.2';
     static public $apiUrl = '/wp-content/themes/cms/api.php';
     static public $registerPage = '/?page=user.register';
-    static public $registerAuthPage = '/?page=user.register-auth';
+    static public $mobileVerificationPage = '/?page=user.mobile-verification';
     static public $resignResultPage = '/?page=user.resign_result';
     static public $adminUserList = '/?page=admin.user.list';
 

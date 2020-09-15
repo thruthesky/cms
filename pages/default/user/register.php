@@ -4,7 +4,7 @@
  * @desc See readme
  */
 if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
-    return move(Config::$registerAuthPage);
+    return move(Config::$mobileVerificationPage . '&display_social_login=true');
 }
 ?>
 

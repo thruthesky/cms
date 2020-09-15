@@ -56,38 +56,12 @@
     </button></div>
                 </div>
 
-
-                <?php
-                /*
-                ?>
-                <div class="send-verification-code mt-3">
-                    <button class="p-2 w-100 bg-primary text-white border-0" type="button" id="recaptcha-verifier">
-                        <?=tr([
-                                en => 'Send Verification Code To My Phone',
-                                ko => '인증 번호 발송',
-]);?>
-                    </button>
-                </div>
-
-
-                <div class="input-verification-code d-flex align-items-end justify-content-between  mt-3" style=" overflow: hidden;">
-                    <div>
-                        <small class="text-muted d-block"><?=tr([en=>'Input Code', ko=>'인증 번호 입력'])?></small>
-                        <div class="d-flex">
-                            <input id="verification-code" size="10">
-                            <button class="btn btn-primary btn-sm ml-2" type="button" onclick="registerAuthPage.verifyCode()"><?=tr([en=>'Verify', ko=>'확인'])?></button>
-                        </div>
-                    </div>
-                    <div>
-                        <button class="btn btn-secondary btn-sm" type="button" onclick="registerAuthPage.retry()"><?=tr([en=>'Retry', ko=>'다시 보내기'])?></button>
-                    </div>
-                </div>
-                <?php */ ?>
-
             </form>
 
         </div>
     </div>
+
+    <?php if ( in('display_social_login') ) include widget('social-login/buttons') ?>
 </div>
 
 
