@@ -21,11 +21,11 @@ var firebaseUser = null;
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         // User is signed in.
-        // console.log('Firebase signed in', user);
+        console.log('Firebase signed in', user);
         firebaseUer = user;
     } else {
         // No user is signed in.
-        // console.log('Firebase Not signed in');
+        console.log('Firebase Not signed in');
         firebaseUser = null;
     }
 });
@@ -60,6 +60,7 @@ function firebaseLoginFacebook() {
 }
 function firebaseLoginApple() {
 }
+
 function loginFirebaseAuth( provider, domain, name ) {
     firebase.auth().signInWithPopup(provider).then(function(result) {
         // This gives you a Google Access Token. You can use it to access the Google API.
@@ -67,12 +68,21 @@ function loginFirebaseAuth( provider, domain, name ) {
         // The signed-in user info.
         var user = result.user;
 
-        console.log("result: ", result);
-        location.href="?page=user.social-login.success&action=result&id=" + user.uid
-            + "&name=" + user.displayName
-            + "&profile_image=" + user.photoURL
-            + "&provider=" + domain
-            + "&provider_name=" + name;
+
+        apiSocialLogin(user.uid, user.user_email, function(res) {
+            console.log('success:', res);
+        }, function(res) {
+            console.log('failure: ', res);
+        });
+
+
+        // console.log("result: ", result);
+        // success(user);
+        // location.href="?page=user.social-login.success&action=result&id=" + user.uid
+        //     + "&name=" + user.displayName
+        //     + "&profile_image=" + user.photoURL
+        //     + "&provider=" + domain
+        //     + "&provider_name=" + name;
 
     }).catch(function(error) {
         // Handle Errors here.

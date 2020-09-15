@@ -440,6 +440,10 @@ Array
     * Kakaotalk
     * Naver
 
+### Social Login
+
+
+
 ### Registration Concept
 
 * If a user logs in with Social account that is supported by Firebase like Google, Facebook, or Apple,
@@ -483,6 +487,22 @@ Array
 * Whenever user has `firebase_uid` in his meta and `Config::$firebaseEnableCustomLogin` is set to true,
   * Wordpress generates a custom token and returns it to user.
   * Then, the user can login with javascript.
+
+* Flow
+   * For site registration
+    register.php
+        -> if mobile is not verified -> mobile-verification.php -> register.php
+    
+   * For Firebase social login
+   
+    Social login
+        -> registered? -> OK
+        -> Not registered? -> mobile-verification.php -> register.php
+        
+   * For social login that are not supported by Firebase
+   
+   Social login -> mobile-verification.php -> register.php
+    
 
 
 ## Locale, I18N

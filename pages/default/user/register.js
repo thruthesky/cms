@@ -32,13 +32,13 @@ function onRegisterFormSubmit() {
                     hideLoader();
                 });
             }
-
         } else {
             alert('Profile update success!');
         }
     }, function(res) {
         showLoader();
         hideLoader();
+        alertError(res);
     });
     return false;
 }
