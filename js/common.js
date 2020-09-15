@@ -101,6 +101,14 @@ function loggedIn() {
 function getUserSessionId() {
     return getCookie('session_id');
 }
+
+function getUserId() {
+    const sid = getUserSessionId();
+    if ( sid ) {
+        return sid.split('_').shift();
+    }
+}
+
 function getUserPhotoUrl() {
     var url = getCookie('photo_url');
     if ( !url ) return themePath + '/img/anonymous/anonymous.jpg';
@@ -497,12 +505,11 @@ function insert_modal() {
  */
 function CommentBox () {
     const self = this;
-    self.el = null;
 
 
-    self.append = function(el, options = []) {
-        self.el = el;
-        $(self.el).append(self.template(options));
+    self.append = function(el, comment = []) {
+        console.log(el);
+        $(el).append(self.template(comment));
         self.attachFiles([]);
     }
 
@@ -515,7 +522,10 @@ function CommentBox () {
 
         const data = objectifyForm(form);
         data['session_id'] = getUserSessionId();
-        const files = $(self.el).find('.files').children();
+
+        /// TODO make it clean by
+        /// 1) when a file is uploaded, add the file id into <input type='hidden' name='files' value='1,2,3,'>
+        const files = $(form).parent().find('.files').children();
         if (files.length) {
             let file_ids = '';
             $.each(files, function (index, item) {
@@ -553,9 +563,7 @@ function CommentBox () {
                 '       </div><!--/.col-->';
 
             $(self.el).find('.files').append(template);
-
         }
-
     }
 
     self.onChangeFile = function($box, options) {
@@ -571,23 +579,22 @@ function CommentBox () {
         });
 
     }
-    self.id = function(options) {
-        return 'input-box' + (typeof options.comment_parent_ID === 'undefined' ? '0' : options.comment_parent_ID);
+    self.id = function(comment) {
+        return 'input-box' + (typeof comment.comment_parent_ID === 'undefined' ? '0' : comment.comment_parent_ID);
     }
-    self.template = function(options) {
-        console.log('options', options);
+    self.template = function(comment) {
+        console.log('comment:', comment);
 
-
-        return '' +
-        '<div class="input-box" id="'+self.id(options)+'">' +
+        const temp = '' +
+        '<div class="input-box" id="'+self.id(comment)+'">' +
         '<form onsubmit="return commentBox.submit(this);">' +
         '<input type="hidden" name="route" value="comment.edit">' +
-        '<input type="hidden" name="comment_post_ID" value="'+options['comment_post_ID']+'">' +
+        '<input type="hidden" name="comment_post_ID" value="'+comment['comment_post_ID']+'">' +
         '<input type="hidden" name="comment_parent" value="">' +
         '<input type="hidden" name="comment_ID" value="">' +
         '<div class="form-group row no-gutters">' +
         '<div class="upload-button position-relative overflow-hidden">' +
-        '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentBox.onChangeFile(this, '+JSON.stringify(options)+')\'>' +
+        '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentBox.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
         '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
         '</div><!--/.uploda-button-->' +
         '<div class="col mr-3">' +
@@ -610,6 +617,8 @@ function CommentBox () {
         '</div><!--/.progress-->' +
         '</div><!--/.input-box-->';
 
+        // console.log('temp: ', temp);
+        return temp;
     }
 }
 
@@ -638,7 +647,9 @@ function CommentList() {
         if ( comment['comment_parent'] === '0' ) {
             self.comments.push(comment);
         } else {
-
+            /// TODO - double check this code.
+            const i = self.comments.map(function(e) {return e.comment_parent;}).indexOf(comment.comment_parent);
+            self.comments.splice(i, 0, comment);
         }
         self.render();
     }
@@ -656,7 +667,25 @@ function CommentList() {
         return t.replace(r, value);
     }
     self.renderTemplate = function(comment) {
-        var t = self.template;
+        let t = self.template;
+
+
+
+        const html = t.split('<!--loop files-->').pop().split('<!--/loop-->').shift();
+        let fts = [];
+        if ( typeof comment['files'] !== 'undefined' ) {
+            for( let file of comment['files'] ) {
+                let ft = html;
+                ft = self.replaceTag('ID', file['ID'], ft);
+                ft = self.replaceTag('name', file['name'], ft);
+                ft = self.replaceTag('url', file['url'], ft);
+                ft = self.replaceTag('thumbnail_url', file['thumbnail_url'], ft);
+                fts.push(ft);
+            }
+        }
+        const file_str = fts.join('');
+        t = t.replace(html, file_str, t);
+
         t = self.replaceTag('comment_ID', comment['comment_ID'], t);
         t = self.replaceTag('comment_post_ID', comment['comment_post_ID'], t);
         t = self.replaceTag('comment_parent', comment['comment_parent'], t);
@@ -670,7 +699,16 @@ function CommentList() {
         t = self.replaceTag('like_text', comment['user_vote'] === 'like'?'Liked':'Like', t);
         t = self.replaceTag('dislike_text', comment['user_vote'] === 'dislike'?'Disliked':'Dislike', t);
 
-        console.log(t);
+        if( comment['user_id'] == getUserId() ) {
+            t = self.replaceTag('mine', '', t);
+        } else {
+            t = self.replaceTag('other', '', t);
+        }
+
+
+
+
+        // console.log(t);
 
         return t;
     }

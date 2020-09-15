@@ -1,4 +1,4 @@
-<div id="comment{comment_ID}>">
+<div id="comment{comment_ID}">
     <div class="display" data-comment-post-id="{comment_post_ID}" data-comment-id="{comment_ID}" data-comment-parent="{comment_parent}" data-depth="{depth}">
         <div class="card mb-3">
             <div class="card-body">
@@ -17,12 +17,11 @@
                     </div>
                 </div>
                 <div class="comment-view-files row py-3">
-                    <?php if (isset($comment['files']) && !empty($comment['files'])) {
-                        foreach ($comment['files'] as $file) { ?>
+                    <!--loop files-->
                     <div class="col-4 col-sm-3">
-                        <img class="w-100" src="<?=$file['thumbnail_url']?>">
+                        <img class="w-100" src="{thumbnail_url}">
                     </div>
-                    <?php }} ?>
+                    <!--/loop-->
                 </div><!--/.row-->
                 <div>
                     <button id="like{comment_ID}" class="btn btn-primary btn-sm mr-3" onclick="onClickLike({comment_ID}, 'like', 'comment')">{like} {like_text}</button>
