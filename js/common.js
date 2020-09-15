@@ -614,7 +614,7 @@ function CommentList() {
             '<input type="hidden" name="comment_ID" value="'+comment['comment_ID']+'">' +
             '<div class="form-group row no-gutters">' +
             '<div class="upload-button position-relative overflow-hidden">' +
-            '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentBox.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
+            '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentList.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
             '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
             '</div><!--/.uploda-button-->' +
             '<div class="col mr-3">' +
@@ -665,6 +665,7 @@ function CommentList() {
                 comment_post_ID: comment.comment_post_ID,
             };
         }
+        if($("#" + self.id(comment)).length) return false;
         $(el).append(self.commentBoxTemplate(comment));
     }
 
