@@ -1,6 +1,11 @@
 <?php
 
 $__i18n = [
+	'appName' => [
+		ko => '소너브',
+		en => 'Sonub',
+		javascript => true,
+	],
     Yes => [
         ko => '예',
         en => 'Yes',
@@ -100,6 +105,10 @@ $__i18n = [
         ko => '비밀번호가 입력되지 않았습니다.',
         en => 'Password is empty.'
     ],
+	ERROR_FIREBASE_UID_EXISTS => [
+		ko => '현재 소셜 계정은 이미 가입되어져 있습니다.',
+		en => 'You have already registered with this social account.'
+	]
 
 
 ];

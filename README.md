@@ -442,48 +442,18 @@ Array
 
 ### Social Login
 
+* uid & email will be used as login signature.
+  * uid is not guessable and together with email, it is impossible to do brutal attacks.
+  * as long as uid is kept in secret, the login is safe.
 
 
-### Registration Concept
-
-* If a user logs in with Social account that is supported by Firebase like Google, Facebook, or Apple,
-    then, the app needs to
-
-    * 1st, Social login
-    * 2nd, Phone number verification
-    * 3rd, Register into Wordpress (with extra information).
-    
-    * Step: Social Login -> Phone verification -> Wordpress Registration
-    
-* If a user login with the social login that are NOT supported by Firebase like Kakao Login, Naver Login,
-    then, the app needs to
-
-    * 1st, Social login
-    * 2nd, Phone number verification
-    * 3nd, Register into Wordpress (with extra information).
-    * 4th, Register Into Firebase Auth using Email/password login.
-
-    * Step: Social Login -> Phone verification -> Wordpress Registration -> Firebase Registration
-      * Email format: ID[USER_ID]@[provider].com
-        Ex) ID12345@kakao.com
-        Ex) ID56789@naver.com
-
-* If a user registers directly to Wordpress(without social login),
-
-  * 1st, Phone number verification
-  * 2nd, Register into Wordpress (with extra information).
-  * 3rd, Register Into Firebase Auth using Email/password login.
-    * Email format: ID[USER_ID]@wordpress.com
-      Ex) ID12345@wordpress.com
-      
-  
-  * Step: Phone Auth -> Wordpress -> Firebase
   
 ### Registration Logic
 
-* if `Config::$firebaseSyncUser` is set to true,
+* if `Config::$firebaseSyncUser` is set to true and the user is not social logged in,
   * Wordpress creates an account on Firebase
-    * And saves the firebase UID on the user meta.
+    * And saves the `firebase_uid` on the user meta.
+* If the user has logged(or registered) in firebase auth(social), then it needs to pass `firebase_uid` to backend so, it will not create firebase account.
 * Whenever user has `firebase_uid` in his meta and `Config::$firebaseEnableCustomLogin` is set to true,
   * Wordpress generates a custom token and returns it to user.
   * Then, the user can login with javascript.
@@ -493,16 +463,20 @@ Array
     register.php
         -> if mobile is not verified -> mobile-verification.php -> register.php
     
-   * For Firebase social login
+   * For Firebase social login like Google, Apple, Facebook
    
     Social login
-        -> registered? -> OK
-        -> Not registered? -> mobile-verification.php -> register.php
+        -> social login error? -> error/social-login.php
+        -> social login success
+            -> login to Wordpress
+                -> login success -> home
+                -> login failure -> register.php
         
-   * For social login that are not supported by Firebase
+   * For social login that are not supported by Firebase like Kakao, Naver
    
-   Social login -> mobile-verification.php -> register.php
+    (Kakao or Naver) Social login -> Firebase email/pasword login(or registration) -> mobile-verification.php -> register.php
     
+
 
 
 ## Locale, I18N

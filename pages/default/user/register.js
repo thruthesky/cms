@@ -33,7 +33,7 @@ function onRegisterFormSubmit() {
                 });
             }
         } else {
-            alert('Profile update success!');
+            alertModal(tr('appName'), 'Profile update success!');
         }
     }, function(res) {
         showLoader();
@@ -42,5 +42,3 @@ function onRegisterFormSubmit() {
     });
     return false;
 }
-
-

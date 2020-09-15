@@ -275,8 +275,21 @@ class ApiLibrary {
         if (isset($in['session_id'])) return ERROR_SESSION_ID_MUST_NOT_PROVIDED;
 
         if (!isset($in['user_email']) || empty($in['user_email']))return ERROR_EMAIL_IS_EMPTY;
-        if (!isset($in['user_pass']) || empty($in['user_pass'])) return ERROR_PASSWORD_IS_EMPTY;
-        if (strlen($in['user_pass']) < MINIMUM_PASSWORD_LENGTH) return ERROR_PASSWORD_TOO_SHORT;
+
+
+
+        /// For firebase social login,
+        if ( in(FIREBASE_UID) ) {
+	        if ( $this->firebase_uid_exists(in(FIREBASE_UID)) ) {
+		        return ERROR_FIREBASE_UID_EXISTS;
+	        }
+	        // Generate random password.
+	        $user_pass = md5( rand() . '/' . time() . '/' . AUTH_KEY);
+        } else {
+	        if (!isset($in['user_pass']) || empty($in['user_pass'])) return ERROR_PASSWORD_IS_EMPTY;
+	        if (strlen($in['user_pass']) < MINIMUM_PASSWORD_LENGTH) return ERROR_PASSWORD_TOO_SHORT;
+	        $user_pass = $in['user_pass'];
+        }
 
         $nickname = $in['nickname'] ?? $in['user_email'];
 
@@ -292,17 +305,16 @@ class ApiLibrary {
         	return ERROR_MOBILE_NOT_VERIFIED;
         }
 
-
         if ( Config::$uniqueMobile && $this->mobile_already_exists($in['mobile']) ) {
             return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
         }
 
 
-
+        ////
 
         $userdata = [
             'user_login' => trim($in['user_email']),
-            'user_pass' => trim($in['user_pass']),
+            'user_pass' => trim($user_pass),
             'user_email' => trim($in['user_email']),
             'user_nicename' => $nickname,
             'display_name' => $nickname,
@@ -323,7 +335,7 @@ class ApiLibrary {
         $this->updateUserMeta($user_ID, $in);
 
 
-	    if ( Config::$firebaseSyncUser ) {
+	    if ( in(FIREBASE_UID) == null && Config::$firebaseSyncUser ) {
 		    $uid = firebaseCreateUser($user_ID);
 	    }
 
@@ -375,6 +387,16 @@ class ApiLibrary {
         $res = $this->userResponse($user->ID);
 
         return $res;
+    }
+
+    public function userSocialLogin($in) {
+    	$user = get_user_by('email', $in['email']);
+    	if ( ! $user ) return ERROR_USER_NOT_FOUND;
+    	if ( $user->firebase_uid == $in[FIREBASE_UID] ) {
+		    return $this->userResponse($user->ID);
+	    } else {
+    		return ERROR_FIREBASE_UID_IS_WRONG;
+	    }
     }
 
 
@@ -1196,6 +1218,7 @@ public function userVerifyPhoneVerificationCode($in)
     }
 
     /**
+     * Check if the mobile no has already registered
      * @param $mobile
      * @return bool
      */
@@ -1206,6 +1229,21 @@ public function userVerifyPhoneVerificationCode($in)
         } else {
             return false;
         }
+    }
+
+	/**
+	 * Check if the firebase uid exists already. This means the user has already account connected to (or registered by)
+	 *      that social login.
+	 * @param $uid
+	 * @return bool
+	 */
+    public function firebase_uid_exists($uid) {
+	    $users = get_users(array('meta_key' => FIREBASE_UID, 'meta_value' => $uid));
+	    if ( $users && count($users) > 0 ) {
+		    return true;
+	    } else {
+		    return false;
+	    }
     }
 
 

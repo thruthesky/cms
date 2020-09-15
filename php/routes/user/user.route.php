@@ -12,6 +12,9 @@ class UserRoute extends ApiLibrary
     {
         $this->response($this->userLogin(in()));
     }
+    public function socialLogin() {
+    	$this->response($this->userSocialLogin(in()));
+    }
     public function update()
     {
         $this->response($this->userUpdate(in()));

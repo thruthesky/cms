@@ -8,6 +8,8 @@ define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 define('FIREBASE_UID', 'firebase_uid');
 define('FIREBASE_CUSTOM_LOGIN_TOKEN', 'firebase_custom_login_token');
 
+
+
 //define('INSTALL', 'cms_install');
 //define('INSTALL_YES', 'cms_install_yes');
 
@@ -61,6 +63,8 @@ define('ERROR_APIKEY_NOT_EXISTS', 'Apikey does not exist');
 define('ERROR_MOBILE_EMPTY', 'ERROR_MOBILE_EMPTY');
 define('ERROR_MOBILE_NOT_VERIFIED', 'ERROR_MOBILE_NOT_VERIFIED');
 define('ERROR_MOBILE_NUMBER_ALREADY_REGISTERED', 'ERROR_MOBILE_NUMBER_ALREADY_REGISTERED');
+define('ERROR_FIREBASE_UID_EXISTS', 'ERROR_FIREBASE_UID_EXISTS');
+define('ERROR_FIREBASE_UID_IS_WRONG', 'ERROR_FIREBASE_UID_IS_WRONG');
 define('ERROR_MOBILE_MUST_BEGIN_WITH_PLUS', 'mobile number must begin with +');
 define('ERROR_TOKEN_EMPTY', 'token empty');
 define('ERROR_SESSION_INFO_EMPTY', 'sessionInfo empty');

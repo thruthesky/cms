@@ -388,9 +388,22 @@ function apiUserLogin(form, success) {
  * @param email
  * @param success
  * @param failure
+ *
+ * @code
+ *
+ $$(function() {
+    firebaseAuth(function(user) {
+        apiSocialLogin(user.uid, user.email, function(res) {
+            console.log('success:', res);
+        }, function(res) {
+            console.log('failure: ', res);
+        });
+    });
+});
+ * @endcode
  */
 function apiSocialLogin(uid, email, success, failure) {
-    $.ajax( apiUrl + '?route=user.socialLogin&uid' + uid + '&email=' + email)
+    $.ajax( apiUrl + '?route=user.socialLogin&firebase_uid=' + uid + '&email=' + email)
         .done(function(res) {
             if ( isBackendError(res) ) failure(res);
             else success(res);
@@ -399,11 +412,7 @@ function apiSocialLogin(uid, email, success, failure) {
 }
 
 
-apiSocialLogin('user.uid', 'user.user_email', function(res) {
-    console.log('success:', res);
-}, function(res) {
-    console.log('failure: ', res);
-});
+
 
 
 /**
@@ -475,7 +484,7 @@ function insert_modal() {
 '        <div class="modal-dialog" role="document">' +
 '        <div class="modal-content">' +
 '        <div class="modal-header">' +
-'        <h5 class="modal-title" id="alertModalLabel">Modal title</h5>' +
+'        <h5 class="modal-title" id="alertModalLabel"></h5>' +
 '    <button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
 '        <span aria-hidden="true">&times;</span>' +
 '    </button>' +

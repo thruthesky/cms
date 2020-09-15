@@ -6,32 +6,55 @@
 if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
     return move(Config::$mobileVerificationPage . '&display_social_login=true');
 }
+
+
 ?>
+<script>
+    $$(function () {
+        firebaseAuth(function(user) {
+            $('#register-form').append('<input type="hidden" name="user_email" value="'+user.email+'">');
+        }, function() {
+            $('.email').removeClass('d-none');
+            $('.password').removeClass('d-none');
+        })
+    })
+</script>
 
 <div id="register-page" class="container py-3">
     <div class="card">
         <div class="card-body">
             <h1><?= loggedIn() ? tr([en=>"Profile Update", ko =>'회원 정보 수정']) : tr([en=>"User Registration", ko =>'회원 가입'])?></h1>
             <form id="register-form" onsubmit="return onRegisterFormSubmit()">
-                <? if (loggedIn()) { ?>
+                <?php if (loggedIn()) { ?>
                     <input type="hidden" name="session_id" value="<?=login('session_id')?>">
-                <? } ?>
+                <?php } else { ?>
+                    <input type="hidden" name="firebase_uid" value="">
+                    <script>
+                        $$(function() {
+                            firebaseAuth(function(user) {
+                                $('[name="firebase_uid"]').val(user.uid);
+                            });
+                        })
+                    </script>
+                <?php } ?>
+	            <?php if ( Config::$verifyMobileOnRegistration ) { ?>
                 <input type="hidden" name="mobile" value="<?=urlencode(in('mobile'))?>">
+                <?php } ?>
                 <? include 'form-profile-photo.php'?>
 
-                <div class="mt-3">
+
+                <div class="email d-none mt-3">
                     <label  class="form-label"><?=tr(emailAddress)?></label>
                     <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>" required>
-
                     <small class="form-text text-muted"><?=tr(emailAddressDescription)?></small>
                 </div>
-
                 <? if (!loggedIn()) { ?>
-                    <div class="mt-3">
+                    <div class="password d-none mt-3">
                         <label class="form-label"><?=tr('password')?></label>
                         <input type="password" class="form-control" name="user_pass" required>
                     </div>
                 <?}?>
+
 
 
                 <div class="mt-3">

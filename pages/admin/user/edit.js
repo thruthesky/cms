@@ -16,7 +16,7 @@ function onUserEdiFormSubmit(form) {
             alert(re);
         }
         else {
-                alert('Profile update success!');
+                alertModal(tr('appName'), 'Profile update success!');
         }
     })
         .fail(function() {

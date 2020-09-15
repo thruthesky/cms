@@ -15,9 +15,6 @@ firebase.initializeApp(firebaseConfig);
 
 
 var firebaseUser = null;
-
-
-
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
         // User is signed in.
@@ -29,6 +26,17 @@ firebase.auth().onAuthStateChanged(function(user) {
         firebaseUser = null;
     }
 });
+
+function firebaseAuth(login, notLogin) {
+    firebase.auth().onAuthStateChanged(function(user) {
+        if (user) {
+            login(user);
+        } else {
+            if(notLogin) notLogin();
+        }
+    });
+}
+
 
 
 
@@ -69,10 +77,12 @@ function loginFirebaseAuth( provider, domain, name ) {
         var user = result.user;
 
 
-        apiSocialLogin(user.uid, user.user_email, function(res) {
-            console.log('success:', res);
+        apiSocialLogin(user.uid, user.email, function(res) {
+            setLogin(res);
+            move('/');
         }, function(res) {
             console.log('failure: ', res);
+            move('/?page=user.register');
         });
 
 
@@ -100,4 +110,6 @@ function loginFirebaseAuth( provider, domain, name ) {
 
     });
 }
+
+
 
