@@ -30,6 +30,10 @@ if( $comment['user_id'] == userId() ) {
 	$view = str_replace('{other}', '', $view);
 }
 
+eval("?> $view <?php ");
+//echo $view;
 
-echo $view;
+
+
+
 

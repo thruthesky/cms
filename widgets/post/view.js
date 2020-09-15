@@ -159,9 +159,6 @@ function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0)
 
 
 
-// function onCommentEditText($this) {
-//     $($this).attr('rows', 4);
-// }
 
 function onClickLike(ID, choice , route = 'post'){
     console.log('choice:' + choice);

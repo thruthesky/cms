@@ -21,6 +21,8 @@ $viewTemplate = file_get_contents(__DIR__ . '/view-template.html');
     foreach($post['comments'] as $comment){
         include widget('comment.view', ['viewTemplate' => $viewTemplate]);
     }
+
+//    dog(addslashes(str_replace("\n", ' ', $viewTemplate)));
     ?>
 
 
@@ -31,7 +33,7 @@ $viewTemplate = file_get_contents(__DIR__ . '/view-template.html');
         commentList.init({
             mount: '#comment-list',
             comments: <?=json_encode($post['comments']);?>,
-            template: '<?=addslashes(str_replace("\n", ' ', $viewTemplate))?>',
+            template: `<?=addslashes(str_replace("\n", " ", $viewTemplate))?>`,
        });
        // commentList.render();
    })
