@@ -21,7 +21,7 @@ class ApiComment extends ApiPost
         if ( API_CALL == false ) return ERROR_API_CALL_ONLY;
         if ( ! is_user_logged_in() ) return ERROR_LOGIN_FIRST;
 
-        if ($in['comment_ID'] && !empty($in['comment_ID'])) {
+        if (isset($in['comment_ID']) && !empty($in['comment_ID'] && is_numeric($in['comment_ID']))) {
             return $this->commentUpdate($in);
         } else {
             return $this->commentCreate($in);
@@ -103,15 +103,15 @@ class ApiComment extends ApiPost
 
     }
 
-    public function commentView($_comment) {
-        global $comment;
-        $comment = $_comment;
-        ob_start();
-        include widget('comment.view');
-        $comment['html']= ob_get_clean();
-        return $comment;
-
-    }
+//    public function commentView($_comment) {
+//        global $comment;
+//        $comment = $_comment;
+//        ob_start();
+//        include widget('comment.view');
+//        $comment['html']= ob_get_clean();
+//        return $comment;
+//
+//    }
 
 
 
