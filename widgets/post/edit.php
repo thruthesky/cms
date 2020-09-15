@@ -14,11 +14,6 @@ if ($ID) {
 }
 ?>
 
-<script>
-    const files_in_edit = <?=json_encode($post['files']??[])?>;
-</script>
-
-
 <div class="post-edit container py-3">
 
     <form id="post-form" data-bind="submit: submitPostEdit">

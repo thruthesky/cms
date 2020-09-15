@@ -183,14 +183,14 @@ function scrollIntoView(element, duration = 100) {
  */
 function getUploadedFileHtml(file, options = {}) {
 
-    // console.log(options);
+    // console.log('getUploadedFileHtml:', options['append']);
     if ( !options['extraClasses'] ) options['extraClasses'] = '';
     if ( typeof options['deleteButton'] == 'undefined' ) options['deleteButton'] = false;
 
     let html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative d-inline-block "+options['extraClasses']+"'>";
         html += "<img class='w-100' src='"+ file.thumbnail_url +"'>";
-        if ( options['deleteButton'] ) html += "<i role='button' class='fa fa-trash position-absolute top right' onclick='onClickDeleteFile(" + file['ID'] + ")'></i>";
-        html += "</div>";
+        if ( options['deleteButton'] ) html += '<i role="button" class="fa fa-trash position-absolute top right" onclick=\'onClickDeleteFile(' + file['ID'] + ','+JSON.stringify(options["parent"])+')\'></i>';
+    html += "</div>";
     return html;
 }
 
@@ -211,7 +211,7 @@ function getUploadedFileHtml(file, options = {}) {
  */
 function onChangeFile($box, options={}) {
 
-    console.log('options', options);
+    // console.log('options', options);
 
     let formData = new FormData();
 
@@ -302,7 +302,8 @@ function progress(progress,e){
     }
 }
 
-function onClickDeleteFile(ID) {
+function onClickDeleteFile(ID, parent) {
+    console.log('onClickDeleteFile:', parent);
     let data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
     $.ajax( {
         method: 'GET',
@@ -311,7 +312,7 @@ function onClickDeleteFile(ID) {
     } )
         .done(function(re) {
             if (re['ID'] === ID) {
-                $('.files.edit #file'+ ID).remove();
+                $(parent + ' .files').find('#file'+ ID).remove();
             }
         })
         .fail(function() {
@@ -514,10 +515,14 @@ function CommentBox () {
 
         const data = objectifyForm(form);
         data['session_id'] = getUserSessionId();
-        // data['files'] = self.files().reduce(function(acc, v, i, arr) {
-        //     return acc += v.ID + ',';
-        // }, '');
-
+        const files = $(self.el).find('.files').children();
+        if (files.length) {
+            let file_ids = '';
+            $.each(files, function (index, item) {
+                file_ids += $(item).data('file-id') + ',';
+            });
+            data['files'] = file_ids;
+        }
 
         $.ajax( {
             method: 'POST',
@@ -549,7 +554,6 @@ function CommentBox () {
 
             $(self.el).find('.files').append(template);
 
-
         }
 
     }
@@ -558,14 +562,20 @@ function CommentBox () {
         console.log('options: ', options);
 
         /// Call global `onChangeFile()` routine.
-        onChangeFile($box, {append: $('#'+self.id(options)+' .files'), extraClasses: 'col-4 col-sm-3'});
+        onChangeFile($box, {
+            parent: self.el,
+            append: $('#'+self.id(options)+' .files'),
+            extraClasses: 'col-4 col-sm-3',
+            progress: $('#'+self.id(options)+' .progress'),
+            deleteButton: true
+        });
 
     }
     self.id = function(options) {
         return 'input-box' + (typeof options.comment_parent_ID === 'undefined' ? '0' : options.comment_parent_ID);
     }
     self.template = function(options) {
-        // console.log('options', options);
+        console.log('options', options);
 
 
         return '' +
@@ -595,10 +605,11 @@ function CommentBox () {
         '   <div class="row files">' +
         '   </div><!--/.row-->' +
         '</div><!--/.container-->' +
-        '<div class="progress mb-3">' +
+        '<div class="progress mb-3" style="display: none">' +
         '   <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>' +
         '</div><!--/.progress-->' +
         '</div><!--/.input-box-->';
+
     }
 }
 
@@ -613,7 +624,7 @@ function CommentList() {
         self.mount = options.mount;
         self.comments = options.comments;
         self.template = options.template;
-        console.log(self.comments);
+        console.log('CommentList::init', self.comments);
 
         // self.render(); // test
     }
@@ -659,8 +670,16 @@ function CommentList() {
         t = self.replaceTag('like_text', comment['user_vote'] === 'like'?'Liked':'Like', t);
         t = self.replaceTag('dislike_text', comment['user_vote'] === 'dislike'?'Disliked':'Dislike', t);
 
+        console.log(t);
+
         return t;
     }
 }
 
 const commentList = new CommentList();
+
+
+
+function onCommentEditText($this) {
+    $($this).attr('rows', 4);
+}
