@@ -26,6 +26,7 @@ $__head_script .=<<<EOH
         const apiUrl = "$_apiUrl";
         const homePage = "/";
         const themePath = "$_theme_url";
+        const fullThemeUrl = "https://$_SERVER[HTTP_HOST]$_theme_url";
         const rootDomain = "$_root_domain";
         function $$(fn) {
             if ( document.readyState === "complete" ) fn(); // for calling it after Ajax load.

@@ -77,6 +77,8 @@ if ( localhost() ) {
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
 <script src="<?php theme_url()?>/js/social-login.js?v=<?php echo Config::$appVersion?>"></script>
 
+<script src="<?php theme_url()?>/js/kakao.min.js"></script>
+
 <script src="<?php theme_url()?>/js/common.js?v=<?php echo Config::$appVersion?>"></script>
 
 </body>

@@ -11,9 +11,9 @@ class Config {
 
 
     /// If it is set to true, user will be redirected to mobile phone verification page on registration.
-    static public $verifyMobileOnRegistration = false;
+    static public $verifyMobileOnRegistration = true;
     /// If it is set to true, only verified mobile can be registered. Meaning user must verifiy phone number before registration.
-    static public $verifiedMobileOnly = false;
+    static public $verifiedMobileOnly = true;
     /// If it is set to true, the mobile number becomes unique in Database.
     static public $uniqueMobile = true;
 
