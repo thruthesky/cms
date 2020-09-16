@@ -10,13 +10,48 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
 
 ?>
 <script>
+
+
+
     $$(function () {
+
+        /**
+         * If user logged in as firebase, don't show email, password input box.
+         */
         firebaseAuth(function(user) {
+            $('.email').remove();
+            $('.password').remove();
             $('#register-form').append('<input type="hidden" name="user_email" value="'+user.email+'">');
         }, function() {
-            $('.email').removeClass('d-none');
-            $('.password').removeClass('d-none');
         })
+        /**
+         * If the user logged in with Kakaotalk, don't show password input box.
+         * If the user has no email address on Kakaotalk login data, then let it be an error.
+         */
+
+        const kakaoAuthToken = Kakao.Auth.getAccessToken();
+
+        if ( kakaoAuthToken ) {
+            Kakao.API.request({
+                url: '/v2/user/me',
+                success: function(response) {
+                    // Login success
+                    console.log(response);
+                    $('.email').remove();
+                    $('.password').remove();
+
+
+                    const id = response.id;
+                    const kakao_account = response.kakao_account;
+                    const $form = $('#register-form');
+                    $form.append('<input type="hidden" name="user_email" value="'+kakao_account.email+'">');
+                    $form.append('<input type="hidden" name="user_pass" value="'+id+'">');
+                },
+                fail: function(error) {
+                    console.log(error);
+                }
+            });
+        }
     })
 </script>
 
@@ -44,13 +79,13 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
                 <? include 'form-profile-photo.php'?>
 
 
-                <div class="email d-none mt-3">
+                <div class="email mt-3">
                     <label  class="form-label"><?=tr(emailAddress)?></label>
                     <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
                     <small class="form-text text-muted"><?=tr(emailAddressDescription)?></small>
                 </div>
                 <? if (!loggedIn()) { ?>
-                    <div class="password d-none mt-3">
+                    <div class="password mt-3">
                         <label class="form-label"><?=tr('password')?></label>
                         <input type="password" class="form-control" name="user_pass">
                     </div>

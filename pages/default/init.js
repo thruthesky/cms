@@ -20,10 +20,12 @@ $profile_photo
 
 
 /**
- * Kakao Login
+ * Kakao Api.
+ * For Kakao login, it should be initialized every where.
  */
 Kakao.init('937af10cf8688bd9a7554cf088b2ac3e');
 Kakao.isInitialized();
+
 
 
 

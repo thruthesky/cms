@@ -11,9 +11,9 @@ class Config {
 
 
     /// If it is set to true, user will be redirected to mobile phone verification page on registration.
-    static public $verifyMobileOnRegistration = true;
+    static public $verifyMobileOnRegistration = false;
     /// If it is set to true, only verified mobile can be registered. Meaning user must verifiy phone number before registration.
-    static public $verifiedMobileOnly = true;
+    static public $verifiedMobileOnly = false;
     /// If it is set to true, the mobile number becomes unique in Database.
     static public $uniqueMobile = true;
 
@@ -46,8 +46,20 @@ class Config {
 	 */
 	static public $firebaseCreateUserIfNotExist = true;
 
+
+	/**
+	 * Naver Login
+	 */
+	static public $naverClientId = "uCSRMmdn9Neo98iSpduh";
+	static public $naverClientSecret = "lmEXnwDKAD";
+    static public $naverRedirectURI = HOME_URL . '/?page=user.naver-login';
+    static public $naverState = "RAMDOM_STATE";
+    static public $naverApiURL = null;
+
 }
 
+Config::$naverRedirectURI =  urlencode(Config::$naverRedirectURI);
+Config::$naverApiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=".Config::$naverClientId."&redirect_uri=".Config::$naverRedirectURI."&state=".Config::$naverState;
 
 /**
  * Get host name

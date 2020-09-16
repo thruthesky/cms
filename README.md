@@ -98,6 +98,17 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
   * For sass compilation, hot reload.
 
 
+## Developer Coding Guideline
+
+
+* WEB/PWA development and design must follow bootstrap way.
+
+* All form submits and form submit like actions should be made by `ajax` call.
+
+* `email address` is a part of security. It must be kept in secret and never reveal.
+
+* If page has 'submit' in its name, then layout will not be shown. only the content from the page script will be shown.
+
 ## Web/PWA Functionality
 
 ### PWA
@@ -224,12 +235,6 @@ route=user.login&user_email=user1598245099@test.com&user_pass=PW.test@,*
 ```
 
 
-
-## Coding Guidelines
-
-* WEB/PWA development and design must follow bootstrap way.
-
-* All form submits and form submit like actions should be made by `ajax` call.
 
 
 ### Javascript & jQuery
@@ -458,25 +463,14 @@ Array
   * Wordpress generates a custom token and returns it to user.
   * Then, the user can login with javascript.
 
-* Flow
-   * For site registration
-    register.php
-        -> if mobile is not verified -> mobile-verification.php -> register.php
-    
-   * For Firebase social login like Google, Apple, Facebook
-   
-    Social login
-        -> social login error? -> error/social-login.php
-        -> social login success
-            -> login to Wordpress
-                -> login success -> home
-                -> login failure -> register.php
-        
-   * For social login that are not supported by Firebase like Kakao, Naver
-   
-    (Kakao or Naver) Social login -> Firebase email/pasword login(or registration) -> mobile-verification.php -> register.php
-    
+#### Flowchart
 
+* Social login with Firebase ( Google, Facebook )
+    Social login -> register -> mobile verification -> profile update
+
+* Social login without Firebase (Kakaotalk, Naver)
+    Social login -> register -> Firebase register -> mobile verification -> profile update
+    
 
 
 ## Locale, I18N

@@ -21,9 +21,9 @@ if ( isset($_REQUEST['route'])) {
 require __DIR__.'/vendor/autoload.php';
 
 
-require 'config.php';
 require 'php/defines.php';
 
+require 'config.php';
 
 /**
  * The content of the variable will be printed at the bottom of HTML page.
@@ -942,4 +942,19 @@ function load_country_phone_number_code() {
         $codes[$c['Iso']] = $c['name'] . '(' . $c['Iso'] . ')';
     }
     return $codes;
+}
+
+
+/**
+ * If true is return, it must not display the layout.
+ *  - Instead, it must display only the output of the page script.
+ *  - And the head, css, javascript must be loaded.
+ * @param $page
+ *
+ * @return bool
+ */
+function noLayout($page) {
+	if ( strpos($page, 'submit') !== false ) return true;
+
+	return false;
 }
