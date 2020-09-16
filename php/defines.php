@@ -9,6 +9,10 @@ define('FIREBASE_UID', 'firebase_uid');
 define('FIREBASE_CUSTOM_LOGIN_TOKEN', 'firebase_custom_login_token');
 
 
+define('SOCIAL_LOGIN', 'social_login');
+define('NAVER', 'naver');
+define('KAKAO', 'kakao');
+
 
 //define('INSTALL', 'cms_install');
 //define('INSTALL_YES', 'cms_install_yes');

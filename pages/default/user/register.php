@@ -9,51 +9,6 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
 
 
 ?>
-<script>
-
-
-
-    $$(function () {
-
-        /**
-         * If user logged in as firebase, don't show email, password input box.
-         */
-        firebaseAuth(function(user) {
-            $('.email').remove();
-            $('.password').remove();
-            $('#register-form').append('<input type="hidden" name="user_email" value="'+user.email+'">');
-        }, function() {
-        })
-        /**
-         * If the user logged in with Kakaotalk, don't show password input box.
-         * If the user has no email address on Kakaotalk login data, then let it be an error.
-         */
-
-        const kakaoAuthToken = Kakao.Auth.getAccessToken();
-
-        if ( kakaoAuthToken ) {
-            Kakao.API.request({
-                url: '/v2/user/me',
-                success: function(response) {
-                    // Login success
-                    console.log(response);
-                    $('.email').remove();
-                    $('.password').remove();
-
-
-                    const id = response.id;
-                    const kakao_account = response.kakao_account;
-                    const $form = $('#register-form');
-                    $form.append('<input type="hidden" name="user_email" value="'+kakao_account.email+'">');
-                    $form.append('<input type="hidden" name="user_pass" value="'+id+'">');
-                },
-                fail: function(error) {
-                    console.log(error);
-                }
-            });
-        }
-    })
-</script>
 
 <div id="register-page" class="container py-3">
     <div class="card">
@@ -79,6 +34,11 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
                 <? include 'form-profile-photo.php'?>
 
 
+	            <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
+
+
+
+
                 <div class="email mt-3">
                     <label  class="form-label"><?=tr(emailAddress)?></label>
                     <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
@@ -92,10 +52,13 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
                 <?}?>
 
 
+	            <?php } ?>
+
+
 
                 <div class="mt-3">
-                    <label class="form-label"><?=tr('name')?></label>
-                    <input type="text" class="form-control" name="fullname">
+                    <label for="fullname" class="form-label"><?=tr('name')?></label>
+                    <input type="text" class="form-control" id="fullname" name="fullname" value="<?=login('fullname')?>">
                 </div>
 
                 <div class="mt-3">
@@ -126,6 +89,10 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
             </div>
 
         </div>
+    </div>
+
+    <div class="alert alert-secondary">
+        logged in with <?=login(SOCIAL_LOGIN)?>
     </div>
 </div>
 

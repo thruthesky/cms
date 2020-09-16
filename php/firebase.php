@@ -35,7 +35,7 @@ function firebaseCreateUser($user_ID) {
 
 	$auth = firebase()->createAuth();
 	$createdUser = $auth->createUser($userProperties);
-	lib()->updateField($user_ID, FIREBASE_UID, $createdUser->uid);
+	lib()->updateUserMeta($user_ID, FIREBASE_UID, $createdUser->uid);
 	return $createdUser->uid;
 }
 

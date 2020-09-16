@@ -354,8 +354,12 @@ function loginOrProfile() {
 }
 
 
-function onUserLogin() {
-
+/**
+ * After user login, this method will be called.
+ */
+function onUserLogin(res) {
+    setLogin(res);
+    move('/');
 }
 /**
  * return the API url of login from the form.
@@ -363,10 +367,16 @@ function onUserLogin() {
  * @returns {string}
  */
 function loginUrl(form) {
-    var url = apiUrl + '?route=user.login&';
-    if ( typeof form['user_email'] ) url += 'user_email=' + form['user_email'] +'&user_pass=' + form['user_pass'];
+    let url = apiUrl + '?route=user.login&';
+
+
+    const count = $(form).find('[name="user_email"]').length;
+    if ( count === 0 ) {
+        url += 'user_email=' + form['user_email'] +'&user_pass=' + form['user_pass'];
+    }
     else url += $( form ).serialize();
-    console.log(url);
+
+
     return url;
 }
 
@@ -378,13 +388,11 @@ function loginUrl(form) {
  * @param failure
  */
 function apiUserLogin(form, success, failure) {
+
     $.ajax( loginUrl(form) )
         .done(function(res) {
-            if ( isBackendError(res) ) {
-                alert(res);
-            }
-            else {
-                setLogin(res);
+            if ( isBackendError(res) ) return alertError(res);
+            // console.log(res);
                 firebaseSignInWithCustomToken(res['firebase_custom_login_token'], function(user) {
                     if ( success ) success(res);
                     onUserLogin(res);
@@ -392,9 +400,10 @@ function apiUserLogin(form, success, failure) {
                     if ( failure ) failure(error);
                     else alertError(error);
                 });
-            }
+
         })
         .fail(ajaxFailure);
+    return false;
 }
 
 /**
@@ -419,8 +428,8 @@ function apiUserLogin(form, success, failure) {
 });
  * @endcode
  */
-function apiSocialLogin(uid, email, success, failure) {
-    $.ajax( apiUrl + '?route=user.socialLogin&firebase_uid=' + uid + '&email=' + email)
+function apiFirebaseSocialLogin(options, success, failure) {
+    $.ajax( apiUrl + '?route=user.firebaseSocialLogin&firebase_uid=' + options.uid + '&email=' + options.email + '&provider='+options.provider)
         .done(function(res) {
             if ( isBackendError(res) ) failure(res);
             else {
@@ -434,14 +443,16 @@ function apiSocialLogin(uid, email, success, failure) {
 
 /**
  * Login with session id.
- * @param sessionId
+ * @param res - result of userResponse()
  */
-function loginWithSessionId(session_id, nickname) {
-    setLogin({
-        session_id: session_id,
-        nickname: nickname,
-    })
+function loginWithUserResponse(res) {
+    firebaseSignInWithCustomToken(res['firebase_custom_login_token'], function(user) {
+        onUserLogin(res);
+    }, function(error) {
+        alertModal('Custom Token Login Failed', error);
+    });
 }
+
 
 
 /**

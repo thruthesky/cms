@@ -463,6 +463,9 @@ Array
   * Wordpress generates a custom token and returns it to user.
   * Then, the user can login with javascript.
 
+
+* If a user logged in(or registered) with social, they will have `social_login` metadata.
+
 #### Flowchart
 
 * Social login with Firebase ( Google, Facebook )

@@ -78,23 +78,25 @@ function loginFirebaseAuth( provider, domain, name ) {
         var user = result.user;
 
 
-        apiSocialLogin(user.uid, user.email, function(res) {
-            console.log('res: ', res);
-            setLogin(res);
-            move('/');
+        apiFirebaseSocialLogin({
+            uid: user.uid,
+            email: user.email,
+            provider: user.providerData[0]['providerId'],
         }, function(res) {
-            console.log('failure: ', res);
-            move('/?page=user.register');
-        });
+            move('/');
+        }, function(error) {
+            alertError(error);
+        })
+
+        // apiSocialLogin(user.uid, user.email, function(res) {
+        //     console.log('res: ', res);
+        //     setLogin(res);
+        // }, function(res) {
+        //     console.log('failure: ', res);
+        //     move('/?page=user.register');
+        // });
 
 
-        // console.log("result: ", result);
-        // success(user);
-        // location.href="?page=user.social-login.success&action=result&id=" + user.uid
-        //     + "&name=" + user.displayName
-        //     + "&profile_image=" + user.photoURL
-        //     + "&provider=" + domain
-        //     + "&provider_name=" + name;
 
     }).catch(function(error) {
         // Handle Errors here.
@@ -114,13 +116,4 @@ function loginFirebaseAuth( provider, domain, name ) {
 }
 
 
-
-function logoutKakao() {
-    if (Kakao.Auth.getAccessToken()) {
-        Kakao.Auth.logout(function() {
-            if ( Kakao.Auth.getAccessToken() ) console.log('Kakao logout failed');
-else            console.log('Kakao logout success');
-        });
-    }
-}
 

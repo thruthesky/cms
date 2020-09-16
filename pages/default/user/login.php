@@ -6,7 +6,7 @@
 
     <h1>Login page</h1>
 
-    <form class="login-form" onsubmit="apiUserLogin(this, openHome); return false;">
+    <form class="login-form" onsubmit="apiUserLogin(this); return false;">
         <div class="mb-3">
             <label class="form-label"><?=tr('emailAddress')?></label>
             <input type="email" class="form-control"aria-describedby="emailHelp" name="user_email">

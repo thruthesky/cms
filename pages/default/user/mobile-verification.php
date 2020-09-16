@@ -1,6 +1,16 @@
 <?php
+$options = get_page_options();
+
+
 
 ?>
+
+<?php if ( isset($options['mode']) && $options['mode'] == 'after-registration' ) { ?>
+    <div class="alert alert-info">
+        홈페이지를 이용하기 위해서 휴대 전화 인증을 해 주시기바랍니다.
+    </div>
+<?php } ?>
+
 <div id="register-page" class="container py-3">
     <div class="card">
         <div class="card-body">

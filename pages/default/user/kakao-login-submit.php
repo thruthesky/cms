@@ -26,6 +26,9 @@ $accessToken = json_decode( $loginResponse )->access_token; //Access Tokenë§Œ ë”
 //echo "<br><br> accessToken : " . $accessToken;
 
 
+
+
+
 ?>
 
 <script>
@@ -47,7 +50,6 @@ $accessToken = json_decode( $loginResponse )->access_token; //Access Tokenë§Œ ë”
 
                     apiUserLogin({user_email: kakao_account.email, user_pass: id}, function() {
                         logoutKakao();
-                        move('/');
                     }, function () {
                         move('/?page=user.register');
                     })

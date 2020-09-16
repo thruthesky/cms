@@ -71,6 +71,7 @@ function RegisterAuthPage() {
             sessionInfo: registerAuthPage.sessionInfo,
             code: code,
             mobile: mobile,
+            session_id: getUserSessionId()
         };
         codeBox.val('');
 
@@ -83,7 +84,7 @@ function RegisterAuthPage() {
                 if ( isBackendError(res) ) { // error on backend
                     return alertError(res);
                 }
-                move('/?page=user.register&mobile=' + mobile ); // success
+                move('/?page=user.register' ); // success
             })
             .fail(ajaxFailure);
     }

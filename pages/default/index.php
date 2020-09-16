@@ -53,7 +53,6 @@ if ( noLayout($_page_script) ) {
     include $_page_script;
 } else {
 
-
 ?>
 <?php include widget('header')?>
 <div class="container px-0">
@@ -83,7 +82,6 @@ if ( noLayout($_page_script) ) {
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
 <script src="<?php theme_url()?>/js/social-login.js?v=<?php echo Config::$appVersion?>"></script>
 
-<script src="<?php theme_url()?>/js/kakao.min.js"></script>
 
 <script src="<?php theme_url()?>/js/common.js?v=<?php echo Config::$appVersion?>"></script>
 

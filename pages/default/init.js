@@ -11,21 +11,16 @@ if ( loggedIn() ) {
     // console.log('User logged out');
 
 }
-$profile_photo
-    .html(getUploadedFileHtml({
-        thumbnail_url: myProfilePhotoUrl()
-    }));
 
+// TODO @bug. myProfilePhotoUrl() shouldn't returned string 'undefined'.
+const my_profile_photo_url = myProfilePhotoUrl();
+if ( my_profile_photo_url && my_profile_photo_url !== 'undefined' ) {
+    $profile_photo
+        .html(getUploadedFileHtml({
+            thumbnail_url: my_profile_photo_url
+        }));
+}
 // console.log('url:', myProfilePhotoUrl());
-
-
-/**
- * Kakao Api.
- * For Kakao login, it should be initialized every where.
- */
-Kakao.init('937af10cf8688bd9a7554cf088b2ac3e');
-Kakao.isInitialized();
-
 
 
 
