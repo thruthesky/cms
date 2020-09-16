@@ -16,7 +16,17 @@ $profile_photo
         thumbnail_url: myProfilePhotoUrl()
     }));
 
-console.log('url:', myProfilePhotoUrl());
+// console.log('url:', myProfilePhotoUrl());
+
+
+/**
+ * Kakao Login
+ */
+Kakao.init('937af10cf8688bd9a7554cf088b2ac3e');
+Kakao.isInitialized();
+
+
+
 
 function AppViewModel() {
     const self = this;
