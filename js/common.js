@@ -432,6 +432,17 @@ function apiSocialLogin(uid, email, success, failure) {
 }
 
 
+/**
+ * Login with session id.
+ * @param sessionId
+ */
+function loginWithSessionId(session_id, nickname) {
+    setLogin({
+        session_id: session_id,
+        nickname: nickname,
+    })
+}
+
 
 /**
  * Register or update

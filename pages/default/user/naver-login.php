@@ -52,7 +52,7 @@ if($status_code == 200) { // 성공
 		echo <<<EOS
 <script>
 $$(function() {
-    loginWithSessionId("{$res['session_id']}");
+    loginWithSessionId("{$res['session_id']}", "{$res['nickname']}");
 });
 </script>
 EOS;
