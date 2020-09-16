@@ -556,7 +556,7 @@ function CommentList() {
     self.render = function() {
         $(self.mount).empty();
         for(let i = 0; i < self.comments.length; i ++ ) {
-            $(self.mount).append(self.renderTemplate(self.comments[i]));
+            $(self.mount).append(self.renderCommentViewTemplate(self.comments[i]));
         }
     }
 
@@ -588,9 +588,9 @@ function CommentList() {
             .done(function(res) {
                 // console.log(res);
                 if ( isBackendError(res) ) return alertBackendError(res);
-                console.log(res);
-                commentList.insert(res);
-
+                console.log('data:', data, res);
+                if ( data['comment_ID'] ) commentList.update(res);
+                else commentList.insert(res);
             })
             .fail(ajaxFailure);
 
@@ -617,6 +617,7 @@ function CommentList() {
         // console.log('comment:', comment);
 
         const content = comment['comment_content'] ? comment['comment_content'] : '';
+        const comment_ID = comment['comment_ID'] ? comment['comment_ID'] : '';
 
         let temp = '' +
             '<div class="input-box" id="'+self.id(comment)+'">' +
@@ -624,7 +625,7 @@ function CommentList() {
             '<input type="hidden" name="route" value="comment.edit">' +
             '<input type="hidden" name="comment_post_ID" value="'+comment['comment_post_ID']+'">' +
             '<input type="hidden" name="comment_parent" value="'+comment['comment_parent']+'">' +
-            '<input type="hidden" name="comment_ID" value="'+comment['comment_ID']+'">' +
+            '<input type="hidden" name="comment_ID" value="'+comment_ID+'">' +
             '<div class="form-group row no-gutters">' +
             '<div class="upload-button position-relative overflow-hidden">' +
             '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentList.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
@@ -670,26 +671,24 @@ function CommentList() {
     }
 
     self.insert = function(comment) {
-        console.log(comment);
          if ( comment['comment_parent'] === '0' ) {
+             console.log('first depth:', comment);
+             comment['depth'] = 1;
             self.comments.push(comment);
         } else {
-
-            /// TODO searching dom is not a good way.
-             const depth = $('#comment' + comment['comment_parent']).find('.display').data('depth');
-
-            /// TODO - double check this code.
-             const commentBox = $('#comment' + comment['comment_ID']);
-             if (commentBox.length) { // Update
-                 const i = self.comments.map(function(e) {return e.comment_ID;}).indexOf(comment.comment_ID);
-                 comment['depth'] = depth;
-                 self.comments.splice(i, 1, comment);
-             }  else {
-                 const i = self.comments.map(function(e) {return e.comment_ID;}).indexOf(comment.comment_parent);
-                 comment['depth'] = depth + 1;
-                 self.comments.splice(i+1, 0, comment);
-             }
+             const parent = self.getComment(comment['comment_parent']);
+             comment['depth'] = 0;
+             if ( parent ) comment['depth'] = parent['depth'] + 1;
+             console.log('comment: ', comment);
+             self.comments.splice(parent['index']+1, 0, comment);
         }
+        self.render();
+    }
+
+    self.update = function(comment) {
+        console.log('self.update: ', comment);
+        const found = self.getComment(comment.comment_ID);
+        Object.assign(found, comment);
         self.render();
     }
 
@@ -709,10 +708,23 @@ function CommentList() {
     }
 
 
+    /**
+     * Return comment object from self.comments.
+     * @param comment_ID
+     * @returns {null|*}
+     *  null if comment not exists.
+     */
     self.getComment = function(comment_ID) {
-        /// TODO Performance improvement. This is going to loop the whole array. Make it stop after finding the element.
-        const i = self.comments.map(function(e) { return e.comment_ID; }).indexOf(comment_ID + '');
+
+        const i = self.indexOfComment(comment_ID);
+
+
         // const i = self.indexOfComment(comment_ID);
+        if ( i === -1 ) return null;
+
+
+        /// @attention put an index of the comments array.
+        self.comments[i]['index'] = i;
         return self.comments[i];
     }
 
@@ -724,7 +736,6 @@ function CommentList() {
      */
     self.indexOfComment = function (comment_ID) {
         for (let i = 0, len = self.comments.length; i < len; i++) {
-            // console.log('loop', self.comments[i].comment_ID , comment_ID +'');
             if (self.comments[i].comment_ID === comment_ID +'') return i;
         }
         return -1;
@@ -749,7 +760,7 @@ function CommentList() {
 
         return t.replace(r, value);
     }
-    self.renderTemplate = function(comment) {
+    self.renderCommentViewTemplate = function(comment) {
         let t = self.commentViewTemplate;
 
 
@@ -758,13 +769,13 @@ function CommentList() {
         let fts = [];
         if ( typeof comment['files'] !== 'undefined' ) {
             for( let file of comment['files'] ) {
-                // let ft = html;
-                // ft = self.replaceTag('ID', file['ID'], ft);
-                // ft = self.replaceTag('name', file['name'], ft);
-                // ft = self.replaceTag('url', file['url'], ft);
-                // ft = self.replaceTag('thumbnail_url', file['thumbnail_url'], ft);
+                let ft = html;
+                ft = self.replaceTag('ID', file['ID'], ft);
+                ft = self.replaceTag('name', file['name'], ft);
+                ft = self.replaceTag('url', file['url'], ft);
+                ft = self.replaceTag('thumbnail_url', file['thumbnail_url'], ft);
 
-                let ft = getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'});
+                // let ft = getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'});
                 fts.push(ft);
             }
         }
