@@ -577,9 +577,6 @@ function CommentList() {
             .done(function(res) {
                 // console.log(res);
                 if ( isBackendError(res) ) return alertBackendError(res);
-                /// TODO searching dom is not a good way.
-                res['depth'] = $('#comment' + data['comment_parent']).find('.display').data('depth') + 1;
-
                 console.log(res);
                 commentList.insert(res);
 
@@ -602,12 +599,15 @@ function CommentList() {
 
     }
     self.id = function(comment) {
+        console.log('comment.comment_parent', comment.comment_parent);
         return 'input-box' + (typeof comment.comment_parent === 'undefined' ? '0' : comment.comment_parent);
     }
     self.commentBoxTemplate = function(comment) {
-        console.log('comment:', comment);
+        // console.log('comment:', comment);
 
-        const temp = '' +
+        const content = comment['comment_content'] ? comment['comment_content'] : '';
+
+        let temp = '' +
             '<div class="input-box" id="'+self.id(comment)+'">' +
             '<form onsubmit="return commentList.submit(this);">' +
             '<input type="hidden" name="route" value="comment.edit">' +
@@ -620,7 +620,7 @@ function CommentList() {
             '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
             '</div><!--/.uploda-button-->' +
             '<div class="col mr-3">' +
-            '<textarea class="form-control" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1"></textarea>' +
+            '<textarea class="form-control" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">'+ content +'</textarea>' +
             '</div>' +
             '<div class="send-button col-1">' +
             '<button type="submit" class="btn btn-outline-dark">' +
@@ -629,9 +629,11 @@ function CommentList() {
             '</div><!--/.send-button-->' +
             '</div><!--/.form-group-->' +
             '</form>' +
-
             '<div class="container">' +
             '   <div class="row files">' +
+            '<!--loop files-->' +
+            '<!--files will be here>' +
+            '<!--/loop-->' +
             '   </div><!--/.row-->' +
             '</div><!--/.container-->' +
             '<div class="progress mb-3" style="display: none">' +
@@ -639,21 +641,46 @@ function CommentList() {
             '</div><!--/.progress-->' +
             '</div><!--/.input-box-->';
 
+
+
+        const html = temp.split('<!--loop files-->').pop().split('<!--/loop-->').shift();
+        let fts = [];
+        if ( typeof comment['files'] !== 'undefined' ) {
+            for( let file of comment['files'] ) {
+                let ft = getUploadedFileHtml(file, {deleteButton: true, extraClasses: 'col-4 col-sm-3'});
+                fts.push(ft);
+            }
+        }
+        const file_str = fts.join('');
+        temp = temp.replace(html, file_str);
+
         // console.log('temp: ', temp);
         return temp;
     }
 
     self.insert = function(comment) {
         console.log(comment);
-        if ( comment['comment_parent'] === '0' ) {
-
+         if ( comment['comment_parent'] === '0' ) {
             self.comments.push(comment);
         } else {
+
+            /// TODO searching dom is not a good way.
+             const depth = $('#comment' + comment['comment_parent']).find('.display').data('depth') + 1;
+
             /// TODO - double check this code.
-            console.log('insert', self.comments);
-            const i = self.comments.map(function(e) {return e.comment_ID;}).indexOf(comment.comment_parent);
-            console.log(i);
-            self.comments.splice(i+1, 0, comment);
+
+             const commentBox = $('#comment' + comment['comment_ID']);
+             if (commentBox.length) { // Update
+                 console.log('update');
+                 const i = self.comments.map(function(e) {return e.comment_ID;}).indexOf(comment.comment_ID);
+                 self.comments.splice(i, 1, comment);
+                 comment['depth'] = depth;
+             }  else {
+                 console.log('new comment');
+                 const i = self.comments.map(function(e) {return e.comment_ID;}).indexOf(comment.comment_parent);
+                 comment['depth'] = depth + 1;
+                 self.comments.splice(i+1, 0, comment);
+             }
         }
         self.render();
     }
@@ -666,8 +693,11 @@ function CommentList() {
                 comment_parent: comment.comment_ID,
                 comment_post_ID: comment.comment_post_ID,
             };
+            if($("#" + self.id(comment)).length) return false;
+        } else if ( mode === 'edit' ) {
+            $(el).empty();
+             return $(el).append(self.commentBoxTemplate(comment));
         }
-        if($("#" + self.id(comment)).length) return false;
         $(el).append(self.commentBoxTemplate(comment));
     }
 
@@ -684,7 +714,12 @@ function CommentList() {
     }
     self.editComment = function(comment_ID) {
         const comment = self.getComment(comment_ID);
-        console.log(comment);
+        console.log('editComment:', comment);
+        self.appendCommentBox('#comment' + comment_ID, comment, 'edit');
+    }
+
+    self.hide =function (comment_ID) {
+
     }
     self.replaceTag = function(tag, value, t) {
 

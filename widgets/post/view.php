@@ -53,7 +53,7 @@ $slug = $post['slug'];
                 <?php
                 if($post['post_author'] == userId()) { ?>
                     <a class="btn btn-primary btn-sm mr-1" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
-                    <button class="btn btn-primary btn-sm mr-1" onclick="onPostDelete(<?=$post['ID']?>, <?=$slug?>)">Delete</button>
+                    <button class="btn btn-primary btn-sm mr-1" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</button>
                 <?php } ?>
             </div>
             <?php
