@@ -115,3 +115,12 @@ function loginFirebaseAuth( provider, domain, name ) {
 
 
 
+function logoutKakao() {
+    if (Kakao.Auth.getAccessToken()) {
+        Kakao.Auth.logout(function() {
+            if ( Kakao.Auth.getAccessToken() ) console.log('Kakao logout failed');
+else            console.log('Kakao logout success');
+        });
+    }
+}
+

@@ -363,7 +363,9 @@ function onUserLogin() {
  * @returns {string}
  */
 function loginUrl(form) {
-    var url = apiUrl + '?route=user.login&' + $( form ).serialize();
+    var url = apiUrl + '?route=user.login&';
+    if ( typeof form['user_email'] ) url += 'user_email=' + form['user_email'] +'&user_pass=' + form['user_pass'];
+    else url += $( form ).serialize();
     console.log(url);
     return url;
 }
@@ -373,8 +375,9 @@ function loginUrl(form) {
  * Email and Password login to Wordpress.
  * @param form
  * @param success
+ * @param failure
  */
-function apiUserLogin(form, success) {
+function apiUserLogin(form, success, failure) {
     $.ajax( loginUrl(form) )
         .done(function(res) {
             if ( isBackendError(res) ) {
@@ -386,8 +389,8 @@ function apiUserLogin(form, success) {
                     if ( success ) success(res);
                     onUserLogin(res);
                 }, function(error) {
-                    alertError(error);
-                    hideLoader();
+                    if ( failure ) failure(error);
+                    else alertError(error);
                 });
             }
         })
@@ -752,3 +755,5 @@ function onCommentEditText($this) {
 function sendEvent(name, obj) {
     obj.dispatchEvent(new CustomEvent(name, obj));
 }
+
+

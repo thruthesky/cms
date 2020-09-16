@@ -269,6 +269,11 @@ class ApiLibrary {
      * @param $in
      *  - You can add any data(meta) on registration and update.
      * @return array|string
+     *
+     * @code
+     *      $res = lib()->userRegister(['user_email' => 'myeamil@gmail.com', 'user_pass' => '134123423']);
+     *      dog($res)
+     * @endcode
      */
     public function userRegister($in) {
 
@@ -278,7 +283,7 @@ class ApiLibrary {
 
 
 
-        /// For firebase social login,
+        /// For firebase social login, `user_pass` is empty.
         if ( in(FIREBASE_UID) ) {
 	        if ( $this->firebase_uid_exists(in(FIREBASE_UID)) ) {
 		        return ERROR_FIREBASE_UID_EXISTS;
@@ -297,17 +302,15 @@ class ApiLibrary {
         if (get_user_by('email', $in['user_email'])) return ERROR_EMAIL_EXISTS;
 
 
-        /// TODO mobile number must be verified.
-        /// TODO mobile number must be unique.
 
-        if (!isset($in['mobile']) || empty($in['mobile'])) return ERROR_MOBILE_EMPTY;
-        if ( Config::$verifiedMobileOnly && !$this->mobile_already_verified($in['mobile']) ) {
-        	return ERROR_MOBILE_NOT_VERIFIED;
-        }
-
-        if ( Config::$uniqueMobile && $this->mobile_already_exists($in['mobile']) ) {
-            return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
-        }
+//        if (!isset($in['mobile']) || empty($in['mobile'])) return ERROR_MOBILE_EMPTY;
+//        if ( Config::$verifiedMobileOnly && !$this->mobile_already_verified($in['mobile']) ) {
+//        	return ERROR_MOBILE_NOT_VERIFIED;
+//        }
+//
+//        if ( Config::$uniqueMobile && $this->mobile_already_exists($in['mobile']) ) {
+//            return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
+//        }
 
 
         ////
@@ -365,9 +368,16 @@ class ApiLibrary {
     }
 
 
-
-
-
+	/**
+	 * @param $in
+	 *
+	 * @return array|string|null
+	 *
+	 * @code
+	 *      $res = lib()->userLogin(['user_email' => 'myeamil@gmail.com', 'user_pass' => '134123423']);
+	 *      dog($res);
+	 * @endcode
+	 */
     public function userLogin($in)
     {
         if (!$in['user_email']) return ERROR_EMAIL_IS_EMPTY;
@@ -1245,10 +1255,6 @@ public function userVerifyPhoneVerificationCode($in)
 		    return false;
 	    }
     }
-
-
-
-
 
 
 

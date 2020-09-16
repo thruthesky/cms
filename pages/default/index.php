@@ -44,16 +44,24 @@ if ( localhost() ) {
     <title>Hello, world!</title>
     <?=$__head_script?>
 </head>
+
 <body data-page="<?=in('page', 'home')?>">
 
-<?php include widget('header')?>
+<?php
+$_page_script = page();
+if ( noLayout($_page_script) ) {
+    include $_page_script;
+} else {
 
+
+?>
+<?php include widget('header')?>
 <div class="container px-0">
     <div class="row no-gutters">
         <div class="col">
             <main class="mr-lg-4">
                 <?php
-                include page();
+                include $_page_script;
                 ?>
             </main>
         </div>
@@ -62,10 +70,8 @@ if ( localhost() ) {
         </div>
     </div>
 </div>
-
 <?php widget('footer')?>
-
-
+<? } ?>
 
 <!-- JavaScript -->
 <script src="<?php theme_url()?>/js/jquery-3.5.1-min.js"></script>

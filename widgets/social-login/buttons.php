@@ -8,28 +8,16 @@
         />
     </a>
 
+    <a href="<?php echo Config::$naverApiURL ?>"><img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/></a>
+
+
 </div>
 
 
-<p id="token-result"></p>
 <script type="text/javascript">
     function loginWithKakao() {
         Kakao.Auth.authorize({
-            redirectUri: fullThemeUrl + '/php/kakao-login.php'
+            redirectUri: homeUrl + "/?page=user.kakao-login-submit"
         })
-    }
-    // 아래는 데모를 위한 UI 코드입니다.
-    getToken()
-    function getToken() {
-        const token = getCookie('authorize-access-token')
-        if(token) {
-            Kakao.Auth.setAccessToken(token)
-            document.getElementById('token-result').innerText = 'login success. token: ' + Kakao.Auth.getAccessToken()
-        }
-    }
-    function getCookie(name) {
-        const value = "; " + document.cookie;
-        const parts = value.split("; " + name + "=");
-        if (parts.length === 2) return parts.pop().split(";").shift();
     }
 </script>
