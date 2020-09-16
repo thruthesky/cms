@@ -27,15 +27,6 @@ if ( $post ) {
 }
 ?>
 
-<!--<comment-input-box params="value: {-->
-<!--    comment_post_ID: '--><?//=$comment_post_ID??''?><!--',-->
-<!--    comment_parent_ID: '--><?//=$comment_parent_ID??''?><!--',-->
-<!--    comment_ID: '--><?//=$comment_ID??''?><!--',-->
-<!--    comment_content: '--><?//=$comment_content??''?><!--',-->
-<!--    files: [],-->
-<!--    always: true-->
-<!--}"></comment-input-box>-->
-
 <div id="comment-input-box-under-post"></div>
 <script>
     $$(function() {

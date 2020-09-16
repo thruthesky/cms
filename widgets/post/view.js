@@ -113,10 +113,10 @@ function onPostDelete(ID, slug) {
 /**
  * Patch depth based on the parent's comment. or the comment itself if it's for update.
  */
-function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0) {
-    var depth = parentElement.find('.display').data('depth') + incrementBy;
-    return html.replace('data-depth="1"', 'data-depth="' + depth + '"');
-}
+// function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0) {
+//     var depth = parentElement.find('.display').data('depth') + incrementBy;
+//     return html.replace('data-depth="1"', 'data-depth="' + depth + '"');
+// }
 
 
 /**
@@ -157,12 +157,6 @@ function onCommentCreateOrUpdateApplyDepth(html, parentElement, incrementBy = 0)
 //     return false;
 // }
 
-
-
-
-function onCommentEditText($this) {
-    $($this).attr('rows', 4);
-}
 
 
 function onClickLike(ID, choice , route = 'post'){
