@@ -12,7 +12,7 @@ class Config {
 
     /// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
 	/// This is only for web registration.
-    static public $verifyMobileOnRegistration = false;
+    static public $verifyMobileOnRegistration = true;
 
     /// If it is set to true and if user has no mobile in his meta data, the user will be redirected to mobile phone verification.
 	/// This is both Social login and Web registration.
