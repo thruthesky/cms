@@ -88,6 +88,9 @@ class Config {
     static public function setPage($page) {
     	self::$page = $page;
     }
+
+
+    static public $firebaseEmailAddressFormat = "ID{ID}@sonub.com";
 }
 
 Config::$naverRedirectURI =  urlencode(Config::$naverRedirectURI);

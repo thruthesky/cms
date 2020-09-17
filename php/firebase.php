@@ -13,7 +13,8 @@ function firebase() {
 }
 
 function firebaseEmailAddress($user_ID) {
-	return "ID$user_ID@wordpress.com";
+	return str_replace("{ID}", $user_ID, Config::$firebaseEmailAddressFormat);
+//	return "ID$user_ID@wordpress.com";
 }
 
 /**
