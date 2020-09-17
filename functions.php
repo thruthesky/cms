@@ -19,6 +19,8 @@ if ( isset($_REQUEST['route'])) {
 
 
 require __DIR__.'/vendor/autoload.php';
+$release_date_stamp = trim(file_get_contents(__DIR__ . '/etc/release-date-stamp.txt'));
+define('RELEASE_DATE_STAMP', $release_date_stamp);
 
 
 require 'php/defines.php';
