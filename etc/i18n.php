@@ -108,6 +108,16 @@ $__i18n = [
 	ERROR_FIREBASE_UID_EXISTS => [
 		ko => '현재 소셜 계정은 이미 가입되어져 있습니다.',
 		en => 'You have already registered with this social account.'
+	],
+	'profile update' => [
+		ko => '회원 정보 수정',
+		en => 'Profile update',
+		javascript => true
+	],
+	'profile update success' => [
+		ko => '회원 정보 수정을 하였습니다.',
+		en => 'Your profile has been updated.',
+		javascript => true
 	]
 
 

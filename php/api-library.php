@@ -431,6 +431,7 @@ class ApiLibrary {
 	 * This updates user information.
 	 *
 	 * @warning API call only.
+	 * @warning This method cannot update mobile number. There must be another method to update mobile number.
 	 *
 	 * @note it gets user input data from $_REQUEST and update the user.
 	 *
@@ -444,7 +445,10 @@ class ApiLibrary {
 	public function userUpdate($in)
 	{
 
-		if (!isset($in['session_id'])) $this->error(ERROR_EMPTY_SESSION_ID);
+		if (!isset($in['session_id'])) return ERROR_EMPTY_SESSION_ID;
+		if (isset($in['mobile']) ) return ERROR_MOBILE_CANNOT_BE_CHANGED_ON_UPDATE; // Mobile phone number cannot be changed on update.
+
+
 
 
 		/**

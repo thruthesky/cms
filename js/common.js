@@ -486,7 +486,7 @@ function ajaxFailure() {
 }
 
 function tr(code) {
-    return __i18n[code];
+    return __i18n[code] ? __i18n[code] : code;
 }
 function alertBackendError(res) {
     // alert(tr('Error') + "\n\n" + res);
@@ -824,6 +824,24 @@ function onCommentEditText($this) {
 // create and dispatch the event
 function sendEvent(name, obj) {
     obj.dispatchEvent(new CustomEvent(name, obj));
+}
+
+/**
+ * Bootstrap toast
+ * @param title
+ * @param subtitle
+ * @param body
+ * @code
+    $$(function(){
+        toast(tr('appName'), '성공', '회원 정보를 수정하였습니다. 감사합니다. 그럼, 안녕히. 아하하하하. 한줄로만 되나요?');
+    });
+ * @endcode
+ */
+function toast(title, subtitle, body) {
+    $('.toast .title').text(title);
+    $('.toast .subtitle').text(subtitle);
+    $('.toast-body').text(body);
+    $('.toast').toast('show');
 }
 
 

@@ -33,7 +33,10 @@ function onRegisterFormSubmit() {
                 });
             }
         } else {
-            alertModal(tr('appName'), 'Profile update success!');
+            toast(tr('profile update'), '', tr('profile update success'))
+            setTimeout(function() {
+                hideLoader();
+            }, 1000);
         }
     }, function(res) {
         showLoader();

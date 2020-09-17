@@ -47,8 +47,7 @@
 
     </div>
 
-    <div class="alert alert-secondary">
-        logged in with <?=login(SOCIAL_LOGIN)?>
-    </div>
+	<?php include widget('user.logged-with') ?>
+
 </div>
 
