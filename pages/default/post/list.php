@@ -2,6 +2,5 @@
 if ( !forum('cat_ID') ) {
 	return include page('error.wrong-input');
 }
-dog(forum(POST_LIST_THEME, 'post.list'));
-include widget(forum(POST_LIST_THEME));
+include widget(forum(POST_LIST_THEME, 'post.list'));
 
