@@ -28,9 +28,6 @@ if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
                         })
                     </script>
                 <?php } ?>
-<!--	            --><?php //if ( Config::$verifyMobileOnRegistration ) { ?>
-<!--                <input type="hidden" name="mobile" value="--><?//=urlencode(in('mobile'))?><!--">-->
-<!--                --><?php //} ?>
                 <? include 'form-profile-photo.php'?>
 
 
@@ -55,7 +52,6 @@ if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
 	            <?php } ?>
 
 
-
                 <div class="mt-3">
                     <label for="fullname" class="form-label"><?=tr('name')?></label>
                     <input type="text" class="form-control" id="fullname" name="fullname" value="<?=login('fullname')?>">
@@ -67,15 +63,13 @@ if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
                 </div>
 
 
-<!--                --><?php //if ( Config::$verifyMobileOnRegistration === false ) { ?>
-<!--                <div class="mt-3">-->
-<!--                    <label class="form-label">--><?//=tr('mobile')?><!--</label>-->
-<!--                    <input type="text" class="form-control" name="mobile"  value="--><?//=login('mobile')?><!--">-->
-<!--                </div>-->
-<!--                --><?php //} ?>
+                <div class="mt-3">
+                    <label class="form-label"><?=tr('mobile')?></label>
+                    <div><?=login('mobile')?></div>
+                </div>
 
                 <hr>
-                <button class="btn btn-primary w-100" type="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
+                <button class="btn btn-primary w-100" type="submit" role="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
             </form>
 
             <div class="mt-3" role="loader" style="display: none;">
