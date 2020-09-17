@@ -27,18 +27,6 @@
     }
     ?>
 
-<!--    <div class="form-group">-->
-<!--        <label for="form-name">Display Name</label>-->
-<!--        <input type="text" name="name" class="form-control" id="form-name" value="--><?//=$cat->name?><!--">-->
-<!--    </div>-->
-
-<!--    <div class="form-group">-->
-<!--        <label for="form-description">Description</label>-->
-<!--        <input type="text" name="description" class="form-control" id="form-description" value="--><?//=$cat->description?><!--">-->
-<!--    </div>-->
-
-
-
 
     <?=form_input(['label' => 'Display Name', 'name' => 'name', 'value' => forum('name')])?>
     <?=form_input(['label' => 'Description', 'name' => 'description', 'value' => forum('description')])?>
@@ -77,11 +65,24 @@
     </div>
 
     <div class="form-group form-check">
-        <input name="post_show_vote" value="Y" type="checkbox" class="form-check-input" id="post-show-vote"
-
-        <?php if ( forum(POST_SHOW_POST) == 'Y' ) echo 'checked'?>
-        >
-        <label class="form-check-label" for="form-list-under-view">Display post like and dislike button .</label>
+        <input name="<?=POST_SHOW_LIKE?>" value="Y" type="checkbox" class="form-check-input" id="<?=POST_SHOW_LIKE?>"
+        <?php if ( forum(POST_SHOW_LIKE) == 'Y' ) echo 'checked'?> >
+        <label class="form-check-label" for="<?=POST_SHOW_LIKE?>">Display Like button on Post view.</label>
+    </div>
+    <div class="form-group form-check">
+        <input name="<?=POST_SHOW_DISLIKE?>" value="Y" type="checkbox" class="form-check-input" id="<?=POST_SHOW_DISLIKE?>"
+        <?php if ( forum(POST_SHOW_DISLIKE) == 'Y' ) echo 'checked'?> >
+        <label class="form-check-label" for="<?=POST_SHOW_DISLIKE?>">Display Dislike button on Post view.</label>
+    </div>
+    <div class="form-group form-check">
+        <input name="<?=COMMENT_SHOW_LIKE?>" value="Y" type="checkbox" class="form-check-input" id="<?=COMMENT_SHOW_LIKE?>"
+        <?php if ( forum(COMMENT_SHOW_LIKE) == 'Y' ) echo 'checked'?> >
+        <label class="form-check-label" for="<?=COMMENT_SHOW_LIKE?>">Display Like button on Comment view.</label>
+    </div>
+    <div class="form-group form-check">
+        <input name="<?=COMMENT_SHOW_DISLIKE?>" value="Y" type="checkbox" class="form-check-input" id="<?=COMMENT_SHOW_DISLIKE?>"
+        <?php if ( forum(COMMENT_SHOW_DISLIKE) == 'Y' ) echo 'checked'?> >
+        <label class="form-check-label" for="<?=COMMENT_SHOW_DISLIKE?>">Display Dislike button on Comment view.</label>
     </div>
 
 

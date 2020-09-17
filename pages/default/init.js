@@ -346,39 +346,39 @@ ko.applyBindings($app);
 
 
 
+//
+// function submitPostEditDone(re) {
+//     if ( isBackendError(re) ) {
+//         return alertBackendError(re);
+//     }
+//     move(re['guid']);
+// }
+//
 
-function submitPostEditDone(re) {
-    if ( isBackendError(re) ) {
-        return alertBackendError(re);
-    }
-    move(re['guid']);
-}
 
-
-
-function progress(progress,e){
-
-    // console.log('progress: ', progress);
-    // console.log('e: ', e);
-
-    if(e.lengthComputable){
-        const max = e.total;
-        const current = e.loaded;
-
-        let Percentage = Math.round((current * 100) / max);
-        // console.log(Percentage);
-
-        if(Percentage >= 100)
-        {
-            // process completed
-            progress.find('.progress-bar').width(0+'%');
-
-        } else {
-            // console.log(Percentage);
-            progress.find('.progress-bar').width(Percentage+'%')
-        }
-    }
-}
+// function progress(progress,e){
+//
+//     // console.log('progress: ', progress);
+//     // console.log('e: ', e);
+//
+//     if(e.lengthComputable){
+//         const max = e.total;
+//         const current = e.loaded;
+//
+//         let Percentage = Math.round((current * 100) / max);
+//         // console.log(Percentage);
+//
+//         if(Percentage >= 100)
+//         {
+//             // process completed
+//             progress.find('.progress-bar').width(0+'%');
+//
+//         } else {
+//             // console.log(Percentage);
+//             progress.find('.progress-bar').width(Percentage+'%')
+//         }
+//     }
+// }
 
 
 

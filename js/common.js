@@ -229,13 +229,15 @@ function getUploadedFileHtml(file, options = {}) {
  */
 function onChangeFile($box, options={}) {
 
-    // console.log('options', options);
+    console.log('onChangeFile::options', $box);
 
     let formData = new FormData();
 
     formData.append('session_id', getUserSessionId());
     formData.append('route', 'file.upload');
     formData.append('userfile', $box.files[0]);
+
+    console.log($box.files[0]);
 
     const $progress = options['progress'];
     if ($progress) { $progress.show(); }
@@ -321,6 +323,7 @@ function progress(progress,e){
 }
 
 function onClickDeleteFile(ID) {
+
     let data = {route: 'file.delete', ID: ID, session_id: getUserSessionId()};
     $.ajax( {
         method: 'GET',
@@ -855,4 +858,32 @@ function toast(title, subtitle, body) {
     $('.toast').toast('show');
 }
 
+submitPostEdit = function(form) {
+    const data = objectifyForm(form);
+    data['session_id'] = getUserSessionId();
+    const files = $(form).parent().find('.files').children();
+    if (files.length) {
+        let file_ids = '';
+        $.each(files, function (index, item) {
+            file_ids += $(item).data('file-id') + ',';
+        });
+        data['files'] = file_ids;
+    }
+
+    $.ajax( {
+        method: 'POST',
+        url: apiUrl,
+        data: data
+    } )
+        .done(submitPostEditDone)
+        .fail(ajaxFailure);
+};
+
+
+function submitPostEditDone(re) {
+    if ( isBackendError(re) ) {
+        return alertBackendError(re);
+    }
+    move(re['guid']);
+}
 
