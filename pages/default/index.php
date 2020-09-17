@@ -42,10 +42,10 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-    <?=$__head_script?>
+    <?php echo $__head_script?>
 </head>
 
-<body data-page="<?=in('page', 'home')?>">
+<body data-page="<?php echo in('page', 'home')?>">
 
 <?php
 $_page_script = page();
@@ -83,7 +83,7 @@ if ( noLayout($_page_script) ) {
         </div>
         <div class="toast-body"></div>
     </div>
-<? } ?>
+<?php } ?>
 
 <!-- JavaScript -->
 <script src="<?php theme_url()?>/js/jquery-3.5.1-min.js"></script>

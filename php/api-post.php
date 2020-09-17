@@ -126,6 +126,9 @@ class ApiPost extends ApiLibrary
 
         if (!isset($in['post_title'])) return ERROR_NO_POST_TITLE_PROVIDED;  // required?
 
+//dog(wp_get_current_user()->to_array());
+
+
 
         $data = [
             'post_author' => login('ID'),
@@ -135,7 +138,7 @@ class ApiPost extends ApiLibrary
         ];
 
 
-        if ($in['ID']) {  // update
+        if (isset($in['ID']) && $in['ID']) {  // update
             if (!$this->isMyPost($in['ID'])) return ERROR_NOT_YOUR_POST; // verify if you own the post
             $post = get_post($in['ID'], ARRAY_A);
             $data['ID'] = $in['ID'];
