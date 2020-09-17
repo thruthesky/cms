@@ -492,9 +492,15 @@ function getCommentProfilePhotoUrl($comment) {
 
 function getPhotoUrl($data, $key) {
     if (!$key) ANONYMOUS_PROFILE_PHOTO;
-    $url = $data[$key];
-    if ($url) return $url;
-    else return ANONYMOUS_PROFILE_PHOTO;
+
+    if(isset($data[$key]) && !empty($data[$key])) {
+        return $data[$key];
+    } else return ANONYMOUS_PROFILE_PHOTO;
+
+
+//    $url = $data[$key];
+//    if ($url) return $url;
+//    else return ANONYMOUS_PROFILE_PHOTO;
 }
 
 /**
