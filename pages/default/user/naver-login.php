@@ -39,23 +39,11 @@ if($status_code == 200) { // 성공
 	if($status_code == 200) { // 사용자 정보 가져오기 성공
 
 		$res = json_decode($response, true);
-		$email = $res['response']['email'];
-		$id = $res['response']['email'];
+		$id = $res['response']['id'];
+		$email = isset($res['response']['email']) ? $res['response']['email'] : 'ID' . $id . '@naver.com';
 
-		$res = lib()->userLogin(['user_email' => $email, 'user_pass' => $id]);
-		if ( isBackendError($res) ) {
-			$res = lib()->userRegister(['user_email' => $email, 'user_pass' => $id]);
-			if ( isBackendError($res) ) {
-				echo tr($res);
-			}
-		}
-		echo <<<EOS
-<script>
-$$(function() {
-    loginWithSessionId("{$res['session_id']}");
-});
-</script>
-EOS;
+		loginOrRegisterBySocialLogin($email, $id, NAVER);
+
 
 	} else {
 		echo "Error 내용:".$response;
@@ -64,3 +52,5 @@ EOS;
 } else {
 	echo "Error 내용:".$response;
 }
+
+

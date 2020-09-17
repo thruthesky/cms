@@ -1,5 +1,4 @@
 <?php
-$user = $apiLib->userResponse(sessionID());
 
 ?>
 <div class="container py-3">
@@ -10,16 +9,20 @@ $user = $apiLib->userResponse(sessionID());
             <div class="d-flex justify-content-center mb-3">
                 <img class="userPhoto circle w-100 wh120x120" src="<?=myProfilePhotoUrl()?>" alt="user photo">
             </div>
+
+            <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
             <div class="form-group row">
                 <label for="user_email" class="col-sm-2 col-form-label">Email</label>
                 <div class="col-sm-10">
                     <input type="text" readonly class="form-control-plaintext" id="user_email" value="<?=login('user_email')?>">
                 </div>
             </div>
+            <?php } ?>
+
             <div class="form-group row">
-                <label for="full_name" class="col-sm-2 col-form-label">Full Name</label>
+                <label for="fullname" class="col-sm-2 col-form-label"><?=tr('name')?></label>
                 <div class="col-sm-10">
-                    <input type="text" readonly class="form-control-plaintext" id="full_name" value="<?=login('first_name')?> <?=login('middle_name')?> <?=login('last_name')?>">
+                    <input type="text" name="fullname" class="form-control-plaintext" id="fullname" value="<?=login('fullname')?>">
                 </div>
             </div>
             <div class="form-group row">
@@ -42,6 +45,10 @@ $user = $apiLib->userResponse(sessionID());
             </div>
         </div>
 
+    </div>
+
+    <div class="alert alert-secondary">
+        logged in with <?=login(SOCIAL_LOGIN)?>
     </div>
 </div>
 

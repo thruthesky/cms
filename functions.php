@@ -128,14 +128,17 @@ function lib() {
  */
 $__included_files = [];
 
-
+/**
+ * For page option. It must be here.
+ */
+$__page_options = [];
 
 /**
  * Global user's API profile information.
  * This is the login user's profile information that should be used for profile update.
  */
 
-$__user = $apiLib->userResponse(sessionID());
+$__user = $apiLib->userResponse(loginSessionID());
 
 /**
  * Set the user logged into Wordpress if the user logged in with cookie.
@@ -162,7 +165,21 @@ if ( API_CALL || isCommandLineInterface() ) {
 else {
     /** Do Website Call init */
     if ( localhost() ) live_reload();
+
+
+    // mobile check
+	if ( loggedIn() ) {
+		if ( Config::$mobileRequired && login('mobile') == null ) {
+			if ( strpos(in('page'), 'logout') === false )
+			Config::setPage('user.mobile-verification');
+			set_page_options(['mode' => 'after-registration']);
+		}
+	}
+
+
+    //
     get_forum_setting();
+
 }
 
 
@@ -207,11 +224,12 @@ EOH;
 }
 
 
-
-$__page_options = null;
-function set_page_options($options) {
+/**
+ * @param array $options
+ */
+function set_page_options($options=[]) {
     global $__page_options;
-    $__page_options = $options;
+    $__page_options = array_merge($__page_options, $options);
 }
 function get_page_options() {
     global $__page_options;
@@ -222,6 +240,8 @@ function get_page_options() {
  * Return PHP script path based on the URL input `page`.
  *
  * @param null $page
+ * @param array $options
+ *
  * @return string
  *
  * http://domain.com/ => pages/home/home.php
@@ -233,7 +253,7 @@ function get_page_options() {
  *  include page('user.register'); /// will include 'pages/theme-name/user/register.php'
  * @endcode
  */
-function page($page = null, $options = null) {
+function page($page = null, $options = []) {
     set_page_options($options);
 
         /**
@@ -241,9 +261,11 @@ function page($page = null, $options = null) {
          * @see README ## Pages
          */
 
-        if ( $page == null ) {
+        if ( Config::$page ) {
+        	$page = Config::$page;
+        }
+        else if ( $page == null ) {
             if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?' ) {
-
                 $page = 'post.view';
             } else {
                 $page = in('page', 'home');
@@ -283,8 +305,7 @@ function page($page = null, $options = null) {
     }
     else { // File not found
 
-
-        set_page_options($file);
+        set_page_options(['file' => $file]);
 
         $name = 'error/file-not-found.php';
         $file = THEME_PATH . '/pages/'. Config::$domain . '/' . $name;
@@ -375,14 +396,15 @@ function widget($name, $options = null) {
  *  - true if the user has loggged in.
  */
 function loggedIn() {
-    return sessionId() != null;
+    return loginSessionId() != null;
 }
 
 /**
+ * Returns login user's session id
  * @warning This is only for PHP function call.
  * Returns login user's Session Id.
  */
-function sessionId() {
+function loginSessionId() {
     if ( isset($_COOKIE['session_id']) && ! empty($_COOKIE['session_id']) ) {
         return $_COOKIE['session_id'];
     } else {
@@ -394,7 +416,8 @@ function sessionId() {
  * @param $key
  *  if $key is null, then it return the same of `loggedIn()` method.
  * @return mixed
- * @example login('nickname')
+ * @code login('nickname')
+ * @code login('social_login');
  */
 function login($key = null)
 {
@@ -424,6 +447,7 @@ function login($key = null)
          $userdata = $user->to_array();
          return $userdata && isset($userdata[$key]) && $userdata[$key];
      }
+
      return null;
 }
 
@@ -494,7 +518,7 @@ function user($user_ID, $field)
  * @return int|mixed
  */
 function userId() {
-    $sid = sessionId();
+    $sid = loginSessionId();
     if ( $sid == null ) return 0;
     $arr = explode('_', $sid);
     return $arr[0];
@@ -840,7 +864,9 @@ EOH;
 //}
 
 /**
- * Return settings of a forum
+ * Set the forum settings of current post.
+ *
+ * Use this method to set forum setting on post view page.
  *
  * @attention this is called on top of `functions.php` on boot
  *  since the return category of `get_the_category()` can be changed in the middle of run time.
@@ -957,4 +983,24 @@ function noLayout($page) {
 	if ( strpos($page, 'submit') !== false ) return true;
 
 	return false;
+}
+function loginOrRegisterBySocialLogin($email, $pass, $provider) {
+
+	$res = lib()->userLogin(['user_email' => $email, 'user_pass' => $pass]);
+	if ( isBackendError($res) ) {
+		$res = lib()->userRegister(['user_email' => $email, 'user_pass' => $pass, SOCIAL_LOGIN => $provider]);
+		if ( isBackendError($res) ) {
+			echo tr($res);
+		}
+	}
+
+	/// 로그인 성공. $res 는 userResponse
+	$json = json_encode($res);
+	echo <<<EOS
+<script>
+$$(function() {
+    loginWithUserResponse($json)
+});
+</script>
+EOS;
 }

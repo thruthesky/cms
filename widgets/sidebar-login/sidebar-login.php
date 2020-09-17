@@ -1,5 +1,6 @@
 
-<div class="card border-success mb-3 login-information" style="display: none;">
+<?php if ( loggedIn() ) { ?>
+<div class="card border-success mb-3 login-information">
     <div class="card-header bg-transparent border-success">Blog title</div>
     <div class="card-body text-success">
 
@@ -14,13 +15,14 @@
         <a class="btn btn-secondary" data-button="profile" href="/?page=user.profile">Profile</a>
     </div>
 </div>
+<?php } else { ?>
 
 
 
 
-<div class="login-form" style="display: none;">
+<div class="login-form">
 
-    <form onsubmit="return onLoginFormSubmit(this)">
+    <form onsubmit="return apiUserLogin(this)">
         <div class="mb-3">
             <label class="form-label">Email address</label>
             <input type="email" class="form-control"aria-describedby="emailHelp" name="user_email">
@@ -38,3 +40,7 @@
     <?php include widget('social-login/buttons'); ?>
 
 </div>
+
+
+<?php } ?>
+
