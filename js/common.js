@@ -602,6 +602,8 @@ function CommentList() {
                 console.log('data:', data, res);
                 if ( data['comment_ID'] ) commentList.update(res);
                 else commentList.insert(res);
+                $(form).find('textarea').val('');
+                $(form).parent().find('.files').empty();
             })
             .fail(ajaxFailure);
 
@@ -713,7 +715,14 @@ function CommentList() {
             };
             if($("#" + self.id(comment)).length) return false;
         } else if ( mode === 'edit' ) {
-            return $(el).empty().append(self.commentBoxTemplate(comment));
+            // modify display
+             const commentViewBox = $(el);
+             commentViewBox.append(self.commentBoxTemplate(comment));
+             commentViewBox.find('.content').hide();
+             commentViewBox.find('.comment-view-files').hide();
+             commentViewBox.find('.comment-buttons').hide();
+             onCommentEditText(commentViewBox.find('textarea'));
+            return false;
         }
         $(el).append(self.commentBoxTemplate(comment));
     }
@@ -726,14 +735,8 @@ function CommentList() {
      *  null if comment not exists.
      */
     self.getComment = function(comment_ID) {
-
         const i = self.indexOfComment(comment_ID);
-
-
-        // const i = self.indexOfComment(comment_ID);
         if ( i === -1 ) return null;
-
-
         /// @attention put an index of the comments array.
         self.comments[i]['index'] = i;
         return self.comments[i];
@@ -759,6 +762,7 @@ function CommentList() {
     self.editComment = function(comment_ID) {
         const comment = self.getComment(comment_ID);
         console.log('editComment:', comment);
+
         self.appendCommentBox('#comment' + comment_ID, comment, 'edit');
     }
 
@@ -785,8 +789,6 @@ function CommentList() {
                 ft = self.replaceTag('name', file['name'], ft);
                 ft = self.replaceTag('url', file['url'], ft);
                 ft = self.replaceTag('thumbnail_url', file['thumbnail_url'], ft);
-
-                // let ft = getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'});
                 fts.push(ft);
             }
         }
