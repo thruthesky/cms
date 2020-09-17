@@ -726,14 +726,8 @@ function CommentList() {
      *  null if comment not exists.
      */
     self.getComment = function(comment_ID) {
-
         const i = self.indexOfComment(comment_ID);
-
-
-        // const i = self.indexOfComment(comment_ID);
         if ( i === -1 ) return null;
-
-
         /// @attention put an index of the comments array.
         self.comments[i]['index'] = i;
         return self.comments[i];
@@ -785,8 +779,6 @@ function CommentList() {
                 ft = self.replaceTag('name', file['name'], ft);
                 ft = self.replaceTag('url', file['url'], ft);
                 ft = self.replaceTag('thumbnail_url', file['thumbnail_url'], ft);
-
-                // let ft = getUploadedFileHtml(file, {extraClasses: 'col-4 col-sm-3'});
                 fts.push(ft);
             }
         }
