@@ -12,11 +12,13 @@ if ($ID) {
     $post =  post()->postGet(['ID' => $ID, 'post_count' => false]);
     $slug = $post['slug'];
 }
+
 ?>
+
 
 <div class="post-edit container py-3">
 
-    <form id="post-form" data-bind="submit: submitPostEdit">
+    <form id="post-form" onsubmit="submitPostEdit(this)" >
         <input type="hidden" name="route" value="post.edit">
         <input type="hidden" name="slug" value="<?=$slug?>">
 
@@ -34,25 +36,23 @@ if ($ID) {
 
         <div class="position-relative icon-size overflow-hidden">
             <input class="position-absolute fs-xxxl opacity-01" type="file" name="file"
-                   data-bind="event: {change: function() {changeFilePostEdit($element);} }">
+                   onchange="onChangeFile(this, {append: $('.files'), extraClasses: 'col-4 col-sm-3', deleteButton: true, progress: $(this).parents('.post-edit').find('.progress')})">
             <i class="fa fa-camera fs-xxl" role="button"></i>
         </div>
 
     </form>
 
-    <div class="files edit row" data-bind="foreach: filesInEdit">
-        <div class="col-4 col-sm-3">
-            <div class="position-relative">
-                <i class='fa fa-trash position-absolute top right fs-xl' role='button' data-bind="click: $root.deleteFile" ></i>
-                <img class="w-100" src="" data-bind="attr: {src: thumbnail_url}">
+    <div class="files edit row">
+        <?php if(isset($post['files'])) foreach ($post['files'] as $file) { ?>
+            <div id="file<?=$file['ID']?>" data-file-id="#file<?=$file['ID']?>" class="uploaded-file position-relative d-inline-block col-4 col-sm-3">
+                <img class="w-100" src="<?=$file['thumbnail_url']?>">
+                <i role="button" class="fa fa-trash position-absolute top right" onclick="onClickDeleteFile(<?=$file['ID']?>)"></i>
             </div>
-        </div>
+        <?php } ?>
     </div>
-    <!-- ko if: progressLoader -->
-    <div class="progress mb-3">
-        <div class="progress-bar progress-bar-striped" role="progressbar" data-bind="style: { width: progressBar}"  aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
+    <div class="progress mb-3" style="display: none">
+        <div class="progress-bar progress-bar-striped" role="progressbar" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
-    <!-- /ko -->
 
     <div class="mt-3">
         <button class="btn btn-primary mr-3" type="submit" form="post-form">Submit</button>

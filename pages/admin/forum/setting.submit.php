@@ -46,7 +46,10 @@ update_term_meta($ID , 'post_list_theme', in('post_list_theme'));
 update_term_meta($ID , 'post_view_theme', in('post_view_theme'));
 update_term_meta($ID , 'post_edit_theme', in('post_edit_theme'));
 update_term_meta($ID , 'post_list_under_view', in('post_list_under_view'));
-update_term_meta($ID , POST_SHOW_POST, in(POST_SHOW_POST));
+update_term_meta($ID , POST_SHOW_LIKE, in(POST_SHOW_LIKE));
+update_term_meta($ID , POST_SHOW_DISLIKE, in(POST_SHOW_DISLIKE));
+update_term_meta($ID , COMMENT_SHOW_LIKE, in(COMMENT_SHOW_LIKE));
+update_term_meta($ID , COMMENT_SHOW_DISLIKE, in(COMMENT_SHOW_DISLIKE));
 
 $cat = get_category($ID);
 

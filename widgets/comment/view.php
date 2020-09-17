@@ -36,14 +36,22 @@ $view = str_replace('{comment_author}', $comment['comment_author'], $view);
 $view = str_replace('{short_date_time}', $comment['short_date_time'], $view);
 $view = str_replace('{comment_content}', $comment['comment_content'], $view);
 
-if (forum('post_show_vote') !== 'Y') {
-    $view = str_replace('{vote}', '', $view);
+
+if (forum(COMMENT_SHOW_LIKE) !== 'Y') {
+    $view = str_replace('{show_like}', '', $view);
 } else {
     $view = str_replace('{like}', $comment['like'], $view);
-    $view = str_replace('{dislike}', $comment['dislike'], $view);
     $view = str_replace('{like_text}', $comment['user_vote']== 'like'?'Liked':'Like', $view);
+}
+
+if (forum(COMMENT_SHOW_DISLIKE) !== 'Y') {
+    $view = str_replace('{show_dislike}', '', $view);
+} else {
+    $view = str_replace('{dislike}', $comment['dislike'], $view);
     $view = str_replace('{dislike_text}', $comment['user_vote']== 'dislike'?'Disliked':'Dislike', $view);
 }
+
+
 
 
 if( $comment['user_id'] == userId() ) {
