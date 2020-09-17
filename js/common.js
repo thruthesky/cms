@@ -602,7 +602,7 @@ function CommentList() {
                 console.log('data:', data, res);
                 if ( data['comment_ID'] ) commentList.update(res);
                 else commentList.insert(res);
-                $(form).find('textarea').html('');
+                $(form).find('textarea').val('');
                 $(form).parent().find('.files').empty();
             })
             .fail(ajaxFailure);
