@@ -922,6 +922,7 @@ function get_forum_setting() {
 }
 
 
+
 /**
  * Add forum settings into <head> tag. so Javascript can use it.
  */
