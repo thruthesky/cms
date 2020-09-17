@@ -172,6 +172,8 @@ else {
 
     //
     get_forum_setting();
+	insert_forum_settings_as_javascript_into_header();
+
 
 }
 
@@ -915,7 +917,28 @@ function get_forum_setting() {
         $re[NO_OF_POSTS_PER_PAGE] = isset($re[NO_OF_POSTS_PER_PAGE]) && $re[NO_OF_POSTS_PER_PAGE] ? $re[NO_OF_POSTS_PER_PAGE] : 10;
     }
     $__get_forum_setting = $re;
+
     return $re;
+}
+
+
+/**
+ * Add forum settings into <head> tag. so Javascript can use it.
+ */
+function insert_forum_settings_as_javascript_into_header() {
+	global $__get_forum_setting, $__head_script;
+	$re = $__get_forum_setting;
+
+
+	$post_show_vote = isset($re['post_show_vote']) ? $re['post_show_vote'] : '';
+	$__head_script .= <<<EOS
+<script>
+	const forum = {
+	    post_show_vote: "$post_show_vote",
+	};
+</script>
+EOS;
+
 }
 
 /**
@@ -1020,4 +1043,23 @@ function checkMobileRequired() {
 			}
 		}
 	}
+}
+
+
+function get_page_no() {
+	$page_no = in('page_no', 1);
+	if ( in('page_no', 1) < 1 ) $page_no = 1;
+	return $page_no;
+}
+
+function post_list_query() {
+	$qs = [];
+	if ( in('page_no') ) {
+		$qs['page_no'] = in('page_no');
+	} else {
+	}
+	$qs['slug'] = in('slug');
+
+		return '?' . http_build_query($qs);
+
 }
