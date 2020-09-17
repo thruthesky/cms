@@ -45,6 +45,7 @@ function firebaseCreateCustomLogin($uid) {
 }
 
 /**
+ * If user has firebase account, it returns firebase uid. otherwise false will be returned.
  * @param $user_ID
  *
  * @return false|string
@@ -55,8 +56,8 @@ function firebaseCreateCustomLogin($uid) {
  */
 function firebaseUserExists($user_ID) {
 	$email = firebaseEmailAddress($user_ID);
-	$auth = firebase()->createAuth();
 	try {
+		$auth = firebase()->createAuth();
 		$user = $auth->getUserByEmail($email);
 		return $user->uid;
 	} catch (Exception $exception) {

@@ -167,13 +167,7 @@ else {
     if ( localhost() ) live_reload();
 
     // mobile check
-	if ( loggedIn() ) {
-		if ( Config::$mobileRequired && login('mobile') == null ) {
-			if ( strpos(in('page'), 'logout') === false )
-			Config::setPage('user.mobile-verification');
-			set_page_options(['mode' => 'after-registration']);
-		}
-	}
+	checkMobileRequired();
 
 
     //
@@ -1002,4 +996,18 @@ $$(function() {
 });
 </script>
 EOS;
+}
+
+/**
+ * If mobile is required and the user didn't didn't input mobile, then force to verify mobile and update profile.
+ */
+function checkMobileRequired() {
+	if ( loggedIn() ) {
+		if ( Config::$mobileRequired && login('mobile') == null ) {
+			if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'mobile') === false ) {
+				Config::setPage('user.mobile-verification');
+				set_page_options(['mode' => 'after-registration']);
+			}
+		}
+	}
 }
