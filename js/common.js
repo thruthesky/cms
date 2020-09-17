@@ -602,6 +602,8 @@ function CommentList() {
                 console.log('data:', data, res);
                 if ( data['comment_ID'] ) commentList.update(res);
                 else commentList.insert(res);
+                $(form).find('textarea').html('');
+                $(form).parent().find('.files').empty();
             })
             .fail(ajaxFailure);
 
@@ -713,7 +715,14 @@ function CommentList() {
             };
             if($("#" + self.id(comment)).length) return false;
         } else if ( mode === 'edit' ) {
-            return $(el).empty().append(self.commentBoxTemplate(comment));
+            // modify display
+             const commentViewBox = $(el);
+             commentViewBox.append(self.commentBoxTemplate(comment));
+             commentViewBox.find('.content').hide();
+             commentViewBox.find('.comment-view-files').hide();
+             commentViewBox.find('.comment-buttons').hide();
+             onCommentEditText(commentViewBox.find('textarea'));
+            return false;
         }
         $(el).append(self.commentBoxTemplate(comment));
     }
@@ -753,6 +762,7 @@ function CommentList() {
     self.editComment = function(comment_ID) {
         const comment = self.getComment(comment_ID);
         console.log('editComment:', comment);
+
         self.appendCommentBox('#comment' + comment_ID, comment, 'edit');
     }
 

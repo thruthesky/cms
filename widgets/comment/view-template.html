@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row no-gutters mb-3">
                     <div class="circle wh50x50 overflow-hidden mr-3">
-                        <img class='mw-100' src="{author_photo_url}" alt='user photo'>";
+                        <img class='mw-100' src="{author_photo_url}" alt='user photo'>
                     </div>
                     <div class="col">
                         <div>
@@ -17,14 +17,14 @@
                         </div>
                     </div>
                 </div>
-                <div class="comment-view-files row py-3">
+                <div class="comment-view-files row mb-3">
                     <!--loop files-->
                     <div class="col-4 col-sm-3">
                         <img class="w-100" src="{thumbnail_url}">
                     </div>
                     <!--/loop-->
                 </div><!--/.row-->
-                <div>
+                <div class="comment-buttons">
                     <button id="like{comment_ID}" class="btn btn-primary btn-sm mr-3" onclick="onClickLike({comment_ID}, 'like', 'comment')">{like} {like_text}</button>
                     <button id="dislike{comment_ID}" class="btn btn-primary btn-sm mr-3" onclick="onClickLike({comment_ID}, 'dislike', 'comment')">{dislike} {dislike_text}</button>
                     <button class="btn btn-primary btn-sm mr-3" onclick='commentList.appendCommentBoxAt({comment_ID})'>Reply</button>
