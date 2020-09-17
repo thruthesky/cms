@@ -17,6 +17,7 @@ define('KAKAO', 'kakao');
 //define('INSTALL', 'cms_install');
 //define('INSTALL_YES', 'cms_install_yes');
 
+define('POST_SHOW_POST', 'post_show_vote');
 define('NO_OF_POSTS_PER_PAGE', 'no_of_posts_per_page');
 define('POST_LIST_THEME', 'post_list_theme');
 define('POST_VIEW_THEME', 'post_view_theme');

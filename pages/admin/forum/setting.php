@@ -49,7 +49,7 @@
     <?=generate_select([
         'label' => 'Select list theme',
         'name' => 'post_list_theme',
-        'options' => generate_options(get_wiget_list('post_list_theme'), forum(POST_LIST_ROUTE, 'post.list')),
+        'options' => generate_options(get_wiget_list('post_list_theme'), forum(POST_LIST_THEME, 'post.list')),
         ])?>
 
 
@@ -76,6 +76,15 @@
         <label class="form-check-label" for="form-list-under-view">Display post list under post view page.</label>
     </div>
 
+    <div class="form-group form-check">
+        <input name="post_show_vote" value="Y" type="checkbox" class="form-check-input" id="post-show-vote"
+
+        <?php if ( forum(POST_SHOW_POST) == 'Y' ) echo 'checked'?>
+        >
+        <label class="form-check-label" for="form-list-under-view">Display post like and dislike button .</label>
+    </div>
+
 
     <button type="submit" class="btn btn-primary">Submit</button>
+    <a type="submit" class="btn btn-secondary" href="<?=Config::$adminForumList?>">Back</a>
 </form>

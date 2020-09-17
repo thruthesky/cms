@@ -7,6 +7,7 @@ class Config {
     static public $mobileVerificationPage = '/?page=user.mobile-verification';
     static public $resignResultPage = '/?page=user.resign_result';
     static public $adminUserList = '/?page=admin.user.list';
+    static public $adminForumList = '/?page=admin.forum.list';
 
 
 

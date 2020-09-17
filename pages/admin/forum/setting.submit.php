@@ -46,6 +46,7 @@ update_term_meta($ID , 'post_list_theme', in('post_list_theme'));
 update_term_meta($ID , 'post_view_theme', in('post_view_theme'));
 update_term_meta($ID , 'post_edit_theme', in('post_edit_theme'));
 update_term_meta($ID , 'post_list_under_view', in('post_list_under_view'));
+update_term_meta($ID , POST_SHOW_POST, in(POST_SHOW_POST));
 
 $cat = get_category($ID);
 
