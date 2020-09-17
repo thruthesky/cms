@@ -970,7 +970,7 @@ EOS;
 function forum($key, $default_value = '') {
     $setting = get_forum_setting();
     if ( $setting ) {
-        return isset($setting[$key]) ? $setting[$key] : $default_value;
+        return isset($setting[$key]) && $setting[$key] ? $setting[$key] : $default_value;
     } else {
         return $default_value;
     }
