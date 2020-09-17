@@ -190,7 +190,7 @@ class ApiLibrary {
 				$user = wp_get_current_user();
 				if ($user->ID != $ID) $this->error(ERROR_FAILED_TO_SET_LOGGED_IN_USER);
 				else {
-					xlog('success on setting logged in user: ' . $user->ID);
+					xlog('login success with session id. user: ' . $user->ID);
 				}
 				return $user;
 			} else {

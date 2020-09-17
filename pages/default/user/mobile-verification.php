@@ -20,7 +20,7 @@ $options = get_page_options();
                     ko => '휴대전화 본인인증'
                 ])?></h1>
 
-            <form id="register-form" onsubmit="return onRegisterFormSubmit()">
+            <form id="register-form" onsubmit="return false">
 
                 <div class="row mt-3">
                     <div class="col-12 col-sm-5">

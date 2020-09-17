@@ -416,11 +416,13 @@ function login($key = null)
 {
     global $__user;
 
+
     if ( $key === null ) {
         return loggedIn();
     }
 
     /**
+     * @warning $__user is not available on API_CALL
      * Check if the value of the key exists on user's API profile.
      * For instance, photoURL is only exists on user's API profile.
      */
@@ -438,7 +440,9 @@ function login($key = null)
      $user = wp_get_current_user();
      if ($user) {
          $userdata = $user->to_array();
-         return $userdata && isset($userdata[$key]) && $userdata[$key];
+         if ( $userdata && isset($userdata[$key]) && $userdata[$key] ) {
+		return $userdata[$key];
+	}
      }
 
      return null;
