@@ -30,7 +30,8 @@ define('POST_EDIT_THEME', 'post_edit_theme');
 define('THEME_PATH', ABSPATH . 'wp-content/themes/cms');
 define('THEME_URL', '/wp-content/themes/cms');
 /// HOME_URL is different from Wordpress Home Url which is based on database setting.
-define('HOME_URL', "https://$_SERVER[HTTP_HOST]");
+$__domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : '';
+define('HOME_URL', "https://$__domain");
 define('FULL_THEME_URL', HOME_URL . THEME_URL);
 define('ANONYMOUS_PROFILE_PHOTO', '/wp-content/themes/cms/img/anonymous/anonymous.jpg');
 
