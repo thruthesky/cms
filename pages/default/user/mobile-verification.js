@@ -1,20 +1,8 @@
-function RegisterAuthPage() {
+// if ( localStorage.getItem('mobile') ) {
+//     $("[name='mobile']").val(localStorage.getItem('mobile'));
+// }
+function MobileVerificationPage() {
     const self = this;
-    self.sessionInfo = '';
-    self.verificationCodeSent = function(sessionInfo) {
-        self.sessionInfo = sessionInfo;
-        self.renderCodeSent();
-    };
-    self.retry = function() {
-        self.sessionInfo = '';
-    };
-
-    self.renderCodeSent = function() {
-        $('.input-verification-code').removeClass('d-none');
-        $('.send').text(sendText).removeClass('bg-primary').addClass('mt-5 bg-lightgrey text-dark');
-
-    };
-
     self.getMobileNumberFromForm = function() {
         let mobile = $("input[name='mobile']").val();
         if (!mobile) return alertBackendError(tr('ERROR_MOBILE_EMPTY'));
@@ -51,47 +39,17 @@ function RegisterAuthPage() {
                 if ( isBackendError(res) ) {
                     alertError(res);
                 } else {
-                    self.verificationCodeSent(res['sessionInfo']);
+                    localStorage.setItem('mobileVerificationSessionInfo', res['sessionInfo']);
+                    localStorage.setItem('mobile', mobile);
+                    move('/?page=user.mobile-verification-input-code')
                 }
-                reInitReCaptcha(); // re init reCaptcha whether success or not.
             })
             .fail(ajaxFailure);
     };
 
-    /**
-     * Verify & move to registration page.
-     */
-    self.verifyCode = function() {
-        const mobile = self.getMobileNumberFromForm();
-        const codeBox = $('#verification-code');
-        const code = codeBox.val();
-
-        const data = {
-            route: 'user.verifyPhoneVerificationCode',
-            sessionInfo: registerAuthPage.sessionInfo,
-            code: code,
-            mobile: mobile,
-            session_id: getUserSessionId()
-        };
-        codeBox.val('');
-
-        $.ajax({
-            method: 'POST',
-            url: apiUrl,
-            data: data
-        })
-            .done(function(res) {
-                if ( isBackendError(res) ) { // error on backend
-                    return alertError(res);
-                }
-                move('/?page=user.register' ); // success
-            })
-            .fail(ajaxFailure);
-    }
-
 }
 
-const registerAuthPage = new RegisterAuthPage();
+const mobileVerificationPage = new MobileVerificationPage();
 
 
 
@@ -108,7 +66,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-verifi
     'size': 'invisible',
     'callback': function(recaptchaToken) {
         // recaptcha has been verified successfully.
-        registerAuthPage.sendVerificationCode(recaptchaToken);
+        mobileVerificationPage.sendVerificationCode(recaptchaToken);
     },
     'expired-callback': function() {
         /// Response expired. Ask user to solve reCAPTCHA again.

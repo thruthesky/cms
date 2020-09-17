@@ -113,17 +113,21 @@ class ApiLibrary {
 		}
 		unset($data['user_pass']);
 
+		/**
+		 * Deliver firebase custom login token to client.
+		 */
 		if ( Config::$firebaseEnableCustomLogin ) {
 			if ( isset($data[FIREBASE_UID]) && $data[FIREBASE_UID] ) {
-				// User exists
-				xlog('Firebase account exists.');
+				// User has firebase account.
+				xlog('User has firebase account: ' . $data[FIREBASE_UID]);
 			}
-			else if ( Config::$firebaseCreateUserIfNotExist ) { // User not exist but create one?
+			else if ( Config::$firebaseCreateUserIfNotExist ) { // If user does have firebase account? then create one?
 				xlog("user_ID: $user_ID");
-				if ( $firebase_uid = firebaseUserExists($user_ID) ) {
+				$firebase_uid = firebaseUserExists($user_ID);
+				if ( $firebase_uid ) { // Somehow the account exists, but firebase_uid is not connected to user meta.
 					xlog('$firebaseCreateUserIfNotExist => Firebase account exists');
-					$this->updateUserMeta($user_ID, FIREBASE_UID, $firebase_uid);
-				} else {
+					$this->updateUserMeta($user_ID, FIREBASE_UID, $firebase_uid); // save firebase uid to user meta.
+				} else { // or create firebase account and save firebase uid into user meta.
 					try {
 						$data[FIREBASE_UID] = firebaseCreateUser($user_ID);
 						xlog('userResponse => $firebaseEnableCustomLogin => $firebaseCreateUserIfNotExist. User created.');
@@ -266,6 +270,9 @@ class ApiLibrary {
 
 
 	/**
+	 * @attention If $in['firebased_uid'] has value, then the user has logged in by Firebase social.
+	 *      - So, no need to create firebase account again.
+	 *
 	 * @param $in
 	 *  - You can add any data(meta) on registration and update.
 	 * @return array|string
@@ -277,6 +284,9 @@ class ApiLibrary {
 	 * @endcode
 	 */
 	public function userRegister($in) {
+
+		xlog('userRegister:');
+		xlog($in);
 
 		if (isset($in['session_id'])) return ERROR_SESSION_ID_MUST_NOT_PROVIDED;
 
@@ -339,7 +349,7 @@ class ApiLibrary {
 		$this->updateUserMetas($user_ID, $in);
 
 
-		if ( in(FIREBASE_UID) == null && Config::$firebaseSyncUser ) {
+		if ( Config::$firebaseSyncUser && in(FIREBASE_UID) == null ) {
 			$uid = firebaseCreateUser($user_ID);
 		}
 
@@ -412,15 +422,28 @@ class ApiLibrary {
 	 */
 	public function userFirebaseSocialLogin($in) {
 
-
-
-
 		$user = get_user_by('login', $in['email']);
-		if ( $user && $user->firebase_uid == $in[FIREBASE_UID] ) { // login succcess
-			xlog('userFirebaseSocialLogin: login success.');
+		if ( $user ) {
+			xlog('userFirebaseSocialLogin: user exists.');
+		} else {
+			xlog('userFirebaseSocialLogin: user NOT exists.');
+		}
+		if ( isset($user->firebase_uid) && $user->firebase_uid == $in[FIREBASE_UID] ) {
+			xlog('userFirebaseSocialLogin: firebase_uid matches');
+		} else {
+			xlog('userFirebaseSocialLogin: firebase_uid NOT matches.');
+			if( isset($user->firebase_uid) ) xlog($user->firebase_uid);
+			xlog($in[FIREBASE_UID]);
+		}
+		if ( $user && (isset($user->firebase_uid) && $user->firebase_uid == $in[FIREBASE_UID]) ) { // login succcess
+			xlog('userFirebaseSocialLogin: user exists and firebase_uid matches. login success.');
 			return $this->userResponse($user->ID);
 		}
-		$res = lib()->userRegister(['user_email' => $in['email'], 'user_pass' => $in[FIREBASE_UID], SOCIAL_LOGIN => $in['provider']]);
+		xlog('userFirebaseSocialLogin: login fail. going to register.');
+		$res = lib()->userRegister([
+			'user_email' => $in['email'], 'user_pass' => $in[FIREBASE_UID], SOCIAL_LOGIN => $in['provider'],
+			FIREBASE_UID => $in[FIREBASE_UID]
+		]);
 		return $res;
 	}
 
