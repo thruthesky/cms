@@ -45,7 +45,6 @@ $slug = $post['slug'];
             </div><!--/.container-->
             <div class="mb-3">
                 <?php if(forum(POST_SHOW_LIKE)) {?>
-
                 <button id="like<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'like')">
                     <?=isset($post['like']) && $post['like']!=="0" ?$post['like']: '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?>
                 <?php } ?>
