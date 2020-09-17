@@ -29,7 +29,7 @@ verifyCode = function() {
             if ( isBackendError(res) ) { // error on backend
                 return alertError(res);
             }
-            move('/?page=user.register' ); // success
+            move('/?page=user.register&mobile=verified'); // success
         })
         .fail(ajaxFailure);
 }

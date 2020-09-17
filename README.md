@@ -30,18 +30,22 @@ $ git clone https://github.com/thruthesky/cms
     * Google
     * Facebook
     * Anonymous
-    
 
-* To enable Firebase Auth, Phone Auth, and Firebase functionality
+  * In `Firebase Console -> Authentication -> sign-in-method -> Authorized Domains`
+    Add your domain for using Social login.    
 
-  * Add `apikey`, `service-account-key.json` in `Config` class.
-  
-    * `Config::$apikey` must hold the apikey of the GCP project
-    * `Config::$serviceAccount` must hold the `service-account` json of the firebase project.
-    * It needs to be inside php variable for security reason.
+* Set GCP `apikey` to `Config::$apikey` in `Config` class.
+
+* Set `service-account` json of the firebase project to `Config::$serviceAccount` in `Config` class.
 
 
 
+
+
+## Publish
+
+* Run `npm run publish`
+* `etc/release-date-stamp.txt` will have the timestamp on the time of release.
 
 
 ### Composer
@@ -517,6 +521,8 @@ Array
     <div class="ml-3">Please wait...</div>
 </div>
 ```
+
+
 
 
 ## TEST Scripts

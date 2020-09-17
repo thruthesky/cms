@@ -28,6 +28,8 @@
                 </div>
             </div>
 
+
+            <?php if ( loggedIn() ) { ?>
             <div class="row mt-5">
                 <div class="col-5"><hr></div>
                 <div class="col"><div class="text-center">Or</div></div>
@@ -38,6 +40,7 @@
                 <div><a href="/?page=user.logout">로그아웃</a></div>
             </div>
 
+            <?php } ?>
 
 
 

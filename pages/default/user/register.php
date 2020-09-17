@@ -3,7 +3,7 @@
  * @file register.php
  * @desc See readme
  */
-if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
+if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration ) {
     return move(Config::$mobileVerificationPage . '&display_social_login=true');
 }
 
@@ -33,9 +33,6 @@ if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
 
 	            <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
 
-
-
-
                 <div class="email mt-3">
                     <label  class="form-label"><?=tr(emailAddress)?></label>
                     <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
@@ -64,8 +61,20 @@ if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
 
 
                 <div class="mt-3">
-                    <label class="form-label"><?=tr('mobile')?></label>
-                    <div><?=login('mobile')?></div>
+                    <label class="form-label"><?=tr('mobileNo')?></label>
+                    <div>
+                    <?php if ( loggedIn() ) echo login('mobile'); else {?>
+                        <div class="mobile"></div>
+                        <input type="hidden" name="mobile" value="">
+                        <script>
+                            $$(function() {
+                                $('.mobile').text(localStorage.getItem('mobile'))
+                                $('[name="mobile"]').val(localStorage.getItem('mobile'))
+                            })
+                        </script>
+                    <?php } ?>
+
+                    </div>
                 </div>
 
                 <hr>
