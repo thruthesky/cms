@@ -397,7 +397,11 @@ class ApiLibrary {
 
 		if (!$in['user_pass']) return ERROR_PASSWORD_IS_EMPTY;
 
+		/// get user by user_login with email
 		$user = get_user_by('login', $in['user_email']);
+		if ( !$user ) { // if no user found by email, get user by user_email with email
+			$user = get_user_by('email', $in['user_email']);
+		}
 
 		if (!$user) return ERROR_USER_NOT_FOUND_BY_THAT_EMAIL;
 

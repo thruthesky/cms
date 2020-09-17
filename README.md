@@ -23,15 +23,29 @@ $ git clone https://github.com/thruthesky/cms
 
 * Enable `permalink` to `post name`.
 
-* Access the site and finish setup.
+* Firebase Authentication Setting
+  * In Firebase -> Authentication -> Sign-in method, enable
+    * Email/password
+    * Phone
+    * Google
+    * Facebook
+    * Anonymous
 
-* To enable Firebase Auth, Phone Auth, and Firebase functionality
+  * In `Firebase Console -> Authentication -> sign-in-method -> Authorized Domains`
+    Add your domain for using Social login.    
 
-  * Add `apikey`, `service-account-key.json` in `Config` class.
-  
-    * `Config::$apikey` must hold the apikey of the GCP project
-    * `Config::$serviceAccount` must hold the `service-account` json of the firebase project.
-    * It needs to be inside php variable for security reason.
+* Set GCP `apikey` to `Config::$apikey` in `Config` class.
+
+* Set `service-account` json of the firebase project to `Config::$serviceAccount` in `Config` class.
+
+
+
+
+
+## Publish
+
+* Run `npm run publish`
+* `etc/release-date-stamp.txt` will have the timestamp on the time of release.
 
 
 ### Composer
@@ -509,6 +523,8 @@ Array
 ```
 
 
+
+
 ## TEST Scripts
 
 * `scripts` folder has test codes.
@@ -524,3 +540,11 @@ Array
 * Naver: thruthesky chonyoungsoon jungyoungsul
 
 * Kakao: thruthesky@hanmail.net, 010-4046-7379, 
+
+
+
+## Trouble Shooting
+
+
+* For error of `CAPTCHA_CHECK_FAILED : Hostname match not found`, add your domain.
+  * Firebase Console -> Authentication -> sign-in-method -> Authorized Domains

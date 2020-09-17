@@ -1,3 +1,6 @@
+<?php
+if ( ! loggedIn() ) return;
+?>
 
 
 <div class="alert alert-secondary">

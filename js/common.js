@@ -583,8 +583,7 @@ function CommentList() {
         const data = objectifyForm(form);
         data['session_id'] = getUserSessionId();
 
-        /// TODO make it clean by
-        /// 1) when a file is uploaded, add the file id into <input type='hidden' name='files' value='1,2,3,'>
+        /// TODO make it clean. Searing DOM is not a good way.
         const files = $(form).parent().find('.files').children();
         if (files.length) {
             let file_ids = '';
@@ -593,6 +592,8 @@ function CommentList() {
             });
             data['files'] = file_ids;
         }
+
+
 
         $.ajax( {
             method: 'POST',

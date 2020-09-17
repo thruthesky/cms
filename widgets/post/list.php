@@ -7,9 +7,7 @@
 
 $forum = get_forum_setting();
 
-$no_of_records_per_page = 20;
-$page_no = in('page_no', 1);
-if ( in('page_no', 1) < 1 ) $page_no = 1;
+$page_no = get_page_no();
 
 $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[NO_OF_POSTS_PER_PAGE], 'paged' => $page_no]);
 
@@ -37,7 +35,7 @@ if ( isBackendError($posts) ) {
                             <span>Date: <?=$post['short_date_time']?></span>
                             <span>View: <?=$post['view_count']??''?></span>
                         </div>
-                        <a class="card-title fs-lg" href="<?=$post['guid']?>"><?=$post['post_title']?></a>
+                        <a class="card-title fs-lg" href="<?=$post['guid']?><?=post_list_query()?>"><?=$post['post_title']?></a>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,8 @@
 <?php
+
 class Config {
     static public $domain = 'default';
-    static public $appVersion = '0.0.2';
+    static public $appVersion = RELEASE_DATE_STAMP;
     static public $apiUrl = '/wp-content/themes/cms/api.php';
     static public $registerPage = '/?page=user.register';
     static public $mobileVerificationPage = '/?page=user.mobile-verification';

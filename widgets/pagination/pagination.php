@@ -76,7 +76,7 @@ function _url($no) {
         }
         ?>
 
-        <?php if($page_no + $blocks < $total_no_of_pages){?>
+        <?php if($page_no + $blocks <= $total_no_of_pages){?>
 
         <li  class='page-item' <?php if($page_no >= $total_no_of_pages){ echo "class='disabled'"; } ?>>
             <a class='page-link' <?php if($page_no < $total_no_of_pages) { echo "href='". _url($next_page) ."'"; } ?>>Next</a>
