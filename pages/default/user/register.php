@@ -3,7 +3,7 @@
  * @file register.php
  * @desc See readme
  */
-if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
+if ( !loggedIn() && Config::$verifyMobileOnRegistration ) {
     return move(Config::$mobileVerificationPage . '&display_social_login=true');
 }
 
@@ -28,9 +28,9 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
                         })
                     </script>
                 <?php } ?>
-	            <?php if ( Config::$verifyMobileOnRegistration ) { ?>
-                <input type="hidden" name="mobile" value="<?=urlencode(in('mobile'))?>">
-                <?php } ?>
+<!--	            --><?php //if ( Config::$verifyMobileOnRegistration ) { ?>
+<!--                <input type="hidden" name="mobile" value="--><?//=urlencode(in('mobile'))?><!--">-->
+<!--                --><?php //} ?>
                 <? include 'form-profile-photo.php'?>
 
 
@@ -67,12 +67,12 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
                 </div>
 
 
-                <?php if ( Config::$verifyMobileOnRegistration === false ) { ?>
-                <div class="mt-3">
-                    <label class="form-label"><?=tr('mobile')?></label>
-                    <input type="text" class="form-control" name="mobile"  value="<?=login('mobile')?>">
-                </div>
-                <?php } ?>
+<!--                --><?php //if ( Config::$verifyMobileOnRegistration === false ) { ?>
+<!--                <div class="mt-3">-->
+<!--                    <label class="form-label">--><?//=tr('mobile')?><!--</label>-->
+<!--                    <input type="text" class="form-control" name="mobile"  value="--><?//=login('mobile')?><!--">-->
+<!--                </div>-->
+<!--                --><?php //} ?>
 
                 <hr>
                 <button class="btn btn-primary w-100" type="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
@@ -91,9 +91,8 @@ if ( Config::$verifyMobileOnRegistration && !in('mobile') ) {
         </div>
     </div>
 
-    <div class="alert alert-secondary">
-        logged in with <?=login(SOCIAL_LOGIN)?>
-    </div>
+	<?php include widget('user.logged-with') ?>
+
 </div>
 
 

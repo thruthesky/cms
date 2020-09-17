@@ -512,3 +512,15 @@ Array
 ## TEST Scripts
 
 * `scripts` folder has test codes.
+
+
+## Social login test id
+
+
+* Google & Facebook: thruthesky@gmail.com thruthesky2@gmail.com thruthesky6@gmail.com
+
+* Google Only: ontue.com@gmail.com
+
+* Naver: thruthesky chonyoungsoon jungyoungsul
+
+* Kakao: thruthesky@hanmail.net, 010-4046-7379, 

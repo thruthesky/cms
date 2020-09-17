@@ -166,7 +166,6 @@ else {
     /** Do Website Call init */
     if ( localhost() ) live_reload();
 
-
     // mobile check
 	if ( loggedIn() ) {
 		if ( Config::$mobileRequired && login('mobile') == null ) {

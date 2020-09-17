@@ -11,6 +11,7 @@ $options = get_page_options();
     </div>
 <?php } ?>
 
+
 <div id="register-page" class="container py-3">
     <div class="card">
         <div class="card-body">
@@ -70,6 +71,11 @@ $options = get_page_options();
 
         </div>
     </div>
+
+    <?php include widget('user.logged-with') ?>
+
+
+
 
     <?php if ( in('display_social_login') ) include widget('social-login/buttons') ?>
 </div>
