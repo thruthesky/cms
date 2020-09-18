@@ -13,12 +13,13 @@ if ($ID) {
     $slug = $post['slug'];
 }
 
+addRichTextEditor('.rich-editor');
 ?>
 
 
 <div class="post-edit container py-3">
 
-    <form id="post-form" onsubmit="submitPostEdit(this)" >
+    <form id="post-form" onsubmit="submitPostEdit(event,this)" >
         <input type="hidden" name="route" value="post.edit">
         <input type="hidden" name="slug" value="<?=$slug?>">
 
@@ -31,7 +32,7 @@ if ($ID) {
 
         <div class="form-group">
             <label for="post-create-content">Content</label>
-            <textarea class="form-control" name="post_content" id="post-create-content" aria-describedby="Content" placeholder="Enter content"><?=$post['post_content']??''?></textarea>
+            <textarea class="form-control rich-editor" name="post_content" id="post-create-content" aria-describedby="Content" placeholder="Enter content"><?=$post['post_content']??''?></textarea>
         </div>
 
         <div class="position-relative icon-size overflow-hidden">

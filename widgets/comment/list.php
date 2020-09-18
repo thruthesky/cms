@@ -35,6 +35,6 @@ $viewTemplate = file_get_contents(__DIR__ . '/view-template.html');
             comments: <?=json_encode($post['comments']);?>,
             template: `<?=addslashes(str_replace("\n", " ", $viewTemplate))?>`,
        });
-//        commentList.render();
+        commentList.render();
    })
 </script>

@@ -10,7 +10,8 @@ $post = post()->postGet([
 ]);
 $slug = $post['slug'];
 
-//dog($post);
+
+addRichTextEditor('.rich-editor');
 ?>
 <h3><?=forum('name')?></h3>
 <div class="p-3">
@@ -45,12 +46,14 @@ $slug = $post['slug'];
             </div><!--/.container-->
             <div class="mb-3">
                 <?php if(forum(POST_SHOW_LIKE)) {?>
-                <button id="like<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'like')">
+                    <button id="like<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'like')">
                     <?=isset($post['like']) && $post['like']!=="0" ?$post['like']: '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?>
+                    </button>
                 <?php } ?>
                 <?php if(forum(POST_SHOW_DISLIKE)) {?>
                     <button id="dislike<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
-                        <?=isset($post['dislike'])&&$post['dislike']!=="0" ?$post['dislike']: '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?>
+                    <?=isset($post['dislike'])&&$post['dislike']!=="0" ?$post['dislike']: '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?>
+                    </button>
                 <?php } ?>
                 <?php
                 if($post['post_author'] == userId()) { ?>
