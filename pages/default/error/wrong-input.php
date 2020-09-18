@@ -3,5 +3,6 @@
 </h1>
 
 <?php
-echo tr(get_page_options());
+
+dog(get_page_options());
 

@@ -226,7 +226,11 @@ EOH;
  */
 function set_page_options($options=[]) {
     global $__page_options;
-    $__page_options = array_merge($__page_options, $options);
+    if ( is_array($options)) {
+    	$__page_options = array_merge($__page_options, $options);
+    } else {
+    	jsAlert('Arguemnt of set_page_options() must be an array.');
+    }
 }
 function get_page_options() {
     global $__page_options;
@@ -253,7 +257,7 @@ function get_page_options() {
 function page($page = null, $options = []) {
     set_page_options($options);
 
-        /**
+	/**
          * Detect if the user is on a post view page.
          * @see README ## Pages
          */
@@ -262,24 +266,31 @@ function page($page = null, $options = []) {
         	$page = Config::$page;
         }
         else if ( $page == null ) {
-            if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?' ) {
+	        if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?' ) {
                 $page = 'post.view';
             } else {
-                $page = in('page', 'home');
-            }
+		        $page = in('page', 'home');
+
+
+	        }
         }
 
-        if ( strpos($page, 'admin.') === 0 ) $page = str_replace('admin.', '', $page);
+
+	if ( strpos($page, 'admin.') === 0 ) $page = str_replace('admin.', '', $page);
 
 
-        if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
+	if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
             $path = 'error/wrong-input.php';
-        } else {
+            set_page_options(['error' => 'Page should not begin with dot(.) or slash(/)']);
+
+	} else {
+
             $arr = explode('.', $page, 2);
 
             if ( count($arr) == 1 ) {
                 if ( $arr[0] == 'index' ) {
                     $path = 'error/wrong-input.php';
+                    set_page_options(['error' => 'Page cannot be index.']);
                 } else {
                     $path = "$arr[0]/$arr[0].php";
                 }
@@ -291,12 +302,14 @@ function page($page = null, $options = []) {
         }
 
 
-    $file = THEME_PATH . '/pages/'. Config::$domain . '/' . $path;
+	$file = THEME_PATH . '/pages/'. Config::$domain . '/' . $path;
     $default_file = THEME_PATH . '/pages/default/' . $path;
 
 
 
-    if ( file_exists($file) ) $script_file = $file;
+    if ( file_exists($file) ) {
+    	$script_file = $file;
+    }
     else if ( file_exists($default_file)) {
         $script_file =  $default_file;
     }
@@ -314,7 +327,6 @@ function page($page = null, $options = []) {
         $script_file =  file_exists($file) ? $file : $default_file;
 
     }
-
     global $__included_files;
     $__included_files[] = $script_file;
     return $script_file;

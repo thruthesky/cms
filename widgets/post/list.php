@@ -11,10 +11,9 @@ $page_no = get_page_no();
 
 $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[NO_OF_POSTS_PER_PAGE], 'paged' => $page_no]);
 
-
-if ( isBackendError($posts) ) {
-    return include page('error.wrong-input', $posts);
-}
+//if ( isBackendError($posts) ) {
+//    return include page('error.wrong-input', 'forum slut not exists');
+//}
 ?>
 <a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$forum['slug']?>">Create</a>
 <div class="container pb-3">

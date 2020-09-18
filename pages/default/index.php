@@ -48,7 +48,12 @@ if ( localhost() ) {
 <body data-page="<?php echo in('page', 'home')?>">
 
 <?php
+
+
 $_page_script = page();
+
+
+
 if ( noLayout($_page_script) ) {
     include $_page_script;
 } else {

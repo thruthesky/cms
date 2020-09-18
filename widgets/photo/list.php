@@ -6,10 +6,10 @@
  */
 
 $slug = in('slug');
-$posts =  $apiPost->postSearch(['slug' => $slug, 'numberposts' => 10]);
-if ( isBackendError($posts) ) {
-    return include page('error.wrong-input', $posts);
-}
+$posts =  lib()->postSearch(['slug' => $slug, 'numberposts' => 10]);
+//if ( isBackendError($posts) ) {
+//    return include page('error.wrong-input', $posts);
+//}
 ?>
 <h1>photo list</h1>
 <a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
