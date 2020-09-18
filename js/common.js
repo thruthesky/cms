@@ -13,6 +13,13 @@ const uploadedFileClass = 'uploaded-file';
 const anonymousUserPhoto  = '/wp-content/themes/cms/img/anonymous/anonymous.jpg';
 
 
+const POST_SHOW_LIKE  = 'post_show_like';
+const POST_SHOW_DISLIKE  = 'post_show_dislike';
+const COMMENT_SHOW_LIKE  = 'comment_show_like';
+const COMMENT_SHOW_DISLIKE  = 'comment_show_dislike';
+
+
+
 /**
  * jQuery object defines
  * TODO Remove this and use Knockoutjs
@@ -649,7 +656,7 @@ function CommentList() {
             '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
             '</div><!--/.uploda-button-->' +
             '<div class="col mr-3">' +
-            '<textarea class="form-control" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-title" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">'+ content +'</textarea>' +
+            '<textarea class="form-control rich-editor" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-content" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">'+ content +'</textarea>' +
             '</div>' +
             '<div class="send-button col-1">' +
             '<button type="submit" class="btn btn-outline-dark">' +
@@ -782,8 +789,6 @@ function CommentList() {
     self.renderCommentViewTemplate = function(comment) {
         let t = self.commentViewTemplate;
 
-
-
         const html = t.split('<!--loop files-->').pop().split('<!--/loop-->').shift();
         let fts = [];
         if ( typeof comment['files'] !== 'undefined' ) {
@@ -813,6 +818,21 @@ function CommentList() {
         t = self.replaceTag('dislike', comment['dislike'], t);
         t = self.replaceTag('like_text', comment['user_vote'] === 'like'?'Liked':'Like', t);
         t = self.replaceTag('dislike_text', comment['user_vote'] === 'dislike'?'Disliked':'Dislike', t);
+
+        if (forum && forum[COMMENT_SHOW_LIKE] !== 'Y') {
+            t = self.replaceTag('show_like', '', t);
+        } else {
+            t = self.replaceTag('like', comment['like'], t);
+            t = self.replaceTag('like_text', comment['user_vote'] === 'like'?'Liked':'Like', t);
+        }
+
+        if (forum && forum[COMMENT_SHOW_DISLIKE] !== 'Y') {
+            t = self.replaceTag('show_dislike', '', t);
+        } else {
+            t = self.replaceTag('dislike', comment['dislike'], t);
+            t = self.replaceTag('dislike_text', comment['user_vote']=== 'dislike'?'Disliked':'Dislike', t);
+        }
+
 
         if( comment['user_id'] == getUserId() ) {
             t = self.replaceTag('mine', '', t);
@@ -858,9 +878,11 @@ function toast(title, subtitle, body) {
     $('.toast').toast('show');
 }
 
-submitPostEdit = function(form) {
+function submitPostEdit($event,form) {
+    $event.preventDefault();
     const data = objectifyForm(form);
     data['session_id'] = getUserSessionId();
+    console.log('submitPostEdit', data);
     const files = $(form).parent().find('.files').children();
     if (files.length) {
         let file_ids = '';
@@ -877,6 +899,7 @@ submitPostEdit = function(form) {
     } )
         .done(submitPostEditDone)
         .fail(ajaxFailure);
+    return false;
 };
 
 

@@ -937,6 +937,7 @@ function insert_forum_settings_as_javascript_into_header() {
 	$post_show_dislike = isset($re[POST_SHOW_DISLIKE]) ? $re[POST_SHOW_DISLIKE] : '';
 	$comment_show_like = isset($re[COMMENT_SHOW_LIKE]) ? $re[COMMENT_SHOW_LIKE] : '';
 	$comment_show_dislike = isset($re[COMMENT_SHOW_DISLIKE]) ? $re[COMMENT_SHOW_DISLIKE] : '';
+
 	$__head_script .= <<<EOS
 <script>
 	const forum = {
@@ -1072,3 +1073,38 @@ function post_list_query() {
 		return '?' . http_build_query($qs);
 
 }
+
+function addRichTextEditor($selector) {
+    $tinymce =  "<script src='" .  THEME_URL . "/js/tinymce/tinymce.min.js'></script>";
+    $tinymce .= "<script>
+      tinymce.init({
+        selector: '$selector',
+        menubar: false,
+        setup: function (editor) {
+        editor.on('change', function () {
+            editor.save();
+        });
+    }
+      });
+    </script>";
+    insert_at_the_bottom($tinymce);
+
+}
+
+
+//function addRichTextEditor($selector) {
+//    $tinymce =  "<script src='" .  THEME_URL . "/js/tinymce/tinymce.min.js'></script>";
+//    $tinymce .= "<script>" .
+//        "$$(function(){" .
+//        "tinymce.init({" .
+//        "selector: '$selector'," .
+//        "menubar: false," .
+//        "setup: function (editor) {" .
+//        "editor.on('change', function () {" .
+//        "editor.save();" .
+//        "});" .
+//        "}});" .
+//        "});" .
+//        "</script>";
+//    insert_at_the_bottom($tinymce);
+//}
