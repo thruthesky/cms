@@ -517,6 +517,7 @@ Array
     -> Profile page
 
 [B] A user logged in with Social account that are not supported by Firebase like Kakao, Naver login.
+   ( After login its social )
 -> App will register(or login) into Firebase and then register(or login) into Wordpress.
   -> User needs to verify Phone number
     -> Profile page

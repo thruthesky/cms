@@ -7,8 +7,10 @@ $blocks = $options['blocks'] ?? 7;
 
 
 if ( !isset($options['total_rows']) || empty($options['total_rows']) ) {
-    return jsAlert('total_rows is empty.');
+//    return jsAlert('total_rows is empty.');
+    return;
 }
+
 if ( !isset($options['url']) || empty($options['url']) ) {
     return jsAlert('url is empty.');
 }

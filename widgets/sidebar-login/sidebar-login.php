@@ -3,12 +3,10 @@
     <div class="card border-success mb-3 login-information">
         <div class="card-header bg-transparent border-success">Blog title</div>
         <div class="card-body text-success">
-
-
             <a class="user-profile-photo profile-photo-size circle" href="/?page=user.profile"></a>
-
-            <h5 class="card-title nickname"></h5>
-            <p class="card-text">Blog description. In the long history of the world, only a few generation have been granted the role of </p>
+            <p class="card-text">Photo</p>
+            <h5 class="card-title nickname">Nickname</h5>
+            <div>No of posts, No of comments</div>
         </div>
         <div class="card-footer bg-transparent border-success">
             <a class="btn btn-secondary" href="/?page=user.logout">Logout</a>
