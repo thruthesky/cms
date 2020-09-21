@@ -1103,20 +1103,3 @@ function addRichTextEditor($selector) {
 
 }
 
-
-//function addRichTextEditor($selector) {
-//    $tinymce =  "<script src='" .  THEME_URL . "/js/tinymce/tinymce.min.js'></script>";
-//    $tinymce .= "<script>" .
-//        "$$(function(){" .
-//        "tinymce.init({" .
-//        "selector: '$selector'," .
-//        "menubar: false," .
-//        "setup: function (editor) {" .
-//        "editor.on('change', function () {" .
-//        "editor.save();" .
-//        "});" .
-//        "}});" .
-//        "});" .
-//        "</script>";
-//    insert_at_the_bottom($tinymce);
-//}

@@ -1,4 +1,4 @@
 <?php
 
-include widget(forum(POST_EDIT_THEME));
+include widget(forum(POST_EDIT_THEME, 'post.edit'));
 

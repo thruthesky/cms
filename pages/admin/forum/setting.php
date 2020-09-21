@@ -85,7 +85,9 @@
         <label class="form-check-label" for="<?=COMMENT_SHOW_DISLIKE?>">Display Dislike button on Comment view.</label>
     </div>
 
+    <div class="d-flex  justify-content-between">
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <a type="submit" class="btn btn-secondary" href="<?=Config::$adminForumList?>">Back</a>
+    </div>
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-    <a type="submit" class="btn btn-secondary" href="<?=Config::$adminForumList?>">Back</a>
 </form>

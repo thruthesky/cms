@@ -9,9 +9,6 @@ $post = post()->postGet([
         'ID' => $_post->ID
 ]);
 $slug = $post['slug'];
-
-
-addRichTextEditor('.rich-editor');
 ?>
 <h3><?=forum('name')?></h3>
 <div class="p-3">
