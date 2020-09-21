@@ -69,5 +69,5 @@ $options = get_page_options();
 
 
 
-    <?php if ( in('display_social_login') ) include widget('social-login/buttons') ?>
+<!--    --><?php //if ( in('display_social_login') ) include widget('social-login/buttons') ?>
 

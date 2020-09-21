@@ -4,7 +4,7 @@
  * @desc See readme
  */
 if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration ) {
-    return move(Config::$mobileVerificationPage . '&display_social_login=true');
+    return move(Config::$mobileVerificationPage);
 }
 
 

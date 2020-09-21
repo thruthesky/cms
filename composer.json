@@ -3,6 +3,7 @@
         "phpunit/phpunit": "^9"
     },
     "require": {
-        "kreait/firebase-php": "^5.0"
+        "kreait/firebase-php": "^5.0",
+        "mobiledetect/mobiledetectlib": "^2.8"
     }
 }

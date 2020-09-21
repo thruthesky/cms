@@ -366,6 +366,7 @@ function loginOrProfile() {
 
 /**
  * After user login, this method will be called.
+ * All user login comes here including email/password login & all social logins.
  */
 function onUserLogin(res) {
     setLogin(res);
@@ -511,6 +512,9 @@ function alertError(res) {
     return alertBackendError(res);
 }
 
+function alertWarning(title, message) {
+    return alertModal(title, message);
+}
 function alertModal(title, message) {
 
     const dialog = $('#alertModal');
@@ -878,9 +882,9 @@ function toast(title, subtitle, body) {
     $('.toast').toast('show');
 }
 
-function submitPostEdit($event,form) {
-    $event.preventDefault();
+function submitPostEdit(form) {
     const data = objectifyForm(form);
+    if ( ! data.slug ) alertWarning('Warning', 'slug is empty');
     data['session_id'] = getUserSessionId();
     console.log('submitPostEdit', data);
     const files = $(form).parent().find('.files').children();
@@ -900,7 +904,7 @@ function submitPostEdit($event,form) {
         .done(submitPostEditDone)
         .fail(ajaxFailure);
     return false;
-};
+}
 
 
 function submitPostEditDone(re) {

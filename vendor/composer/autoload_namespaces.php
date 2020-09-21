@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Rize\\UriTemplate' => array($vendorDir . '/rize/uri-template/src'),
+    'Detection' => array($vendorDir . '/mobiledetect/mobiledetectlib/namespaced'),
 );

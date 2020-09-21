@@ -32,15 +32,15 @@ $slug = $post['slug'];
             <div class="card-title fs-lg"><?=$post['post_title']?></div>
             <p class="card-text"><?=$post['post_content']?></p>
 
-            <div class="container">
+
                 <div class="post-view-files row py-3">
                     <?php foreach ($post['files'] as $file) { ?>
-                        <div class="col-4 col-sm-3">
+                        <div class="col-3 col-sm-2">
                             <img class="w-100" src="<?=$file['thumbnail_url']?>">
                         </div>
                     <?php } ?>
                 </div><!--/.row-->
-            </div><!--/.container-->
+
             <div class="mb-3">
                 <?php if(forum(POST_SHOW_LIKE)) {?>
                     <button id="like<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'like')">

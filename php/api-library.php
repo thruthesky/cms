@@ -416,7 +416,7 @@ class ApiLibrary {
 	}
 
 	/**
-	 * User logged in with firebase social.
+	 * For users who logged in with social logins that are supported by Firebase like Facebook, Google, Apple.
 	 *
 	 * It needs to login or register.
 	 *

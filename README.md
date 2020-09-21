@@ -467,7 +467,7 @@ Array
 
 
   
-### Registration Logic
+### Login & Registration Logic
 
 * if `Config::$firebaseSyncUser` is set to true and the user is not social logged in,
   * Wordpress creates an account on Firebase
@@ -477,17 +477,58 @@ Array
   * Wordpress generates a custom token and returns it to user.
   * Then, the user can login with javascript.
 
-
 * If a user logged in(or registered) with social, they will have `social_login` metadata.
 
-#### Flowchart
 
-* Social login with Firebase ( Google, Facebook )
-    Social login -> register -> mobile verification -> profile update
+* For Web
+```text
+[A] User logged in with Firebase Social login
 
-* Social login without Firebase (Kakaotalk, Naver)
-    Social login -> register -> Firebase register -> mobile verification -> profile update
-    
+-> it will login/register into Wordpress(in background).
+	-> Verify phone number
+		-> Profile page
+
+[B] User logged in with Social logins that are not suppported by Firebase like Kakao/Naver login.
+
+-> it will create Wordpress account & Firebase account in background.
+	-> Verifiy phone number.
+		-> Profile page.
+
+[C] User register with email/password. (Web only)
+
+-> Verify phone number first
+	-> Register page with social login option
+		-> If user register with Wordpress,
+			-> then, Wordpress will create an account in Firebase ( in backgournd.)
+
+		-> If user login with social,
+			-> then, it will create an account into Wordpress.( in backgournd.)
+
+		
+		-> Profile update
+```
+
+* For Mobile Registration
+
+```text
+[A] A user logged in with Social accounts that are supported by Firebase like Facebook, Google, Apple
+-> App needs to register into Wordpress
+  -> User needs to verify Phone number.
+    -> Profile page
+
+[B] A user logged in with Social account that are not supported by Firebase like Kakao, Naver login.
+-> App will register(or login) into Firebase and then register(or login) into Wordpress.
+  -> User needs to verify Phone number
+    -> Profile page
+
+[C] User wants to register with email/password without Social login,
+-> Present registration form with email/password input. (with options of displaying social login buttons)
+-> User submit the form(email/password) to create Wordpress account and Wordpress will automatically creat Firebase account.
+    -> User needs to verify Phone number
+        -> Profile page.
+```
+
+
 
 
 ## Locale, I18N
@@ -521,6 +562,11 @@ Array
     <div class="ml-3">Please wait...</div>
 </div>
 ```
+
+
+## Rich Editor and File upload
+
+* Rich editor works only on desktop(mobile) web browser. On mobile web browser, the editor will be simple textarea.
 
 
 

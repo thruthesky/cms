@@ -1088,18 +1088,25 @@ function post_list_query() {
 
 function addRichTextEditor($selector) {
     $tinymce =  "<script src='" .  THEME_URL . "/js/tinymce/tinymce.min.js'></script>";
-    $tinymce .= "<script>
+    $tinymce .=<<<EOJ
+<script>
       tinymce.init({
         selector: '$selector',
+        relative_urls : false,
+        content_css : "/wp-content/themes/cms/css/index.css",
+        height: 600,
         menubar: false,
-        setup: function (editor) {
-        editor.on('change', function () {
-            editor.save();
-        });
-    }
+        statusbar: false,
+        plugins: 'code link autoresize',
+        toolbar: 'h1 h2 h3 | forecolor backcolor | bold italic underline strikethrough link removeformat | alignleft aligncenter alignright alignjustify | outdent indent | code | undo redo ',
+        setup: function(editor) {
+	        editor.on('change', function () {
+	            editor.save();
+	        });
+	    },
       });
-    </script>";
+    </script>
+EOJ;
     insert_at_the_bottom($tinymce);
-
 }
 
