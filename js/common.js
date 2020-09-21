@@ -85,6 +85,7 @@ function getCookie(name) {
 
 
 function setLogin(re) {
+    console.log(re);
     setCookie('session_id', re['session_id'], { expires: 365 });
     setCookie('session_id', re['session_id'], { expires: 365, domain: rootDomain });
 

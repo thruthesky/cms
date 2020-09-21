@@ -1,6 +1,5 @@
 <?php
 
-
 if ( localhost() ) {
     Config::$appVersion = time();
 }

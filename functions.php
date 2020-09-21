@@ -1094,15 +1094,34 @@ function addRichTextEditor($selector) {
         selector: '$selector',
         relative_urls : false,
         content_css : "/wp-content/themes/cms/css/index.css",
-        height: 600,
         menubar: false,
         statusbar: false,
         plugins: 'code link autoresize',
-        toolbar: 'h1 h2 h3 | forecolor backcolor | bold italic underline strikethrough link removeformat | alignleft aligncenter alignright alignjustify | outdent indent | code | undo redo ',
+        min_height: 400,
+        toolbar: 'customUpload | h1 h2 h3 | forecolor backcolor | bold italic underline strikethrough link removeformat | alignleft aligncenter alignright alignjustify | outdent indent | code | undo redo ',
         setup: function(editor) {
+            
 	        editor.on('change', function () {
 	            editor.save();
 	        });
+	        
+            editor.ui.registry.addButton('customUpload', {
+              text: 'Upload',
+              icon: 'image',
+              onAction: function (_) {
+                  var input = document.createElement('input');
+                  input.setAttribute('type', 'file');
+                  input.setAttribute('accept', 'image/*');
+                  input.onchange = function () {
+                      onChangeFile(this, { success: function onFileUploadSuccess(res) {
+                          const html = '<img id="uploaded-file'+res.ID+'" class="mw-100" src="'+res.url+'">';
+                          editor.insertContent(html);
+                      }});
+                };
+                  
+                input.click();
+              }
+            });
 	    },
       });
     </script>
