@@ -1,8 +1,5 @@
 <?php
 $options = get_page_options();
-
-
-
 ?>
 
 <?php if ( isset($options['mode']) && $options['mode'] == 'after-registration' ) { ?>
@@ -50,7 +47,7 @@ $options = get_page_options();
 
                 <button class="send btn bg-primary mt-3 p-2 w-100 text-white border-0 rounded" type="button" id="recaptcha-verifier">
 		            <?=tr([
-			            en => 'Send Verification Code To My Phone',
+			            en => 'Send Verification Code',
 			            ko => '인증 번호 발송',
 		            ]);?>
                 </button>

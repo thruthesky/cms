@@ -1,5 +1,5 @@
 <?php
-if ( ! loggedIn() ) return;
+if ( ! loggedIn() || ! loginSocialProviderName() ) return;
 ?>
 
 

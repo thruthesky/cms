@@ -37,7 +37,12 @@ function MobileVerificationPage() {
         })
             .done(function(res) {
                 if ( isBackendError(res) ) {
-                    alertError(res);
+
+                    /// After alert, it must wait until user close the alert box.
+                    alertErrorWait(res);
+                    // Then, refresh the page.
+                    location.reload();
+
                 } else {
                     localStorage.setItem('mobileVerificationSessionInfo', res['sessionInfo']);
                     localStorage.setItem('mobile', mobile);

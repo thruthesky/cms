@@ -509,6 +509,11 @@ function alertBackendError(res) {
     return false;
 }
 
+
+function alertErrorWait(msg) {
+    alert("Error\n\n" + msg);
+}
+
 function alertError(res) {
     return alertBackendError(res);
 }
