@@ -1,5 +1,4 @@
 <?php
-
 $options = get_page_options();
 
 ?>

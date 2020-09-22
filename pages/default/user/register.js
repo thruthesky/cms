@@ -2,11 +2,6 @@
  * @file register.js
  */
 
-
-
-
-
-
 function showLoader() {
     $('[role="submit"]').hide();
     $('[role="loader"]').show();
