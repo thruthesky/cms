@@ -16,7 +16,7 @@
 <?php } else { ?>
     <div class="login-form">
 
-        <form onsubmit="return apiUserLogin(this)">
+        <form class="mb-3" onsubmit="return apiUserLogin(this)">
             <div class="mb-3">
                 <label class="form-label">Email address</label>
                 <input type="email" class="form-control"aria-describedby="emailHelp" name="user_email">

@@ -130,8 +130,8 @@ $__i18n[emailAddressDescription] = [
     en => 'Your email address will be used when you login.'
 ];
 
-define('password', 'password');
-$__i18n[password] = [
+define('PASSWORD', 'password');
+$__i18n[PASSWORD] = [
     ko => '비밀번호',
     en => 'Password'
 ];
@@ -151,6 +151,17 @@ define('mobileNo', 'mobileNo');
 $__i18n[mobileNo] = [
     ko => '휴대폰 번호',
     en => 'Mobile number'
+];
+
+define('LOGIN', 'login');
+$__i18n[LOGIN] = [
+    ko => 'Login',
+    en => 'Login'
+];
+define('LOGIN_HEADER', 'login_header');
+$__i18n[LOGIN_HEADER] = [
+    ko => 'Proceed with your',
+    en => 'Proceed with your'
 ];
 
 $__json = [];
