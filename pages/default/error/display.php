@@ -16,3 +16,4 @@ $options = get_page_options();
     </p>
 </div>
 
+<img class="w-100" src="<?=THEME_URL?>/img/error/error.jpg">
