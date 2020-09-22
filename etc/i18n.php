@@ -149,8 +149,13 @@ $__i18n[nickname] = [
 
 define('mobileNo', 'mobileNo');
 $__i18n[mobileNo] = [
-    ko => '휴대폰 번호',
-    en => 'Mobile number'
+	ko => '휴대폰 번호',
+	en => 'Mobile number'
+];
+define('inputNickname', 'inputNickname');
+$__i18n[inputNickname] = [
+	ko => '닉네임을 입력해주세요.',
+	en => 'Please, insert your nickname.'
 ];
 
 $__json = [];

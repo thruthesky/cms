@@ -42,7 +42,7 @@ if($status_code == 200) { // 성공
 		$id = $res['response']['id'];
 		$email = isset($res['response']['email']) ? $res['response']['email'] : 'ID' . $id . '@naver.com';
 
-		loginOrRegisterBySocialLogin($email, $id, NAVER);
+		loginOrRegisterBySocialLogin($email, $id, SOCIAL_LOGIN_NAVER);
 
 
 	} else {
