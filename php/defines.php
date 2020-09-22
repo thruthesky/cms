@@ -10,8 +10,10 @@ define('FIREBASE_CUSTOM_LOGIN_TOKEN', 'firebase_custom_login_token');
 
 
 define('SOCIAL_LOGIN', 'social_login');
-define('NAVER', 'naver');
-define('KAKAO', 'kakao');
+define('SOCIAL_LOGIN_NAVER', 'naver');
+define('SOCIAL_LOGIN_KAKAO', 'kakao');
+define('SOCIAL_LOGIN_GOOGLE', 'google.com');
+define('SOCIAL_LOGIN_FACEBOOK', 'facebook.com');
 
 
 //define('INSTALL', 'cms_install');

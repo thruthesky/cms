@@ -97,7 +97,13 @@ class ApiLibrary {
 			return [];
 		}
 		$data = $user->to_array();
-		$data['nickname'] = $data['display_name'] ?? null;
+
+//		xlog('data:');
+//		xlog($data);
+//		xlog($this->get_user_metas($user->ID));
+
+
+		$data['nickname'] = $user->nickname;
 		unset($data['user_pass'], $data['user_activation_key'], $data['user_status'], $data['user_nicename'], $data['display_name'], $data['user_url']);
 
 		$data['session_id'] = $this->get_session_id($user);
@@ -142,6 +148,10 @@ class ApiLibrary {
 			}
 		}
 
+		if (isset($user->social_login)) {
+			$data[SOCIAL_LOGIN] = $user->social_login;
+		}
+//xlog($data);
 		return $data;
 	}
 
@@ -270,6 +280,8 @@ class ApiLibrary {
 
 
 	/**
+	 * @attention All user registration must be one by this method. No exceptions!
+	 *
 	 * @attention If $in['firebased_uid'] has value, then the user has logged in by Firebase social.
 	 *      - So, no need to create firebase account again.
 	 *
@@ -278,6 +290,9 @@ class ApiLibrary {
 	 * @return array|string
 	 *
 	 * @attention user_email becomes user_login. So, t must be 'user_login' field to search/find a user with email.
+	 *
+	 * @attention it checks email format and return error if the email is invalid.
+	 *
 	 * @code
 	 *      $res = lib()->userRegister(['user_email' => 'myeamil@gmail.com', 'user_pass' => '134123423']);
 	 *      dog($res)
@@ -291,6 +306,10 @@ class ApiLibrary {
 		if (isset($in['session_id'])) return ERROR_SESSION_ID_MUST_NOT_PROVIDED;
 
 		if (!isset($in['user_email']) || empty($in['user_email']))return ERROR_EMAIL_IS_EMPTY;
+
+		if ($this->check_email_format($in['user_email']) === false) return ERROR_WRONG_EMAIL_FORMAT;
+		if (get_user_by('email', $in['user_email'])) return ERROR_EMAIL_EXISTS;
+
 
 
 
@@ -307,21 +326,19 @@ class ApiLibrary {
 			$user_pass = $in['user_pass'];
 		}
 
-		$nickname = $in['nickname'] ?? $in['user_email'];
-
-		if ($this->check_email_format($in['user_email']) === false) return ERROR_WRONG_EMAIL_FORMAT;
-		if (get_user_by('email', $in['user_email'])) return ERROR_EMAIL_EXISTS;
 
 
+		/// @fix 2020. 09. 21. If user has no nickname, Make it empty string. User must update on his profile.
+		if ( isset($in['nickname']) && $in['nickname'] ) {
+			$nickname = $in['nickname'];
+			$user_nicename = $nickname;
+			$display_name = $nickname;
+		} else {
+			$nickname = '';
+			$user_nicename = '_';
+			$display_name = '_';
+		}
 
-//        if (!isset($in['mobile']) || empty($in['mobile'])) return ERROR_MOBILE_EMPTY;
-//        if ( Config::$verifiedMobileOnly && !$this->mobile_already_verified($in['mobile']) ) {
-//        	return ERROR_MOBILE_NOT_VERIFIED;
-//        }
-//
-//        if ( Config::$uniqueMobile && $this->mobile_already_exists($in['mobile']) ) {
-//            return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
-//        }
 
 
 		////
@@ -330,13 +347,14 @@ class ApiLibrary {
 			'user_login' => trim($in['user_email']),
 			'user_pass' => trim($user_pass),
 			'user_email' => trim($in['user_email']),
-			'user_nicename' => $nickname,
-			'display_name' => $nickname,
+			'user_nicename' => $user_nicename,
+			'display_name' => $display_name,
 			'nickname' => $nickname,
 			'first_name' => $in['first_name'] ?? '',
 			'last_name' => $in['last_name'] ?? '',
 		];
 
+		xlog($userdata);
 		$user_ID = wp_insert_user($userdata);
 
 
@@ -427,35 +445,37 @@ class ApiLibrary {
 	public function userFirebaseSocialLogin($in) {
 
 		$user = get_user_by('login', $in['email']);
-		if ( $user ) {
-			xlog('userFirebaseSocialLogin: user exists.');
-		} else {
-			xlog('userFirebaseSocialLogin: user NOT exists.');
-		}
-		if ( isset($user->firebase_uid) && $user->firebase_uid == $in[FIREBASE_UID] ) {
-			xlog('userFirebaseSocialLogin: firebase_uid matches');
-		} else {
-			xlog('userFirebaseSocialLogin: firebase_uid NOT matches.');
-			if( isset($user->firebase_uid) ) xlog($user->firebase_uid);
-			xlog($in[FIREBASE_UID]);
-		}
+																						//		if ( $user ) {
+																						//			xlog('userFirebaseSocialLogin: user exists.');
+																						//		} else {
+																						//			xlog('userFirebaseSocialLogin: user NOT exists.');
+																						//		}
+																						//		if ( isset($user->firebase_uid) && $user->firebase_uid == $in[FIREBASE_UID] ) {
+																						//			xlog('userFirebaseSocialLogin: firebase_uid matches');
+																						//		} else {
+																						//			xlog('userFirebaseSocialLogin: firebase_uid NOT matches.');
+																						//			if( isset($user->firebase_uid) ) xlog($user->firebase_uid);
+																						//			xlog($in[FIREBASE_UID]);
+																						//		}
 		if ( $user && (isset($user->firebase_uid) && $user->firebase_uid == $in[FIREBASE_UID]) ) { // login succcess
 			xlog('userFirebaseSocialLogin: user exists and firebase_uid matches. login success.');
 			return $this->userResponse($user->ID);
 		}
+
 		xlog('userFirebaseSocialLogin: login fail. going to register.');
 		$res = lib()->userRegister([
 			'user_email' => $in['email'], 'user_pass' => $in[FIREBASE_UID], SOCIAL_LOGIN => $in['provider'],
 			FIREBASE_UID => $in[FIREBASE_UID]
 		]);
 		return $res;
+
 	}
 
 
 
 
 	/**
-	 * This updates user information.
+	 * This updates user information. All user update must call this method. No exceptions !
 	 *
 	 * @warning API call only.
 	 * @warning This method cannot update mobile number. There must be another method to update mobile number.
@@ -516,7 +536,6 @@ class ApiLibrary {
 		if (isset($in['nickname'])) {
 			$userdata['user_nicename'] = $in['nickname'];
 			$userdata['display_name'] = $in['nickname'];
-			$userdata['nickname'] = $in['nickname'];
 		}
 
 		/// photo URL
@@ -573,6 +592,7 @@ class ApiLibrary {
 				}
 			}
 		}
+		xlog("updateUserMeta($ID, $k, $v)");
 		update_user_meta($ID, $k, $v);
 	}
 

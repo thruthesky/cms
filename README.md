@@ -179,6 +179,33 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 route=app.version
 ```
 
+### User response
+
+* User registration, login, update will return same response.
+
+```text
+Array
+(
+    [nickname] => _
+    [first_name] => 
+    [last_name] => 
+    [user_email] => thruthesky6@gmail.com
+    [social_login] => google.com
+    [firebase_uid] => WNaN8AnkKIfh12eptxzJ6kc6A3D2
+    [mobile] => +821086934225
+    [photo_url] => 
+    [fullname] => full name
+    [ID] => 73
+    [user_login] => thruthesky6@gmail.com
+    [user_registered] => 2020-09-17 07:16:39
+    [session_id] => 73_9f4b4e127337707b4be137412d419b7f
+    [firebase_custom_login_token] => eyJ0eX...WNw
+)
+```
+
+* Wordpress registration may not have `social_login`.
+* If user didn't input nickname, then `_` will be put as default nickname.
+
 ### Registration
 
 * Request through URL
@@ -595,3 +622,18 @@ Array
 
 * For error of `CAPTCHA_CHECK_FAILED : Hostname match not found`, add your domain.
   * Firebase Console -> Authentication -> sign-in-method -> Authorized Domains
+
+
+## Reproducing Problems
+
+
+* Make the app redirect profile update page for information correction (web only)
+
+  * delete nickname/birtday and click home.
+
+* error page (web only)
+
+```
+https://wordpress.philgo.com/?page=error.social-login&action=result&code=auth/account-exists-with-different-credential&message=An%20account%20already%20exists%20with%20the%20same%20email%20address%20but%20different%20sign-in%20credentials.%20Sign%20in%20using%20a%20provider%20associated%20with%20this%20email%20address.&provider=facebook.com&provider_name=%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%B6%81
+https://wordpress.philgo.com/?page=post.list&slug=noslug
+```

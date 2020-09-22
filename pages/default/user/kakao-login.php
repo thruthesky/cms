@@ -20,9 +20,6 @@ curl_close( $ch );
 $accessToken = json_decode( $loginResponse )->access_token; //Access Token만 따로 뺌
 //echo "<br><br> accessToken : " . $accessToken;
 
-
-
-
 // 사용자 정보 가저오기
 $USER_API_URL= "https://kapi.kakao.com/v2/user/me";
 $opts = [
@@ -55,7 +52,7 @@ if ($me['id']) {
 	$mb_birthday = $me['kakao_account']['birthday'] ?? ''; // 생일
 
 	$email = $mb_email ? $mb_email : 'ID' . $mb_id . '@kakao.com';
-	loginOrRegisterBySocialLogin($email, $mb_id, KAKAO);
+	loginOrRegisterBySocialLogin($email, $mb_id, SOCIAL_LOGIN_KAKAO);
 } else {
 	dog("카카오 로그인 회원 정보를 가져오지 못했습니다.");
 }

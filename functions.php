@@ -140,7 +140,7 @@ $__page_options = [];
  * This is the login user's profile information that should be used for profile update.
  */
 
-$__user = $apiLib->userResponse(loginSessionID());
+$__user = $apiLib->userResponse(loginSessionIDFromCookie());
 
 /**
  * Set the user logged into Wordpress if the user logged in with cookie.
@@ -170,6 +170,10 @@ else {
 
 	// mobile check
 	checkMobileRequired();
+
+
+	//
+	checkProfileInformation();
 
 
 	//
@@ -399,13 +403,17 @@ function widget($name, $options = null) {
 /**
  * Check if user is logged in.
  *
+ * This code is working on both API_CALL and web browser.
+ *
  * It checks the session_id in Cookie.
  *
  * @return bool
  *  - true if the user has loggged in.
  */
 function loggedIn() {
-	return loginSessionId() != null;
+	if ( loginSessionIDFromCookie() != null ) return true;
+	if ( is_user_logged_in() ) return true;
+	return false;
 }
 
 /**
@@ -413,8 +421,8 @@ function loggedIn() {
  * @warning This is only for PHP function call.
  * Returns login user's Session Id.
  */
-function loginSessionId() {
-	if ( isset($_COOKIE['session_id']) && ! empty($_COOKIE['session_id']) ) {
+function loginSessionIDFromCookie() {
+	if ( isset($_COOKIE) && isset($_COOKIE['session_id']) && ! empty($_COOKIE['session_id']) ) {
 		return $_COOKIE['session_id'];
 	} else {
 		return null;
@@ -439,6 +447,8 @@ function login($key = null)
 
 	/**
 	 * @warning $__user is not available on API_CALL
+	 *  But this method still works perfect on API_CALL. This code is only for caching for web browser.
+	 *
 	 * Check if the value of the key exists on user's API profile.
 	 * For instance, photoURL is only exists on user's API profile.
 	 */
@@ -546,7 +556,7 @@ function user( $user_ID, $field)
  * @return int|mixed
  */
 function userId() {
-	$sid = loginSessionId();
+	$sid = loginSessionIDFromCookie();
 	if ( $sid == null ) return 0;
 	$arr = explode('_', $sid);
 	return $arr[0];
@@ -554,11 +564,7 @@ function userId() {
 
 
 function loginNickname() {
-	echo getLoginNickname();
-}
-
-function getLoginNickname() {
-	return $_COOKIE['nickname'];
+	return login('nickname');
 }
 
 function loginSocialProviderName() {
@@ -1076,6 +1082,19 @@ function checkMobileRequired() {
 	}
 }
 
+/**
+ * If user didn't complete profile information, it will redirect to the page.
+ */
+function checkProfileInformation() {
+	if ( ! loggedIn() ) return;
+	if ( !loginNickname() ) {
+		if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'user') === false ) {
+			Config::setPage( 'user.profile' );
+			set_page_options( [ 'messageCode' => inputNickname ] );
+		}
+	}
+}
+
 
 function get_page_no() {
 	$page_no = in('page_no', 1);
@@ -1107,30 +1126,12 @@ function addRichTextEditor($selector) {
         statusbar: false,
         plugins: 'code link autoresize',
         min_height: 400,
-        toolbar: 'customUpload | h1 h2 h3 | forecolor backcolor | bold italic underline strikethrough link removeformat | alignleft aligncenter alignright alignjustify | outdent indent | code | undo redo ',
+        toolbar: 'h1 h2 h3 | forecolor backcolor | bold italic underline strikethrough link removeformat | alignleft aligncenter alignright alignjustify | outdent indent | code | undo redo ',
         setup: function(editor) {
             
 	        editor.on('change', function () {
 	            editor.save();
 	        });
-	        
-            editor.ui.registry.addButton('customUpload', {
-              text: 'Upload',
-              icon: 'image',
-              onAction: function (_) {
-                  var input = document.createElement('input');
-                  input.setAttribute('type', 'file');
-                  input.setAttribute('accept', 'image/*');
-                  input.onchange = function () {
-                      onChangeFile(this, { success: function onFileUploadSuccess(res) {
-                          const html = '<img id="uploaded-file'+res.ID+'" class="mw-100" src="'+res.url+'">';
-                          editor.insertContent(html);
-                      }});
-                };
-                  
-                input.click();
-              }
-            });
 	    },
       });
     </script>
