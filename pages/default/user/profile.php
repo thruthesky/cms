@@ -3,7 +3,7 @@ $options = get_page_options();
 
 ?>
 
-<?php if ( $options['messageCode'] ) { ?>
+<?php if ( isset($options['messageCode']) ) { ?>
     <div class="alert alert-danger"><?=tr($options['messageCode'])?></div>
 <?php } ?>
 <div class="container py-3">
