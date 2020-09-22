@@ -1,4 +1,2 @@
-<h1>Social Login Failed</h1>
 <?php
-dog(in());
-?>
+include page('error.display', ['title' => 'Social login error', 'body' => in('message')]);

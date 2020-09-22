@@ -1086,6 +1086,7 @@ function checkMobileRequired() {
  * If user didn't complete profile information, it will redirect to the page.
  */
 function checkProfileInformation() {
+	if ( ! loggedIn() ) return;
 	if ( !loginNickname() ) {
 		if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'user') === false ) {
 			Config::setPage( 'user.profile' );
