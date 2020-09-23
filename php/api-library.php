@@ -465,7 +465,7 @@ class ApiLibrary {
 		xlog('userFirebaseSocialLogin: login fail. going to register.');
 		$res = lib()->userRegister([
 			'user_email' => $in['email'], 'user_pass' => $in[FIREBASE_UID], SOCIAL_LOGIN => $in['provider'],
-			FIREBASE_UID => $in[FIREBASE_UID], 'nickname' => $in['nickname'], 'photo_url' => $in['photo_url']
+			FIREBASE_UID => $in[FIREBASE_UID], 'nickname' => $in['nickname']
 		]);
 		return $res;
 
