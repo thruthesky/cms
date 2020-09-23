@@ -42,22 +42,28 @@ if ( localhost() ) {
 
 <?php
 
+//if ( hasLayout() ) {
+//    if ( isMobile() ) {
+//	    include page('home.mobile-layout');
+//    } else {
+//        include page('home.desktop-layout');
+//    }
+//} else {
+//    include page();
+//}
 
 $_page_script = page();
 
-
-
 if ( noLayout($_page_script) ) {
-    include $_page_script;
+	include $_page_script;
 } else {
-    if ( isMobile() ) {
-        include page('home.mobile-layout', ['page_script' => $_page_script]);
-    } else {
-        include page('home.desktop-layout', ['page_script' => $_page_script]);
-    }
-
-    ?>
-<?php } ?>
+	if ( isMobile() ) {
+		include page('home.mobile-layout', ['page_script' => $_page_script]);
+	} else {
+		include page('home.desktop-layout', ['page_script' => $_page_script]);
+	}
+}
+?>
 
 
 <script src="<?php theme_url()?>/js/jquery-3.5.1-min.js"></script>

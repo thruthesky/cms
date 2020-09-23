@@ -1,6 +1,9 @@
 <?php
 	$options = get_page_options();
 ?>
+<div class="top l-width bg-dark text-white">
+    .top
+</div>
 <?php include widget('header')?>
 <div class="container px-0">
 	<div class="row no-gutters">
