@@ -20,8 +20,6 @@
     </div>
 
 
-    <?=get_browser_language()?>
-    <?=tr('appName')?>
 
     <h2>
         User management is done!

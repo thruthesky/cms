@@ -49,18 +49,6 @@ a:hover {
   border-width: 2px;
 }
 
-.sbg-primary {
-  background-color: #0384D0 !important;
-}
-
-.bg-lightgrey {
-  background-color: #efefef !important;
-}
-
-.bg-lighter {
-  background-color: #f4f4f4 !important;
-}
-
 .h-70 {
   height: 70px;
 }
@@ -222,15 +210,19 @@ a:hover {
 }
 
 .light {
-  color: #d9d9d9 !important;
+  color: #e8e8e8 !important;
 }
 
 .lighter {
-  color: #eeeeee !important;
+  color: #f0f0f0 !important;
 }
 
 .black {
   color: #000 !important;
+}
+
+.white {
+  color: #FFFFFF;
 }
 
 .border-darkgray {
@@ -239,6 +231,22 @@ a:hover {
 
 .fa-darkgray:before {
   color: #5f5f5f;
+}
+
+.bg-skyblue {
+  background-color: #0384D0 !important;
+}
+
+.sbg-primary {
+  background-color: #0384D0 !important;
+}
+
+.bg-lightgrey {
+  background-color: #efefef !important;
+}
+
+.bg-lighter {
+  background-color: #f4f4f4 !important;
 }
 
 .fs-12 {
@@ -287,6 +295,14 @@ a:hover {
 
 .fs-xxxl {
   font-size: 10rem !important;
+}
+
+.fw-xs {
+  font-weight: 100;
+}
+
+.fw-sm {
+  font-weight: 300;
 }
 
 .z-index-high {
