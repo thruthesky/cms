@@ -190,6 +190,11 @@ $__i18n[VERIFICATION] = [
     ko => 'Verification',
     en => 'Verification'
 ];
+define('VERIFY', 'verify');
+$__i18n[VERIFY] = [
+    ko => 'Verify',
+    en => 'Verify'
+];
 
 define('FACEBOOK', 'facebook');
 $__i18n[FACEBOOK] = [
