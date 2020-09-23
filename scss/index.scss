@@ -1,5 +1,8 @@
+/**
+ * Layout classes
+ */
 .l-width {
-  width: 1300px;
+  width: 1130px;
 }
 .l-space {
   width: 16px;
@@ -8,6 +11,9 @@
   width: 24px;
 }
 
+/**
+ * Utility classes
+ */
 .sbg-primary {
   background-color: #0384D0 !important;
 }
@@ -269,3 +275,4 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
   border-radius: 0;
   background-color: transparent;
 }
+

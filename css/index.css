@@ -1,5 +1,8 @@
+/**
+ * Layout classes
+ */
 .l-width {
-  width: 1300px;
+  width: 1130px;
 }
 
 .l-space {
@@ -10,6 +13,9 @@
   width: 24px;
 }
 
+/**
+ * Utility classes
+ */
 .sbg-primary {
   background-color: #0384D0 !important;
 }
