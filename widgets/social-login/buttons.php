@@ -1,17 +1,20 @@
 <div class="social-login-buttons d-flex justify-content-between flex-wrap">
-    <div class="d-inline-block" onclick="firebaseLoginFacebook()">
-        <img src="<?=theme_url()?>/img/social-login/facebook.png">
+    <div class="d-flex flex-column text-center" onclick="firebaseLoginFacebook()">
+        <img class="wh-52 mb-12" src="<?=theme_url()?>/img/social-login/facebook.png">
+        <span class="color-gray"><?=tr(FACEBOOK)?></span>
     </div>
-    <div onclick="firebaseLoginGoogle()">
-        <img src="<?=theme_url()?>/img/social-login/google.png">
+    <div class="d-flex flex-column text-center" onclick="firebaseLoginGoogle()">
+        <img class="wh-52 mb-12" src="<?=theme_url()?>/img/social-login/google.png">
+        <span class="color-gray"><?=tr(GOOGLE)?></span>
     </div>
-
-    <a href="<?=Config::$naverLoginApiURL?>">
-<!--        <img height="50" src="http://static.nid.naver.com/oauth/small_g_in.PNG"/>-->
-
-        <img src="<?=theme_url()?>/img/social-login/naver.png">
+    <a class="d-flex flex-column text-center" href="<?=Config::$naverLoginApiURL?>">
+        <img class="wh-52 mb-12"src="<?=theme_url()?>/img/social-login/naver.png">
+        <span class="color-gray"><?=tr(NAVER)?></span>
     </a>
-    <a href="<?=Config::$kakaoLoginApiURL?>">
-       <img src="<?=theme_url()?>/img/social-login/kakaotalk.png">
+    <a class="d-flex flex-column text-center"href="<?=Config::$kakaoLoginApiURL?>">
+        <img class="wh-52 mb-12" src="<?=theme_url()?>/img/social-login/kakaotalk.png">
+        <span class="color-gray"><?=tr(KAKAOTALK)?></span>
     </a>
 </div>
+
+

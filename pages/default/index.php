@@ -74,7 +74,7 @@ if ( noLayout($_page_script) ) {
     </div>
 </div>
 <?php widget('footer')?>
-    <div class="toast" role="alert" style="position: absolute; top: 0; right: 0;"  data-delay="10000">
+    <div class="toast" role="alert" style="position: absolute; bottom: 0; right: 0;"  data-delay="10000">
         <div class="toast-header">
             <strong class="mr-auto">
                 <i class="fa fa-check-square mr-1"></i>

@@ -163,10 +163,33 @@ $__i18n[LOGIN] = [
     ko => 'Login',
     en => 'Login'
 ];
+
 define('LOGIN_HEADER', 'login_header');
 $__i18n[LOGIN_HEADER] = [
     ko => 'Proceed with your',
     en => 'Proceed with your'
+];
+define('FACEBOOK', 'facebook');
+$__i18n[FACEBOOK] = [
+    ko => '페이스북',
+    en => 'Facebook'
+];
+
+define('GOOGLE', 'google');
+$__i18n[GOOGLE] = [
+    ko => '구글',
+    en => 'Google'
+];
+
+define('NAVER', 'naver');
+$__i18n[NAVER] = [
+    ko => '네이버',
+    en => 'Naver'
+];
+define('KAKAOTALK', 'kakaotalk');
+$__i18n[KAKAOTALK] = [
+    ko => '카카오톡',
+    en => 'Kakao'
 ];
 
 $__json = [];
