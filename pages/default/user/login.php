@@ -18,7 +18,7 @@
             </div>
         </div>
 
-        <button type="submit" class="btn btn-primary btn-lg w-100 text-uppercase mb-3"><?=tr(LOGIN)?></button>
+        <button type="submit" class="btn sbtn-primary text-white btn-lg w-100 text-uppercase mb-3"><?=tr(LOGIN)?></button>
 
         <div class="d-flex justify-content-between mb-56 fs-12">
             <a class="color-black" href="<?php echo Config::$registerPage?>">Forgot password?</a>
