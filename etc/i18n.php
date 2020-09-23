@@ -164,10 +164,20 @@ $__i18n[LOGIN] = [
     en => 'Login'
 ];
 
-define('LOGIN_HEADER', 'login_header');
-$__i18n[LOGIN_HEADER] = [
+define('LOGIN_HEAD', 'login_header');
+$__i18n[LOGIN_HEAD] = [
     ko => 'Proceed with your',
     en => 'Proceed with your'
+];
+define('REGISTRATION_HEAD', 'registration_header');
+$__i18n[REGISTRATION_HEAD] = [
+    ko => 'Fill in the form',
+    en => 'Fill in the form'
+];
+define('PROFILE_HEAD', 'profile_head');
+$__i18n[PROFILE_HEAD] = [
+    ko => 'Touch and update your information',
+    en => 'Touch and update your information'
 ];
 define('FACEBOOK', 'facebook');
 $__i18n[FACEBOOK] = [
@@ -190,6 +200,10 @@ define('KAKAOTALK', 'kakaotalk');
 $__i18n[KAKAOTALK] = [
     ko => '카카오톡',
     en => 'Kakao'
+];
+$__i18n['or'] = [
+    ko => '카카오톡',
+    en => 'OR'
 ];
 
 $__json = [];

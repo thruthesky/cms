@@ -2,17 +2,14 @@
 $options = get_page_options();
 
 ?>
-
 <?php if ( isset($options['messageCode']) ) { ?>
     <div class="alert alert-danger"><?=tr($options['messageCode'])?></div>
 <?php } ?>
-<div class="container py-3">
-    <div class="card">
-        <div class="card-body">
+<div class="px-30 mt-26">
 
-            <h1>User Profile</h1>
+            <div class="fs-12 mb-68 color-gray"><?=tr(PROFILE_HEAD)?></div>
             <div class="d-flex justify-content-center mb-3">
-                <img class="userPhoto circle w-100 wh120x120" src="<?=myProfilePhotoUrl()?>" alt="user photo">
+                <img class="userPhoto circle w-100 wh145x145" src="<?=myProfilePhotoUrl()?>" alt="user photo">
             </div>
 
             <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
@@ -48,9 +45,6 @@ $options = get_page_options();
                 <a class="btn btn-secondary" href="/?page=user.logout">Logout</a>
                 <a class="btn btn-danger" href="/?page=user.resign">Resign</a>
             </div>
-        </div>
-
-    </div>
 
 	<?php include widget('user.logged-with') ?>
 

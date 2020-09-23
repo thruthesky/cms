@@ -1,5 +1,5 @@
-<div class="px-40 mt-60">
-    <div class="fs-20"><?=tr(LOGIN_HEADER)?></div>
+<div class="px-40 mt-24">
+    <div class="fs-20"><?=tr(LOGIN_HEAD)?></div>
     <h1 class="fs-40 font-weight-bold mb-56"><?=tr(LOGIN)?></h1>
     <form class="login-form" onsubmit="apiUserLogin(this); return false;">
         <label class="form-label fs-14 color-light"><?=tr('emailAddress')?></label>
@@ -27,7 +27,7 @@
 
         <div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #B1B1B1">
               <span class="px-10 bg-white color-lighter">
-                OR
+                <?=tr('or')?>
               </span>
         </div>
     </form>
