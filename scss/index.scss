@@ -1,7 +1,16 @@
+.l-width {
+  width: 1300px;
+}
+.l-space {
+  width: 16px;
+}
+.l-space-lg {
+  width: 24px;
+}
+
 .sbg-primary {
   background-color: #0384D0 !important;
 }
-
 
 .bg-lightgrey {
   background-color: #efefef !important;
@@ -221,7 +230,6 @@ input[type=file], /* FF, IE7+, chrome (except button) */
 input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
   cursor: pointer;
 }
-
 
 
 .spinner {

@@ -1139,3 +1139,15 @@ EOJ;
 	insert_at_the_bottom($tinymce);
 }
 
+/**
+ * Returns true if the device is Mobile phone or Tablet.
+ * @return bool
+ */
+function isMobile() {
+	$mobileDetect = new \Detection\MobileDetect();
+	if ($mobileDetect->isMobile() || $mobileDetect->isTablet() ) {
+		return true;
+	} else {
+		return false;
+	}
+}
