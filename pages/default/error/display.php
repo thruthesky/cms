@@ -11,3 +11,4 @@ $options = get_page_options();
 <h1 class="display-5"><?=$options['title']?></h1>
 <hr>
 <p class="lead"><?=$options['body']?></p>
+

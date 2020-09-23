@@ -17,9 +17,7 @@ if ($ID) {
     $slug = $post['slug'];
 }
 
-
-$mobileDetect = new \Detection\MobileDetect();
-if ($mobileDetect->isMobile() || $mobileDetect->isTablet() ) {
+if ( isMobile() ) {
     include widget('post/edit-mboile');
 } else {
     include widget('post/edit-desktop');

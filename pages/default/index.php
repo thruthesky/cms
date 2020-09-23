@@ -1,19 +1,15 @@
 <?php
 global $__head_script;
 if ( localhost() ) {
-    Config::$appVersion = time();
+	Config::$appVersion = time();
 }
 ?>
 <!doctype html>
 <html lang="en">
 <head>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
-
     <meta name="description" content="소셜 네트워크 허브. 모든 소셜 서비스를 모았습니다.">
-
     <link rel="manifest" href="<?php theme_url()?>/manifest.json">
-
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="application-name" content="<?php echo PWA_APP_NAME?>">
@@ -23,8 +19,6 @@ if ( localhost() ) {
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="msapplication-starturl" content="<?php echo PWA_START_URL?>">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-
     <meta name="theme-color" content="#4285f4">
     <link rel="apple-touch-icon" href="<?php theme_url()?>/img/pwa/Icon-192.png">
 
@@ -41,7 +35,7 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-    <?php echo $__head_script?>
+	<?php echo $__head_script?>
 </head>
 
 <body data-page="<?php echo in('page', 'home')?>">
@@ -54,39 +48,15 @@ $_page_script = page();
 
 
 if ( noLayout($_page_script) ) {
-    include $_page_script;
+	include $_page_script;
 } else {
+if ( isMobile() ) {
+    include page('home.mobile-layout', ['page_script' => $_page_script]);
+} else {
+    include page('home.desktop-layout', ['page_script' => $_page_script]);
+}
 
-?>
-<?php include widget('header')?>
-<div class="container px-0">
-    <div class="row no-gutters">
-        <div class="col">
-            <main class="mr-lg-4">
-                <?php
-                include $_page_script;
-                ?>
-            </main>
-        </div>
-        <div class="col-lg-3 d-none d-lg-block">
-            <?php include widget('sidebar-login')?>
-        </div>
-    </div>
-</div>
-<?php widget('footer')?>
-    <div class="toast" role="alert" style="position: absolute; bottom: 0; right: 0;"  data-delay="10000">
-        <div class="toast-header">
-            <strong class="mr-auto">
-                <i class="fa fa-check-square mr-1"></i>
-                <span class="title"></span>
-            </strong>
-            <small class="subtitle"></small>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="toast-body"></div>
-    </div>
+	?>
 <?php } ?>
 
 
