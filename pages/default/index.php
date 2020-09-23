@@ -1,5 +1,5 @@
 <?php
-
+global $__head_script;
 if ( localhost() ) {
     Config::$appVersion = time();
 }
@@ -74,7 +74,7 @@ if ( noLayout($_page_script) ) {
     </div>
 </div>
 <?php widget('footer')?>
-    <div class="toast" role="alert" style="position: absolute; top: 0; right: 0;"  data-delay="10000">
+    <div class="toast" role="alert" style="position: absolute; bottom: 0; right: 0;"  data-delay="10000">
         <div class="toast-header">
             <strong class="mr-auto">
                 <i class="fa fa-check-square mr-1"></i>
@@ -89,17 +89,14 @@ if ( noLayout($_page_script) ) {
     </div>
 <?php } ?>
 
-<!-- JavaScript -->
+
 <script src="<?php theme_url()?>/js/jquery-3.5.1-min.js"></script>
 <script src="<?php theme_url()?>/css/bootstrap-4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="<?php theme_url()?>/js/js.cookie.min.js"></script>
 <script src="<?php theme_url()?>/js/knockout-3.5.1.js"></script>
-
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
 <script src="<?php theme_url()?>/js/social-login.js?v=<?php echo Config::$appVersion?>"></script>
-
-
 <script src="<?php theme_url()?>/js/common.js?v=<?php echo Config::$appVersion?>"></script>
 
 </body>
