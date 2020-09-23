@@ -57,11 +57,7 @@ $_page_script = page();
 if ( noLayout($_page_script) ) {
 	include $_page_script;
 } else {
-	if ( isMobile() ) {
-		include page('home.mobile-layout', ['page_script' => $_page_script]);
-	} else {
-		include page('home.desktop-layout', ['page_script' => $_page_script]);
-	}
+    include 'layout' . rwd() . '.php';
 }
 ?>
 
