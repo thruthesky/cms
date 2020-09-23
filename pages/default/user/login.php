@@ -1,4 +1,4 @@
-<div class="px-40 mt-24">
+<div class="px-40 mt-60">
     <div class="fs-20"><?=tr(LOGIN_HEAD)?></div>
     <h1 class="fs-40 font-weight-bold mb-56"><?=tr(LOGIN)?></h1>
     <form class="login-form" onsubmit="apiUserLogin(this); return false;">
