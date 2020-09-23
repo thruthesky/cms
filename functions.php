@@ -247,6 +247,13 @@ function get_page_options() {
  * @param null $page
  * @param array $options
  *
+ *  - $options['rwd']
+ *      If it is set to true, it will load a page script with the extension of `.mobile` or `.desktop`.
+ *      For instance, if 'rwd' => true passed on 'home' page, then the return will be one of
+ *          'home.mobile.php' or 'home.desktop.php'
+ *  - $options['including']
+ *      $options['rwd'] works only when $page is in $options['including'] array.
+ *
  * @return string
  *
  * http://domain.com/ => pages/home/home.php
@@ -256,6 +263,7 @@ function get_page_options() {
  *
  * @code
  *  include page('user.register'); /// will include 'pages/theme-name/user/register.php'
+ *  include page(null, ['rwd' => true, 'including' => ['home']]); /// load one of home.mobile.php or home.desktop.php if the page is home.
  * @endcode
  */
 function page($page = null, $options = []) {
@@ -291,16 +299,22 @@ function page($page = null, $options = []) {
 
 		$arr = explode('.', $page, 2);
 
+
+		$rwd = '';
+		if ( isset($options['including']) && in_array($page, $options['including']) ) {
+			if ( isset($options['rwd']) && $options['rwd'] ) $rwd = rwd();
+		}
+
 		if ( count($arr) == 1 ) {
 			if ( $arr[0] == 'index' ) {
 				$path = 'error/wrong-input.php';
 				set_page_options(['error' => 'Page cannot be index.']);
 			} else {
-				$path = "$arr[0]/$arr[0].php";
+				$path = "$arr[0]/$arr[0]$rwd.php";
 			}
 		}
 		else if ( count($arr) == 2 ) {
-			$path = "$arr[0]/$arr[1].php";
+			$path = "$arr[0]/$arr[1]$rwd.php";
 		}
 
 	}
@@ -1150,4 +1164,9 @@ function isMobile() {
 	} else {
 		return false;
 	}
+}
+
+function rwd() {
+	if ( isMobile() ) return '.mobile';
+	else return '.desktop';
 }

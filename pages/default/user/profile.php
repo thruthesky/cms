@@ -7,7 +7,7 @@ $options = get_page_options();
 <?php } ?>
 <div class="px-30 mt-26 mb-56">
 
-            <div class="fs-12 mb-68 color-gray"><?=tr(PROFILE_HEAD)?></div>
+            <div class="fs-12 mb-68 gray"><?=tr(PROFILE_HEAD)?></div>
             <div class="d-flex justify-content-center mb-3">
                 <img class="userPhoto circle w-100 wh145x145" src="<?=myProfilePhotoUrl()?>" alt="user photo">
             </div>

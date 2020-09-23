@@ -14,7 +14,7 @@ class Config {
 
     /// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
 	/// This is only for web registration.
-    static public $verifyMobileOnRegistration = true;
+    static public $verifyMobileOnRegistration = false;
 
 
     /// If it is set to true and if user has no mobile in his meta data, the user will be redirected to mobile phone verification.
@@ -24,7 +24,7 @@ class Config {
 
     /// If it is set to true, only verified mobile can be save into user meta.
 	/// This means the user must verify phone number before registration or updating mobile no.
-    static public $verifiedMobileOnly = true;
+    static public $verifiedMobileOnly = false;
 
 
     /// If it is set to true, the mobile number becomes unique in Database.
@@ -125,3 +125,6 @@ else if ($_host == 'wp-blog.philgo.com' ) {
 } else if ($_host == 'wp-realestate.philgo.com' ) {
     Config::$domain = 'realestate';
 }
+
+define('PAGE_URL', THEME_URL . '/pages/'. Config::$domain);
+

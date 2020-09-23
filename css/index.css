@@ -1,9 +1,29 @@
 /**
+ * Base
+ */
+body {
+  font-size: 16px;
+}
+
+a {
+  color: #0c0c0c;
+}
+
+a:hover {
+  color: #3c3c3c;
+  text-decoration: none;
+}
+
+/**
  * Layout classes
  */
 .l-center {
   margin: auto;
   width: 1130px;
+}
+
+.l-content-width {
+  width: 805px;
 }
 
 .l-width {
@@ -18,23 +38,27 @@
   width: 24px;
 }
 
+.ml-space-lg {
+  margin-left: 24px;
+}
+
 /**
  * Utility classes
  */
-.sbg-primary {
-  background-color: #0384D0 !important;
-}
-
-.bg-lightgrey {
-  background-color: #efefef !important;
-}
-
-.bg-lighter {
-  background-color: #fefefe !important;
+.border-w-2 {
+  border-width: 2px;
 }
 
 .sbtn-primary {
   background-color: #0098E1 !important;
+}
+
+.h-70 {
+  height: 70px;
+}
+
+.w-360 {
+  width: 360px;
 }
 
 .icon-size {
@@ -89,8 +113,16 @@
   top: 0 !important;
 }
 
+.top-xs {
+  top: 0.25em;
+}
+
 .right {
   right: 0 !important;
+}
+
+.right-md {
+  right: 1em;
 }
 
 .bottom {
@@ -173,6 +205,74 @@
   margin-bottom: 68px;
 }
 
+.darkgray {
+  color: #5F5F5F !important;
+}
+
+.gray {
+  color: #707070 !important;
+}
+
+.light {
+  color: #e8e8e8 !important;
+}
+
+.lighter {
+  color: #f0f0f0 !important;
+}
+
+.black {
+  color: #000 !important;
+}
+
+.bg-black {
+  background-color: #000000;
+}
+
+.white {
+  color: #FFFFFF;
+}
+
+.bg-gray {
+  background-color: #bcbcbc;
+}
+
+.orangered {
+  color: orangered;
+}
+
+.bg-orangered {
+  background-color: orangered;
+}
+
+.border-darkgray {
+  border-color: #5f5f5f;
+}
+
+.fa-darkgray:before {
+  color: #5f5f5f;
+}
+
+.skyblue {
+  color: #0384D0 !important;
+}
+
+.bg-skyblue {
+  background-color: #0384D0 !important;
+}
+
+.sbg-primary {
+  background-color: #0384D0 !important;
+}
+
+.bg-lightgrey {
+  background-color: #efefef !important;
+}
+
+.bg-lighter {
+  background-color: #f4f4f4 !important;
+}
+
 .fs-12 {
   font-size: 12px;
 }
@@ -191,26 +291,6 @@
 
 .fs-40 {
   font-size: 40px;
-}
-
-.color-darkgray {
-  color: #5F5F5F !important;
-}
-
-.color-gray {
-  color: #707070 !important;
-}
-
-.color-light {
-  color: #717171 !important;
-}
-
-.color-lighter {
-  color: #AFAFAF !important;
-}
-
-.color-black {
-  color: #000 !important;
 }
 
 .fs-xs {
@@ -239,6 +319,14 @@
 
 .fs-xxxl {
   font-size: 10rem !important;
+}
+
+.fw-xs {
+  font-weight: 100;
+}
+
+.fw-sm {
+  font-weight: 300;
 }
 
 .z-index-high {
