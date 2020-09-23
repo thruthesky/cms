@@ -16,8 +16,8 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
 
 <div id="register-page" class="px-40 mt-60">
     <div class="fs-20"><?=tr(REGISTRATION_HEAD)?></div>
-    <h1  class="fs-40 font-weight-bold mb-56"><?= loggedIn() ? tr([en=>"Profile", ko =>'회원 정보 수정']) : tr([en=>"Registration", ko =>'회원 가입'])?></h1>
-    <form id="register-form" onsubmit="return onRegisterFormSubmit()">
+    <h1  class="fs-40 font-weight-bold mb-34"><?= loggedIn() ? tr([en=>"Profile", ko =>'회원 정보 수정']) : tr([en=>"Registration", ko =>'회원 가입'])?></h1>
+    <form class="mb-56" id="register-form" onsubmit="return onRegisterFormSubmit()">
         <?php if (loggedIn()) { ?>
         <input type="hidden" name="session_id" value="<?=login('session_id')?>">
         <?php } else { ?>
@@ -42,7 +42,7 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
                 <div class="input-group-append">
                     <span class="input-group-text smat-input-group-text"><i class="fa fa-user"></i></span>
                 </div>
-                <small class="form-text text-muted"><?=tr(emailAddressDescription)?></small>
+<!--                <small class="form-text text-muted">--><?//=tr(emailAddressDescription)?><!--</small>-->
             </div>
             <? if (!loggedIn()) { ?>
                 <label class="form-label fs-14 color-light"><?=tr(PASSWORD)?></label>
@@ -94,7 +94,7 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
         <button class="btn btn-primary btn-lg w-100" type="submit" role="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
     </form>
 
-    <div class="mt-3" role="loader" style="display: none;">
+    <div class="my-5" role="loader" style="display: none;">
         <div class="d-flex justify-content-center">
             <div class="spinner"></div>
             <div class="ml-3"><?=tr([
@@ -103,12 +103,16 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
                 ])?></div>
         </div>
     </div>
-    <div class="mb-34">
+    <div class="mb-56">
         <?php include widget('user.logged-with') ?>
     </div>
     <?php
-    if ( ! loggedIn() ) {
-    ?>
+    if ( ! loggedIn() ) { ?>
+    <div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #B1B1B1">
+          <span class="px-10 bg-white color-lighter">
+            <?=tr('or')?>
+          </span>
+    </div>
     <div class="mb-56">
         <?php include widget('social-login/buttons') ?>
     </div>
