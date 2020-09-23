@@ -38,18 +38,18 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
         <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
             <label class="form-label fs-14 color-light"><?=tr(emailAddress)?></label>
             <div class="input-group mb-34">
-                <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
+                <input type="email" class="form-control smat-input" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
                 <div class="input-group-append">
-                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    <span class="input-group-text smat-input-group-text"><i class="fa fa-user"></i></span>
                 </div>
                 <small class="form-text text-muted"><?=tr(emailAddressDescription)?></small>
             </div>
             <? if (!loggedIn()) { ?>
                 <label class="form-label fs-14 color-light"><?=tr(PASSWORD)?></label>
                 <div class="input-group mb-34">
-                    <input type="password" class="form-control" name="user_pass">
+                    <input type="password" class="form-control smat-input" name="user_pass">
                     <div class="input-group-append show pointer">
-                        <span class="input-group-text"><i class="fa fa-eye-slash"></i></span>
+                        <span class="input-group-text smat-input-group-text"><i class="fa fa-eye-slash"></i></span>
                     </div>
                 </div>
             <?}?>
@@ -57,11 +57,11 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
 
 
         <label class="form-label fs-14 color-light"><?=tr('name')?></label>
-        <input type="text" class="form-control mb-34" id="fullname" name="fullname" value="<?=login('fullname')?>">
+        <input type="text" class="form-control smat-input mb-34" id="fullname" name="fullname" value="<?=login('fullname')?>">
 
 
         <label class="form-label fs-14 color-light"><?=tr('nickname')?></label>
-        <input type="text" class="form-control mb-34" name="nickname"  value="<?=login('nickname')?>">
+        <input type="text" class="form-control smat-input mb-34" name="nickname"  value="<?=login('nickname')?>">
 
 
         <?php if ( Config::$mobileRequired ) { ?>
@@ -82,7 +82,7 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
                             </script>
 
                         <?php } else { ?>
-                        <input class="form-control" type="text" name="mobile" value="">
+                        <input class="form-control smat-input" type="text" name="mobile" value="">
                         <?php }?>
 
 
