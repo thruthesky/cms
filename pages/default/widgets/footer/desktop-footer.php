@@ -1,11 +1,8 @@
 <?php
 ?>
 
-<div class="p-3 bg-skyblue white">
-	(C) All Rights Reserved!
+<div class="l-center rounded mt-5 p-3 bg-skyblue white">
 
-
-	<div><?=get_browser_language()?></div>
-	<div><?=tr('appName')?></div>
-
+	<div>Language: <?=get_browser_language()?></div>
+	<div>(C) All Rights Reserved by. <?=tr('appName')?></div>
 </div>

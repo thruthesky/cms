@@ -214,10 +214,27 @@ a:hover {
 .black {
   color: #000 !important;
 }
+.bg-black {
+  background-color: #000000;
+}
 
 .white {
   color: #FFFFFF;
 }
+
+.bg-gray {
+  background-color: #bcbcbc;
+}
+
+.orangered {
+  color: orangered;
+}
+
+.bg-orangered {
+  background-color: orangered;
+}
+
+
 
 .border-darkgray {
   border-color: #5f5f5f;
@@ -227,6 +244,10 @@ a:hover {
   color: #5f5f5f;
 }
 
+
+.skyblue {
+  color: #0384D0 !important;
+}
 
 .bg-skyblue {
   background-color: #0384D0 !important;

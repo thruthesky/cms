@@ -41,21 +41,21 @@
 
 
 
-<div class="layout-body l-center d-flex">
+<div class="layout-body l-center d-flex mt-2">
     <div class="layout-body-content l-content-width">
-        <main class="mr-lg-4">
+        <main class="">
 		    <?php
 		    include $options['page_script'];
 		    ?>
         </main>
     </div>
-    <div class="layout-body-side-bar flex-grow-1 my-3 ml-space-lg">
-	    <div class="p-3 border rounded bg-light">
+    <div class="layout-body-side-bar flex-grow-1  ml-space-lg">
+	    <div class="p-3 border bg-light">
 		    <?php include widget('sidebar-login')?>
         </div>
     </div>
 </div>
 
-<?php include widget('footer')?>
+<?php include widget('footer/desktop-footer')?>
 
 <?php include widget('bootstrap/toast')?>
