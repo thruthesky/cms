@@ -277,5 +277,21 @@ input[type=file]::-webkit-file-upload-button {
     transform: rotate(360deg);
   }
 }
+.smat-input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  border-radius: 0;
+}
+
+.smat-input-group-text {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  border-radius: 0;
+  background-color: transparent;
+}
 
 /*# sourceMappingURL=index.css.map */

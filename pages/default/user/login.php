@@ -4,17 +4,17 @@
     <form class="login-form" onsubmit="apiUserLogin(this); return false;">
         <label class="form-label fs-14 color-light"><?=tr('emailAddress')?></label>
         <div class="input-group mb-34">
-            <input type="email" class="form-control" aria-label="emailHelp" name="user_email">
+            <input type="email" class="form-control smat-input" aria-label="emailHelp" name="user_email">
             <div class="input-group-append">
-                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                <span class="input-group-text smat-input-group-text"><i class="fa fa-user"></i></span>
             </div>
         </div>
 
         <label class="form-label fs-14 color-light"><?=tr(PASSWORD)?></label>
         <div class="input-group mb-48">
-            <input type="password" class="form-control" name="user_pass">
+            <input type="password" class="form-control smat-input" name="user_pass">
             <div class="input-group-append show pointer">
-                <span class="input-group-text"><i class="fa fa-eye-slash"></i></span>
+                <span class="input-group-text smat-input-group-text"><i class="fa fa-eye-slash"></i></span>
             </div>
         </div>
 
