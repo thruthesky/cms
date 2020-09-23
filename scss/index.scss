@@ -164,23 +164,6 @@
 
 
 
-.fs-12 {
-  font-size: 12px;
-}
-.fs-14 {
-  font-size: 14px;
-}
-.fs-17 {
-  font-size: 17px;
-}
-.fs-20 {
-  font-size: 20px;
-}
-.fs-40 {
-  font-size: 40px;
-}
-
-
 .color-darkgray {
   color: #5F5F5F !important;
 }
@@ -203,6 +186,25 @@
 
 
 
+
+
+
+.fs-12 {
+  font-size: 12px;
+}
+.fs-14 {
+  font-size: 14px;
+}
+.fs-17 {
+  font-size: 17px;
+}
+.fs-20 {
+  font-size: 20px;
+}
+.fs-40 {
+  font-size: 40px;
+}
+
 .fs-xs {
   font-size: .8rem!important;
 }
@@ -224,6 +226,8 @@
 .fs-xxxl {
   font-size: 10rem!important;
 }
+
+
 .z-index-high {
   z-index: 1000;
 }
