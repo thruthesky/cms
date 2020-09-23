@@ -10,12 +10,12 @@ $options = get_page_options();
 
 
 <div class="px-40 mt-60 mb-60">
-    <div class="fs-12 color-black"><?=tr([
+    <div class="fs-12 black"><?=tr([
             en => 'Mobile Number Verification',
             ko => '휴대전화 본인인증'
         ])?></div>
     <h1 class="fs-40 font-weight-bold"><?=tr(VERIFICATION)?></h1>
-    <div class="fs-12 color-darkgray mb-56"><?=tr([
+    <div class="fs-12 darkgray mb-56"><?=tr([
             en => 'Please enter your country & number and submit.',
             ko => '국가 및 번호를 입력하고 제출하십시오.'
         ])?></div>
@@ -31,7 +31,7 @@ $options = get_page_options();
             ])?>
         </div>
         <div class="mb-68">
-            <label class="form-label fs-14 color-light"><?=tr(mobileNo)?></label>
+            <label class="form-label fs-14 light"><?=tr(mobileNo)?></label>
             <input type="tel"
                    minlength="8"
                    maxlength="14"
