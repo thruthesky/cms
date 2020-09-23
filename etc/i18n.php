@@ -179,6 +179,18 @@ $__i18n[PROFILE_HEAD] = [
     ko => 'Touch and update your information',
     en => 'Touch and update your information'
 ];
+define('VERIFICATION_HEAD', 'verification_head');
+$__i18n[VERIFICATION_HEAD] = [
+    ko => 'Mobile Number Verification',
+    en => 'Mobile Number Verification'
+];
+
+define('VERIFICATION', 'verification');
+$__i18n[VERIFICATION] = [
+    ko => 'Verification',
+    en => 'Verification'
+];
+
 define('FACEBOOK', 'facebook');
 $__i18n[FACEBOOK] = [
     ko => '페이스북',

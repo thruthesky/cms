@@ -16,8 +16,8 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
 
 <div id="register-page" class="px-40 mt-60">
     <div class="fs-20"><?=tr(REGISTRATION_HEAD)?></div>
-    <h1  class="fs-40 font-weight-bold mb-56"><?= loggedIn() ? tr([en=>"Profile", ko =>'회원 정보 수정']) : tr([en=>"Registration", ko =>'회원 가입'])?></h1>
-    <form id="register-form" onsubmit="return onRegisterFormSubmit()">
+    <h1  class="fs-40 font-weight-bold mb-34"><?= loggedIn() ? tr([en=>"Profile", ko =>'회원 정보 수정']) : tr([en=>"Registration", ko =>'회원 가입'])?></h1>
+    <form class="mb-56" id="register-form" onsubmit="return onRegisterFormSubmit()">
         <?php if (loggedIn()) { ?>
         <input type="hidden" name="session_id" value="<?=login('session_id')?>">
         <?php } else { ?>
@@ -38,18 +38,18 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
         <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
             <label class="form-label fs-14 color-light"><?=tr(emailAddress)?></label>
             <div class="input-group mb-34">
-                <input type="email" class="form-control" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
+                <input type="email" class="form-control smat-input" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
                 <div class="input-group-append">
-                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                    <span class="input-group-text smat-input-group-text"><i class="fa fa-user"></i></span>
                 </div>
-                <small class="form-text text-muted"><?=tr(emailAddressDescription)?></small>
+<!--                <small class="form-text text-muted">--><?//=tr(emailAddressDescription)?><!--</small>-->
             </div>
             <? if (!loggedIn()) { ?>
                 <label class="form-label fs-14 color-light"><?=tr(PASSWORD)?></label>
                 <div class="input-group mb-34">
-                    <input type="password" class="form-control" name="user_pass">
+                    <input type="password" class="form-control smat-input" name="user_pass">
                     <div class="input-group-append show pointer">
-                        <span class="input-group-text"><i class="fa fa-eye-slash"></i></span>
+                        <span class="input-group-text smat-input-group-text"><i class="fa fa-eye-slash"></i></span>
                     </div>
                 </div>
             <?}?>
@@ -57,11 +57,11 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
 
 
         <label class="form-label fs-14 color-light"><?=tr('name')?></label>
-        <input type="text" class="form-control mb-34" id="fullname" name="fullname" value="<?=login('fullname')?>">
+        <input type="text" class="form-control smat-input mb-34" id="fullname" name="fullname" value="<?=login('fullname')?>">
 
 
         <label class="form-label fs-14 color-light"><?=tr('nickname')?></label>
-        <input type="text" class="form-control mb-34" name="nickname"  value="<?=login('nickname')?>">
+        <input type="text" class="form-control smat-input mb-34" name="nickname"  value="<?=login('nickname')?>">
 
 
         <?php if ( Config::$mobileRequired ) { ?>
@@ -82,7 +82,7 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
                             </script>
 
                         <?php } else { ?>
-                        <input class="form-control" type="text" name="mobile" value="">
+                        <input class="form-control smat-input" type="text" name="mobile" value="">
                         <?php }?>
 
 
@@ -94,7 +94,7 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
         <button class="btn btn-primary btn-lg w-100" type="submit" role="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
     </form>
 
-    <div class="mt-3" role="loader" style="display: none;">
+    <div class="my-5" role="loader" style="display: none;">
         <div class="d-flex justify-content-center">
             <div class="spinner"></div>
             <div class="ml-3"><?=tr([
@@ -103,12 +103,16 @@ if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration 
                 ])?></div>
         </div>
     </div>
-    <div class="mb-34">
+    <div class="mb-56">
         <?php include widget('user.logged-with') ?>
     </div>
     <?php
-    if ( ! loggedIn() ) {
-    ?>
+    if ( ! loggedIn() ) { ?>
+    <div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #B1B1B1">
+          <span class="px-10 bg-white color-lighter">
+            <?=tr('or')?>
+          </span>
+    </div>
     <div class="mb-56">
         <?php include widget('social-login/buttons') ?>
     </div>

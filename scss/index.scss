@@ -32,8 +32,8 @@
 
 
 .icon-size {
-  width: 40px !important;
-  height: 40px !important;
+  width: 40px!important;
+  height: 40px!important;
 }
 
 .icon-md-size {
@@ -264,4 +264,19 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 }
 
 
+.smat-input {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  border-radius: 0;
+}
+.smat-input-group-text {
+  border-top-style: hidden;
+  border-right-style: hidden;
+  border-left-style: hidden;
+  border-bottom-style: groove;
+  border-radius: 0;
+  background-color: transparent;
+}
 
