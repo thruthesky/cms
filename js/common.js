@@ -920,3 +920,28 @@ function submitPostEditDone(re) {
     move(re['guid']);
 }
 
+
+/***
+ *
+ *
+ <input type="password" class="form-control smat-input" name="user_pass">
+ <div class="show input-group-append pointer" onclick="showPassword()">
+     <span class="input-group-text smat-input-group-text px-0">
+         <i class="fa fa-eye-slash fs-lg"></i>
+     </span>
+ </div>
+ */
+function showPassword() {
+    const password = $(".show");
+    const input = password.prev();
+    const icon = password.find('i');
+    if (input.attr('type') === "password") {
+        input.attr('type','text');
+        icon.addClass('fa-eye');
+        icon.removeClass('fa-eye-slash');
+    } else {
+        input.attr('type','password');
+        icon.addClass('fa-eye-slash');
+        icon.removeClass('fa-eye');
+    }
+}

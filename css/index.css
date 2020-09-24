@@ -1,8 +1,37 @@
 /**
+ * Base
+ */
+body {
+  font-size: 16px;
+}
+
+a {
+  color: #0c0c0c;
+}
+
+a:hover {
+  color: #3c3c3c;
+  text-decoration: none;
+}
+
+/**
  * Layout classes
  */
+.l-center {
+  margin: auto;
+  width: 1130px;
+}
+
 .l-width {
   width: 1130px;
+}
+
+.l-content-width {
+  width: 806px;
+}
+
+.l-sidebar-width {
+  width: 300px;
 }
 
 .l-space {
@@ -13,19 +42,23 @@
   width: 24px;
 }
 
+.ml-space-lg {
+  margin-left: 24px;
+}
+
 /**
  * Utility classes
  */
-.sbg-primary {
-  background-color: #0384D0 !important;
+.border-w-2 {
+  border-width: 2px;
 }
 
-.bg-lightgrey {
-  background-color: #efefef !important;
+.h-70 {
+  height: 70px;
 }
 
-.bg-lighter {
-  background-color: #fefefe !important;
+.w-360 {
+  width: 360px;
 }
 
 .icon-size {
@@ -80,8 +113,16 @@
   top: 0 !important;
 }
 
+.top-xs {
+  top: 0.25em;
+}
+
 .right {
   right: 0 !important;
+}
+
+.right-md {
+  right: 1em;
 }
 
 .bottom {
@@ -92,7 +133,7 @@
   right: 0 !important;
 }
 
-.circle > div {
+.circle {
   display: block;
   overflow: hidden;
   border-radius: 50%;
@@ -128,6 +169,10 @@
   padding-right: 40px !important;
 }
 
+.pt-60 {
+  padding-top: 60px !important;
+}
+
 .mt-26 {
   margin-top: 26px;
 }
@@ -144,6 +189,10 @@
   margin-bottom: 26px;
 }
 
+.mb-20 {
+  margin-bottom: 20px;
+}
+
 .mb-34 {
   margin-bottom: 34px;
 }
@@ -152,12 +201,100 @@
   margin-bottom: 48px;
 }
 
+.mb-52 {
+  margin-bottom: 52px;
+}
+
 .mb-56 {
   margin-bottom: 56px;
 }
 
+.mb-60 {
+  margin-bottom: 60px;
+}
+
 .mb-68 {
   margin-bottom: 68px;
+}
+
+.darkgray {
+  color: #5F5F5F !important;
+}
+
+.gray {
+  color: #707070 !important;
+}
+
+.gray100 {
+  color: #717171 !important;
+}
+
+.lightgray {
+  color: #AFAFAF !important;
+}
+
+.light {
+  color: #e8e8e8 !important;
+}
+
+.lighter {
+  color: #f0f0f0 !important;
+}
+
+.black {
+  color: #000 !important;
+}
+
+.bg-black {
+  background-color: #000000;
+}
+
+.white {
+  color: #FFFFFF;
+}
+
+.bg-gray {
+  background-color: #bcbcbc;
+}
+
+.orangered {
+  color: orangered;
+}
+
+.bg-orangered {
+  background-color: orangered;
+}
+
+.border-darkgray {
+  border-color: #5f5f5f;
+}
+
+.fa-darkgray:before {
+  color: #5f5f5f;
+}
+
+.darkblue {
+  color: #032674 !important;
+}
+
+.skyblue {
+  color: #0384D0 !important;
+}
+
+.bg-skyblue {
+  background-color: #0384D0 !important;
+}
+
+.bg-lightblue {
+  background-color: #0098E1 !important;
+}
+
+.bg-lightgrey {
+  background-color: #efefef !important;
+}
+
+.bg-lighter {
+  background-color: #f4f4f4 !important;
 }
 
 .fs-12 {
@@ -178,22 +315,6 @@
 
 .fs-40 {
   font-size: 40px;
-}
-
-.color-gray {
-  color: #707070 !important;
-}
-
-.color-light {
-  color: #717171 !important;
-}
-
-.color-lighter {
-  color: #AFAFAF !important;
-}
-
-.color-black {
-  color: #000 !important;
 }
 
 .fs-xs {
@@ -222,6 +343,22 @@
 
 .fs-xxxl {
   font-size: 10rem !important;
+}
+
+.fw-xs {
+  font-weight: 100;
+}
+
+.fw-sm {
+  font-weight: 300;
+}
+
+.helvetica {
+  font-family: "Helvetica Neue";
+}
+
+.bold {
+  font-weight: 700 !important;
 }
 
 .z-index-high {
@@ -278,11 +415,13 @@ input[type=file]::-webkit-file-upload-button {
   }
 }
 .smat-input {
+  padding-left: 0;
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: groove;
   border-radius: 0;
+  color: #2E2E2E;
 }
 
 .smat-input-group-text {

@@ -125,3 +125,6 @@ else if ($_host == 'wp-blog.philgo.com' ) {
 } else if ($_host == 'wp-realestate.philgo.com' ) {
     Config::$domain = 'realestate';
 }
+
+define('PAGE_URL', THEME_URL . '/pages/'. Config::$domain);
+

@@ -179,6 +179,23 @@ $__i18n[PROFILE_HEAD] = [
     ko => 'Touch and update your information',
     en => 'Touch and update your information'
 ];
+define('VERIFICATION_HEAD', 'verification_head');
+$__i18n[VERIFICATION_HEAD] = [
+    ko => 'Mobile Number Verification',
+    en => 'Mobile Number Verification'
+];
+
+define('VERIFICATION', 'verification');
+$__i18n[VERIFICATION] = [
+    ko => 'Verification',
+    en => 'Verification'
+];
+define('VERIFY', 'verify');
+$__i18n[VERIFY] = [
+    ko => 'Verify',
+    en => 'Verify'
+];
+
 define('FACEBOOK', 'facebook');
 $__i18n[FACEBOOK] = [
     ko => '페이스북',
@@ -212,9 +229,9 @@ foreach( $__i18n as $k => $v ) {
         $__json[$k] = tr($k);
     }
 }
-global $__head_script;
+global $__system_head_script;
 $__json_encoded = json_encode($__json);
-$__head_script .= <<<EOJ
+$__system_head_script .= <<<EOJ
 <script>
     var __i18n = $__json_encoded;
 </script>

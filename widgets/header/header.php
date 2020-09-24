@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-dark sbg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-skyblue">
     <div class="container px-0">
         <a class="navbar-brand" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
         <a class="d-lg-none text-white" href="/?page=post.list&slug=qna"><?=tr(['ko'=>'질문과답변', 'en' => 'QnA'])?></a>

@@ -34,7 +34,7 @@ require 'config.php';
 $__insert_at_the_bottom = '';
 
 /// Javascript that will be added into head tag.
-$__head_script = '';
+$__system_head_script = '';
 
 
 require 'etc/i18n.php';
@@ -209,8 +209,8 @@ function theme_url() {
 
 
 function live_reload() {
-	global $__head_script;
-	$__head_script .= <<<EOH
+	global $__system_head_script;
+	$__system_head_script .= <<<EOH
 <script src="http://127.0.0.1:12345/socket.io/socket.io.js"></script>
    <script>
        var socket = io('http://127.0.0.1:12345');
@@ -247,6 +247,13 @@ function get_page_options() {
  * @param null $page
  * @param array $options
  *
+ *  - $options['rwd']
+ *      If it is set to true, it will load a page script with the extension of `.mobile` or `.desktop`.
+ *      For instance, if 'rwd' => true passed on 'home' page, then the return will be one of
+ *          'home.mobile.php' or 'home.desktop.php'
+ *  - $options['including']
+ *      $options['rwd'] works only when $page is in $options['including'] array.
+ *
  * @return string
  *
  * http://domain.com/ => pages/home/home.php
@@ -256,6 +263,7 @@ function get_page_options() {
  *
  * @code
  *  include page('user.register'); /// will include 'pages/theme-name/user/register.php'
+ *  include page(null, ['rwd' => true, 'including' => ['home']]); /// load one of home.mobile.php or home.desktop.php if the page is home.
  * @endcode
  */
 function page($page = null, $options = []) {
@@ -291,16 +299,22 @@ function page($page = null, $options = []) {
 
 		$arr = explode('.', $page, 2);
 
+
+		$rwd = '';
+		if ( isset($options['including']) && in_array($page, $options['including']) ) {
+			if ( isset($options['rwd']) && $options['rwd'] ) $rwd = rwd();
+		}
+
 		if ( count($arr) == 1 ) {
 			if ( $arr[0] == 'index' ) {
 				$path = 'error/wrong-input.php';
 				set_page_options(['error' => 'Page cannot be index.']);
 			} else {
-				$path = "$arr[0]/$arr[0].php";
+				$path = "$arr[0]/$arr[0]$rwd.php";
 			}
 		}
 		else if ( count($arr) == 2 ) {
-			$path = "$arr[0]/$arr[1].php";
+			$path = "$arr[0]/$arr[1]$rwd.php";
 		}
 
 	}
@@ -444,7 +458,6 @@ function login($key = null)
 	if ( $key === null ) {
 		return loggedIn();
 	}
-
 	/**
 	 * @warning $__user is not available on API_CALL
 	 *  But this method still works perfect on API_CALL. This code is only for caching for web browser.
@@ -956,7 +969,7 @@ function get_forum_setting() {
  * Add forum settings into <head> tag. so Javascript can use it.
  */
 function insert_forum_settings_as_javascript_into_header() {
-	global $__get_forum_setting, $__head_script;
+	global $__get_forum_setting, $__system_head_script;
 	$re = $__get_forum_setting;
 
 
@@ -965,7 +978,7 @@ function insert_forum_settings_as_javascript_into_header() {
 	$comment_show_like = isset($re[COMMENT_SHOW_LIKE]) ? $re[COMMENT_SHOW_LIKE] : '';
 	$comment_show_dislike = isset($re[COMMENT_SHOW_DISLIKE]) ? $re[COMMENT_SHOW_DISLIKE] : '';
 
-	$__head_script .= <<<EOS
+	$__system_head_script .= <<<EOS
 <script>
 	const forum = {
 	    post_show_like: "$post_show_like",
@@ -1044,9 +1057,21 @@ function load_country_phone_number_code() {
  */
 function noLayout($page) {
 	if ( strpos($page, 'submit') !== false ) return true;
-
 	return false;
 }
+function hasLayout($page) {
+	return !noLayout($page);
+}
+
+/**
+ * If the user access the site with mobile browser, it returns 'layout.mobile.php'
+ * If the user access the site with desktop browser, it return 'layout.desktop.php'
+ * @return string
+ */
+function rwdLayout() {
+	return 'layout' . rwd() . '.php';
+}
+
 function loginOrRegisterBySocialLogin($email, $pass, $provider) {
 
 	$res = lib()->userLogin(['user_email' => $email, 'user_pass' => $pass]);
@@ -1150,4 +1175,9 @@ function isMobile() {
 	} else {
 		return false;
 	}
+}
+
+function rwd() {
+	if ( isMobile() ) return '.mobile';
+	else return '.desktop';
 }
