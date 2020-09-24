@@ -14,7 +14,7 @@
 
         <label class="form-label fs-14 gray100"><?=tr(PASSWORD)?></label>
         <div class="input-group mb-48">
-            <input type="password" class="form-control smat-input" name="user_pass">
+            <input type="password" class="form-control smat-input" name="user_pass" autocomplete="new-password">
             <div class="input-group-append show pointer" onclick="showPassword()">
                 <span class="input-group-text smat-input-group-text px-0">
                     <i class="fa fa-eye-slash fs-lg"></i>
