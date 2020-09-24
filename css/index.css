@@ -126,11 +126,11 @@ a:hover {
 }
 
 .bottom {
-  top: 0 !important;
+  bottom: 0 !important;
 }
 
 .left {
-  right: 0 !important;
+  left: 0 !important;
 }
 
 .circle {
@@ -147,6 +147,14 @@ a:hover {
 .no-gutters > [class*=col-] {
   padding-right: 0;
   padding-left: 0;
+}
+
+.p-6px {
+  padding: 0.375em;
+}
+
+.p-10px {
+  padding: 0.625em;
 }
 
 .px-10 {
@@ -169,8 +177,24 @@ a:hover {
   padding-right: 40px !important;
 }
 
+.pt-17 {
+  padding-top: 17px !important;
+}
+
+.pt-34 {
+  padding-top: 34px !important;
+}
+
 .pt-60 {
   padding-top: 60px !important;
+}
+
+.pb-20 {
+  padding-bottom: 20px !important;
+}
+
+.pb-60 {
+  padding-bottom: 60px !important;
 }
 
 .mt-26 {
@@ -179,6 +203,10 @@ a:hover {
 
 .mt-60 {
   margin-top: 60px;
+}
+
+.mr-26 {
+  margin-right: 26px;
 }
 
 .mb-12 {
@@ -190,6 +218,10 @@ a:hover {
 }
 
 .mb-20 {
+  margin-bottom: 20px;
+}
+
+.mb-22 {
   margin-bottom: 20px;
 }
 
@@ -217,6 +249,10 @@ a:hover {
   margin-bottom: 68px;
 }
 
+.darkergray {
+  color: #4E4E4E !important;
+}
+
 .darkgray {
   color: #5F5F5F !important;
 }
@@ -227,6 +263,10 @@ a:hover {
 
 .gray100 {
   color: #717171 !important;
+}
+
+.gray900 {
+  color: #909090 !important;
 }
 
 .lightgray {
@@ -249,6 +289,14 @@ a:hover {
   background-color: #000000;
 }
 
+.bg-lightgray {
+  background-color: #F5F5F5;
+}
+
+.bg-lightgray100 {
+  background-color: #EAEAEA !important;
+}
+
 .white {
   color: #FFFFFF;
 }
@@ -269,12 +317,20 @@ a:hover {
   border-color: #5f5f5f;
 }
 
+.border-light {
+  border-color: #E3E3E3 !important;
+}
+
 .fa-darkgray:before {
   color: #5f5f5f;
 }
 
 .darkblue {
   color: #032674 !important;
+}
+
+.blue {
+  color: #1684D0 !important;
 }
 
 .skyblue {
@@ -311,6 +367,10 @@ a:hover {
 
 .fs-20 {
   font-size: 20px;
+}
+
+.fs-36 {
+  font-size: 36px;
 }
 
 .fs-40 {
@@ -355,6 +415,10 @@ a:hover {
 
 .helvetica {
   font-family: "Helvetica Neue";
+}
+
+.helvetica {
+  font-family: "Roboto";
 }
 
 .bold {
@@ -431,6 +495,12 @@ input[type=file]::-webkit-file-upload-button {
   border-bottom-style: groove;
   border-radius: 0;
   background-color: transparent;
+}
+
+.border-shadow {
+  -webkit-box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.16);
+  -moz-box-shadow: 0 0 6px 3px rgba(0, 0, 0, 0.16);
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
 }
 
 /*# sourceMappingURL=index.css.map */

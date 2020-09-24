@@ -118,6 +118,14 @@ $__i18n = [
 		ko => '회원 정보 수정을 하였습니다.',
 		en => 'Your profile has been updated.',
 		javascript => true
+	],
+	'submit' => [
+		ko => 'Submit',
+		en => 'Submit',
+	],
+	'cancel' => [
+		ko => 'Cancel',
+		en => 'Cancel',
 	]
 
 
@@ -221,6 +229,11 @@ $__i18n[KAKAOTALK] = [
 $__i18n['or'] = [
     ko => '카카오톡',
     en => 'OR'
+];
+define('EMAIL', 'email');
+$__i18n[EMAIL] = [
+    ko => 'Email',
+    en => 'Email'
 ];
 
 $__json = [];

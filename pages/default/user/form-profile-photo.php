@@ -1,10 +1,9 @@
-
 <? if (loggedIn()) { ?>
     <input class="profile-photo-url" type="hidden" name="photo_url" value="">
     <div class="d-flex flex-column justify-content-center align-items-center">
-        <div class="wh120x120 position-relative overflow-hidden pointer">
+        <div class="wh145x145 position-relative pointer overflow-hidden p-2">
 
-            <i class="fa fa-camera position-absolute z-index-middle fs-xxl right bottom"></i>
+            <i class="fa fa-camera position-absolute z-index-middle fs-xxl left bottom darkergray"></i>
             <input
                     class="position-absolute z-index-high fs-xxxl opacity-01"
                     type="file" name="file"
@@ -16,8 +15,8 @@
             }
             )">
 
-            <div class="user-profile-photo position-relative z-index-low circle wh120x120 overflow-hidden">
-                <img src="<?=ANONYMOUS_PROFILE_PHOTO?>">
+            <div class="user-profile-photo position-relative z-index-low circle w-100 overflow-hidden border-shadow">
+                <img class="w-100" src="<?=myProfilePhotoUrl()?>">
             </div>
 
         </div>
