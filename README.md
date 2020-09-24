@@ -123,6 +123,30 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 
 * If page has 'submit' in its name, then layout will not be shown. only the content from the page script will be shown.
 
+### How to load layout
+
+* loading page on index.php
+```php
+include page();
+```
+
+* Loading different layout on mobile or desktop
+```php
+$page = page();
+if ( hasLayout($page) ) include rwdLayout();
+else include $page;
+```
+
+* This is one way to load a layout differently on desktop or mobile.
+```php
+$page = page();
+if ( noLayout($page) ) {
+	include $page;
+} else {
+    include 'layout' . rwd() . '.php';
+}
+```
+
 ## Web/PWA Functionality
 
 ### PWA
@@ -637,3 +661,5 @@ Array
 https://wordpress.philgo.com/?page=error.social-login&action=result&code=auth/account-exists-with-different-credential&message=An%20account%20already%20exists%20with%20the%20same%20email%20address%20but%20different%20sign-in%20credentials.%20Sign%20in%20using%20a%20provider%20associated%20with%20this%20email%20address.&provider=facebook.com&provider_name=%ED%8E%98%EC%9D%B4%EC%8A%A4%EB%B6%81
 https://wordpress.philgo.com/?page=post.list&slug=noslug
 ```
+
+

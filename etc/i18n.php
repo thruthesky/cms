@@ -229,9 +229,9 @@ foreach( $__i18n as $k => $v ) {
         $__json[$k] = tr($k);
     }
 }
-global $__head_script;
+global $__system_head_script;
 $__json_encoded = json_encode($__json);
-$__head_script .= <<<EOJ
+$__system_head_script .= <<<EOJ
 <script>
     var __i18n = $__json_encoded;
 </script>

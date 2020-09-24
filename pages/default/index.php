@@ -1,5 +1,5 @@
 <?php
-global $__head_script;
+global $__system_head_script;
 if ( localhost() ) {
     Config::$appVersion = time();
 }
@@ -35,30 +35,17 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-    <?php echo $__head_script?>
+    <?php echo $__system_head_script?>
+    <style>
+        .h-stack-1 { height: 348px; }
+    </style>
 </head>
-
 <body data-page="<?php echo in('page', 'home')?>">
 
 <?php
-
-//if ( hasLayout() ) {
-//    if ( isMobile() ) {
-//	    include page('home.mobile-layout');
-//    } else {
-//        include page('home.desktop-layout');
-//    }
-//} else {
-//    include page();
-//}
-
-$_page_script = page();
-
-if ( noLayout($_page_script) ) {
-	include $_page_script;
-} else {
-    include 'layout' . rwd() . '.php';
-}
+$page = page();
+if ( hasLayout($page) ) include rwdLayout();
+else include $page;
 ?>
 
 

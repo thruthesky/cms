@@ -22,12 +22,16 @@ a:hover {
   width: 1130px;
 }
 
-.l-content-width {
-  width: 805px;
-}
-
 .l-width {
   width: 1130px;
+}
+
+.l-content-width {
+  width: 806px;
+}
+
+.l-sidebar-width {
+  width: 300px;
 }
 
 .l-space {
@@ -129,7 +133,7 @@ a:hover {
   right: 0 !important;
 }
 
-.circle > div {
+.circle {
   display: block;
   overflow: hidden;
   border-radius: 50%;
@@ -351,6 +355,10 @@ a:hover {
 
 .helvetica {
   font-family: "Helvetica Neue";
+}
+
+.bold {
+  font-weight: 700 !important;
 }
 
 .z-index-high {

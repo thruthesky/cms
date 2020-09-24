@@ -21,11 +21,14 @@ a:hover {
   margin: auto;
   width: 1130px;
 }
-.l-content-width {
-  width: 805px;
-}
 .l-width {
   width: 1130px;
+}
+.l-content-width {
+  width: 806px;
+}
+.l-sidebar-width {
+  width: 300px;
 }
 .l-space {
   width: 16px;
@@ -48,6 +51,9 @@ a:hover {
 }
 
 
+
+
+/// Size, Width, Height
 .h-70 {
   height: 70px;
 }
@@ -123,7 +129,7 @@ a:hover {
   right: 0 !important;
 }
 
-.circle > div {
+.circle {
   display: block;
   overflow: hidden;
   border-radius: 50%;
@@ -288,7 +294,7 @@ a:hover {
 }
 
 
-/// Font
+/// Font, font size, font weight
 
 
 
@@ -342,11 +348,11 @@ a:hover {
 .helvetica {
   font-family: "Helvetica Neue";
 }
+.bold {
+  font-weight: 700 !important;
+}
 
-
-
-
-
+/// Z-index
 .z-index-high {
   z-index: 1000;
 }

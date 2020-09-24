@@ -1,4 +1,4 @@
-<div class="social-login-buttons d-flex justify-content-between flex-wrap">
+<div class="social-login-buttons d-flex justify-content-between flex-wrap fs-xs">
     <div class="d-flex flex-column text-center helvetica" onclick="firebaseLoginFacebook()">
         <img class="wh52x52 mb-12" src="<?=theme_url()?>/img/social-login/facebook.png">
         <span class="gray"><?=tr(FACEBOOK)?></span>
