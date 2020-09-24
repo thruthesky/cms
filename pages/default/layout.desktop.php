@@ -47,8 +47,8 @@
 		    ?>
         </main>
     </div>
-    <div class="layout-body-side-bar flex-grow-1  ml-space-lg">
-	    <div class="p-3 border bg-light">
+    <div class="layout-body-side-bar flex-grow-1 l-sidebar-width overflow-hidden ml-space-lg">
+	    <div class="p-3 border bg-light h-stack-1 overflow-hidden">
 		    <?php include widget('sidebar-login')?>
         </div>
     </div>

@@ -458,7 +458,6 @@ function login($key = null)
 	if ( $key === null ) {
 		return loggedIn();
 	}
-
 	/**
 	 * @warning $__user is not available on API_CALL
 	 *  But this method still works perfect on API_CALL. This code is only for caching for web browser.
@@ -1072,6 +1071,7 @@ function hasLayout($page) {
 function rwdLayout() {
 	return 'layout' . rwd() . '.php';
 }
+
 function loginOrRegisterBySocialLogin($email, $pass, $provider) {
 
 	$res = lib()->userLogin(['user_email' => $email, 'user_pass' => $pass]);

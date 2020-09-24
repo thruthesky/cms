@@ -1,4 +1,4 @@
-<div class="l-content-width p-5 white bg-black" style="height: 348px">
+<div class="l-content-width p-5 white bg-black h-stack-1">
     <div class="fs-xxl white">
         모바일 앱 개발 크로스 프레임워크 순위
     </div>
