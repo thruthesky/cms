@@ -26,7 +26,7 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>관리자 페이지</title>
-    <?=$__head_script?>
+    <?=$__system_head_script?>
 </head>
 <body data-page="<?=in('page', 'home')?>">
 

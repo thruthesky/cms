@@ -34,7 +34,7 @@ require 'config.php';
 $__insert_at_the_bottom = '';
 
 /// Javascript that will be added into head tag.
-$__head_script = '';
+$__system_head_script = '';
 
 
 require 'etc/i18n.php';
@@ -209,8 +209,8 @@ function theme_url() {
 
 
 function live_reload() {
-	global $__head_script;
-	$__head_script .= <<<EOH
+	global $__system_head_script;
+	$__system_head_script .= <<<EOH
 <script src="http://127.0.0.1:12345/socket.io/socket.io.js"></script>
    <script>
        var socket = io('http://127.0.0.1:12345');
@@ -970,7 +970,7 @@ function get_forum_setting() {
  * Add forum settings into <head> tag. so Javascript can use it.
  */
 function insert_forum_settings_as_javascript_into_header() {
-	global $__get_forum_setting, $__head_script;
+	global $__get_forum_setting, $__system_head_script;
 	$re = $__get_forum_setting;
 
 
@@ -979,7 +979,7 @@ function insert_forum_settings_as_javascript_into_header() {
 	$comment_show_like = isset($re[COMMENT_SHOW_LIKE]) ? $re[COMMENT_SHOW_LIKE] : '';
 	$comment_show_dislike = isset($re[COMMENT_SHOW_DISLIKE]) ? $re[COMMENT_SHOW_DISLIKE] : '';
 
-	$__head_script .= <<<EOS
+	$__system_head_script .= <<<EOS
 <script>
 	const forum = {
 	    post_show_like: "$post_show_like",
@@ -1058,8 +1058,19 @@ function load_country_phone_number_code() {
  */
 function noLayout($page) {
 	if ( strpos($page, 'submit') !== false ) return true;
-
 	return false;
+}
+function hasLayout($page) {
+	return !noLayout($page);
+}
+
+/**
+ * If the user access the site with mobile browser, it returns 'layout.mobile.php'
+ * If the user access the site with desktop browser, it return 'layout.desktop.php'
+ * @return string
+ */
+function rwdLayout() {
+	return 'layout' . rwd() . '.php';
 }
 function loginOrRegisterBySocialLogin($email, $pass, $provider) {
 

@@ -20,8 +20,8 @@ $_nickname = login('nickname');
 $_photo_ID = login('photo_ID');
 $_photo_url = login('photo_url');
 
-global $__head_script;
-$__head_script .=<<<EOH
+global $__system_head_script;
+$__system_head_script .=<<<EOH
     <script>
         var isLocalhost = $_localhost;
         const appVersion = "$_appVersion";
