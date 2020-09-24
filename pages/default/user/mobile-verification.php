@@ -25,13 +25,13 @@ $options = get_page_options();
             $codes = load_country_phone_number_code();
             echo generate_select([
                 'label' => tr('Country Code'),
-                'labelClass' => 'fs-sm',
+                'labelClass' => 'fs-14 darkgray',
                 'name' => 'country_code',
                 'options' => generate_options($codes, '+82'),
             ])?>
         </div>
         <div class="mb-68">
-            <label class="form-label fs-14 light"><?=tr(mobileNo)?></label>
+            <label class="form-label fs-14 darkgray"><?=tr(mobileNo)?></label>
             <input type="tel"
                    minlength="8"
                    maxlength="14"
@@ -40,7 +40,7 @@ $options = get_page_options();
                    name="mobile"  value="<?=login('mobile')?>">
         </div>
 
-        <button class="send btn bg-primary btn-lg w-100 text-white border-0 rounded" type="button" id="recaptcha-verifier">
+        <button class="send btn bg-lightblue btn-lg w-100 white border-0 rounded text-uppercase" type="button" id="recaptcha-verifier">
             <?=tr([
                 en => 'Send Verification Code',
                 ko => '인증 번호 발송',

@@ -47,12 +47,6 @@ a:hover {
   border-width: 2px;
 }
 
-.sbtn-primary {
-  background-color: #0098E1 !important;
-}
-
-
-
 
 .h-70 {
   height: 70px;
@@ -166,6 +160,11 @@ a:hover {
 }
 
 
+.pt-60 {
+  padding-top: 60px !important;
+}
+
+
 
 .mt-26 {
   margin-top: 26px;
@@ -181,11 +180,17 @@ a:hover {
 .mb-26 {
   margin-bottom: 26px;
 }
+.mb-20 {
+  margin-bottom: 20px;
+}
 .mb-34 {
   margin-bottom: 34px;
 }
 .mb-48 {
   margin-bottom: 48px;
+}
+.mb-52 {
+  margin-bottom: 52px;
 }
 .mb-56 {
   margin-bottom: 56px;
@@ -208,6 +213,12 @@ a:hover {
 .gray {
   color: #707070 !important;
 }
+.gray100 {
+  color: #717171 !important;
+}
+.lightgray {
+  color: #AFAFAF !important;
+}
 
 .light {
   color: #e8e8e8 !important;
@@ -220,6 +231,7 @@ a:hover {
 .black {
   color: #000 !important;
 }
+
 .bg-black {
   background-color: #000000;
 }
@@ -251,17 +263,20 @@ a:hover {
 }
 
 
+.darkblue {
+  color: #032674 !important;
+}
 .skyblue {
   color: #0384D0 !important;
 }
+
 
 .bg-skyblue {
   background-color: #0384D0 !important;
 }
 
-
-.sbg-primary { // @deprecated. User .bg-skyblue
-  background-color: #0384D0 !important;
+.bg-lightblue {
+  background-color: #0098E1 !important;
 }
 
 .bg-lightgrey {
@@ -324,6 +339,14 @@ a:hover {
   font-weight: 300;
 }
 
+.helvetica {
+  font-family: "Helvetica Neue";
+}
+
+
+
+
+
 .z-index-high {
   z-index: 1000;
 }
@@ -373,11 +396,13 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
 
 
 .smat-input {
+  padding-left: 0;
   border-top-style: hidden;
   border-right-style: hidden;
   border-left-style: hidden;
   border-bottom-style: groove;
   border-radius: 0;
+  color: #2E2E2E;
 }
 .smat-input-group-text {
   border-top-style: hidden;
