@@ -126,6 +126,10 @@ $__i18n = [
 	'cancel' => [
 		ko => 'Cancel',
 		en => 'Cancel',
+	],
+	'login_with' => [
+		ko => 'Login with',
+		en => 'Login with',
 	]
 
 

@@ -39,6 +39,9 @@ a:hover {
 .ml-space-lg {
   margin-left: 24px;
 }
+.ml-16px {
+  margin-left: 16px;
+}
 
 /**
  * Utility classes
@@ -75,9 +78,9 @@ a:hover {
   width: 120px !important;
   height: 120px !important;
 }
-.wh50x50 {
-  width: 50px!important;
-  height: 50px!important;
+.wh40x40 {
+  width: 40px!important;
+  height: 40px!important;
 }
 
 .wh50x50 {
@@ -153,6 +156,9 @@ a:hover {
 .p-6px {
   padding: 0.375em; // 6px
 }
+.p-8px {
+  padding: 0.5em; // 6px
+}
 .p-10px {
   padding: 0.625em; // 10px
 }
@@ -190,8 +196,15 @@ a:hover {
   padding-top: 34px !important;
 }
 
+.pt-40 {
+  padding-top: 40px !important;
+}
 .pt-60 {
   padding-top: 60px !important;
+}
+
+.pr-20 {
+  padding-right: 20px !important;
 }
 
 .pb-20 {
@@ -209,6 +222,9 @@ a:hover {
 }
 
 
+.mt-8 {
+  margin-top: 8px;
+}
 .mt-26 {
   margin-top: 26px;
 }
@@ -217,22 +233,35 @@ a:hover {
 }
 
 
+.mr-8 {
+  margin-right: 8px;
+}
 .mr-26 {
   margin-right: 26px;
 }
 
+.mr-60 {
+  margin-right: 60px;
+}
 
+
+.mb-6 {
+  margin-bottom: 6px;
+}
 .mb-12 {
   margin-bottom: 12px;
-}
-.mb-26 {
-  margin-bottom: 26px;
 }
 .mb-20 {
   margin-bottom: 20px;
 }
 .mb-22 {
   margin-bottom: 20px;
+}
+.mb-26 {
+  margin-bottom: 26px;
+}
+.mb-28 {
+  margin-bottom: 28px;
 }
 .mb-34 {
   margin-bottom: 34px;
@@ -268,6 +297,10 @@ a:hover {
 }
 .darkgray {
   color: #5F5F5F !important;
+}
+
+.darkergray100 {
+  color: #626262 !important;
 }
 .gray {
   color: #707070 !important;
