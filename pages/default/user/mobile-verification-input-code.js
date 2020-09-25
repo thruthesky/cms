@@ -29,6 +29,7 @@ verifyCode = function() {
             if ( isBackendError(res) ) { // error on backend
                 return alertError(res);
             }
+            console.log(localStorage.getItem('mobile'));
             move('/?page=user.register&mobile=verified'); // success
         })
         .fail(ajaxFailure);

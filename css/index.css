@@ -153,6 +153,10 @@ a:hover {
   padding-left: 0;
 }
 
+.p-4px {
+  padding: 0.25em;
+}
+
 .p-6px {
   padding: 0.375em;
 }
@@ -181,6 +185,11 @@ a:hover {
   padding-right: 40px !important;
 }
 
+.py-4px {
+  padding-top: 0.25em !important;
+  padding-bottom: 0.25em !important;
+}
+
 .pt-17 {
   padding-top: 17px !important;
 }
@@ -199,6 +208,10 @@ a:hover {
 
 .pb-60 {
   padding-bottom: 60px !important;
+}
+
+.m-10px {
+  margin: 0.625em;
 }
 
 .mt-26 {
@@ -251,6 +264,10 @@ a:hover {
 
 .mb-68 {
   margin-bottom: 68px;
+}
+
+.black600 {
+  color: rgba(0, 0, 0, 0.6) !important;
 }
 
 .darkergray {
@@ -309,6 +326,10 @@ a:hover {
   background-color: #bcbcbc;
 }
 
+.red {
+  color: #F20000;
+}
+
 .orangered {
   color: orangered;
 }
@@ -357,6 +378,22 @@ a:hover {
   background-color: #f4f4f4 !important;
 }
 
+.fw-light {
+  font-weight: 300;
+}
+
+.fw-normal {
+  font-weight: 400;
+}
+
+.fw-medium {
+  font-weight: 500;
+}
+
+.fw-semi-bold {
+  font-weight: 600;
+}
+
 .fs-12 {
   font-size: 12px;
 }
@@ -371,6 +408,10 @@ a:hover {
 
 .fs-20 {
   font-size: 20px;
+}
+
+.fs-22 {
+  font-size: 22px;
 }
 
 .fs-36 {
@@ -421,8 +462,24 @@ a:hover {
   font-family: "Helvetica Neue";
 }
 
-.helvetica {
+.roboto {
   font-family: "Roboto";
+}
+
+.fw-light {
+  font-weight: 300 !important;
+}
+
+.fw-normal {
+  font-weight: 400 !important;
+}
+
+.fw-medium {
+  font-weight: 500 !important;
+}
+
+.fw-semi-bold {
+  font-weight: 600 !important;
 }
 
 .bold {

@@ -6,9 +6,6 @@
  */
 
 
-
-
-
 $ID = in('ID');
 $slug = in('slug');
 $post = [];
@@ -18,7 +15,7 @@ if ($ID) {
 }
 
 if ( isMobile() ) {
-    include widget('post/edit-mboile');
+    include widget('post/edit-mobile');
 } else {
     include widget('post/edit-desktop');
 }

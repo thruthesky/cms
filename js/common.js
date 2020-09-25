@@ -237,7 +237,7 @@ function getUploadedFileHtml(file, options = {}) {
  */
 function onChangeFile($box, options={}) {
 
-    console.log('onChangeFile::options', $box);
+    // console.log('onChangeFile::options', $box);
 
     let formData = new FormData();
 
