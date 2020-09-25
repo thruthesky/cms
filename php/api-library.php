@@ -1332,5 +1332,24 @@ class ApiLibrary {
 	}
 
 
+    /**
+     *  Count how many my posts
+     */
+    public function countMyPost() {
+        $user = wp_get_current_user();
+        global $wpdb;
+        return $wpdb->get_var("SELECT COUNT(*) FROM wp_posts WHERE post_type='post' AND post_author=$user->ID");
+    }
+
+    /**
+     *  Count how many my comments
+     */
+    public function countMyComment() {
+        $user = wp_get_current_user();
+        global $wpdb;
+        return $wpdb->get_var("SELECT COUNT(*) FROM wp_comments WHERE user_id=$user->ID");
+    }
+
+
 
 }

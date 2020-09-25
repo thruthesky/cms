@@ -3,7 +3,7 @@
     <div class="d-flex flex-column justify-content-center align-items-center">
         <div class="wh145x145 position-relative pointer overflow-hidden p-2">
 
-            <i class="fa fa-camera position-absolute z-index-middle fs-xxl left bottom darkergray"></i>
+            <i class="fa fa-camera position-absolute z-index-middle fs-xxl left bottom darkergray px-10 py-4px"></i>
             <input
                     class="position-absolute z-index-high fs-xxxl opacity-01"
                     type="file" name="file"
@@ -11,7 +11,16 @@
                         html: $('.user-profile-photo'),
                         deleteButton: true,
                         progress: $('.profile-photo-progress'),
-                        success: function(res) { $('input.profile-photo-url').val(res['url']);  },
+                        success: function(res) {
+                            $('input.profile-photo-url').val(res['url']);
+
+                            apiUserRegister({'photo_url': res['url'], 'session_id': getUserSessionId()}, function(res) {
+                                alertModal(tr('profile update'), tr('profile update success'));
+                            }, function(res) {
+                                alertError(res);
+                            });
+
+                        },
             }
             )">
 

@@ -12,8 +12,8 @@ $options = get_page_options();
                 <? include 'form-profile-photo.php'?>
             </div>
 
-            <div class="position-relative mb-34 text-center">
-                <div class="fs-20 gray"><?=login('fullname')?></div>
+            <div class="position-relative m-10px mb-34 text-center">
+                <div class="fs-20 gray"><?=login('fullname') ? login('fullname') : "<span class='red'>" . tr([en=>"Update your name.", ko =>'Update your name.']) . "</span>"?></div>
                 <a href="#profileModal" data-toggle="modal"
                    data-field="fullname"
                    data-title="<?=tr([en=>"Input your name.", ko =>'Input your name.'])?>"
@@ -21,45 +21,62 @@ $options = get_page_options();
                 ><i class="fa fa-edit gray900 position-absolute top right p-6px"></i></a>
             </div>
 
-    <div class="bg-lightgray px-10 pt-17 pb-20 mb-48">
+    <div class="bg-lightgray px-10 pt-17 pb-20 mb-48 gray">
         <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
-                <label class="fs-12 gray"><?=tr(EMAIL)?></label>
-                <div class="position-relative mb-22">
-                    <div class="gray"><?=login('user_email')?></div>
+            <div class="d-flex justify-content-between mb-22">
+                <div>
+                    <label class="fs-12"><?=tr(EMAIL)?></label>
+                    <div><?=login('user_email') ? login('user_email') : "<span class='red'>" . tr([en=>"Update your email.", ko =>'Update your email.']) . "</span>"?></div>
+                </div>
+                <div class="d-flex justify-content-center align-items-center">
                     <a href="#profileModal" data-toggle="modal"
                        data-field="user_email"
                        data-title="<?=tr([en=>"Input your email.", ko =>'Input your email.'])?>"
                        data-value="<?=login('user_email')?>"
-                    ><i class="fa fa-edit gray900 position-absolute top right p-6px"></i></a>
+                    ><i class="fa fa-edit gray900 p-6px"></i></a>
                 </div>
+            </div>
         <?php } ?>
-
-        <label class="fs-12 gray">Nickname</label>
-        <div class="position-relative mb-22">
-            <div class="gray"><?=login('nickname')?></div>
-            <a href="#profileModal" data-toggle="modal"
-               data-field="nickname"
-               data-title="<?=tr([en=>"Input your nickname.", ko =>'Input your nickname.'])?>"
-               data-value="<?=login('nickname')?>"
-            ><i class="fa fa-edit gray900 position-absolute top right p-6px"></i></a>
+        <div class="d-flex justify-content-between mb-22">
+            <div>
+                <label class="fs-12">Nickname</label>
+                <div class="fs-22"><?=login('nickname') ? login('nickname'): "<span class='red'>" . tr([en=>"Update your nickname.", ko =>'Update your nickname.']) . "</span>"?></div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <a href="#profileModal" data-toggle="modal"
+                   data-field="nickname"
+                   data-title="<?=tr([en=>"Input your nickname.", ko =>'Input your nickname.'])?>"
+                   data-value="<?=login('nickname')?>"
+                ><i class="fa fa-edit gray900 p-6px"></i></a>
+            </div>
         </div>
 
-        <?php if ( Config::$mobileRequired ) { ?>
-            <label class="fs-12 gray">Mobile No.</label>
-            <div class="gray"><?=login('mobile')?></div>
-        <?php } ?>
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <label class="fs-12">Mobile No.</label>
+                <div class="fs-22"><?=login('mobile') ? login('mobile'): "<span class='red'>" . tr([en=>"Update your mobile.", ko =>'Update your mobile.']) . "</span>"?></div>
+            </div>
+            <div class="d-flex justify-content-center align-items-center">
+                <a href="#profileModal" data-toggle="modal"
+                   data-field="mobile"
+                   data-title="<?=tr([en=>"Input your mobile.", ko =>'Input your mobile.'])?>"
+                   data-value="<?=login('mobile')?>"
+                ><i class="fa fa-edit gray900 p-6px"></i></a>
+            </div>
+        </div>
 
 
     </div>
 
     <div class="d-flex justify-content-between px-10 gray">
         <div class="text-center w-100 mr-26">
-                <div class="fs-36">10</div>
+                <div class="fs-36"><?=$apiLib->countMyPost()?></div>
                 <hr class="border-light">
                 <div class="fs-12">Post</div>
         </div>
         <div class="text-center w-100">
-                <div class="fs-36">273</div>
+                <div class="fs-36"><?=$apiLib->countMyComment()?></div>
                 <hr class="border-light">
                 <div class="fs-12">Comment</div>
         </div>
@@ -80,14 +97,15 @@ $options = get_page_options();
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-body pt-34">
-                <form class="mb-56" id="register-form" onsubmit="return onRegisterFormSubmit()">
+            <div class="modal-body position-relative pt-34">
+                <span class="position-absolute top right px-10 fs-xl pointer" data-dismiss="modal">&times;</span>
+                <form id="register-form" onsubmit="return onRegisterFormSubmit()">
                     <input type="hidden" name="session_id" value="<?=login('session_id')?>">
                     <label class="modal-title form-label mb-34 fs-14 gray100"></label>
                     <input type="text" class="form-control smat-input mb-34" id="field" name="field" value="">
-                    <div class="d-flex justify-content-end">
-<!--                        <button type="button" class="btn btn-lg bg-gray" data-dismiss="modal">--><?//=tr('cancel')?><!--</button>-->
-                        <button type="submit" class="btn btn-lg bg-lightgray100 blue text-uppercase roboto"><?=tr('submit')?></button>
+                    <div class="d-flex justify-content-end mb-48 roboto">
+<!--                        <button type="button" class="btn btn-lg mr-3 bg-lightgray100 blue text-uppercase" data-dismiss="modal">--><?//=tr('cancel')?><!--</button>-->
+                        <button type="submit" class="btn btn-lg bg-lightgray100 blue text-uppercase"><?=tr('submit')?></button>
                     </div>
                 </form>
             </div>
@@ -110,14 +128,17 @@ $options = get_page_options();
         })
 
         $('#profileModal').on('hidden.bs.modal', function (e) {
-            console.log(e);
+
+            location.reload();
         })
     });
 
 
     function onRegisterFormSubmit() {
         apiUserRegister(objectifyForm($('#register-form')), function(res) {
-            toast(tr('profile update'), '', tr('profile update success'))
+//            toast(tr('profile update'), '', tr('profile update success'))
+            alertModal(tr('profile update'), tr('profile update success'));
+
         }, function(res) {
             alertError(res);
         });
