@@ -78,3 +78,52 @@
 
     </div>
 </div>
+
+
+<?php
+function decorateLine($title) {
+    return <<<EOH
+<div class="mt-2 overflow-hidden fw-xs" style="line-height: 1.4em; height: 2.8em;">$title</div>
+EOH;
+}
+?>
+
+<div class="l-center-width mt-space">
+<table width="806" border="0" cellspacing="0" cellpadding="0">
+    <tr valign="top">
+        <td width="258">
+            <img class="w-100" src="<?=THEME_URL?>/tmp/tap1.jpg">
+            <div class="mt-1 px-3 pt-2 pb-3 border">
+                <?php
+                for($i = 0; $i < 5; $i ++) {
+                    echo decorateLine('유튜브에서 전문 강사들이 무료로 제공하는 왕초보 필수 코드 동영상 강좌입니다.');
+                }
+                ?>
+            </div>
+        </td>
+        <td width="16"><div class="l-space overflow-hidden">&nbsp;</div></td>
+        <td width="258">
+            <img class="w-100" src="<?=THEME_URL?>/tmp/tap2.jpg">
+            <div class="mt-1 px-3 pt-2 pb-3  border">
+
+                <?php
+                for($i = 0; $i < 5; $i ++) {
+                    echo decorateLine('유튜브에서 전문 강사들이 무료로 제공하는 왕초보 필수 코드 동영상 강좌입니다.');
+                }
+                ?>
+            </div>
+        </td>
+        <td width="16"><div class="l-space overflow-hidden">&nbsp;</div></td>
+        <td width="258">
+            <img class="w-100" src="<?=THEME_URL?>/tmp/tap3.jpg">
+            <div class="mt-1 px-3 pt-2 pb-3  border">
+
+                <?php
+                for($i = 0; $i < 5; $i ++) {
+                    echo decorateLine('유튜브에서 전문 강사들이 무료로 제공하는 왕초보 필수 코드 동영상 강좌입니다.');
+                }
+                ?>
+            </div></td>
+    </tr>
+</table>
+</div>
