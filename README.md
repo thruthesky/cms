@@ -663,3 +663,10 @@ https://wordpress.philgo.com/?page=post.list&slug=noslug
 ```
 
 
+
+## Cypress Test
+
+* To test on cypress, run `$ npm run cypress:open`.
+  * Each test file(*.spec.js) must be each page folder.
+  
+* To publish, see publish section in this document.

@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "publish": "./node_modules/.bin/cypress run --env server=wordpress.philgo.com --config integrationFolder=tests/cypress,testFiles=**/*.spec.js && npm run push:live",
+    "publish": "npm run cypress:run && npm run push:live",
     "push:live": "date +%s > etc/release-date-stamp.txt && git add . && git commit -a -m 'push:live' && git push && ssh sonub@english-fun.com 'cd www/wp-content/themes/cms; git pull'",
-    "cypress:run": "./node_modules/.bin/cypress run --config integrationFolder=src,testFiles=**/*.spec.js",
-    "cypress:open": "./node_modules/.bin/cypress open --config integrationFolder=src,testFiles=**/*.spec.js"
+    "cypress:run": "./node_modules/.bin/cypress run --config integrationFolder=pages,testFiles=**/*.spec.js,userAgent=cypress",
+    "cypress:open": "./node_modules/.bin/cypress open --config integrationFolder=pages,testFiles=**/*.spec.js,userAgent=cypress"
   },
   "repository": {
     "type": "git",
@@ -28,5 +28,8 @@
     "faker": "^5.0.0",
     "sass": "^1.26.10",
     "socket.io": "^2.3.0"
+  },
+  "dependencies": {
+    "fs-extra": "^9.0.1"
   }
 }

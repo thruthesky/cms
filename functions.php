@@ -166,7 +166,7 @@ if ( API_CALL || isCommandLineInterface() ) {
 }
 else {
 	/** Do Website Call init */
-	if ( localhost() ) live_reload();
+	if ( localhost() && !isCypress() ) live_reload();
 
 	// mobile check
 	checkMobileRequired();
@@ -1180,4 +1180,8 @@ function isMobile() {
 function rwd() {
 	if ( isMobile() ) return '.mobile';
 	else return '.desktop';
+}
+
+function isCypress() {
+    return strpos($_SERVER['HTTP_USER_AGENT'], 'cypress') !== false;
 }
