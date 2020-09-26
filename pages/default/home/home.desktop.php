@@ -81,9 +81,11 @@
 
 
 <?php
-function decorateLine($title) {
+function decorateLine($post) {
     return <<<EOH
-<div class="mt-2 overflow-hidden fw-xs" style="line-height: 1.4em; height: 2.8em;">$title</div>
+<a class="d-inline-block border-box mt-2 overflow-hidden fw-xs" href="{$post->guid}" style="line-height: 1.4em; height: 2.8em;">
+{$post->post_title}
+</a>
 EOH;
 }
 ?>
@@ -95,8 +97,12 @@ EOH;
             <img class="w-100" src="<?=THEME_URL?>/tmp/tap1.jpg">
             <div class="mt-1 px-3 pt-2 pb-3 border">
                 <?php
-                for($i = 0; $i < 5; $i ++) {
-                    echo decorateLine('유튜브에서 전문 강사들이 무료로 제공하는 왕초보 필수 코드 동영상 강좌입니다.');
+                $posts = get_posts([
+                    'category' => implode(',', get_ids_of_slugs(['flutter', 'dart', 'firebase', 'wordpress', 'nodejs'])),
+                    'numberposts' => 5
+                ]);
+                foreach($posts as $post) {
+                    echo decorateLine($post);
                 }
                 ?>
             </div>
@@ -107,8 +113,14 @@ EOH;
             <div class="mt-1 px-3 pt-2 pb-3  border">
 
                 <?php
-                for($i = 0; $i < 5; $i ++) {
-                    echo decorateLine('유튜브에서 전문 강사들이 무료로 제공하는 왕초보 필수 코드 동영상 강좌입니다.');
+
+                $posts = get_posts([
+                    'category' => implode(',', get_ids_of_slugs(['flutter', 'dart', 'firebase', 'wordpress', 'nodejs'])),
+                    'numberposts' => 5
+                ]);
+
+                foreach($posts as $post) {
+                    echo decorateLine($post);
                 }
                 ?>
             </div>
@@ -119,8 +131,14 @@ EOH;
             <div class="mt-1 px-3 pt-2 pb-3  border">
 
                 <?php
-                for($i = 0; $i < 5; $i ++) {
-                    echo decorateLine('유튜브에서 전문 강사들이 무료로 제공하는 왕초보 필수 코드 동영상 강좌입니다.');
+
+                $posts = get_posts([
+                    'category' => implode(',', get_ids_of_slugs(['qna', 'discussion'])),
+                    'numberposts' => 5
+                ]);
+
+                foreach($posts as $post) {
+                    echo decorateLine($post);
                 }
                 ?>
             </div></td>

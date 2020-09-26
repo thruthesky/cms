@@ -1185,3 +1185,18 @@ function rwd() {
 function isCypress() {
     return strpos($_SERVER['HTTP_USER_AGENT'], 'cypress') !== false;
 }
+
+
+/**
+ * Gets the category IDs in array.
+ * @param $slugs - is the slugs of the category.
+ * @return array
+ */
+function get_ids_of_slugs($slugs) {
+    $ids = [];
+    foreach( $slugs as $slug ) {
+        $cat = get_category_by_slug($slug);
+        $ids[] = $cat->term_id;
+    }
+    return $ids;
+}

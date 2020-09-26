@@ -9,20 +9,26 @@
             </div>
         </a>
 
+        <?php if ( admin() ) {?>
+        <div>
+            <a href="?page=admin.home">Admin Page</a>
+        </div>
+        <?php } ?>
+
         <div>
             <a href="/?page=user.logout">Logout</a>
         </div>
     </div>
 <?php } else { ?>
     <div class="fs-xs">
-        <form class="mb-3" onsubmit="return apiUserLogin(this)" autocomplete="off">
+        <form class="mb-3" onsubmit="return apiUserLogin(this)">
             <div class="">
                 <label class="form-label mb-1">Email address</label>
                 <input class="form-control rounded-0" type="email"  aria-describedby="Input your email address" name="user_email">
             </div>
             <div class="mt-3">
                 <label class="form-label mb-1">Password</label>
-                <input class="form-control rounded-0" type="password" name="user_pass" autocomplete="new-password">
+                <input class="form-control rounded-0" type="password" name="user_pass">
             </div>
             <div class="d-flex justify-content-between">
                 <button class="pl-0 pr-3 border-0 bg-transparent bold" style="height: 30px;" type="submit">Login</button>

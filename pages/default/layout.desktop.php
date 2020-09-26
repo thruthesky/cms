@@ -28,12 +28,12 @@
     <div class="l-content-width d-flex justify-content-between fw-sm fs-sm">
         <a href="/?page=post.list&slug=discussion">자유게시판</a>
         <a href="/?page=post.list&slug=qna">질문과답변</a>
-        <a href="#">플러터 강좌</a>
-        <a href="#">다트 강좌</a>
-        <a href="#">파이어베이스 강좌</a>
-        <a href="#">워드프레스 강좌</a>
-        <a href="#">NODE.JS 강좌</a>
-        <a href="#">오프라인 모임</a>
+        <a href="/?page=post.list&slug=flutter">플러터 강좌</a>
+        <a href="/?page=post.list&slug=dart">다트 강좌</a>
+        <a href="/?page=post.list&slug=firebase">파이어베이스 강좌</a>
+        <a href="/?page=post.list&slug=wordpress">워드프레스 강좌</a>
+        <a href="/?page=post.list&slug=nodejs">NODE.JS 강좌</a>
+        <a href="/?page=post.list&slug=meeting">오프라인 모임</a>
     </div>
 </div>
 
