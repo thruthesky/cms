@@ -132,10 +132,10 @@ EOH;
 
                 <?php
 
-                $posts = get_posts([
-                    'category' => implode(',', get_ids_of_slugs(['qna', 'discussion'])),
-                    'numberposts' => 5
-                ]);
+$posts = get_posts([
+    'category' => implode(',', get_ids_of_slugs(['qna', 'discussion'])),
+    'numberposts' => 5
+]);
 
                 foreach($posts as $post) {
                     echo decorateLine($post);

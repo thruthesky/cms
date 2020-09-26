@@ -1191,6 +1191,13 @@ function isCypress() {
  * Gets the category IDs in array.
  * @param $slugs - is the slugs of the category.
  * @return array
+ *
+ * @code
+ * $posts = get_posts([
+    'category' => implode(',', get_ids_of_slugs(['qna', 'discussion'])),
+    'numberposts' => 5
+    ]);
+ * @endcoce
  */
 function get_ids_of_slugs($slugs) {
     $ids = [];
