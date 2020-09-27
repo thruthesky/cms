@@ -35,7 +35,10 @@ $__insert_at_the_bottom = '';
 
 /// Javascript that will be added into head tag.
 $__system_head_script = '';
-
+function get_system_head_script() {
+	global $__system_head_script;
+	return $__system_head_script;
+}
 
 require 'etc/i18n.php';
 require 'php/library.php';
@@ -1203,6 +1206,7 @@ function get_ids_of_slugs($slugs) {
     $ids = [];
     foreach( $slugs as $slug ) {
         $cat = get_category_by_slug($slug);
+        if ( ! $cat ) continue;
         $ids[] = $cat->term_id;
     }
     return $ids;

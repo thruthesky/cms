@@ -28,6 +28,8 @@ define('POST_LIST_THEME', 'post_list_theme');
 define('POST_VIEW_THEME', 'post_view_theme');
 define('POST_EDIT_THEME', 'post_edit_theme');
 
+define('DOMAIN_SETTINGS', 'domain_settings');
+
 
 /**
  * Theme relative path for URL.

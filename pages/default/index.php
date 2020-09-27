@@ -1,5 +1,4 @@
 <?php
-global $__system_head_script;
 if ( localhost() ) {
     Config::$appVersion = time();
 }
@@ -35,7 +34,7 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>Hello, world!</title>
-    <?php echo $__system_head_script?>
+    <?=get_system_head_script()?>
     <style>
         .h-stack-1 { height: 348px; }
     </style>

@@ -15,27 +15,24 @@
                     <a class="nav-link" href="/?page=admin.user.list"><?=tr(['ko'=>'사용자', 'en' => 'Users'])?></a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="#">Posts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Comments</a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link" href="/?page=admin.forum.list"><?=tr(['ko'=>'게시판', 'en' => 'Forum'])?></a>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="/?page=post.list&slug=jobs">Jobs</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Realestate</a>
-                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
-                        Community
+                        More
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Greetings</a></li>
-                        <li><a class="dropdown-item" href="#">PHP Developers</a></li>
-                        <li><a class="dropdown-item" href="#">Javascript Developers</a></li>
-                        <li><a class="dropdown-item" href="#">Flutter Developers</a></li>
+                        <li><a class="dropdown-item" href="/?page=admin.settings.domain">Domain Settings</a></li>
+                        <li><a class="dropdown-item" href="#">System Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Create your forum</a></li>
-                        <li><a class="dropdown-item" href="/?page=contact">Contact</a></li>
+                        <li><a class="dropdown-item" href="#">Help</a></li>
                     </ul>
                 </li>
 

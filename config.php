@@ -119,11 +119,16 @@ if (isset($_SERVER['HTTP_HOST'])) {
  */
 if ( isset($_REQUEST['page']) && strpos($_REQUEST['page'], 'admin.') !== false ) { // if 'page' HTTP variable has 'admin', then it uses 'admin' theme.
     Config::$domain = 'admin';
-}
-else if ($_host == 'wp-blog.philgo.com' ) {
-    Config::$domain = 'blog';
-} else if ($_host == 'wp-realestate.philgo.com' ) {
-    Config::$domain = 'realestate';
+} else {
+	$setting = get_option(DOMAIN_SETTINGS);
+	if ( $setting ) {
+		$domains = parse_ini_string($setting);
+		foreach( $domains as $domain => $v ) {
+			if ( strpos($_host, $domain) !== false ) {
+				Config::$domain =$v;
+			}
+		}
+	}
 }
 
 define('PAGE_URL', THEME_URL . '/pages/'. Config::$domain);

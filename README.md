@@ -670,3 +670,29 @@ https://wordpress.philgo.com/?page=post.list&slug=noslug
   * Each test file(*.spec.js) must be each page folder.
   
 * To publish, see publish section in this document.
+
+
+
+## Domain settings in admin page
+
+* It can have multi themes based on the domain.
+* The format of the domain setting is `PHP INI` format where key is a part of the domain and value is the theme page.
+* If the key matches with the domain (or the domain contains the key), the page will be used as its theme.
+
+* Example of domain & page.
+
+```text
+wordpress = default
+blog = blog
+real = realestate
+```
+
+- If a domain is `wordpress.abc.com` then, `default` theme will be used.
+
+- If a domain is `tim-myblog.com`, then `blog` theme will be used.
+
+
+* There could be overhead if there are many domain & theme settings since they need to loop to find matches.
+  * For a completely different project, there should be only less than three(3) domain settings.
+    It may be a one way to set the default `Config::$domain` to the theme that the project is using.
+    

@@ -26,28 +26,18 @@ if ( localhost() ) {
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
 
     <title>관리자 페이지</title>
-    <?=$__system_head_script?>
+    <?=get_system_head_script()?>
 </head>
 <body data-page="<?=in('page', 'home')?>">
 
 <?php include widget('header')?>
 
-<div class="container px-0">
-    <div class="row no-gutters">
-
-        <div class="col-lg-3 d-none d-lg-block mr-lg-4 ">
-            <?php include widget('sidebar-login')?>
-        </div>
-
-        <div class="col">
-            <main class="">
+            <main class="l-center">
                 <?php
                 include page();
                 ?>
             </main>
-        </div>
-    </div>
-</div>
+
 
 <?php widget('footer')?>
 
