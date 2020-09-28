@@ -53,7 +53,6 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
     }
     ?>
 </div>
-
 <?php
 
 include widget('pagination', [
@@ -62,3 +61,4 @@ include widget('pagination', [
     'url' => '/?page=post.list&slug=' . $forum['slug'] . '&page_no={page_no}',
     'page_no' => $page_no,
 ]);
+?>

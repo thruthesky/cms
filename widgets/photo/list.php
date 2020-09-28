@@ -26,12 +26,7 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
             <div><?=tr(NO_POSTS_YET_3)?></div>
         </div>
     <?php } else {
-        foreach ($posts as $post) {
-
-            $ml = 'ml-7px';
-            if (postHasProfilePhotoUrl($post) && postHasFiles($post)) $ml = 'ml-44px';
-            if (postHasProfilePhotoUrl($post) && !postHasFiles($post)) $ml= 'ml-82px';
-            ?>
+        foreach ($posts as $post) { ?>
             <a class="position-relative d-block pb-20 clearfix"  href="<?=$post['guid'] ?><?=post_list_query() ?>">
                 <div class="fs-11 fw-light <?=postHasProfilePhotoUrl($post) && postHasFiles($post) ? 'ml-44px' : (postHasProfilePhotoUrl($post) && !postHasFiles($post) ? 'ml-82px' : 'ml-7px')?>">
                     <?php if ( postHasProfilePhotoUrl($post) && postHasFiles($post) ) { ?>
@@ -54,7 +49,7 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
                             <div class="m-auto wh43x43 circle">
                                 <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
                             </div>
-                            <div class="fs-10 fw-light one-line"><?=$post['author_name'] ?></div>
+                            <div class="fs-10 fw one-line"><?=$post['author_name'] ?></div>
                         </div>
 
                     <?php } ?>
@@ -73,7 +68,7 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
     }
     ?>
 </div>
-
+<div class="text-center">
 <?php
 
 include widget('pagination', [
@@ -81,7 +76,10 @@ include widget('pagination', [
     'no_of_records_per_page' => $forum[NO_OF_POSTS_PER_PAGE],
     'url' => '/?page=post.list&slug=' . $forum['slug'] . '&page_no={page_no}',
     'page_no' => $page_no,
+    'arrows' => true,
 ]);
+?>
+</div>
 
 
 
