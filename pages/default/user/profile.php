@@ -21,7 +21,7 @@ $options = get_page_options();
                 ><i class="fa fa-edit gray900 position-absolute top right p-6px"></i></a>
             </div>
 
-    <div class="bg-lightgray px-10 pt-17 pb-20 mb-48 gray">
+    <div class="bg-lightgray px-10 pt-17 pb-20 mb-48 gray radius-3px">
         <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
             <div class="d-flex justify-content-between mb-22">
                 <div>
@@ -95,8 +95,8 @@ $options = get_page_options();
 </div>
 
 <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content radius-3px">
             <div class="modal-body position-relative pt-34">
                 <span class="position-absolute top right px-10 fs-xl pointer" data-dismiss="modal">&times;</span>
                 <form id="register-form" onsubmit="return onRegisterFormSubmit()">

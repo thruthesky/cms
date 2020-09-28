@@ -109,6 +109,10 @@ a:hover {
   height: 145px !important;
 }
 
+.w-60 {
+  width: 60px;
+}
+
 .w-120 {
   width: 120px !important;
 }
@@ -139,6 +143,10 @@ a:hover {
 
 .left {
   left: 0 !important;
+}
+
+.radius-3px {
+  border-radius: 3px !important;
 }
 
 .circle {
