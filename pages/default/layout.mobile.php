@@ -7,6 +7,6 @@
 	?>
 </main>
 
-<?php include widget('footer/mobile-footer')?>
+<?php include widget('footer/footer.mobile')?>
 
 <?php include widget('bootstrap/toast')?>
