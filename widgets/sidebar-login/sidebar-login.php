@@ -26,7 +26,7 @@
         <?php } ?>
 
         <div class="d-flex justify-content-between mt-5">
-            <a href="/?page=user.logout">Profile</a>
+            <a href="/?page=user.profile">Profile</a>
             <a href="/?page=user.logout">Logout</a>
         </div>
     </div>
