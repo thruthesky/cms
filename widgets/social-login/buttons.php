@@ -1,9 +1,9 @@
 <div class="social-login-buttons d-flex justify-content-between flex-wrap fs-xs">
-    <div class="d-flex flex-column text-center helvetica" onclick="firebaseLoginFacebook()">
+    <div class="d-flex flex-column text-center helvetica pointer" onclick="firebaseLoginFacebook()">
         <img class="wh52x52 mb-12" src="<?=theme_url()?>/img/social-login/facebook.png">
         <span class="gray"><?=tr(FACEBOOK)?></span>
     </div>
-    <div class="d-flex flex-column text-center" onclick="firebaseLoginGoogle()">
+    <div class="d-flex flex-column text-center pointer" onclick="firebaseLoginGoogle()">
         <img class="wh52x52 mb-12" src="<?=theme_url()?>/img/social-login/google.png">
         <span class="gray"><?=tr(GOOGLE)?></span>
     </div>
