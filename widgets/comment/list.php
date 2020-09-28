@@ -16,6 +16,14 @@ $viewTemplate = file_get_contents(__DIR__ . '/view-template.html');
     [data-depth='9'] { margin-left: 5.5rem; }
     [data-depth='10'] { margin-left: 6rem; }
 </style>
+<?php if (!$post['comments'] || empty($post['comments'])) { ?>
+    <div id="no-comment-yet<?=$post['ID']?>" class="pt-40 text-center roboto">
+        <img class="w-100" src="<?=theme_url()?>/tmp/no_posts.png">
+        <div class="fs-20 mb-12"><?=tr(NO_COMMENTS_YET_1)?></div>
+        <div class="fs-14 mb-20"><?=tr(NO_COMMENTS_YET_2)?></div>
+        <div class="fs-12 fw-medium mb-58 blue" onclick="appendCommendBoxToPost()"><?=tr(NO_COMMENTS_YET_3)?></div>
+    </div>
+<?php } ?>
 <div id="comment-list" class="pb-3">
     <?php
     foreach($post['comments'] as $comment){

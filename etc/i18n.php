@@ -288,6 +288,21 @@ $__i18n[NO_POSTS_YET_3] = [
     ko => 'Please...',
     en => 'Please...'
 ];
+define('NO_COMMENTS_YET_1', 'no_comments_yet_1');
+$__i18n[NO_COMMENTS_YET_1] = [
+    ko => 'No comments, yet.',
+    en => 'No comments, yet.'
+];
+define('NO_COMMENTS_YET_2', 'no_comments_yet_2');
+$__i18n[NO_COMMENTS_YET_2] = [
+    ko => 'Be the first to add a comment on this post.',
+    en => 'Be the first to add a comment on this post.'
+];
+define('NO_COMMENTS_YET_3', 'no_comments_yet_3');
+$__i18n[NO_COMMENTS_YET_3] = [
+    ko => 'Create a comment',
+    en => 'Create a comment'
+];
 
 $__json = [];
 foreach( $__i18n as $k => $v ) {
