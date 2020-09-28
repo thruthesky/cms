@@ -5,6 +5,10 @@ function patch_javascript_into_output($output) {
 
     global $__included_files;
 
+	$__included_files = array_unique($__included_files);
+
+
+
     $v = Config::$appVersion;
 
     $url = THEME_URL;
@@ -15,6 +19,7 @@ function patch_javascript_into_output($output) {
         $path_url = $url . '/pages/'. Config::$domain . '/first.js';
         $scripts = <<<EOH
 <script src="$path_url?v=$v"></script>
+
 EOH;
     }
 
@@ -24,6 +29,7 @@ EOH;
         $path_url = '/wp-content/' . $arr[1];
         if ( file_exists($path) ) $scripts .= <<<EOH
 <script src="$path_url?v=$v"></script>
+
 EOH;
     }
 
@@ -32,6 +38,7 @@ EOH;
         $path_url = $url . '/pages/'. Config::$domain . '/init.js';
         $scripts .= <<<EOH
 <script src="$path_url?v=$v"></script>
+
 EOH;
     }
 
