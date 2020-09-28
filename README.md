@@ -70,6 +70,7 @@ $ git clone https://github.com/thruthesky/cms
   * GCP `apikey` in `GCP ==> APIs & Services ==> Credentials ==> API Keys` is required to set to verify user's mobile number.
   * in GCP settings, there might be an API key that is already created by Firebase. You can copy that APIKey
     and put it in `Config::$apikey` variable.
+  * You can optionally overwrite `Config::$apikey` by inputting the `apikey` in Admin ==> System Settings ==> apiKey.
   
 
 * Set `Service Account Json Key` in Firebase Settings ==> Service accounts ==> Firebase Admin SDK to `Config::$serviceAccount` in `Config` class.
