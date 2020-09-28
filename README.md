@@ -10,16 +10,15 @@ CMS for community projects
 
 ### Requirement
 
-* Nginx + PHP 7.3+(with PHP-FPM) 
-* Wordpress 5.5.1+
-* SSL is required for the site domain.
+* `Nginx + PHP 7.3+(with PHP-FPM) + MariaDB` must be installed
+* `Wordpress 5.5.1+` must be installed
+* `SSL` is required for the site domain.
 * Firebase project
 
 ### Wordpress Theme Installation and Settings
 
-
-
 * git clone `cms` theme inti `wp-content/themes` folder.
+
 ```text
 $ cd wp-content/themes/
 $ git clone https://github.com/thruthesky/cms
