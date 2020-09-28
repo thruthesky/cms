@@ -531,6 +531,16 @@ function getPostProfilePhotoUrl($post) {
 	return getPhotoUrl($post, 'author_photo_url');
 }
 
+
+/**
+ * returns post's author_photo_url if available. Or return anonymous photo url.
+ * @param $post $apiPost->postResponse
+ * @return string
+ */
+function postHasProfilePhotoUrl($post) {
+	return getPhotoUrl($post, 'author_photo_url') != ANONYMOUS_PROFILE_PHOTO;
+}
+
 /**
  * returns post's author_photo_url if available. Or return anonymous photo url.
  * @param $comment $apiPost->commentResponse
@@ -1229,4 +1239,9 @@ function count_user_comments($id) {
         FROM $wpdb->comments
         WHERE user_id = $id");
 	return $users;
+}
+
+
+function postHasFiles($post) {
+    return $post && $post['files'] && !empty($post['files']);
 }

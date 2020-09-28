@@ -50,12 +50,24 @@ a:hover {
   margin-left: 24px;
 }
 
+.ml-7px {
+  margin-left: 7px;
+}
+
+.ml-8px {
+  margin-left: 8px;
+}
+
 .ml-10px {
   margin-left: 10px;
 }
 
 .ml-16px {
   margin-left: 16px;
+}
+
+.ml-44px {
+  margin-left: 44px;
 }
 
 /**
@@ -67,6 +79,10 @@ a:hover {
 
 .h-70 {
   height: 70px;
+}
+
+.w-85 {
+  width: 85px;
 }
 
 .w-360 {
@@ -86,6 +102,11 @@ a:hover {
 .profile-photo-size {
   width: 120px !important;
   height: 120px !important;
+}
+
+.wh29x29 {
+  width: 29px !important;
+  height: 29px !important;
 }
 
 .wh40x40 {
@@ -111,6 +132,11 @@ a:hover {
 .wh145x145 {
   width: 145px !important;
   height: 145px !important;
+}
+
+.wh85x56 {
+  width: 85px !important;
+  height: 56px !important;
 }
 
 .w-60 {
@@ -216,6 +242,10 @@ a:hover {
 
 .pt-8 {
   padding-top: 8px !important;
+}
+
+.pt-10 {
+  padding-top: 10px !important;
 }
 
 .pt-17 {
@@ -360,6 +390,10 @@ a:hover {
 
 .black600 {
   color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.black870 {
+  color: rgba(0, 0, 0, 0.87) !important;
 }
 
 .blackgray {
@@ -514,6 +548,10 @@ a:hover {
   font-size: 12px;
 }
 
+.fs-13 {
+  font-size: 13px;
+}
+
 .fs-14 {
   font-size: 14px;
 }
@@ -608,6 +646,12 @@ a:hover {
 
 .pointer {
   cursor: pointer;
+}
+
+.one-line {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 input[type=file],
