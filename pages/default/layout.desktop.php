@@ -13,6 +13,9 @@
 	    <div class="p-3 border bg-light h-stack-1 overflow-hidden">
 		    <?php include widget('sidebar-login')?>
         </div>
+        <div class="mt-3">
+            <a href="https://www.katalkenglish.com" target="_blank"><img class="w-100" src="<?=THEME_URL?>/tmp/katalk-banner.jpg"></a>
+        </div>
     </div>
 </div>
 
