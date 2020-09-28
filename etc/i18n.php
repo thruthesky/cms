@@ -130,6 +130,34 @@ $__i18n = [
 	'login_with' => [
 		ko => 'Login with',
 		en => 'Login with',
+	],
+	'profile' => [
+		ko => 'Profile',
+		en => 'Profile',
+	],
+	'logout' => [
+		ko => 'Logout',
+		en => 'Logout',
+	],
+	'login' => [
+		ko => 'Login with',
+    en => 'Login with',
+],
+	'register' => [
+		ko => 'Register',
+		en => 'Register',
+	],
+	'qna' => [
+		ko => 'QnA',
+		en => 'QnA',
+	],
+	'discussion' => [
+		ko => 'Discussion',
+		en => 'Discussion',
+	],
+	'jobs' => [
+		ko => 'Jobs',
+		en => 'Jobs',
 	]
 
 

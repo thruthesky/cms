@@ -13,7 +13,7 @@
         <a class="" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa fa-bars white" aria-hidden="true"></i>
         </a>
-        <div class="side-nav collapse navbar-collapse position-relative bg-white show" id="navbarSupportedContent">
+        <div class="side-nav collapse navbar-collapse position-relative bg-white" id="navbarSupportedContent">
             <div class="position-absolute right top mt-8 mr-8">
                 <a  href="/">
                     <i class="fa fa-home darkergray100 fs-22 p-8px" aria-hidden="true"></i>
@@ -48,14 +48,14 @@
                     <li class="nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=user.profile">
                             <i class="fa fa-address-book px-20 mr-12 fs-lg"></i>
-                            <div class="fw-medium">Profile</div>
+                            <div class="fw-medium"><?=tr('profile')?></div>
                         </a>
                     </li>
 
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=user.logout">
                             <i class="fa fa-power-off px-20 mr-12 fs-lg"></i>
-                            <div class="fw-medium">Logout</div>
+                            <div class="fw-medium"><?=tr('logout')?></div>
                         </a>
                     </li>
                 <?php } else { ?>
@@ -63,13 +63,13 @@
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=user.login">
                             <i class="fa fa-reply px-20 mr-12 fs-lg"></i>
-                            <div class="fw-medium">Login</div>
+                            <div class="fw-medium"><?=tr('login')?></div>
                         </a>
                     </li>
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="<?=Config::$registerPage?>">
                             <i class="fa fa-address-card px-20 mr-12 fs-lg"></i>
-                            <div class="fw-medium">Register</div>
+                            <div class="fw-medium"><?=tr('register')?></div>
                         </a>
                     </li>
 
@@ -88,19 +88,19 @@
                 <li class=" nav-item mb-22">
                     <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=qna">
                         <i class="fa fa-question px-20 mr-12 fs-lg"></i>
-                        <div class="fw-medium">QnA</div>
+                        <div class="fw-medium"><?=tr('qna')?></div>
                     </a>
                 </li>
                 <li class=" nav-item mb-22">
                     <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=discussion">
                         <i class="fa fa-book px-20 mr-12 fs-lg"></i>
-                        <div class="fw-medium">Discussion</div>
+                        <div class="fw-medium"><?=tr('discussion')?></div>
                     </a>
                 </li>
                 <li class=" nav-item mb-22">
                     <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=jobs">
                         <i class="fa fa-graduation-cap px-20 mr-12 fs-lg"></i>
-                        <div class="fw-medium">Jobs</div>
+                        <div class="fw-medium"><?=tr('jobs')?></div>
 
                     </a>
                 </li>
