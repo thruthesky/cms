@@ -8,9 +8,16 @@ CMS for community projects
 
 ## Installation
 
-* Install wordpress with `https` supported domain. Or PWA and other things may not work.
-  * You can register host in `hosts` file.
-  * And set webserver with some SSL for the domain.
+### Requirement
+
+* Nginx + PHP 7.3+(with PHP-FPM) 
+* Wordpress 5.5.1+
+* SSL is required for the site domain.
+* Firebase project
+
+### Wordpress Theme Installation and Settings
+
+
 
 * git clone `cms` theme inti `wp-content/themes` folder.
 ```text

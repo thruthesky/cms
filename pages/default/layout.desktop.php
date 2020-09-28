@@ -14,7 +14,7 @@
 		    <?php include widget('sidebar-login')?>
         </div>
         <div class="mt-3">
-            <img class="w-100" src="<?=THEME_URL?>/tmp/katalk-banner.jpg">
+            <a href="https://www.katalkenglish.com" target="_blank"><img class="w-100" src="<?=THEME_URL?>/tmp/katalk-banner.jpg"></a>
         </div>
     </div>
 </div>
