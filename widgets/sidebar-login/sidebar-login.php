@@ -15,7 +15,18 @@
         </div>
         <?php } ?>
 
-        <div>
+        <?php if ( login() ) { ?>
+        <div class="mt-5">
+            <div>
+                <a href="/?page=user.posts">My posts: <?=count_user_posts(login('ID'), 'post', true)?></a>
+            </div><div>
+                <a href="/?page=user.comments">My comments: <?=count_user_comments(login('ID'))?></a>
+            </div>
+        </div>
+        <?php } ?>
+
+        <div class="d-flex justify-content-between mt-5">
+            <a href="/?page=user.logout">Profile</a>
             <a href="/?page=user.logout">Logout</a>
         </div>
     </div>

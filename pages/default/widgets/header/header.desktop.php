@@ -39,7 +39,7 @@
 	<div class="flex-grow-1 ml-space-lg border" style="margin-top: 25px; height: 94px;">
 		<div class="p-3">
 			<div class="fs-xs">플러터 새소식</div>
-            <div class="fs-sm">게임체인져: Null Safety</div>
+            <div class="fs-sm">게임체인져: Null Safety <a href="https://dart.dev/null-safety" target="_blank" class="bold">[1]</a> <a class="bold" href="https://dart.dev/null-safety/understanding-null-safety" target="_blank">[2]</a></div>
 		</div>
 	</div>
 </div>

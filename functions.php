@@ -449,7 +449,11 @@ function loginSessionIDFromCookie() {
  * Returns login user's information from his wp_users table.
  * @param $key
  *  if $key is null, then it return the same of `loggedIn()` method.
+ *
+ *
  * @return mixed
+ *  - true if user logged in and method called without $key
+ *  - false if user is not logged in and method called without $key
  * @code login('nickname')
  * @code login('social_login');
  */
@@ -1210,4 +1214,19 @@ function get_ids_of_slugs($slugs) {
         $ids[] = $cat->term_id;
     }
     return $ids;
+}
+
+/**
+ * Wordpress has no function `count_user_comments`. So here it is.
+ * @param $id - user iD.
+ *
+ * @return string|null
+ */
+function count_user_comments($id) {
+	global $wpdb;
+	$users = $wpdb->get_var("
+        SELECT COUNT( * ) AS total
+        FROM $wpdb->comments
+        WHERE user_id = $id");
+	return $users;
 }
