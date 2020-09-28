@@ -418,6 +418,10 @@ a:hover {
   background-color: #f4f4f4 !important;
 }
 
+.bg-yellow {
+  background-color: #ffc800;
+}
+
 .fw-light {
   font-weight: 300;
 }
