@@ -8,6 +8,14 @@ CMS for community projects
 
 ## Installation
 
+### Assumption
+
+* Assumption: the domain you are going to use is `flutterkorea.com`.
+* Assumption: Package id in Android and Bundle ID in iOS is `com.flutterkorea.app`.
+* Assumption: Firebase project name is `FlutterKorea`
+
+
+
 ### Requirement
 
 * `Nginx + PHP 7.3+(with PHP-FPM) + MariaDB` must be installed
@@ -27,14 +35,19 @@ $ git clone https://github.com/thruthesky/cms
 * Visit Wordpress Admin Dashboard ==> Appearance, then activate the `cms` theme.
   * When the `cms` theme is enabled, it creates tables that are needed.
 
-* Enable `permalink` to `post name`.
+* Enable `permalink`. Set it to `post name`.
+
+* Enable `Phone verification` in `config.php`.
+  * Set `$verifyMobileOnRegistration` to true.
+  * Set `$mobileRequired` to true.
+  * Set `$verifiedMobileOnly` to true.
+  * Set `$uniqueMobile` to true.
 
 * Firebase Authentication Setting
   * In Firebase -> Authentication -> Sign-in method, enable
     * Email/password
     * Phone
     * Google
-    * Facebook
     * Anonymous
 
   * In `Firebase Console -> Authentication -> sign-in-method -> Authorized Domains`
@@ -44,7 +57,7 @@ $ git clone https://github.com/thruthesky/cms
 
 * Set `service-account` json of the firebase project to `Config::$serviceAccount` in `Config` class.
 
-
+* Enable `Facebook` on Firebase Authentication ==> Sign-in method Settings.
 
 
 
