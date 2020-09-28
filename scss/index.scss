@@ -117,6 +117,9 @@ a:hover {
   width: 120px !important;
 }
 
+.mw-33 {
+  max-width: 33.3333%;
+}
 .mw-100 {
   max-width: 100%;
 }
@@ -208,6 +211,9 @@ a:hover {
 .pt-17 {
   padding-top: 17px !important;
 }
+.pt-20 {
+  padding-top: 20px !important;
+}
 
 .pt-34 {
   padding-top: 34px !important;
@@ -229,6 +235,9 @@ a:hover {
 
 .pb-6 {
   padding-bottom: 6px !important;
+}
+.pb-12 {
+  padding-bottom: 12px !important;
 }
 .pb-20 {
   padding-bottom: 20px !important;
@@ -254,6 +263,9 @@ a:hover {
 .mt-26 {
   margin-top: 26px;
 }
+.mt-40 {
+  margin-top: 40px;
+}
 .mt-60 {
   margin-top: 60px;
 }
@@ -276,6 +288,9 @@ a:hover {
 }
 .mb-12 {
   margin-bottom: 12px;
+}
+.mb-15 {
+  margin-bottom: 15px;
 }
 .mb-20 {
   margin-bottom: 20px;
@@ -353,7 +368,6 @@ a:hover {
   color: #AFAFAF !important;
 }
 
-
 .light {
   color: #e8e8e8 !important;
 }
@@ -361,9 +375,11 @@ a:hover {
   color: #f0f0f0 !important;
 }
 
-
 .bg-black {
   background-color: #000000;
+}
+.bg-lightgray100 {
+  background-color: #F4F4F4;
 }
 .bg-lightgray {
   background-color: #F5F5F5;

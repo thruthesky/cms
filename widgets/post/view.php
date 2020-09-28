@@ -10,7 +10,7 @@ $post = post()->postGet([
 ]);
 $slug = $post['slug'];
 ?>
-<h3><?=forum('name')?></h3>
+<!--<h3 class="text-center">--><?//=forum('name')?><!--</h3>-->
 <div class="p-3">
     <a class="btn btn-primary mr-3" href="/?page=post.list&slug=<?=$slug?>">Back</a>
     <a class="btn btn-secondary mr-3" href="/?page=post.edit&slug=<?=$slug?>">Create</a>
@@ -40,7 +40,7 @@ $slug = $post['slug'];
             <div class="">
                 <img class="w-100" src="<?=$post['files'][0]['thumbnail_url']?>">
             </div>
-            <div class="d-flex justify-content-around">
+            <div class="d-flex justify-content-start flex-wrap">
 
 
         <?php }
@@ -51,34 +51,32 @@ $slug = $post['slug'];
                 continue;
             }
             ?>
-            <div class="">
+            <div class="mw-33">
                 <img class="w-100" src="<?=$file['thumbnail_url']?>">
             </div>
         <?php }
         ?>
             </div>
     </div><!--/.row-->
-    <div class="px-20"><?=$post['post_content']?></div>
+    <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
 
-
-
-
-    <div class="mb-3">
+    <div class="px-20 mb-20">
+        <span class="mr-8" onclick="appendCommendBoxToPost()">Reply</span>
+        <?php if($post['post_author'] == userId()) { ?>
+            <a class="mr-8" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
+            <span class="mr-8" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</span>
+        <?php } ?>
         <?php if(forum(POST_SHOW_LIKE)) {?>
-            <button id="like<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'like')">
-                <?=isset($post['like']) && $post['like']!=="0" ?$post['like']: '' ?> <?=$post['user_vote']== 'like'?'Liked':'Like'?>
-            </button>
+            <span id="like<?=$post['ID']?>" class="mr-8" onclick="onClickLike(<?=$post['ID']?>, 'like')">
+                 <?=$post['user_vote']== 'like'?'Liked':'Likes'?><?=isset($post['like']) && $post['like']!="0" ? '('. $post['like'] . ')': '' ?>
+            </span>
         <?php } ?>
         <?php if(forum(POST_SHOW_DISLIKE)) {?>
-            <button id="dislike<?=$post['ID']?>" class="btn btn-primary btn-sm mr-1" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
-                <?=isset($post['dislike'])&&$post['dislike']!=="0" ?$post['dislike']: '' ?> <?=$post['user_vote']== 'dislike'?'Disliked':'Dislike'?>
-            </button>
+            <span id="dislike<?=$post['ID']?>" class="" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
+                 <?=$post['user_vote']== 'dislike'?'Disliked':'Dislikes'?><?=isset($post['dislike'])&&$post['dislike']!="0" ?'('.$post['dislike'] . ')': '' ?>
+            </span>
         <?php } ?>
-        <?php
-        if($post['post_author'] == userId()) { ?>
-            <a class="btn btn-primary btn-sm mr-1" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
-            <button class="btn btn-primary btn-sm mr-1" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</button>
-        <?php } ?>
+
     </div>
     <?php
     include widget('comment.input-box');

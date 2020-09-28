@@ -709,6 +709,7 @@ function CommentList() {
              console.log('first depth:', comment);
              comment['depth'] = 1;
             self.comments.push(comment);
+            if($('#no-comment-yet' + comment['comment_post_ID']).length)  $('#no-comment-yet' + comment['comment_post_ID']).remove();
         } else {
              const parent = self.getComment(comment['comment_parent']);
              comment['depth'] = 0;

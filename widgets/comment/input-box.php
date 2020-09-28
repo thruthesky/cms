@@ -29,9 +29,18 @@ if ( $post ) {
 
 <div id="comment-input-box-under-post"></div>
 <script>
-    $$(function() {
+//    $$(function() {
+//        commentList.appendCommentBox('#comment-input-box-under-post', {
+//            comment_post_ID: '<?//=$comment_post_ID?>//',
+//        });
+//    })
+
+    function appendCommendBoxToPost() {
+
+        if ($('#comment-input-box-under-post').children().length > 0) return false;
+
         commentList.appendCommentBox('#comment-input-box-under-post', {
             comment_post_ID: '<?=$comment_post_ID?>',
         });
-    })
+    }
 </script>
