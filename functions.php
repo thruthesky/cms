@@ -23,9 +23,7 @@ $release_date_stamp = trim(file_get_contents(__DIR__ . '/etc/release-date-stamp.
 define('RELEASE_DATE_STAMP', $release_date_stamp);
 
 
-require 'php/defines.php';
 
-require 'config.php';
 
 /**
  * The content of the variable will be printed at the bottom of HTML page.
@@ -39,7 +37,15 @@ function get_system_head_script() {
 	global $__system_head_script;
 	return $__system_head_script;
 }
+function add_system_head_script($snippet) {
+	global $__system_head_script;
+	$__system_head_script .= $snippet;
+}
 
+
+
+require 'php/defines.php';
+require 'config.php';
 require 'etc/i18n.php';
 require 'php/library.php';
 require 'php/api-library.php';
@@ -212,8 +218,7 @@ function theme_url() {
 
 
 function live_reload() {
-	global $__system_head_script;
-	$__system_head_script .= <<<EOH
+	$live = <<<EOH
 <script src="http://127.0.0.1:12345/socket.io/socket.io.js"></script>
    <script>
        var socket = io('http://127.0.0.1:12345');
@@ -224,6 +229,8 @@ function live_reload() {
    </script>
 
 EOH;
+
+	add_system_head_script($live);
 
 }
 
@@ -976,7 +983,7 @@ function get_forum_setting() {
  * Add forum settings into <head> tag. so Javascript can use it.
  */
 function insert_forum_settings_as_javascript_into_header() {
-	global $__get_forum_setting, $__system_head_script;
+	global $__get_forum_setting;
 	$re = $__get_forum_setting;
 
 
@@ -985,7 +992,7 @@ function insert_forum_settings_as_javascript_into_header() {
 	$comment_show_like = isset($re[COMMENT_SHOW_LIKE]) ? $re[COMMENT_SHOW_LIKE] : '';
 	$comment_show_dislike = isset($re[COMMENT_SHOW_DISLIKE]) ? $re[COMMENT_SHOW_DISLIKE] : '';
 
-	$__system_head_script .= <<<EOS
+	$forum = <<<EOS
 <script>
 	const forum = {
 	    post_show_like: "$post_show_like",
@@ -995,6 +1002,7 @@ function insert_forum_settings_as_javascript_into_header() {
 	};
 </script>
 EOS;
+	add_system_head_script($forum);
 
 }
 
@@ -1106,7 +1114,7 @@ EOS;
 function checkMobileRequired() {
 	if ( loggedIn() ) {
 		if ( Config::$mobileRequired && login('mobile') == null ) {
-			if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'mobile') === false ) {
+			if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'mobile') === false && strpos(in('page'), 'admin') === false ) {
 				Config::setPage('user.mobile-verification');
 				set_page_options(['mode' => 'after-registration']);
 			}
@@ -1120,7 +1128,7 @@ function checkMobileRequired() {
 function checkProfileInformation() {
 	if ( ! loggedIn() ) return;
 	if ( !loginNickname() ) {
-		if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'user') === false ) {
+		if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'user') === false && strpos(in('page'), 'admin') === false ) {
 			Config::setPage( 'user.profile' );
 			set_page_options( [ 'messageCode' => inputNickname ] );
 		}

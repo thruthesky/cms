@@ -20,6 +20,7 @@ verifyCode = function() {
 
     console.log('data: ', data);
 
+    showLoader();
     $.ajax({
         method: 'POST',
         url: apiUrl,
@@ -32,5 +33,8 @@ verifyCode = function() {
             console.log(localStorage.getItem('mobile'));
             move('/?page=user.register&mobile=verified'); // success
         })
-        .fail(ajaxFailure);
+        .fail(ajaxFailure)
+        .always(function() {
+            hideLoader();
+        });
 }

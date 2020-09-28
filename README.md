@@ -35,7 +35,11 @@ $ git clone https://github.com/thruthesky/cms
 * Visit Wordpress Admin Dashboard ==> Appearance, then activate the `cms` theme.
   * When the `cms` theme is enabled, it creates tables that are needed.
 
-* Enable `permalink`. Set it to `post name`.
+* Enable `permalink` in Dashboard ==> Settings ==> Permalinks . Set it to `post name`.
+
+* Visit the site(https://fluterkorea.com) and login with admin email and password.
+  * You will see `Admin Page` menu. Enter the admin page.
+  * Set connect your domain(flutterkorea.com) to a theme page.
 
 * Enable `Phone verification` in `config.php`.
   * Set `$verifyMobileOnRegistration` to true.
@@ -51,13 +55,32 @@ $ git clone https://github.com/thruthesky/cms
     * Anonymous
 
   * In `Firebase Console -> Authentication -> sign-in-method -> Authorized Domains`
-    Add your domain for using Social login.    
+    Add your domain(flutterkorea.com).    
+
+* Firebase Settings ==> Your aps ==> Web app => Register app => enter nickname like 'FlutterKorea'
+  * Then, copy the variable `firebaseConfig` from `var firebaseConfig = { ...` until `};` not including `<script>` tag itself, nor `initializeApp` code.
+    * You can get the `firebaseConfig` variable
+        in Firebase Project Settings ==> General ==> Your apps ==> Web apps ==> Select your web app ==> Firebase SDK snippet ==> Config
+  * Then, click `continue to console` button.
+  * Paste the `firebaseConfig` variable string in `Config::$firebaseConfig` in config.php
+  * Or, you can optionally overwrite the `Config::$firebaseConfig` by setting the JSON script in admin page
+    in `Website Admin Page ==> System Settings ==> firebaseConfig`.
 
 * Set GCP `apikey` to `Config::$apikey` in `Config` class.
+  * GCP `apikey` in `GCP ==> APIs & Services ==> Credentials ==> API Keys` is required to set to verify user's mobile number.
+  * in GCP settings, there might be an API key that is already created by Firebase. You can copy that APIKey
+    and put it in `Config::$apikey` variable.
+  
 
-* Set `service-account` json of the firebase project to `Config::$serviceAccount` in `Config` class.
+* Set `Service Account Json Key` in Firebase Settings ==> Service accounts ==> Firebase Admin SDK to `Config::$serviceAccount` in `Config` class.
+  * `Service Account Json Key` is required for Backend PHP to communicate with Firebase.
+  
+  * One thing to note is that `Service Account JSON Key` has control characters like '\n'. So you cann use it in heredoc. Simple wrap it with single quotes.
+  
+  * You can overwrite the `Service Account JSON Key` in Admin page ==> System Settings ==> Service Account JSON Key.
 
 * Enable `Facebook` on Firebase Authentication ==> Sign-in method Settings.
+
 
 
 

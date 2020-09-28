@@ -29,6 +29,8 @@ define('POST_VIEW_THEME', 'post_view_theme');
 define('POST_EDIT_THEME', 'post_edit_theme');
 
 define('DOMAIN_SETTINGS', 'domain_settings');
+define('FIREBASE_CONFIG_SETTING', 'firebase_config_setting');
+define('FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING', 'firebase_service_account_json_key_setting');
 
 
 /**

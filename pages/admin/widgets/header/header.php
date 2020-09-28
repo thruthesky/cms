@@ -24,6 +24,8 @@
                     <a class="nav-link" href="/?page=admin.forum.list"><?=tr(['ko'=>'게시판', 'en' => 'Forum'])?></a>
                 </li>
 
+                <li class="nav-item"><a class="nav-link" href="/?page=admin.settings.system">System Settings</a></li>
+
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                         More

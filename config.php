@@ -33,18 +33,37 @@ class Config {
 
 
     static public $apikey = 'AIzaSyClwlY3-l4GQOKgqvq-VtCcKJ_Ql8rVPt8';
-    static public $serviceAccount = [
-	    "type" => "service_account",
-	    "project_id" => "sonub-version-2020",
-	    "private_key_id" => "2293352db7154bc256ae5a57796f808e526306ab",
-	    "private_key" => "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC6WcR6/coLMe9X\nJlKsVyWuQGov88H9Cjt3VAtDby6UXQP/JoHDdDJqBNfEZ6kweur0ez19Dovb6mkd\nDrMwvEbGhqBR7UwgTiKeq5N9N8+pnuDmWAkzyk8VCSNU7axi4rx06w8w/KSnUUVE\n1SNgh/z7TiVEawfpATMIfep5F2X7LaKcBqlqxEfCvYFiYnTfgysj2FGneTGJSOBV\nQUxLXaxIhxe7iaevPDYs9MsCGBhphkYMyXH/FoIacxuXW/tZRaRhXiK5361Zdl03\nd/cAiS2v8uQNOc5uzQUeN7J3GXaeldDOTwANyFqJqmcID/E6O1DVXqie3zjmEbhy\nH3/fOegDAgMBAAECggEAHZmJpzGYaLEnVRP4w3gvkN9EHqwc2Z5zoKTVtIHnXQND\nUcF3kNNsTevJVrX9KVQKQwgvqvq8W2j/W5wMpBvxMAfiqkYY4UltSqpyicwWLQQC\nsYPf/lJ5v5vNJBMr3nnTuSHnLqmgARWx0i5QFBK1q+NB8dKrFdHYyICxAEf9Ammm\nYV9HImsTObWXudtZ3I/gjpvlXwe3HcU0qr0B8cqGaXbMfWYEcVvSgYljfLh19Z16\ntXNmFcclkoa20Wr3NeR4y2EfJDk1hIN23jk580+i99dvaFsEpga9jlKkiwlQWV0t\nkNvgs5ZQqzuh7lDciiIc9xFuQYOnGIhO6qJkenaSiQKBgQDw/D/y7opYM9XYnlr+\nlTecbB26h52NbEEf7LCCjGSaSl05i3W529Ku6jEHQ7OicL8wXIW39sR5ay/zGtmh\nHtDyrSFpd3zZWDBsTdMZanGEnuLROlRPzPqemSVnR+c1HSjVKubRaZptUsVxs9/5\nC21jBVla5qJewH/Lvs+yqR0HywKBgQDF9hYsh+cFFfLqc9td+ptOjZVNCt7c9mq0\nJHhC2MEidBPgIC/izriM4SUM7msEtfqPdUxVQwt7l1j+5de1ZiKa6Spm6pd6YsHB\n1akbh2Nmw0BmLg2ZqGQFUFIPbvFQojChqbl0H4dufGNvi3nA5lxFGAM88v6hnwyf\nzFOdXejpqQKBgQDEeWTJ86Hnd5uKGNGnbpEAf0VdpuPVQcV2+cqPJVeAU9Dd8c3x\n0j9bTKTcf14duj6md0iuTAqz06gsVF/K9Qz2TiFHk5u+uCACrRDHT/ltXv0eCKhk\nx4ItfD76jaz7qOJ5qZi2c5rsNuezZCvfKGnuqZXIfvEyv09yFgfQagC5MQKBgGN+\n4vgwuhkhRf02i9v5OBPML20QeKDgLRMrfVJDtRaG9vJf2xGIytLr2f5c2mb8u9lc\noCf+UYglsnIyvS8MDXqElG4znDzD5BRzOdJ/QqOEoRp6LRW8v8C39PaS0TCww/aM\n4owNyLjsReHrXR9p6JhFkGMS0o4S7XpnbOMcLxM5AoGAANlYvDoBZUalQVwcoEwc\nqWKhPoyRYFkp+Ku9vnCIRZ0JUXJm42Vru2HnovW90hv5de2rCjHQAxkt9Q0kOyU/\nAbRGcQ7hqG6EvdxXguZyU8nI6MudLPva+WssPqOF+VtRzcrOYRqrJuvlqjW3wWDn\n3pSeXQ6Q24q+RbzEEaMegKE=\n-----END PRIVATE KEY-----\n",
-	    "client_email" => "sonub-version-2020@appspot.gserviceaccount.com",
-	    "client_id" => "112081277289694275287",
-	    "auth_uri" => "https://accounts.google.com/o/oauth2/auth",
-	    "token_uri" => "https://oauth2.googleapis.com/token",
-	    "auth_provider_x509_cert_url" => "https://www.googleapis.com/oauth2/v1/certs",
-	    "client_x509_cert_url" => "https://www.googleapis.com/robot/v1/metadata/x509/sonub-version-2020%40appspot.gserviceaccount.com"
-    ];
+    static public $serviceAccount = [];
+    static public $serviceAccountJson ='
+{
+  "type": "service_account",
+  "project_id": "sonub-version-2020",
+  "private_key_id": "c914c92ffb9f7dfc928eb5d3151dd00effe27d79",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDSsW7GTiDvdO4j\n3R+/n/ivSnfp0R1je6B2CnSnuFe5/J+nOt1fqFSVmCoEkiAbvPbPDthp1tdwVNtx\nnxl+Zqn2BM1lB9DD2cgGUKAlRja0TOn/CEzcgyXrTLbc1hTWw30QIlg6XwvlslSG\nmgdavL7YEXILZbpa55e/ZYh3k9o2PGajhkGSuYLLaf1iS1SN0EFAC5cBmP7YeOmb\nDQZ4nhq5uMM5NBLsIEkNqijREF35ZkuEFjExjvYz7ijg7xkBEyml0jc5RjrKdF05\nG5/8AcYZY610jryflJMw6Y/l0gyDEyGp5XuAqBToLkfuL3fEt0TRZpv5NutylPal\nHE4YtpXNAgMBAAECggEAINzH+GpLPM4yLqnYv9zFvyGQXondWZz4xDCRTW+1Ty8V\n/9FwofDxcHvRYfEgzPLGVDlui+OUqtKxf6FfKpX8wICzQKTdbQ7U4hdFQ0sWUT0F\n6l9zDZnvGipXA07o5S6MnS2eMUyN4H/WK0BvEToLUkw2S4zMak1hH9tIU85d5MNy\nP874jAI8rlXYr2yl0g2/csBU2HqXeh7Tk07NbPlh2nKQvz6l90My14ZpVWZaSfpR\nAGQ99EVuJi81IkCZ8VFCpDvlmeIqB2YDiRK92VXijorny4Sr9kyafWssR5nOhcZJ\nI+7X/9pbGAuNm1Mi0OFW0ngiajxEfCw5d0ktirBFCQKBgQD/c9g3iLSSg3C7XIt0\nT162YUuNmNRttNnKdaLiw8yIuWUtEIPXZVzB2qObPFxEGpO0AOOKPyekoXMLw/wj\n/nJot5QUZYx0EgqDjNjd3ZeQKEUnKFeTQJh5p3Hy57zvowm3jXpwjk9hlIUWLRqI\npOMvZadlWTKu6JRFbHdDV4E9cwKBgQDTJQfWkv2O8hwLJOvFoS2JDfBIGWRy9+MZ\nSFEG6Uppe/vAlpjC0QPjflOd9uJKP0br/kh7W4D0BHKEAeh72Wzp3X/0s5M17UFb\nErvl7glX1zy4H+0LWA72kzFY50pNnw1mDGPulFKEFW9zmRfJG2q0tKayu+YD7bXR\n10HlpJAPvwKBgQDvB+suK9Ert6po53PmZc5uQiR8XqGH9k5E0EaWgjiFR1WREX8M\nsmBVVMz6mUSMxYGoUZyY4/eoaRpJzB3HYHSV4BHD9DG0+pyz87uJ/6uuzL/IoEsy\nEqOaUkCh1o5Iffq9srj7UW6eFGdkFNhbPE8JLsmwYAK5ABCd1ZzTerIIWQKBgBLm\n7sOz1wU0AXSx8nV3z2bEm60osMhmDquVwMM4oVO+KLR+BuDx60IzbfLnRizVa1j3\nI6//ahTuTP4qWZC0zz5EeQ8EAHrEaaRoke+slqOJfkMRgJwSXwyN8s39rrYyNfXb\nyBp0pspyTM7xdqKnVK8muQGpNpdFcZB+j8SqLcdrAoGAVOIxez62l6QXNEdlAN1S\n9xyR+FqxXa9cpQXqHTEwus3HJvhIf15jQUO+tn7kG3AqmQfiRfixKtSQryqs8R92\n3EIRC89g7BXivIr/GYbgV6K7o/NAyZ11a5z1tzwepqXs9XVezP0dB+uuwmb25M+Q\nxOqEqpBan5YK2Ucr5xGsITA=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-ujql9@sonub-version-2020.iam.gserviceaccount.com",
+  "client_id": "111347155811174235130",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-ujql9%40sonub-version-2020.iam.gserviceaccount.com"
+}
+';
+
+
+
+    static public $firebaseConfig =<<<EOJ
+const firebaseConfig = {
+    apiKey: "AIzaSyDaj8gzVYM-bS93emOndKEvBXmw1o83fcQ",
+    authDomain: "sonub-version-2020.firebaseapp.com",
+    databaseURL: "https://sonub-version-2020.firebaseio.com",
+    projectId: "sonub-version-2020",
+    storageBucket: "sonub-version-2020.appspot.com",
+    messagingSenderId: "446424199137",
+    appId: "1:446424199137:web:24747fb488d820a889aca0",
+    measurementId: "G-VN1YRRHX2K"
+};
+EOJ;
+
 
 	/**
 	 * @see readme
@@ -133,3 +152,33 @@ if ( isset($_REQUEST['page']) && strpos($_REQUEST['page'], 'admin.') !== false )
 
 define('PAGE_URL', THEME_URL . '/pages/'. Config::$domain);
 
+
+
+/**
+ * Overwriting firebaseConfig
+ */
+$setting = get_option(FIREBASE_CONFIG_SETTING);
+if ( $setting ) {
+	$__firebaseConfig = stripslashes($setting);
+} else {
+	$__firebaseConfig = Config::$firebaseConfig;
+}
+$snippet=<<<EOJ
+<script>$__firebaseConfig</script>
+EOJ;
+
+add_system_head_script($snippet);
+
+
+/**
+ * Overwrite firebase service account key
+ */
+
+$setting = get_option(FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING);
+if ( $setting ) {
+	$__setting = stripslashes($setting);
+} else {
+	$__setting = Config::$serviceAccountJson;
+}
+
+Config::$serviceAccount = json_decode($__setting, true);

@@ -121,8 +121,10 @@ class ApiLibrary {
 
 		/**
 		 * Deliver firebase custom login token to client.
+		 *
+		 * @note since creating Firebase Custom Login Token may take overhead, it create the token only on client request.
 		 */
-		if ( Config::$firebaseEnableCustomLogin ) {
+		if ( Config::$firebaseEnableCustomLogin  && API_CALL ) {
 			if ( isset($data[FIREBASE_UID]) && $data[FIREBASE_UID] ) {
 				// User has firebase account.
 				xlog('User has firebase account: ' . $data[FIREBASE_UID]);

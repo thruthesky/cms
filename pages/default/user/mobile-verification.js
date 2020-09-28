@@ -30,6 +30,8 @@ function MobileVerificationPage() {
             token: recaptchaToken
         };
 
+        showLoader();
+
         $.ajax({
             method: 'POST',
             url: apiUrl,
@@ -49,7 +51,10 @@ function MobileVerificationPage() {
                     move('/?page=user.mobile-verification-input-code')
                 }
             })
-            .fail(ajaxFailure);
+            .fail(ajaxFailure)
+            .always(function() {
+                hideLoader();
+            });
     };
 
 }
