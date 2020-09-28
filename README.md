@@ -24,7 +24,7 @@ $ cd wp-content/themes/
 $ git clone https://github.com/thruthesky/cms
 ```
 
-* Activate the `cms` theme on admin panel.
+* Visit Wordpress Admin Dashboard ==> Appearance, then activate the `cms` theme.
   * When the `cms` theme is enabled, it creates tables that are needed.
 
 * Enable `permalink` to `post name`.
