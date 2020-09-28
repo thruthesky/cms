@@ -302,8 +302,8 @@ function page($page = null, $options = []) {
 
 
 	if ( $page[0] == '.' || $page[0] == '/' || strpos($page, '..') !== false ) {
-		$path = 'error/wrong-input.php';
-		set_page_options(['error' => 'Page should not begin with dot(.) or slash(/)']);
+		$path = 'error/display.php';
+		set_page_options(['message' => 'Page should not begin with dot(.) or slash(/)']);
 
 	} else {
 
@@ -317,8 +317,8 @@ function page($page = null, $options = []) {
 
 		if ( count($arr) == 1 ) {
 			if ( $arr[0] == 'index' ) {
-				$path = 'error/wrong-input.php';
-				set_page_options(['error' => 'Page cannot be index.']);
+				$path = 'error/display.php';
+				set_page_options(['message' => 'Page cannot be index.']);
 			} else {
 				$path = "$arr[0]/$arr[0]$rwd.php";
 			}

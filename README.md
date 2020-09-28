@@ -74,9 +74,7 @@ $ git clone https://github.com/thruthesky/cms
 
 * Set `Service Account Json Key` in Firebase Settings ==> Service accounts ==> Firebase Admin SDK to `Config::$serviceAccount` in `Config` class.
   * `Service Account Json Key` is required for Backend PHP to communicate with Firebase.
-  
   * One thing to note is that `Service Account JSON Key` has control characters like '\n'. So you cann use it in heredoc. Simple wrap it with single quotes.
-  
   * You can overwrite the `Service Account JSON Key` in Admin page ==> System Settings ==> Service Account JSON Key.
 
 * Enable `Facebook` on Firebase Authentication ==> Sign-in method Settings.
