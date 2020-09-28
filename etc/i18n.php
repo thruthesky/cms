@@ -267,6 +267,21 @@ $__i18n[EMAIL] = [
     ko => 'Email',
     en => 'Email'
 ];
+define('NO_POSTS_YET_1', 'no_posts_yet_1');
+$__i18n[NO_POSTS_YET_1] = [
+    ko => 'No posts, yet.',
+    en => 'No posts, yet.'
+];
+define('NO_POSTS_YET_2', 'no_posts_yet_2');
+$__i18n[NO_POSTS_YET_2] = [
+    ko => 'Won’t you be the first to write?',
+    en => 'Won’t you be the first to write?'
+];
+define('NO_POSTS_YET_3', 'no_posts_yet_3');
+$__i18n[NO_POSTS_YET_3] = [
+    ko => 'Please...',
+    en => 'Please...'
+];
 
 $__json = [];
 foreach( $__i18n as $k => $v ) {

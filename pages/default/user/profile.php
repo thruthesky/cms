@@ -83,13 +83,6 @@ $options = get_page_options();
 
     </div>
 
-
-<!--            <div class="d-flex justify-content-between">-->
-<!--                <a class="btn btn-secondary" data-button="profile-update" href="/?page=user.update">Update Profile</a>-->
-<!--                <a class="btn btn-secondary" href="/?page=user.logout">Logout</a>-->
-<!--                <a class="btn btn-danger" href="/?page=user.resign">Resign</a>-->
-<!--            </div>-->
-
 	<?php include widget('user.logged-with') ?>
 
 </div>
@@ -103,7 +96,7 @@ $options = get_page_options();
                     <input type="hidden" name="session_id" value="<?=login('session_id')?>">
                     <label class="modal-title form-label mb-34 fs-14 gray100"></label>
                     <input type="text" class="form-control smat-input mb-34" id="field" name="field" value="">
-                    <div class="d-flex justify-content-end mb-48 roboto">
+                    <div class="d-flex justify-content-end mb-6 roboto">
 <!--                        <button type="button" class="btn btn-lg mr-3 bg-lightgray100 blue text-uppercase" data-dismiss="modal">--><?//=tr('cancel')?><!--</button>-->
                         <button type="submit" class="btn btn-lg bg-lightgray100 blue text-uppercase"><?=tr('submit')?></button>
                     </div>

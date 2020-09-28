@@ -16,30 +16,40 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
 //}
 ?>
 <a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$forum['slug']?>">Create</a>
-<div class="container pb-3">
-    <?php
-    foreach($posts as $post){
-        ?>
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="row">
-                    <div class="circle overflow-hidden wh50x50">
-                        <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
-                    </div>
-                    <div class="col">
-                        <div>
-                            <?php if (!empty($post['files'])) echo "<i class='fa fa-images'></i>" ?>
+<div class="px-40 mb-48">
 
-                            <span><?=$post['author_name']?></span>
-                            <span>Date: <?=$post['short_date_time']?></span>
-                            <span>View: <?=$post['view_count']??''?></span>
+    <?php if (!$posts || empty($posts)) { ?>
+        <div class="text-center roboto">
+            <img class="w-100" src="<?=theme_url()?>/tmp/no_posts.png">
+            <div class="fs-27"><?=tr(NO_POSTS_YET_1)?></div>
+            <div class="fs-19"><?=tr(NO_POSTS_YET_2)?></div>
+            <div><?=tr(NO_POSTS_YET_3)?></div>
+        </div>
+    <?php } else {
+        foreach ($posts as $post) {
+            ?>
+            <div class="card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="circle overflow-hidden wh50x50">
+                            <img class='mw-100' src="<?= getPostProfilePhotoUrl($post) ?>" alt='user photo'>
                         </div>
-                        <a class="card-title fs-lg" href="<?=$post['guid']?><?=post_list_query()?>"><?=$post['post_title']?></a>
+                        <div class="col">
+                            <div>
+                                <?php if (!empty($post['files'])) echo "<i class='fa fa-images'></i>" ?>
+
+                                <span><?= $post['author_name'] ?></span>
+                                <span>Date: <?= $post['short_date_time'] ?></span>
+                                <span>View: <?= $post['view_count']??'' ?></span>
+                            </div>
+                            <a class="card-title fs-lg"
+                               href="<?= $post['guid'] ?><?= post_list_query() ?>"><?= $post['post_title'] ?></a>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <?php
+            <?php
+        }
     }
     ?>
 </div>

@@ -5,12 +5,11 @@
 $options = get_page_options();
 
 ?>
-<div class="p-5">
+<div class="px-40 pt-60 helvetica text-center">
 
-    <img class="w-100" src="<?=THEME_URL?>/img/error/error.jpg">
+    <img class="w-100 mb-58" src="<?=THEME_URL?>/img/error/error.jpg">
 
-    <h1 class="display-5"><?=$options['title']?></h1>
+    <div class="pb-6 dark-red fw-light"><?=tr([en=>'Forum Slug Error', ko=>'Forum Slug Error'])?></div>
     <hr>
-    <p class="lead"><?=$options['body']?></p>
-
+    <div class="pt-8 mb-58 blackgray"><?=tr([en=>'Forum slug is incorrect or it may not created.', ko=>'Forum slug is incorrect or it may not created.'])?></div>
 </div>

@@ -4,7 +4,6 @@
     }
 </style>
 
-
 <nav class="navbar navbar-expand-lg navbar-dark bg-skyblue">
     <div class="container px-0">
         <a class="navbar-brand" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
@@ -13,7 +12,7 @@
         <a class="" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fa fa-bars white" aria-hidden="true"></i>
         </a>
-        <div class="side-nav collapse navbar-collapse position-relative bg-white show" id="navbarSupportedContent">
+        <div class="side-nav collapse navbar-collapse position-relative bg-white" id="navbarSupportedContent">
             <div class="position-absolute right top mt-8 mr-8">
                 <a  href="/">
                     <i class="fa fa-home darkergray100 fs-22 p-8px" aria-hidden="true"></i>
@@ -48,14 +47,14 @@
                     <li class="nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=user.profile">
                             <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                            <div class="fw-medium"><?=tr('profile')?></div>
+                            <div class="ml-10px fw-medium"><?=tr('profile')?></div>
                         </a>
                     </li>
 
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=user.logout">
                             <span class="w-60 text-center"><i class="fa fa-power-off mr-12 fs-lg"></i></span>
-                            <div class="fw-medium"><?=tr('logout')?></div>
+                            <div class="ml-10px fw-medium"><?=tr('logout')?></div>
                         </a>
                     </li>
                 <?php } else { ?>
@@ -63,13 +62,13 @@
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=user.login">
                             <span class="w-60 text-center"><i class="fa fa-reply mr-12 fs-lg"></i></span>
-                            <div class="fw-medium"><?=tr('login')?></div>
+                            <div class="ml-10px fw-medium"><?=tr('login')?></div>
                         </a>
                     </li>
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="<?=Config::$registerPage?>">
                             <span class="w-60 text-center"><i class="fa fa-address-card mr-12 fs-lg"></i></span>
-                            <div class="fw-medium"><?=tr('register')?></div>
+                            <div class="ml-10px fw-medium"><?=tr('register')?></div>
                         </a>
                     </li>
 
@@ -80,7 +79,7 @@
                     <li class=" nav-item mb-22">
                         <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=admin.home">
                             <span class="w-60 text-center"><i class="fa fa-cubes mr-12 fs-lg"></i></span>
-                            <div class="fw-medium">Admin Page</div>
+                            <div class="ml-10px fw-medium">Admin Page</div>
                         </a>
                     </li>
                 <?php } ?>
@@ -88,57 +87,57 @@
                 <li class=" nav-item mb-22">
                     <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=qna">
                         <span class="w-60 text-center"><i class="fa fa-question mr-12 fs-lg"></i></span>
-                        <div class="fw-medium"><?=tr('qna')?></div>
+                        <div class="ml-10px fw-medium"><?=tr('qna')?></div>
                     </a>
                 </li>
                 <li class=" nav-item mb-22">
                     <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=discussion">
                         <span class="w-60 text-center"><i class="fa fa-book mr-12 fs-lg"></i></span>
-                        <div class="fw-medium"><?=tr('discussion')?></div>
+                        <div class="ml-10px fw-medium"><?=tr('discussion')?></div>
                     </a>
                 </li>
                 <li class=" nav-item mb-22">
                     <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=jobs">
                         <span class="w-60 text-center"><i class="fa fa-graduation-cap mr-12 fs-lg"></i></span>
-                        <div class="fw-medium"><?=tr('jobs')?></div>
+                        <div class="ml-10px fw-medium"><?=tr('jobs')?></div>
 
                     </a>
                 </li>
                 <li class="nav-item mb-22">
-                    <a class="nav-link d-flex justify-content-start align-items-center black600" href="#">
+                    <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=post.list&slug=abc">
                         <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                        <div class="fw-medium">Realestate</div>
+                        <div class="ml-10px fw-medium">Realestate</div>
 
                     </a>
                 </li>
                 <li class="nav-item dropdown mb-22 ">
                     <a class="nav-link dropdown-toggle  d-flex justify-content-start align-items-center black600" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-expanded="false">
                         <span class="w-60 text-center"><i class="fa fa-users mr-12 fs-lg"></i></span>
-                        <div class="fw-medium">Community</div>
+                        <div class="ml-10px fw-medium">Community</div>
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li class="nav-item mb-22">
                             <a class="nav-link d-flex justify-content-start align-items-center black600" href="#">
                                 <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                                <div class="fw-medium">Greetings</div>
+                                <div class="ml-10px fw-medium">Greetings</div>
                             </a>
                         </li>
                         <li class="nav-item mb-22">
                             <a class="nav-link d-flex justify-content-start align-items-center black600" href="#">
                                 <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                                <div class="fw-medium">PHP Developers</div>
+                                <div class="ml-10px fw-medium">PHP Developers</div>
                             </a>
                         </li>
                         <li class="nav-item mb-22">
                             <a class="nav-link d-flex justify-content-start align-items-center black600" href="#">
                                 <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                                <div class="fw-medium">Javascript Developers</div>
+                                <div class="ml-10px fw-medium">Javascript Developers</div>
                             </a>
                         </li>
                         <li class="nav-item mb-22">
                             <a class="nav-link d-flex justify-content-start align-items-center black600" href="#">
                                 <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                                <div class="fw-medium">Flutter Developers</div>
+                                <div class="ml-10px fw-medium">Flutter Developers</div>
                             </a>
                         </li>
 
@@ -147,13 +146,13 @@
                         <li class="nav-item mb-22">
                             <a class="nav-link d-flex justify-content-start align-items-center black600" href="#">
                                 <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                                <div class="fw-medium">Create your forum</div>
+                                <div class="ml-10px fw-medium">Create your forum</div>
                             </a>
                         </li>
                         <li class="nav-item mb-22">
                             <a class="nav-link d-flex justify-content-start align-items-center black600" href="/?page=contact">
                                 <span class="w-60 text-center"><i class="fa fa-address-book mr-12 fs-lg"></i></span>
-                                <div class="fw-medium">Contact</div>
+                                <div class="ml-10px fw-medium">Contact</div>
                             </a>
                         </li>
                     </ul>

@@ -50,6 +50,10 @@ a:hover {
   margin-left: 24px;
 }
 
+.ml-10px {
+  margin-left: 10px;
+}
+
 .ml-16px {
   margin-left: 16px;
 }
@@ -206,6 +210,10 @@ a:hover {
   padding-bottom: 0.25em !important;
 }
 
+.pt-8 {
+  padding-top: 8px !important;
+}
+
 .pt-17 {
   padding-top: 17px !important;
 }
@@ -222,8 +230,16 @@ a:hover {
   padding-top: 60px !important;
 }
 
+.pr-100 {
+  padding-right: 10px !important;
+}
+
 .pr-20 {
   padding-right: 20px !important;
+}
+
+.pb-6 {
+  padding-bottom: 6px !important;
 }
 
 .pb-20 {
@@ -232,6 +248,10 @@ a:hover {
 
 .pb-60 {
   padding-bottom: 60px !important;
+}
+
+.pl-20 {
+  padding-left: 20px !important;
 }
 
 .m-10px {
@@ -275,7 +295,7 @@ a:hover {
 }
 
 .mb-22 {
-  margin-bottom: 20px;
+  margin-bottom: 22px;
 }
 
 .mb-26 {
@@ -302,6 +322,10 @@ a:hover {
   margin-bottom: 56px;
 }
 
+.mb-58 {
+  margin-bottom: 56px;
+}
+
 .mb-60 {
   margin-bottom: 60px;
 }
@@ -310,8 +334,16 @@ a:hover {
   margin-bottom: 68px;
 }
 
+.black {
+  color: #000 !important;
+}
+
 .black600 {
   color: rgba(0, 0, 0, 0.6) !important;
+}
+
+.blackgray {
+  color: #3B3B3B !important;
 }
 
 .darkergray {
@@ -350,10 +382,6 @@ a:hover {
   color: #f0f0f0 !important;
 }
 
-.black {
-  color: #000 !important;
-}
-
 .bg-black {
   background-color: #000000;
 }
@@ -372,6 +400,10 @@ a:hover {
 
 .bg-gray {
   background-color: #bcbcbc;
+}
+
+.dark-red {
+  color: #BE0033;
 }
 
 .red {
@@ -426,20 +458,32 @@ a:hover {
   background-color: #f4f4f4 !important;
 }
 
+.bg-yellow {
+  background-color: #ffc800;
+}
+
 .fw-light {
-  font-weight: 300;
+  font-weight: 300 !important;
 }
 
 .fw-normal {
-  font-weight: 400;
+  font-weight: 400 !important;
 }
 
 .fw-medium {
-  font-weight: 500;
+  font-weight: 500 !important;
 }
 
 .fw-semi-bold {
-  font-weight: 600;
+  font-weight: 600 !important;
+}
+
+.bold {
+  font-weight: 700 !important;
+}
+
+.fs-11 {
+  font-size: 11px;
 }
 
 .fs-12 {
@@ -454,12 +498,20 @@ a:hover {
   font-size: 17px;
 }
 
+.fs-19 {
+  font-size: 19px;
+}
+
 .fs-20 {
   font-size: 20px;
 }
 
 .fs-22 {
   font-size: 22px;
+}
+
+.fs-27 {
+  font-size: 27px;
 }
 
 .fs-36 {
@@ -512,26 +564,6 @@ a:hover {
 
 .roboto {
   font-family: "Roboto";
-}
-
-.fw-light {
-  font-weight: 300 !important;
-}
-
-.fw-normal {
-  font-weight: 400 !important;
-}
-
-.fw-medium {
-  font-weight: 500 !important;
-}
-
-.fw-semi-bold {
-  font-weight: 600 !important;
-}
-
-.bold {
-  font-weight: 700 !important;
 }
 
 .z-index-high {
