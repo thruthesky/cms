@@ -521,7 +521,7 @@ function alertError(res) {
 function alertWarning(title, message) {
     return alertModal(title, message);
 }
-function alertModal(title, message) {
+function alertModal(title, message, callback) {
 
     const dialog = $('#alertModal');
 
@@ -534,6 +534,7 @@ function alertModal(title, message) {
      * That is why it needs to mount immediately when Javascript is loaded.
      */
     dialog.modal();
+    if (callback) callback(dialog);
 }
 /// Mount it immediately it is loaded.
 insert_modal();

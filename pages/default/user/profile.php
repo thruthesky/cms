@@ -119,19 +119,18 @@ $options = get_page_options();
             input.val(value);
             input.attr('name', field);
         })
-
-        $('#profileModal').on('hidden.bs.modal', function (e) {
-
-            location.reload();
-        })
     });
 
 
     function onRegisterFormSubmit() {
         apiUserRegister(objectifyForm($('#register-form')), function(res) {
-//            toast(tr('profile update'), '', tr('profile update success'))
-            alertModal(tr('profile update'), tr('profile update success'));
-
+            $('#profileModal').modal('hide');
+            alertModal(tr('profile update'), tr('profile update success'), function (dialog) {
+                dialog.on('hidden.bs.modal', function (e) {
+                    location.reload();
+                    console.log('do something here');
+                })
+            });
         }, function(res) {
             alertError(res);
         });
