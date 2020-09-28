@@ -27,30 +27,41 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
         </div>
     <?php } else {
         foreach ($posts as $post) {
-            ?>
-            <a class="position-relative d-block pb-20"  href="<?=$post['guid'] ?><?=post_list_query() ?>">
-                <div class="fs-11 fw-light <?=postHasProfilePhotoUrl($post) ? 'ml-44px' : 'ml-7px'?>">
-                    <?php if ( postHasProfilePhotoUrl($post) ) { ?>
 
+            $ml = 'ml-7px';
+            if (postHasProfilePhotoUrl($post) && postHasFiles($post)) $ml = 'ml-44px';
+            if (postHasProfilePhotoUrl($post) && !postHasFiles($post)) $ml= 'ml-82px';
+            ?>
+            <a class="position-relative d-block pb-20 clearfix"  href="<?=$post['guid'] ?><?=post_list_query() ?>">
+                <div class="fs-11 fw-light <?=postHasProfilePhotoUrl($post) && postHasFiles($post) ? 'ml-44px' : (postHasProfilePhotoUrl($post) && !postHasFiles($post) ? 'ml-82px' : 'ml-7px')?>">
+                    <?php if ( postHasProfilePhotoUrl($post) && postHasFiles($post) ) { ?>
                     <div class="position-absolute top left wh29x29 ml-8px circle overflow-hidden">
                         <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
                     </div>
                     <?php } ?>
 
-                    <span><?=$post['author_name'] ?></span>
+                    <span><?=postHasProfilePhotoUrl($post) && !postHasFiles($post) ? ''  : $post['author_name'] ?></span>
                     <span><?=$post['short_date_time'] ?></span>
                     <span><?=$post['like']??'' ?> Likes</span>
                 </div>
                 <div class="position-relative">
-                    <?php if (postHasFiles($post)) { ?>
+                    <?php if ( postHasFiles($post) ) { ?>
                     <div class="float-left wh85x56 overflow-hidden">
                         <img class="mw-100" src="<?=$post['files'][0]['thumbnail_url'] ?>">
                     </div>
+                    <?php } else if ( postHasProfilePhotoUrl($post) ) {?>
+                        <div class="float-left w-75px  ml-8px">
+                            <div class="m-auto wh43x43 circle">
+                                <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
+                            </div>
+                            <div class="fs-10 fw-light one-line"><?=$post['author_name'] ?></div>
+                        </div>
+
                     <?php } ?>
                     <div class="<?=postHasFiles($post) ? '' : 'ml-7px' ?>">
                         <div class="black870 one-line"><?=$post['post_title'] ?></div>
                         <div class="fs-13 black600 one-line"><?=$post['post_content'] ?></div>
-                        <div class="fs-13 black600 one-line">
+                        <div class="fs-11 black600 fw-light one-line">
                             <?=$post['comment_count']!='0'?'('. $post['comment_count'] .')': ''?>
                             <?=$post['comment_count']>'0'? $post['comments'][0]['comment_content']: ''?>
                         </div>

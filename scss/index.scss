@@ -57,6 +57,9 @@ a:hover {
 .ml-44px {
   margin-left: 44px;
 }
+.ml-82px {
+  margin-left: 82px;
+}
 
 /**
  * Utility classes
@@ -105,6 +108,11 @@ a:hover {
   height: 40px!important;
 }
 
+.wh43x43 {
+  width: 50px!important;
+  height: 50px!important;
+}
+
 .wh50x50 {
   width: 50px!important;
   height: 50px!important;
@@ -131,6 +139,10 @@ a:hover {
 
 .w-60 {
   width: 60px;
+}
+
+.w-75px {
+  width: 75px;
 }
 
 .w-120 {
@@ -504,6 +516,9 @@ a:hover {
   font-weight: 700 !important;
 }
 
+.fs-10 {
+  font-size: 10px;
+}
 .fs-11 {
   font-size: 11px;
 }
