@@ -139,14 +139,12 @@ $__i18n = [
 		ko => 'Logout',
 		en => 'Logout',
 	],
-	'login' => [
+	'login with' => [
 		ko => 'Login with',
-    en => 'Login with',
-],
-	'register' => [
-		ko => 'Register',
-		en => 'Register',
+        en => 'Login with',
 	],
+
+
 	'qna' => [
 		ko => 'QnA',
 		en => 'QnA',
@@ -171,6 +169,7 @@ $__i18n[emailAddressDescription] = [
 ];
 
 define('PASSWORD', 'password');
+define('password', PASSWORD);
 $__i18n[PASSWORD] = [
     ko => '비밀번호',
     en => 'Password'
@@ -199,9 +198,16 @@ $__i18n[inputNickname] = [
 ];
 
 define('LOGIN', 'login');
+define('login', LOGIN);
 $__i18n[LOGIN] = [
-    ko => 'Login',
-    en => 'Login'
+	ko => '로그인',
+	en => 'Login'
+];
+
+define('register', 'register');
+$__i18n[register] = [
+	ko => '회원가입',
+	en => 'Register'
 ];
 
 define('LOGIN_HEAD', 'login_header');
