@@ -153,7 +153,13 @@ if ( isset($_REQUEST['page']) && strpos($_REQUEST['page'], 'admin.') !== false )
 define('PAGE_URL', THEME_URL . '/pages/'. Config::$domain);
 
 
-
+/**
+ * Overwrite apikey
+ */
+$__apikey = get_option(FIREBASE_API_KEY_SETTING);
+if ( $__apikey) {
+	Config::$apikey = $__apikey;
+}
 /**
  * Overwriting firebaseConfig
  */
