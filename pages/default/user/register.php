@@ -78,15 +78,11 @@ if( !Config::$verifiedMobileOnly ) { ?>
         <button class="btn bg-lightblue white btn-lg w-100 text-uppercase" type="submit" role="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
     </form>
 
-    <div class="my-5" role="loader" style="display: none;">
-        <div class="d-flex justify-content-center">
-            <div class="spinner"></div>
-            <div class="ml-3"><?=tr([
-                    ko => '회원 가입 중입니다...',
-                    en => 'Please wait...'
-                ])?></div>
-        </div>
-    </div>
+
+    <?php include widget('loader/loader', ['tr' => [
+	    ko => '회원 가입 중입니다...',
+	    en => 'Please wait...'
+    ]])?>
 
     <div class="mb-56">
         <?php include widget('user.logged-with') ?>

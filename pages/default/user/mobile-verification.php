@@ -50,6 +50,13 @@ $options = get_page_options();
     </form>
 
 
+
+	<?php include widget('loader/loader', ['tr' => [
+		ko => '인증 코드를 전송 중입니다 ...',
+		en => 'Sending verfication code ...'
+	]])?>
+
+
     <?php include widget('user.logged-with') ?>
 </div>
 

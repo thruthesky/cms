@@ -1,2 +1,2 @@
 <?php
-include page('error.display', ['title' => 'Social login error', 'body' => in('message')]);
+include page('error.display', ['code' => 'Social login error', 'message' => in('message')]);

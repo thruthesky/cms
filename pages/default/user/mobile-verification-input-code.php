@@ -18,7 +18,14 @@
         <input class="form-control smat-input w-100 mb-34" id="verification-code" size="10">
     </div>
 
-    <button class="btn mb-34 bg-lightblue white btn-lg w-100 text-uppercase" type="button" onclick="verifyCode()"><?=tr([en=>'Verify Code', ko=>'인증 번호 확인'])?></button>
+    <button class="btn mb-34 bg-lightblue white btn-lg w-100 text-uppercase" type="button" role="submit" onclick="verifyCode()"><?=tr([en=>'Verify Code', ko=>'인증 번호 확인'])?></button>
+
+
+	<?php include widget('loader/loader', ['tr' => [
+		ko => '인증 코드를 확인 중입니다 ...',
+		en => 'Verifying the code ...'
+	]])?>
+
 
     <div class="mb-20 text-center" style="height: 14px; border-bottom: 1px solid #AFAFAF">
               <span class="px-10 bg-white lightgray">

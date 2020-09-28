@@ -265,7 +265,7 @@ $__i18n[KAKAOTALK] = [
     en => 'Kakao'
 ];
 $__i18n['or'] = [
-    ko => '카카오톡',
+    ko => '또는',
     en => 'OR'
 ];
 define('EMAIL', 'email');
