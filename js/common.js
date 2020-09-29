@@ -213,7 +213,7 @@ function getUploadedFileHtml(file, options = {}) {
     if ( !options['extraClasses'] ) options['extraClasses'] = '';
     if ( typeof options['deleteButton'] == 'undefined' ) options['deleteButton'] = false;
 
-    let html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative d-inline-block "+options['extraClasses']+"'>";
+    let html = "<div id='file" + file['ID'] + "' data-file-id='" + file['ID'] + "' class='"+uploadedFileClass+" position-relative "+options['extraClasses']+"'>";
         html += "<img class='w-100' src='"+ file.thumbnail_url +"'>";
         if ( options['deleteButton'] ) html += "<i role='button' class='fa fa-trash position-absolute top right' onclick='onClickDeleteFile(" + file['ID'] + ")'></i>";
     html += "</div>";
@@ -666,11 +666,11 @@ function CommentList() {
             '   <input class="position-absolute z-index-high fs-xxxl opacity-01" type="file" name="file" onchange=\'commentList.onChangeFile(this, '+JSON.stringify(comment)+')\'>' +
             '   <i class="fa fa-camera fs-xl cursor p-2"></i>' +
             '</div><!--/.uploda-button-->' +
-            '<div class="col mr-3">' +
+            '<div class="col">' +
             '<textarea class="form-control rich-editor" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-content" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">'+ content +'</textarea>' +
             '</div>' +
-            '<div class="send-button col-1">' +
-            '<button type="submit" class="btn btn-outline-dark">' +
+            '<div class="send-button ">' +
+            '<button type="submit" class="btn btn-outline-dark border-0">' +
             '   <i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
             '</button>' +
             '</div><!--/.send-button-->' +

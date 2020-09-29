@@ -108,9 +108,9 @@ a:hover {
   height: 40px!important;
 }
 
-.wh43x43 {
-  width: 50px!important;
-  height: 50px!important;
+.wh42x42 {
+  width: 42px!important;
+  height: 42px!important;
 }
 
 .wh50x50 {
@@ -217,6 +217,10 @@ a:hover {
   padding-left: 10px !important;
   padding-right: 10px !important;
 }
+.px-16 {
+  padding-left: 16px !important;
+  padding-right: 16px !important;
+}
 .px-20 {
   padding-left: 20px !important;
   padding-right: 20px !important;
@@ -234,6 +238,10 @@ a:hover {
 .py-4px {
   padding-top: 0.25em !important;
   padding-bottom: 0.25em !important;
+}
+.py-8px {
+  padding-top: 0.5em !important;
+  padding-bottom: 0.5em !important;
 }
 
 
@@ -261,7 +269,7 @@ a:hover {
   padding-top: 60px !important;
 }
 
-.pr-100 {
+.pr-10 {
   padding-right: 10px !important;
 }
 .pr-20 {
@@ -277,9 +285,16 @@ a:hover {
 .pb-20 {
   padding-bottom: 20px !important;
 }
+.pb-25 {
+  padding-bottom: 25px !important;
+}
 
 .pb-60 {
   padding-bottom: 60px !important;
+}
+
+.pl-10 {
+  padding-left: 10px !important;
 }
 .pl-20 {
   padding-left: 20px !important;
@@ -309,6 +324,10 @@ a:hover {
 .mr-8 {
   margin-right: 8px;
 }
+.mr-15 {
+  margin-right: 15px;
+}
+
 .mr-26 {
   margin-right: 26px;
 }
@@ -320,6 +339,9 @@ a:hover {
 
 .mb-6 {
   margin-bottom: 6px;
+}
+.mb-10 {
+  margin-bottom: 10px;
 }
 .mb-12 {
   margin-bottom: 12px;
@@ -416,14 +438,15 @@ a:hover {
 .bg-black {
   background-color: #000000;
 }
-.bg-lightgray100 {
-  background-color: #F4F4F4;
-}
 .bg-lightgray {
   background-color: #F5F5F5;
 }
 
-.bg-lightgray100  {
+.bg-lightgray100 {
+  background-color: #F4F4F4 !important;
+}
+
+.bg-lightgray200  {
   background-color: #EAEAEA !important;
 }
 
@@ -670,5 +693,13 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
   -webkit-box-shadow: 0 0 6px 3px rgba(0,0,0,0.16);
   -moz-box-shadow: 0 0 6px 3px rgba(0,0,0,0.16);
   box-shadow: 0 3px 6px 0 rgba(0,0,0,0.16);
+}
+
+.border-1-solid {
+  border: 1px solid transparent;
+}
+
+.border-bottom-1-solid {
+  border-bottom: 1px solid transparent;
 }
 

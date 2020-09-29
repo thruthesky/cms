@@ -24,7 +24,7 @@ $viewTemplate = file_get_contents(__DIR__ . '/view-template.html');
         <div class="fs-12 fw-medium mb-58 blue" onclick="appendCommendBoxToPost()"><?=tr(NO_COMMENTS_YET_3)?></div>
     </div>
 <?php } ?>
-<div id="comment-list" class="pb-3">
+<div id="comment-list" class="pl-20 pr-10 pb-40">
     <?php
     foreach($post['comments'] as $comment){
         include widget('comment.view', ['viewTemplate' => $viewTemplate]);

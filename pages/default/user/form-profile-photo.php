@@ -9,7 +9,6 @@
                     type="file" name="file"
                     onchange="onChangeFile(this, {
                         html: $('.user-profile-photo'),
-                        deleteButton: true,
                         progress: $('.profile-photo-progress'),
                         success: function(res) {
                             $('input.profile-photo-url').val(res['url']);

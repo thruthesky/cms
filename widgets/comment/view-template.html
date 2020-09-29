@@ -1,38 +1,33 @@
-<div id="comment{comment_ID}">
-    <div class="display" data-comment-post-id="{comment_post_ID}" data-comment-id="{comment_ID}" data-comment-parent="{comment_parent}" data-depth="{depth}">
-        <div class="card mb-3">
-            <div class="card-body">
-                <div class="row no-gutters mb-3">
-                    <div class="circle wh50x50 overflow-hidden mr-3">
-                        <img class='mw-100' src="{author_photo_url}" alt='user photo'>
-                    </div>
-                    <div class="col">
-                        <div>
-                            <span>No. {comment_ID}</span>
-                            <span>{comment_author}</span>
-                            <span>Date: {short_date_time}</span>
-                        </div>
-                        <div class="content">
-                            {comment_content}
-                        </div>
-                    </div>
-                </div>
-                <div class="comment-view-files row mb-3">
-                    <!--loop files-->
-                    <div class="col-4 col-sm-3">
-                        <img class="w-100" src="{thumbnail_url}">
-                    </div>
-                    <!--/loop-->
-                </div><!--/.row-->
-                <div class="comment-buttons">
-                    <button id="like{comment_ID}" class="{show_like}d-none btn btn-primary btn-sm mr-1" onclick="onClickLike({comment_ID}, 'like', 'comment')">{like} {like_text}</button>
-                    <button id="dislike{comment_ID}" class="{show_dislike}d-none btn btn-primary btn-sm mr-1" onclick="onClickLike({comment_ID}, 'dislike', 'comment')">{dislike} {dislike_text}</button>
-                    <button class="btn btn-primary btn-sm mr-1" onclick='commentList.appendCommentBoxAt({comment_ID})'>Reply</button>
-                    <button class="{other}d-none btn btn-primary btn-sm mr-1" onclick='commentList.editComment({comment_ID})'>Edit</button>
-                    <button class="{other}d-none btn btn-primary btn-sm mr-1" onclick="onCommentDelete({comment_ID}, {comment_post_ID})">Delete</button>
-                </div>
-
+<div id="comment{comment_ID}" class="">
+    <div class="display p-10px  bg-lightgray100 mb-12" data-comment-post-id="{comment_post_ID}" data-comment-id="{comment_ID}" data-comment-parent="{comment_parent}" data-depth="{depth}">
+        <div class="row no-gutters mb-10">
+            <div class="circle wh42x42 overflow-hidden mr-15">
+                <img class='mw-100' src="{author_photo_url}" alt='user photo'>
             </div>
+            <div class="col fs-12">
+                    <div>{comment_author}</div>
+                    <span>No. {comment_ID}</span>
+                    <span>{short_date_time}</span>
+            </div>
+        </div>
+        <div class="content pb-12">
+            {comment_content}
+        </div>
+        <div class="comment-view-files row no-gutters mb-12">
+            <!--loop files-->
+            <div class="col-4 col-sm-3">
+                <img class="w-100 border-1-solid" src="{thumbnail_url}">
+            </div>
+            <!--/loop-->
+        </div><!--/.row-->
+        <hr>
+        <div class="comment-buttons mb-22">
+            <span class=" mr-1" onclick='commentList.appendCommentBoxAt({comment_ID})'>Reply</span>
+            <span class="{other}d-none  mr-1" onclick='commentList.editComment({comment_ID})'>Edit</span>
+            <span class="{other}d-none  mr-1" onclick="onCommentDelete({comment_ID}, {comment_post_ID})">Delete</span>
+            <span id="like{comment_ID}" class="{show_like}d-none  mr-1" onclick="onClickLike({comment_ID}, 'like', 'comment')">{like_text} {like}</span>
+            <span id="dislike{comment_ID}" class="{show_dislike}d-none  mr-1" onclick="onClickLike({comment_ID}, 'dislike', 'comment')">{dislike_text} {dislike}</span>
+            <span class="float-right px-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
         </div>
     </div>
     <div class="comment-input-box"></div>

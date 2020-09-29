@@ -97,8 +97,7 @@ $options = get_page_options();
                     <label class="modal-title form-label mb-34 fs-14 gray100"></label>
                     <input type="text" class="form-control smat-input mb-34" id="field" name="field" value="">
                     <div class="d-flex justify-content-end mb-6 roboto">
-<!--                        <button type="button" class="btn btn-lg mr-3 bg-lightgray100 blue text-uppercase" data-dismiss="modal">--><?//=tr('cancel')?><!--</button>-->
-                        <button type="submit" class="btn btn-lg bg-lightgray100 blue text-uppercase"><?=tr('submit')?></button>
+                        <button type="submit" class="btn btn-lg bg-lightgray200 blue text-uppercase"><?=tr('submit')?></button>
                     </div>
                 </form>
             </div>
@@ -127,7 +126,7 @@ $options = get_page_options();
             $('#profileModal').modal('hide');
             alertModal(tr('profile update'), tr('profile update success'), function (dialog) {
                 dialog.on('hidden.bs.modal', function (e) {
-                    location.reload();
+                    location.reload(); // update through jquery
                     console.log('do something here');
                 })
             });

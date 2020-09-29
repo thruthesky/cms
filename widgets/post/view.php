@@ -20,7 +20,7 @@ $slug = $post['slug'];
 
     <div class="px-10 fs-20 text-center mb-20"><?=$post['post_title']?></div>
 
-    <div class="row no-gutters pr-10 pl-20">
+    <div class="row no-gutters pr-10 pl-20 pb-25">
         <div class="circle wh50x50 overflow-hidden mr-3">
             <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>";
         </div>
@@ -33,12 +33,13 @@ $slug = $post['slug'];
             </div>
             <div><?=forum('name')?></div>
         </div>
+        <div class="pt-10 pr-20 pl-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
-    <div class="post-view-files row py-3">
+    <div class="post-view-files row no-gutters border-bottom-1-solid">
         <?php
         if(!empty($post['files']) && $post['files'][0]) { ?>
             <div class="">
-                <img class="w-100" src="<?=$post['files'][0]['thumbnail_url']?>">
+                <img class="w-100 border-1-solid" src="<?=$post['files'][0]['thumbnail_url']?>">
             </div>
             <div class="d-flex justify-content-start flex-wrap">
 
@@ -52,7 +53,7 @@ $slug = $post['slug'];
             }
             ?>
             <div class="mw-33">
-                <img class="w-100" src="<?=$file['thumbnail_url']?>">
+                <img class="w-100 border-1-solid" src="<?=$file['thumbnail_url']?>">
             </div>
         <?php }
         ?>
@@ -76,6 +77,8 @@ $slug = $post['slug'];
                  <?=$post['user_vote']== 'dislike'?'Disliked':'Dislikes'?><?=isset($post['dislike'])&&$post['dislike']!="0" ?'('.$post['dislike'] . ')': '' ?>
             </span>
         <?php } ?>
+
+        <span class="float-right px-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
 
     </div>
     <?php
