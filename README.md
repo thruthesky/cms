@@ -119,7 +119,7 @@ $ git clone https://github.com/thruthesky/cms
 
 ### Kakaotalk Login
 
-* Create a new app.
+* Create a new app at https://developers.kakao.com/console/app/
 * Then, Add a platform and add select Web platform.
   * add your domain like `https://flutterkorea.com`. You may replace the domain with yours.
 * Then, add Redirect URI like `https://flutterkorea.com/?page=user.kakao-login` in Kakao app dashboard ==> Kakao Login ==> Redirect URI. You may replace the domain with yours.
@@ -130,8 +130,28 @@ $ git clone https://github.com/thruthesky/cms
 
 ### Naver Login
 
+* Create a new app in Naver Developers page at https://developers.naver.com/apps/
+  * When select 'Naver Login' when you create app
+  * Then, add 'PC Web' and 'Mobile Web' in Environment section.
+  * Then, add your domain like 'https://flutterkorea.com' at Service URL on both of 'PC Web' and 'Mobile Web'
+  * Then, add `https://flutterkorea.com/?page=user.naver-login` in `Callback URL` on both of 'PC' & 'Mobile' web
+  * Then, save
+* Go to API settings
+  * Then, add logo image.
+  * Then, set category of the app.
+  * Then, save.
+* Go to Overview section.
+  * Click 'Apply Naver Login Evaluation'.
+    * The app must pass the 'evaluation', then the App can be change to production mode.
+    Until then, you can only login with registered login id.
+  * Set the login IDs in member management.
+  
+* Wait for 'Evaluation'.
+  * When evaluation is done, Chagne the mode to production.
 
-
+* Copy the `Client ID` and `Client Secret`.
+  * Then, put them in `Config::$naverClientId` and `Config::$naverClientSecret` in `config.php`
+    You can overwrite the `Config` member variables by setting the values in Admin page.
 
 ## Publish
 

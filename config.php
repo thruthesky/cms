@@ -188,9 +188,11 @@ Config::$kakaoRestApiKey = get_option(KAKAO_REST_API_KEY_SETTING, Config::$kakao
 Config::$kakaoRedirectURI = urlencode(Config::$kakaoRedirectURI);
 Config::$kakaoLoginApiURL = "https://kauth.kakao.com/oauth/authorize?client_id=".Config::$kakaoRestApiKey."&redirect_uri=".Config::$kakaoRedirectURI."&response_type=code";
 
-
-
-
+/**
+ * Overwriting Naver PC & Mobile Web Client Configuration
+ */
+Config::$naverClientId = get_option(NAVER_CLIENT_ID_SETTING, Config::$naverClientId);
+Config::$naverClientSecret = get_option(NAVER_CLIENT_SECRET_SETTING, Config::$naverClientSecret);
 Config::$naverRedirectURI =  urlencode(Config::$naverRedirectURI);
 Config::$naverLoginApiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=".Config::$naverClientId."&redirect_uri=".Config::$naverRedirectURI."&state=".Config::$naverState;
 

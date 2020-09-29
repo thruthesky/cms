@@ -4,6 +4,8 @@ if ( in('mode') == 'submit' ) {
 	update_option(FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING, in(FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING), true);
 	update_option(FIREBASE_API_KEY_SETTING, in(FIREBASE_API_KEY_SETTING), true);
 	update_option(KAKAO_REST_API_KEY_SETTING, in(KAKAO_REST_API_KEY_SETTING), true);
+	update_option(NAVER_CLIENT_ID_SETTING, in(NAVER_CLIENT_ID_SETTING), true);
+	update_option(NAVER_CLIENT_SECRET_SETTING, in(NAVER_CLIENT_SECRET_SETTING), true);
 }
 ?>
 
@@ -34,6 +36,20 @@ if ( in('mode') == 'submit' ) {
                 <div>Kakao Rest Api Key</div>
                 <input class="w-100" name="<?=KAKAO_REST_API_KEY_SETTING?>" value="<?=stripslashes(get_option(KAKAO_REST_API_KEY_SETTING))?>">
             </div>
+
+
+            <div class="mt-5">
+                <div>Naver Client ID</div>
+                <input class="w-100" name="<?=NAVER_CLIENT_ID_SETTING?>" value="<?=stripslashes(get_option(NAVER_CLIENT_ID_SETTING))?>">
+            </div>
+
+
+            <div class="mt-5">
+                <div>Naver Client Secret</div>
+                <input class="w-100" name="<?=NAVER_CLIENT_SECRET_SETTING?>" value="<?=stripslashes(get_option(NAVER_CLIENT_SECRET_SETTING))?>">
+            </div>
+
+
             <div class="mt-5">
                 <button type="submit">SUBMIT</button>
             </div>
