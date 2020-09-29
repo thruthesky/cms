@@ -8,6 +8,11 @@ CMS for community projects
 
 ## Installation
 
+### Overview of installation
+
+* The hard coded default system configurations are in `config.php` script.
+  * You can override most of the configurations by settings the values in admin page.
+
 ### Assumption
 
 * Assumption: the domain you are going to use is `flutterkorea.com`.
@@ -22,6 +27,10 @@ CMS for community projects
 * `Wordpress 5.5.1+` must be installed
 * `SSL` is required for the site domain.
 * Firebase project
+
+### Backend and Web Installation
+
+* For Flutter mobile app installation, 
 
 ### Wordpress Theme Installation and Settings
 
@@ -102,14 +111,22 @@ $ git clone https://github.com/thruthesky/cms
   * Input the `OAuth Redirect URL` in `Valid OAuth Redirect URIs`.
   * Choose `yes` of `Enforce HTTPS` if it is set to `no`.
   * Click save changes.
-* 
+* Fifth, add `https://flutterkorea.com/wp-content/themes/cms/etc/privacy-policy.php` in Privacy Policy URL. You can change the domain to your site domain.
+  * Choose app purpose to `Your own business`.
+  * Click `Save Changes`
 
-  * Set `Facebook Login`
-  * 
-* Enable `Facebook` on Firebase Authentication ==> Sign-in method Settings.
-  * Set `Facebook` Developer Account
-  * Set `Facebook` App ID and Secret to Firebase.
-  * Set `Firebase URL` to Facebook.
+* Done
+
+### Kakaotalk Login
+
+* First, create new app.
+* Second, Add a platform and add select Web platform.
+  * add your domain like `https://flutterkorea.com`. You may replace the domain with yours.
+* Third, add Redirect URI like `https://flutterkorea.com/?page=user.kakao-login` in Kakao app dashboard ==> Kakao Login ==> Redirect URI. You may replace the domain with yours.
+
+
+### Naver Login
+
 
 
 
