@@ -13,7 +13,7 @@
         <a href="/?page=post.list&slug=flutter" class="link pl-4">플러터 강좌</a>
         <a href="/?page=post.list&slug=dart" class="link pl-2">다트 강좌</a>
         <a href="/?page=post.list&slug=firebase" class="link pl-2">파이어베이스 강좌</a>
-        <a href="/?page=post.list&slug=wordpress" class="link pl-2">PHP 워드프레스 강좌</a>
+        <a href="/?page=post.list&slug=php" class="link pl-2">PHP 워드프레스 강좌</a>
         <a href="/?page=post.list&slug=nodejs" class="link pl-2">Node.js 강좌</a>
     </div>
     <div class="d-flex mt-3">
