@@ -417,11 +417,11 @@ function widget($name, $options = null) {
 	} else {
 		$rel_path = "/widgets/$name/$name.php";
 	}
-	$p = ABSPATH . THEME_URL . "/pages/$domain$rel_path";
+	$p = THEME_PATH . "/pages/$domain$rel_path";
 	if ( file_exists($p) ) {
 		$widget_path = $p;
 	} else {
-		$widget_path = ABSPATH . THEME_URL . $rel_path;
+		$widget_path = THEME_PATH . $rel_path;
 	}
 
 
@@ -1303,4 +1303,15 @@ function short_content( $content, $length = 64 ) {
 
 function strcut($text, $len=32) {
 	return short_content($text, $len);
+}
+
+/**
+ * @param $id
+ *
+ * @return string
+ *
+ * Returns the HTML ID of uploaded file on <img> tag in post view content
+ */
+function get_uploaded_file_id($id) {
+	return "uploaded-file$id";
 }

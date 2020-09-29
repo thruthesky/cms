@@ -42,17 +42,9 @@ $slug = $post['slug'];
         <div class="pt-10 pr-20 pl-10 pointer"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
 
-    <div class="post-view-files first-image-w-100 d-flex flex-wrap">
-        <?php foreach ($post['files'] as $file) { ?>
-            <div class="mw-33">
-                <img class="w-100 border-1-solid" src="<?=$file['thumbnail_url']?>">
-            </div>
-        <?php } ?>
-    </div>
-
-
-
+    <?php if (Config::$showUploadedFilesOnTop) include widget('files/display-uploaded-files', ['post' => $post])?>
     <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
+	<?php if (Config::$showUploadedFilesAtBottom) include widget('files/display-uploaded-files', ['post' => $post])?>
 
     <div class="px-20 mb-20">
         <span class="mr-8 pointer" onclick="appendCommendBoxToPost()">Reply</span>
