@@ -1256,3 +1256,17 @@ function count_user_comments($id) {
 function postHasFiles($post) {
     return $post && $post['files'] && !empty($post['files']);
 }
+
+function short_name($name) {
+    if ( strlen($name) > 14 ) return mb_substr($name, 0, 14);
+    else return $name;
+}
+
+function short_content( $content, $length = 64 ) {
+    $content = str_replace("&nbsp;", ' ', $content);
+    $content = preg_replace("/\s+/", ' ', $content);
+    $content = strip_tags($content);
+
+    return strlen($content) > $length ? mb_substr( $content, 0, $length ) ."&hellip;" : $content;
+
+}

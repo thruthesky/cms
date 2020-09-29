@@ -1,6 +1,6 @@
 <style>
     .side-nav {
-        margin: -48px -16px -9px 70px;
+        margin: -48px 0 -9px 70px;
     }
 </style>
 

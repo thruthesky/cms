@@ -28,35 +28,34 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
             <a class="position-relative d-block pb-20 clearfix"  href="<?=$post['guid'] ?><?=post_list_query() ?>">
                 <div class="fs-11 fw-light <?=postHasProfilePhotoUrl($post) && postHasFiles($post) ? 'ml-44px' : (postHasProfilePhotoUrl($post) && !postHasFiles($post) ? 'ml-82px' : 'ml-7px')?>">
                     <?php if ( postHasProfilePhotoUrl($post) && postHasFiles($post) ) { ?>
-                    <div class="position-absolute top left wh29x29 ml-8px circle border-shadow">
+                    <div class="position-absolute top left wh29x29 ml-8px circle border-shadow z-index-middle">
                         <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
                     </div>
                     <?php } ?>
 
-                    <span><?=postHasProfilePhotoUrl($post) && !postHasFiles($post) ? ''  : $post['author_name'] ?></span>
+                    <span><?=postHasProfilePhotoUrl($post) && !postHasFiles($post) ? ''  : short_name($post['author_name']) ?></span>
                     <span><?=$post['short_date_time'] ?></span>
                     <span><?=$post['like']??'' ?> Likes</span>
                 </div>
                 <div class="position-relative">
                     <?php if ( postHasFiles($post) ) { ?>
-                    <div class="float-left wh85x56 overflow-hidden">
+                    <div class="float-left wh85x56 overflow-hidden mr-8">
                         <img class="mw-100" src="<?=$post['files'][0]['thumbnail_url'] ?>">
                     </div>
                     <?php } else if ( postHasProfilePhotoUrl($post) ) {?>
-                        <div class="float-left w-75px  ml-8px">
+                        <div class="float-left w-75px  ml-8px text-center">
                             <div class="m-auto wh42x42 circle border-shadow">
                                 <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
                             </div>
-                            <div class="fs-10 fw one-line"><?=$post['author_name'] ?></div>
+                            <div class="fs-10 fw one-line"><?=short_name($post['author_name']) ?></div>
                         </div>
-
                     <?php } ?>
                     <div class="<?=postHasFiles($post) ? '' : 'ml-7px' ?>">
-                        <div class="black870 one-line"><?=$post['post_title'] ?></div>
-                        <div class="fs-13 black600 one-line"><?=$post['post_content'] ?></div>
+                        <div class="black870 one-line"><?=short_content($post['post_title'],160)?></div>
+                        <div class="fs-13 black600 one-line"><?=short_content($post['post_content'],160) ?></div>
                         <div class="fs-11 black600 fw-light one-line">
                             <?=$post['comment_count']!='0'?'('. $post['comment_count'] .')': ''?>
-                            <?=$post['comment_count']>'0'? $post['comments'][0]['comment_content']: ''?>
+                            <?=$post['comment_count']>'0'? short_content($post['comments'][count($post['comments'])-1]['comment_content'],160): ''?>
                         </div>
                     </div>
                 </div>

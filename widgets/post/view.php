@@ -64,21 +64,21 @@ $slug = $post['slug'];
     <div class="px-20 mb-20">
         <span class="mr-8" onclick="appendCommendBoxToPost()">Reply</span>
         <?php if($post['post_author'] == userId()) { ?>
-            <a class="mr-8" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
-            <span class="mr-8" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</span>
+            <a class="mr-8 pointer" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
+            <span class="mr-8  pointer" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</span>
         <?php } ?>
         <?php if(forum(POST_SHOW_LIKE)) {?>
-            <span id="like<?=$post['ID']?>" class="mr-8" onclick="onClickLike(<?=$post['ID']?>, 'like')">
+            <span id="like<?=$post['ID']?>" class="mr-8 pointer" onclick="onClickLike(<?=$post['ID']?>, 'like')">
                  <?=$post['user_vote']== 'like'?'Liked':'Likes'?><?=isset($post['like']) && $post['like']!="0" ? '('. $post['like'] . ')': '' ?>
             </span>
         <?php } ?>
         <?php if(forum(POST_SHOW_DISLIKE)) {?>
-            <span id="dislike<?=$post['ID']?>" class="" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
+            <span id="dislike<?=$post['ID']?>" class="pointer" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
                  <?=$post['user_vote']== 'dislike'?'Disliked':'Dislikes'?><?=isset($post['dislike'])&&$post['dislike']!="0" ?'('.$post['dislike'] . ')': '' ?>
             </span>
         <?php } ?>
 
-        <span class="float-right px-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+        <span class="float-right px-10  pointer"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
 
     </div>
     <?php

@@ -46,7 +46,7 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
                                href="<?= $post['guid'] ?><?= post_list_query() ?>"><?= $post['post_title'] ?></a>
                         </div>
                     </div>
-                </div>
+                  </div>
             </div>
             <?php
         }
