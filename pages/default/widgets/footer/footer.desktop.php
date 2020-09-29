@@ -7,6 +7,8 @@
         <div class="bold">커뮤니티</div>
         <a href="/?page=post.list&slug=discussion" class="link pl-4">자유게시판</a>
         <a href="/?page=post.list&slug=qna" class="link pl-2">질문과답변</a>
+        <a href="/?page=post.list&slug=reminder" class="link pl-2">공지</a>
+        <a href="/?page=post.list&slug=news" class="link pl-2">새소식</a>
     </div>
     <div class="d-flex mt-3">
         <div class="bold">개발강좌</div>

@@ -1,20 +1,19 @@
 <div class="container">
     <div class="row no-gutters">
         <div class="col">
-
             <div class="mt-3 d-flex justify-content-end">
-                <a class="link d-inline-block fs-sm" href="#"><i class="fa fa-edit mr-2"></i><?=tr(['en' => 'Greetings', 'ko' => '가입인사'])?></a>
-                <a class="link d-inline-block pl-3 fs-sm" href="#"><i class="fa fa-comments mr-2"></i><?=tr(['en' => 'Chatting', 'ko' => '채팅방입장'])?></a>
+                <a class="link d-inline-block fs-sm" href="/?page=post.list&slug=discussion"><i class="fa fa-edit mr-2"></i><?=tr(['en' => 'Greetings', 'ko' => '가입인사'])?></a>
+                <a class="link d-inline-block pl-3 fs-sm" href="https://open.kakao.com/o/g20m41Mb" target="_blank"><i class="fa fa-comments mr-2"></i><?=tr(['en' => 'Chatting', 'ko' => '채팅방입장'])?></a>
+	            <?php if ( login() ) { ?><a class="link d-inline-block d-lg-none pl-3 fs-sm" href="/?page=user.profile"><i class="fa fa-user mr-2"></i><?=tr(['en' => 'Profile', 'ko' => '회원정보'])?></a><?php } ?>
+	            <?php if ( !login() ) { ?><a class="link d-inline-block d-lg-none pl-3 fs-sm" href="/?page=user.login"><i class="fa fa-sign-in-alt mr-2"></i><?=tr(login)?></a><?php } ?>
             </div>
         </div>
     </div>
 </div>
 
-
-
 <div class="header container">
     <div class="row no-gutters">
-        <div class="col-9">
+        <div class="col-12 col-lg-9">
             <div class="logo-search py-3 d-flex">
                 <a href="/"><img class="h-70" src="<?=PAGE_URL?>/img/icons/flutter-icon.png"></a>
                 <a href="/">
@@ -42,11 +41,19 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="d-none d-lg-block col-lg-3">
             <div class="ml-space-lg border" style="margin-top: 25px; height: 94px;">
                 <div class="p-3">
                     <div class="fs-xs">플러터 새소식</div>
-                    <div class="fs-sm">게임체인져: Null Safety <a href="https://dart.dev/null-safety" target="_blank" class="bold">[1]</a> <a class="bold" href="https://dart.dev/null-safety/understanding-null-safety" target="_blank">[2]</a></div>
+                    <?php
+                    $posts = get_posts(['category_name' => 'news', 'posts_per_page' => 2]);
+                    foreach( $posts as $post ) {
+                        ?>
+                        <a class="d-block fs-sm" href="<?=$post->guid?>"><?=strcut($post->post_title, 14)?></a>
+                    <?
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>

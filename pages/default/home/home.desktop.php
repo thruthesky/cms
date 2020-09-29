@@ -115,7 +115,7 @@ EOH;
                 <?php
 
                 $posts = get_posts([
-                    'category' => implode(',', get_ids_of_slugs(['flutter'])),
+                    'category' => implode(',', get_ids_of_slugs(['flutter', 'news', 'reminder'])),
                     'numberposts' => 5
                 ]);
 
