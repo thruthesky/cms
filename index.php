@@ -38,7 +38,11 @@ $__system_head_script .=<<<EOH
 EOH;
 
 
+if ( API_CALL ) {
 
+} else {
+	set_page_post();
+}
 
 /**
  * Load theme based on domain.

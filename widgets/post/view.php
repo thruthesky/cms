@@ -4,11 +4,15 @@
  * @widget-type post_view_theme
  * @widget-name Default post view
  */
-$_post = get_post();
+/**
+ * Get post of the page.
+ */
+$_post = get_page_post();
 $post = post()->postGet([
 	'ID' => $_post->ID
 ]);
 $slug = $post['slug'];
+
 ?>
 <!--<h3 class="text-center">--><?//=forum('name')?><!--</h3>-->
 <div class="p-3">

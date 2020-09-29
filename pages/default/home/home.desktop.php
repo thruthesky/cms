@@ -98,7 +98,7 @@ EOH;
             <div class="mt-1 px-3 pt-2 pb-3 border">
                 <?php
                 $posts = get_posts([
-                    'category' => implode(',', get_ids_of_slugs(['flutter', 'dart', 'firebase', 'wordpress', 'nodejs'])),
+                    'category' => implode(',', get_ids_of_slugs(['php', 'dart', 'firebase', 'nodejs'])),
                     'numberposts' => 5
                 ]);
                 foreach($posts as $post) {
@@ -115,7 +115,7 @@ EOH;
                 <?php
 
                 $posts = get_posts([
-                    'category' => implode(',', get_ids_of_slugs(['flutter', 'dart', 'firebase', 'wordpress', 'nodejs'])),
+                    'category' => implode(',', get_ids_of_slugs(['flutter', 'news', 'reminder'])),
                     'numberposts' => 5
                 ]);
 

@@ -3,12 +3,12 @@
 <div class="container">
 
     <div class="row no-gutters mt-2">
-        <main class="col-9">
+        <main class="col-12 col-lg-9">
 			<?php
 			include page(null, ['rwd' => true, 'including' => ['home']]);
 			?>
         </main>
-        <div class="col-3">
+        <div class="d-none d-lg-block col-lg-3">
             <div class="ml-space-lg">
                 <div class="p-3 border bg-light h-stack-1">
 		            <?php include widget('sidebar-login')?>

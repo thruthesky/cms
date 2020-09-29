@@ -42,6 +42,8 @@ function add_system_head_script($snippet) {
 	$__system_head_script .= $snippet;
 }
 
+$__page_post = null;
+
 
 
 require 'php/defines.php';
@@ -188,8 +190,6 @@ else {
 	//
 	get_forum_setting();
 	insert_forum_settings_as_javascript_into_header();
-
-
 }
 
 
@@ -251,6 +251,9 @@ function get_page_options() {
 	return $__page_options;
 }
 
+function isPostViewPage() {
+	return !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?';
+}
 /**
  * Return PHP script path based on the URL input `page`.
  *
@@ -288,12 +291,14 @@ function page($page = null, $options = []) {
 		$page = Config::$page;
 	}
 	else if ( $page == null ) {
-		if ( !isset($_REQUEST['page']) && $_SERVER['REQUEST_URI'] != '/' && $_SERVER['REQUEST_URI'] != '/?' ) {
+		/**
+		 * Is is post view page?
+		 */
+		if ( isPostViewPage() ) {
+			/// Yes, it is post view page.
 			$page = 'post.view';
 		} else {
 			$page = in('page', 'home');
-
-
 		}
 	}
 
@@ -938,7 +943,26 @@ EOH;
 //}
 
 /**
- * Set the forum settings of current post.
+ * Set the post of current page before it changes.
+ */
+
+
+function set_page_post() {
+	if ( isPostViewPage() ) {
+		global $__page_post;
+		$__page_post = get_post();
+	}
+}
+
+
+function get_page_post() {
+	global $__page_post;
+	return $__page_post;
+}
+
+
+/**
+ * Set the forum settings of current post before the `post` change.
  *
  * Use this method to set forum setting on post view page.
  *
@@ -1275,4 +1299,8 @@ function short_content( $content, $length = 64 ) {
 
     return strlen($content) > $length ? mb_substr( $content, 0, $length ) . "..." : $content;
 
+}
+
+function strcut($text, $len=32) {
+	return short_content($text, $len);
 }
