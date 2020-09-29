@@ -15,8 +15,8 @@ if ( localhost() ) {
 
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="<?php echo PWA_APP_NAME?>">
-    <meta name="apple-mobile-web-app-title" content="<?php echo PWA_APP_NAME?>">
+    <meta name="application-name" content="<?php echo Config::$appName?>">
+    <meta name="apple-mobile-web-app-title" content="<?php echo Config::$appName?>">
     <meta name="theme-color" content="#FF9800">
     <meta name="msapplication-navbutton-color" content="#FF9800">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">

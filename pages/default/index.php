@@ -11,8 +11,8 @@ if ( localhost() ) {
     <link rel="manifest" href="<?php theme_url()?>/manifest.json">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="<?php echo PWA_APP_NAME?>">
-    <meta name="apple-mobile-web-app-title" content="<?php echo PWA_APP_NAME?>">
+    <meta name="application-name" content="<?php echo Config::$appName?>">
+    <meta name="apple-mobile-web-app-title" content="<?php echo Config::$appName?>">
     <meta name="theme-color" content="#FF9800">
     <meta name="msapplication-navbutton-color" content="#FF9800">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -38,7 +38,7 @@ if ( localhost() ) {
 
 
 
-    <title>Hello, world!</title>
+    <title><?=Config::$appName?></title>
     <?=get_system_head_script()?>
     <style>
         .h-stack-1 { height: 348px; }
