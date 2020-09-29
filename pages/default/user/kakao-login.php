@@ -1,4 +1,10 @@
 <?php
+if ( !isset($_GET['code']) ) {
+	include error_page('카카오톡 로그인 에러', '회원 정보 코드를 가져오지 못했습니다.');
+	return;
+}
+
+include widget('loader/login');
 
 $returnCode = $_GET["code"]; // 서버로 부터 토큰을 발급받을 수 있는 코드를 받아옵니다.
 // API 요청 URL
@@ -54,6 +60,6 @@ if ($me['id']) {
 	$email = $mb_email ? $mb_email : 'ID' . $mb_id . '@kakao.com';
 	loginOrRegisterBySocialLogin($email, $mb_id, SOCIAL_LOGIN_KAKAO);
 } else {
-	dog("카카오 로그인 회원 정보를 가져오지 못했습니다.");
+	include error_page('카카오톡 로그인 에러', '카카오 로그인 회원 정보를 가져오지 못했습니다.');
 }
 

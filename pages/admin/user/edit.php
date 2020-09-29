@@ -1,5 +1,5 @@
 <?php
-$user = $apiLib->userResponse(in('ID'));
+$user = lib()->userResponse(in('ID'));
 //dog($user)
 ?>
 

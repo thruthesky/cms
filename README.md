@@ -8,6 +8,11 @@ CMS for community projects
 
 ## Installation
 
+### Overview of installation
+
+* The hard coded default system configurations are in `config.php` script.
+  * You can override most of the configurations by settings the values in admin page.
+
 ### Assumption
 
 * Assumption: the domain you are going to use is `flutterkorea.com`.
@@ -22,6 +27,10 @@ CMS for community projects
 * `Wordpress 5.5.1+` must be installed
 * `SSL` is required for the site domain.
 * Firebase project
+
+### Backend and Web Installation
+
+* For Flutter mobile app installation, 
 
 ### Wordpress Theme Installation and Settings
 
@@ -47,6 +56,8 @@ $ git clone https://github.com/thruthesky/cms
   * Set `$verifiedMobileOnly` to true.
   * Set `$uniqueMobile` to true.
 
+### Firebase setup, Google sign-in, Phone verification
+
 * Firebase Authentication Setting
   * In Firebase -> Authentication -> Sign-in method, enable
     * Email/password
@@ -55,7 +66,7 @@ $ git clone https://github.com/thruthesky/cms
     * Anonymous
 
   * In `Firebase Console -> Authentication -> sign-in-method -> Authorized Domains`
-    Add your domain(flutterkorea.com).    
+    Add your domain(flutterkorea.com and www.flutterkorea.com).    
 
 * Firebase Settings ==> Your aps ==> Web app => Register app => enter nickname like 'FlutterKorea'
   * Then, copy the variable `firebaseConfig` from `var firebaseConfig = { ...` until `};` not including `<script>` tag itself, nor `initializeApp` code.
@@ -78,10 +89,69 @@ $ git clone https://github.com/thruthesky/cms
   * One thing to note is that `Service Account JSON Key` has control characters like '\n'. So you cann use it in heredoc. Simple wrap it with single quotes.
   * You can overwrite the `Service Account JSON Key` in Admin page ==> System Settings ==> Service Account JSON Key.
 
-* Enable `Facebook` on Firebase Authentication ==> Sign-in method Settings.
+### Facebook Sign-In
 
+* First, create an app in facebook developer account at https://developers.facebook.com/apps/
+  * Select `For everything else` when crate the app.
+  * Then, name the app like 'FlutterKorea'.
+  * Input your email.
+  * Then, click `Create App ID`.
+* Second, click `Set up` in `Facebook Login` tap. ( or choose any menu to add `Facebook Login` to the app)
+  * Then, select `WWW web` platform.
+  * Then, add `https://flutterkorea.com` in Site URL.
+  * Then, save.
+  * Change `in development` to `Live` mode.
+* Third, open Facebook Settings ==> basic and Get  `App ID` and `App secret`.
+  * Open Firebase ==> Authentication ==> Sign-in method
+  * Enable `Facebook`
+  * Input `App ID` and `App secret`.
+  * Copy `OAuth Redirect URL`
+  * Save
+* Forth, open Facebook App ==> Products ==> Facebook Logi ==> Settings
+  * Input the `OAuth Redirect URL` in `Valid OAuth Redirect URIs`.
+  * Choose `yes` of `Enforce HTTPS` if it is set to `no`.
+  * Click save changes.
+* Fifth, add `https://flutterkorea.com/wp-content/themes/cms/etc/privacy-policy.php` in Privacy Policy URL. You can change the domain to your site domain.
+  * Choose app purpose to `Your own business`.
+  * Click `Save Changes`
 
+* Done
 
+### Kakaotalk Login
+
+* Create a new app at https://developers.kakao.com/console/app/
+* Then, Add a platform and add select Web platform.
+  * add your domain like `https://flutterkorea.com`. You may replace the domain with yours.
+* Then, add Redirect URI like `https://flutterkorea.com/?page=user.kakao-login` in Kakao app dashboard ==> Kakao Login ==> Redirect URI. You may replace the domain with yours.
+* Then, Choose Profile information and Email on Kakaotalk Login ==> User data agreement ==> Privacy
+* Then, Choose `ON` to enable Kakao Login in App dashboard ==> Kakao Login page.
+* Then, Get the `Rest API Key` from App summary and input it in `Config::$kakaoRestApiKey` or overwrite it by inputting the key in Admin page ==> System settings ==> Kakao Rest Api Key
+* Done.
+
+### Naver Login
+
+* Create a new app in Naver Developers page at https://developers.naver.com/apps/
+  * When select 'Naver Login' when you create app
+  * Then, add 'PC Web' and 'Mobile Web' in Environment section.
+  * Then, add your domain like 'https://flutterkorea.com' at Service URL on both of 'PC Web' and 'Mobile Web'
+  * Then, add `https://flutterkorea.com/?page=user.naver-login` in `Callback URL` on both of 'PC' & 'Mobile' web
+  * Then, save
+* Go to API settings
+  * Then, add logo image.
+  * Then, set category of the app.
+  * Then, save.
+* Go to Overview section.
+  * Click 'Apply Naver Login Evaluation'.
+    * The app must pass the 'evaluation', then the App can be change to production mode.
+    Until then, you can only login with registered login id.
+  * Set the login IDs in member management.
+  
+* Wait for 'Evaluation'.
+  * When evaluation is done, Chagne the mode to production.
+
+* Copy the `Client ID` and `Client Secret`.
+  * Then, put them in `Config::$naverClientId` and `Config::$naverClientSecret` in `config.php`
+    You can overwrite the `Config` member variables by setting the values in Admin page.
 
 ## Publish
 

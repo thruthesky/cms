@@ -32,6 +32,10 @@ define('DOMAIN_SETTINGS', 'domain_settings');
 define('FIREBASE_CONFIG_SETTING', 'firebase_config_setting');
 define('FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING', 'firebase_service_account_json_key_setting');
 define('FIREBASE_API_KEY_SETTING', 'firebase_api_key_setting');
+define('KAKAO_REST_API_KEY_SETTING', 'kakao_rest_api_key_setting');
+define('NAVER_CLIENT_ID_SETTING', 'naver_client_id_setting');
+define('NAVER_CLIENT_SECRET_SETTING', 'naver_client_secret_setting');
+
 
 
 /**

@@ -360,6 +360,9 @@ function page($page = null, $options = []) {
 	return $script_file;
 }
 
+function error_page($code, $message) {
+	return page('error.display', ['code' => $code, 'message' => $message]);
+}
 
 /**
  * Includes a widget script

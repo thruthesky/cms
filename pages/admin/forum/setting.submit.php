@@ -5,7 +5,7 @@ require_once (ABSPATH . "/wp-admin/includes/taxonomy.php");
 
 $category = [
     'cat_ID' => in('cat_ID'),
-    'cat_name' => in('name'),
+    'cat_name' => in('name', in('slug')),
     'category_description' => in('description'),
     'category_nicename' => in('slug'),
 ];
@@ -21,6 +21,7 @@ if ( in('cat_ID') ) {
         if ( $cat_by_slug && $cat_by_ID->cat_ID !== $cat_by_slug->cat_ID )  {
             jsAlert('Category Already Exist');
             jsGo("/?page=admin.forum.setting&slug=" . $cat_by_ID->slug);
+	    return;
         }
     }
 
@@ -36,10 +37,12 @@ if ( in('cat_ID') ) {
     $ID = wp_insert_category($category);
 }
 
-if (is_wp_error($ID)) {
+if ( ! $ID || is_wp_error($ID)) {
     jsAlert('Category Create failed');
     jsGo("/?page=admin.forum.list");
+    return;
 }
+
 
 update_term_meta($ID , NO_OF_POSTS_PER_PAGE, in(NO_OF_POSTS_PER_PAGE));
 update_term_meta($ID , 'post_list_theme', in('post_list_theme'));

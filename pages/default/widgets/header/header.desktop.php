@@ -29,7 +29,7 @@
                 <a href="/?page=post.list&slug=flutter">플러터 강좌</a>
                 <a href="/?page=post.list&slug=dart">다트 강좌</a>
                 <a href="/?page=post.list&slug=firebase">파이어베이스 강좌</a>
-                <a href="/?page=post.list&slug=wordpress">PHP 워드프레스 강좌</a>
+                <a href="/?page=post.list&slug=php">PHP 워드프레스 강좌</a>
                 <a href="/?page=post.list&slug=nodejs">NODE.JS 강좌</a>
                 <a href="/?page=post.list&slug=meeting">오프라인 모임</a>
             </div>
