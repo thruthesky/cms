@@ -30,8 +30,13 @@ if ( localhost() ) {
     <link rel="stylesheet" href="<?php theme_url()?>/css/index.css?v=<?php echo Config::$appVersion?>">
 
 
-    <link rel="shortcut icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
-    <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?=PAGE_URL?>/img/icons/favicon-16.png" sizes="16x16">
+    <link rel="icon" href="<?=PAGE_URL?>/img/icons/favicon-32.png" sizes="32x32">
+    <link rel="icon" href="<?=PAGE_URL?>/img/icons/favicon-64.png" sizes="64x64">
+    <link rel="icon" href="<?=PAGE_URL?>/img/icons/favicon-128.png" sizes="128x128">
+    <link rel="icon" href="<?=PAGE_URL?>/img/icons/favicon-152.png" sizes="152x152">
+
+
 
     <title>Hello, world!</title>
     <?=get_system_head_script()?>
