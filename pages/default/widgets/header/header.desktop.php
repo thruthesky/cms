@@ -44,7 +44,7 @@
         <div class="d-none d-lg-block col-lg-3">
             <div class="ml-space-lg border" style="margin-top: 25px; height: 94px;">
                 <div class="p-3">
-                    <div class="fs-xs">플러터 새소식</div>
+                    <a class="d-block fs-xs" href="/?page=post.list&slug=news">플러터 새소식</a>
                     <?php
                     $posts = get_posts(['category_name' => 'news', 'posts_per_page' => 2]);
                     foreach( $posts as $post ) {
