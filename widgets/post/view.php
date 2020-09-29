@@ -51,7 +51,7 @@ $slug = $post['slug'];
     <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
 
     <div class="px-20 mb-20">
-        <span class="mr-8" onclick="appendCommendBoxToPost()">Reply</span>
+        <span class="mr-8 pointer" onclick="appendCommendBoxToPost()">Reply</span>
             <a class="mr-8 pointer" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
             <span class="mr-8  pointer" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</span>
         <?php if(forum(POST_SHOW_LIKE)) {?>
