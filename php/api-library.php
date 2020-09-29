@@ -82,7 +82,7 @@ class ApiLibrary {
 	 * @return array
 	 *  - if it cannot find user information, it return an empty array.
 	 */
-	public function userResponse($user_ID)
+	public function userResponse($user_ID, $customToken = false)
 	{
 
 		if ( empty($user_ID) ) return null;
@@ -126,7 +126,7 @@ class ApiLibrary {
 		 * `userResponse()` method is only being called with user related functions.
 		 *
 		 */
-		if ( Config::$firebaseEnableCustomLogin ) {
+		if ( Config::$firebaseEnableCustomLogin && $customToken) {
 			if ( isset($data[FIREBASE_UID]) && $data[FIREBASE_UID] ) {
 				// User has firebase account.
 				xlog('User has firebase account: ' . $data[FIREBASE_UID]);
@@ -375,7 +375,7 @@ class ApiLibrary {
 			$uid = firebaseCreateUser($user_ID);
 		}
 
-		$res = $this->userResponse($user_ID);
+		$res = $this->userResponse($user_ID, true);
 
 		return $res;
 	}
@@ -432,7 +432,7 @@ class ApiLibrary {
 
 		wp_set_current_user($user->ID);
 
-		$res = $this->userResponse($user->ID);
+		$res = $this->userResponse($user->ID, true);
 
 		return $res;
 	}
@@ -555,7 +555,7 @@ class ApiLibrary {
 
 		$this->updateUserMetas($user_id, $in);
 
-		return $this->userResponse($user->ID);
+		return $this->userResponse($user->ID, true);
 	}
 
 

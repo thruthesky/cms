@@ -3,6 +3,9 @@ if ( !isset($_GET['code']) ) {
 	include error_page('카카오톡 로그인 에러', '회원 정보 코드를 가져오지 못했습니다.');
 	return;
 }
+
+include widget('loader/login');
+
 $returnCode = $_GET["code"]; // 서버로 부터 토큰을 발급받을 수 있는 코드를 받아옵니다.
 // API 요청 URL
 $returnUrl = "https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=" . Config::$kakaoRestApiKey . "&redirect_uri=" . Config::$kakaoRedirectURI . "&code=" . $returnCode;
