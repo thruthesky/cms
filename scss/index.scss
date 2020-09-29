@@ -711,3 +711,12 @@ input[type=file]::-webkit-file-upload-button { /* chromes and blink button */
   border-bottom: 1px solid transparent;
 }
 
+
+
+/**
+ * Blocks
+ */
+.first-image-w-100 div:first-child {
+  width: 100% !important;
+  max-width: 100% !important;
+}

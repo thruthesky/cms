@@ -38,30 +38,15 @@ $slug = $post['slug'];
         <div class="pt-10 pr-20 pl-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
 
-    <?php
-    /*
-    ?>
-    <div class="post-view-files no-gutters border-bottom-1-solid">
-		<?php if(!empty($post['files']) && $post['files'][0]) { ?>
-        <div class="">
-            <img class="w-100 border-1-solid" src="<?=$post['files'][0]['thumbnail_url']?>">
-        </div>
-        <div class="d-flex justify-content-start flex-wrap">
-			<?php }
-			$isFirst = true;
-			foreach ($post['files'] as $file) {
-				if ($isFirst) {
-					$isFirst = false;
-					continue;
-				}
-				?>
-                <div class="mw-33">
-                    <img class="w-100 border-1-solid" src="<?=$file['thumbnail_url']?>">
-                </div>
-			<?php } ?>
-        </div>
+    <div class="post-view-files first-image-w-100 d-flex flex-wrap">
+        <?php foreach ($post['files'] as $file) { ?>
+            <div class="mw-33">
+                <img class="w-100 border-1-solid" src="<?=$file['thumbnail_url']?>">
+            </div>
+        <?php } ?>
     </div>
-<?php */ ?>
+
+
 
     <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
 
