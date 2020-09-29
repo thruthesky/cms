@@ -38,6 +38,9 @@ $slug = $post['slug'];
         <div class="pt-10 pr-20 pl-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
 
+    <?php
+    /*
+    ?>
     <div class="post-view-files no-gutters border-bottom-1-solid">
 		<?php if(!empty($post['files']) && $post['files'][0]) { ?>
         <div class="">
@@ -58,6 +61,7 @@ $slug = $post['slug'];
 			<?php } ?>
         </div>
     </div>
+<?php */ ?>
 
     <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
 
