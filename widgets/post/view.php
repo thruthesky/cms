@@ -6,7 +6,7 @@
  */
 $_post = get_post();
 $post = post()->postGet([
-    'ID' => $_post->ID
+	'ID' => $_post->ID
 ]);
 $slug = $post['slug'];
 ?>
@@ -20,72 +20,72 @@ $slug = $post['slug'];
 
     <div class="px-10 fs-20 text-center mb-20"><?=$post['post_title']?></div>
 
-    <div class="row no-gutters pr-10 pl-20 pb-25">
-        <div class="circle wh50x50 overflow-hidden mr-3">
-            <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>";
-        </div>
-        <div class="col">
-            <div class="fs-11">
-                <span><?=$post['author_name']?></span>
-                <span>Date: <?=$post['ID']?></span>
-                <span>Date: <?=$post['short_date_time']?></span>
-                <span>View: <?=$post['view_count']?></span>
+    <div class="d-flex justify-content-between pr-10 pl-20 pb-25">
+        <div class="d-flex">
+            <div class="circle wh50x50 overflow-hidden mr-3">
+                <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>";
             </div>
-            <div><?=forum('name')?></div>
+            <div class="">
+                <div class="fs-11">
+                    <span><?=$post['author_name']?></span>
+                    <span>Date: <?=$post['ID']?></span>
+                    <span>Date: <?=$post['short_date_time']?></span>
+                    <span>View: <?=$post['view_count']?></span>
+                </div>
+                <div><?=forum('name')?></div>
+            </div>
         </div>
         <div class="pt-10 pr-20 pl-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
-    <div class="post-view-files row no-gutters border-bottom-1-solid">
-        <?php
-        if(!empty($post['files']) && $post['files'][0]) { ?>
-            <div class="">
-                <img class="w-100 border-1-solid" src="<?=$post['files'][0]['thumbnail_url']?>">
-            </div>
-            <div class="d-flex justify-content-start flex-wrap">
 
+    <div class="post-view-files no-gutters border-bottom-1-solid">
+		<?php if(!empty($post['files']) && $post['files'][0]) { ?>
+        <div class="">
+            <img class="w-100 border-1-solid" src="<?=$post['files'][0]['thumbnail_url']?>">
+        </div>
+        <div class="d-flex justify-content-start flex-wrap">
+			<?php }
+			$isFirst = true;
+			foreach ($post['files'] as $file) {
+				if ($isFirst) {
+					$isFirst = false;
+					continue;
+				}
+				?>
+                <div class="mw-33">
+                    <img class="w-100 border-1-solid" src="<?=$file['thumbnail_url']?>">
+                </div>
+			<?php } ?>
+        </div>
+    </div>
 
-        <?php }
-        $isFirst = true;
-        foreach ($post['files'] as $file) {
-            if ($isFirst) {
-                $isFirst = false;
-                continue;
-            }
-            ?>
-            <div class="mw-33">
-                <img class="w-100 border-1-solid" src="<?=$file['thumbnail_url']?>">
-            </div>
-        <?php }
-        ?>
-            </div>
-    </div><!--/.row-->
     <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
 
     <div class="px-20 mb-20">
         <span class="mr-8" onclick="appendCommendBoxToPost()">Reply</span>
-        <?php if($post['post_author'] == userId()) { ?>
+		<?php if($post['post_author'] == userId()) { ?>
             <a class="mr-8" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
             <span class="mr-8" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</span>
-        <?php } ?>
-        <?php if(forum(POST_SHOW_LIKE)) {?>
+		<?php } ?>
+		<?php if(forum(POST_SHOW_LIKE)) {?>
             <span id="like<?=$post['ID']?>" class="mr-8" onclick="onClickLike(<?=$post['ID']?>, 'like')">
                  <?=$post['user_vote']== 'like'?'Liked':'Likes'?><?=isset($post['like']) && $post['like']!="0" ? '('. $post['like'] . ')': '' ?>
             </span>
-        <?php } ?>
-        <?php if(forum(POST_SHOW_DISLIKE)) {?>
+		<?php } ?>
+		<?php if(forum(POST_SHOW_DISLIKE)) {?>
             <span id="dislike<?=$post['ID']?>" class="" onclick="onClickLike(<?=$post['ID']?>, 'dislike')">
                  <?=$post['user_vote']== 'dislike'?'Disliked':'Dislikes'?><?=isset($post['dislike'])&&$post['dislike']!="0" ?'('.$post['dislike'] . ')': '' ?>
             </span>
-        <?php } ?>
+		<?php } ?>
 
         <span class="float-right px-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
 
     </div>
-    <?php
-    include widget('comment.input-box');
-    ?>
+	<?php
+	include widget('comment.input-box');
+	?>
     <div id="newcomment<?=$post['ID']?>"></div>
-    <?php
-    include widget('comment.list');
-    ?>
+	<?php
+	include widget('comment.list');
+	?>
 </div>

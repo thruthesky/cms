@@ -1,4 +1,4 @@
-<div class="l-content-width p-5 white bg-black h-stack-1">
+<div class="p-5 white bg-black h-stack-1">
     <div class="fs-xxl white">
         모바일 앱 개발 크로스 프레임워크 순위
     </div>
@@ -91,9 +91,9 @@ EOH;
 ?>
 
 <div class="l-center-width mt-space">
-<table width="806" border="0" cellspacing="0" cellpadding="0">
+<table border="0" cellspacing="0" cellpadding="0">
     <tr valign="top">
-        <td width="258">
+        <td width="33%">
             <img class="w-100" src="<?=THEME_URL?>/tmp/tap1.jpg">
             <div class="mt-1 px-3 pt-2 pb-3 border">
                 <?php
@@ -108,7 +108,7 @@ EOH;
             </div>
         </td>
         <td width="16"><div class="l-space overflow-hidden">&nbsp;</div></td>
-        <td width="258">
+        <td width="33%">
             <img class="w-100" src="<?=THEME_URL?>/tmp/tap2.jpg">
             <div class="mt-1 px-3 pt-2 pb-3  border">
 
@@ -126,7 +126,7 @@ EOH;
             </div>
         </td>
         <td width="16"><div class="l-space overflow-hidden">&nbsp;</div></td>
-        <td width="258">
+        <td width="33%">
             <img class="w-100" src="<?=THEME_URL?>/tmp/tap3.jpg">
             <div class="mt-1 px-3 pt-2 pb-3  border">
 
