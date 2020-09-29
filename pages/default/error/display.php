@@ -12,7 +12,7 @@ if ( !isset($options['code']) ) $options['code'] = 'error';
 ?>
 <div class="px-40 pt-60 helvetica text-center">
 
-    <img class="w-100 mb-58" src="<?=THEME_URL?>/img/error/error.jpg">
+    <img class="w-100 mb-58 mw-60 mx-auto" src="<?=THEME_URL?>/img/error/error.jpg">
 
     <div class="pb-6 dark-red fw-light"><?=$options['code']?></div>
     <hr>

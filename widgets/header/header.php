@@ -9,16 +9,26 @@
         <div class="d-flex  justify-content-between align-items-center w-100">
             <a class="navbar-brand pl-10" href="/"><?=tr(['ko'=> '소너브', 'en'=> 'Sonub'])?></a>
             <a class="d-lg-none text-white" href="/?page=post.list&slug=qna"><?=tr(['ko'=>'질문과답변', 'en' => 'QnA'])?></a>
-            <a class="d-lg-none user-profile-photo icon-size wh40x40" href="#" onclick="loginOrProfile()">
-                <img class="user-profile-photo circle w-100" src="<?=loginProfilePhotoUrl()?>">
-            </a>
-            <a class="px-16" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fa fa-bars white" aria-hidden="true"></i>
-            </a>
+            <div class="d-flex align-items-center">
+                <?php if (forum('slug')) { ?>
+                    <a class="px-16" href="/?page=post.edit&slug=<?=forum('slug')?>">
+                        <i class="fa fa-paint-brush white"></i>
+                    </a>
+                <? } ?>
+                <a class="px-16">
+                    <i class="fa fa-search white"></i>
+                </a>
+                <a class="d-lg-none user-profile-photo icon-size wh40x40" href="#" onclick="loginOrProfile()">
+                    <img class="user-profile-photo circle w-100" src="<?=loginProfilePhotoUrl()?>">
+                </a>
+                <a class="px-16" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-bars white"></i>
+                </a>
+            </div>
         </div>
         <div class="side-nav collapse navbar-collapse position-relative bg-white" id="navbarSupportedContent">
             <div class="position-absolute right top mt-8 mr-8">
-                <a  href="/">
+                <a  href="/?page=post.edit&slug=<?=forum('slug')?>">
                     <i class="fa fa-home darkergray100 fs-22 p-8px" aria-hidden="true"></i>
                 </a>
                 <a  type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

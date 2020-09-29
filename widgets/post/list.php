@@ -20,7 +20,7 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
 
     <?php if (!$posts || empty($posts)) { ?>
         <div class="text-center roboto">
-            <img class="w-100" src="<?=theme_url()?>/tmp/no_posts.png">
+            <img class="w-100 mx-auto mw-60" src="<?=theme_url()?>/tmp/no_posts.png">
             <div class="fs-27"><?=tr(NO_POSTS_YET_1)?></div>
             <div class="fs-19"><?=tr(NO_POSTS_YET_2)?></div>
             <div><?=tr(NO_POSTS_YET_3)?></div>

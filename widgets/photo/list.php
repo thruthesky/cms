@@ -13,12 +13,12 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
 //dog($posts[0])
 
 ?>
-<a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=$forum['slug']?>">Create</a>
+<a class="btn btn-secondary m-3" href="/?page=post.edit&slug=<?=forum('slug')?>">Create</a>
 <div class="px-10 pt-10 mb-48 roboto">
 
     <?php if (!$posts || empty($posts)) { ?>
         <div class="text-center">
-            <img class="w-100" src="<?=theme_url()?>/tmp/no_posts.png">
+            <img class="w-100 mx-auto mw-60" src="<?=theme_url()?>/tmp/no_posts.png">
             <div class="fs-27"><?=tr(NO_POSTS_YET_1)?></div>
             <div class="fs-19"><?=tr(NO_POSTS_YET_2)?></div>
             <div><?=tr(NO_POSTS_YET_3)?></div>

@@ -178,6 +178,14 @@ a:hover {
   max-width: 33.3333%;
 }
 
+.mw-60 {
+  max-width: 60%;
+}
+
+.mw-80 {
+  max-width: 80%;
+}
+
 .mw-100 {
   max-width: 100%;
 }
