@@ -26,7 +26,7 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
     <?php } else {
         foreach ($posts as $post) { ?>
             <a class="position-relative d-block pb-20 clearfix"  href="<?=$post['guid'] ?><?=post_list_query() ?>">
-                <div class="fs-11 fw-light <?=postHasProfilePhotoUrl($post) && postHasFiles($post) ? 'ml-44px' : (postHasProfilePhotoUrl($post) && !postHasFiles($post) ? 'ml-82px' : 'ml-7px')?>">
+                <div class="fs-11 fw-light <?=postHasProfilePhotoUrl($post) && postHasFiles($post) ? 'ml-44px' : (postHasProfilePhotoUrl($post) && !postHasFiles($post) ? 'ml-76px' : 'ml-7px')?>">
                     <?php if ( postHasProfilePhotoUrl($post) && postHasFiles($post) ) { ?>
                     <div class="position-absolute top left wh29x29 ml-8px circle border-shadow z-index-middle">
                         <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
@@ -43,8 +43,8 @@ $posts = post()->postSearch(['slug' => $forum['slug'], 'numberposts' => $forum[N
                         <img class="mw-100" src="<?=$post['files'][0]['thumbnail_url'] ?>">
                     </div>
                     <?php } else if ( postHasProfilePhotoUrl($post) ) {?>
-                        <div class="float-left w-75px  ml-8px text-center">
-                            <div class="m-auto wh42x42 circle border-shadow">
+                        <div class="float-left w-75px text-center">
+                            <div class="mx-auto mb-5px wh42x42 circle border-shadow">
                                 <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>
                             </div>
                             <div class="fs-10 fw one-line"><?=short_name($post['author_name']) ?></div>

@@ -80,6 +80,10 @@ a:hover {
   margin-left: 44px;
 }
 
+.ml-76px {
+  margin-left: 76px;
+}
+
 .ml-82px {
   margin-left: 82px;
 }
@@ -371,6 +375,10 @@ a:hover {
 
 .mr-60 {
   margin-right: 60px;
+}
+
+.mb-5px {
+  margin-bottom: 5px;
 }
 
 .mb-6 {
