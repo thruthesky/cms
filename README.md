@@ -119,11 +119,14 @@ $ git clone https://github.com/thruthesky/cms
 
 ### Kakaotalk Login
 
-* First, create new app.
-* Second, Add a platform and add select Web platform.
+* Create a new app.
+* Then, Add a platform and add select Web platform.
   * add your domain like `https://flutterkorea.com`. You may replace the domain with yours.
-* Third, add Redirect URI like `https://flutterkorea.com/?page=user.kakao-login` in Kakao app dashboard ==> Kakao Login ==> Redirect URI. You may replace the domain with yours.
-
+* Then, add Redirect URI like `https://flutterkorea.com/?page=user.kakao-login` in Kakao app dashboard ==> Kakao Login ==> Redirect URI. You may replace the domain with yours.
+* Then, Choose Profile information and Email on Kakaotalk Login ==> User data agreement ==> Privacy
+* Then, Choose `ON` to enable Kakao Login in App dashboard ==> Kakao Login page.
+* Then, Get the `Rest API Key` from App summary and input it in `Config::$kakaoRestApiKey` or overwrite it by inputting the key in Admin page ==> System settings ==> Kakao Rest Api Key
+* Done.
 
 ### Naver Login
 
