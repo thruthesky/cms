@@ -1,6 +1,8 @@
 <?php
+//define('PWA_APP_NAME', '소너브');
 
 class Config {
+	static public $appName = '플러터 코리아';
     static public $domain = 'default';
     static public $appVersion = RELEASE_DATE_STAMP;
     static public $apiUrl = '/wp-content/themes/cms/api.php';
