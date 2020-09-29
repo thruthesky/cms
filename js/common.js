@@ -669,7 +669,7 @@ function CommentList() {
             '<div class="col">' +
             '<textarea class="form-control rich-editor" name="comment_content" onkeydown="onCommentEditText(this)"  id="post-create-content" aria-describedby="Enter comment" placeholder="Enter comment" rows="1">'+ content +'</textarea>' +
             '</div>' +
-            '<div class="send-button ">' +
+            '<div class="send-button ml-8px">' +
             '<button type="submit" class="btn btn-outline-dark border-0">' +
             '   <i class="fa fa-paper-plane fs-xl" aria-hidden="true"></i>' +
             '</button>' +

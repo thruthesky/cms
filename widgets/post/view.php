@@ -18,11 +18,11 @@ $slug = $post['slug'];
 
 <div class="roboto">
 
-    <div class="px-10 fs-20 text-center mb-20"><?=$post['post_title']?></div>
+    <div class="px-10 fs-20 text-center text-md-left mb-20"><?=$post['post_title']?></div>
 
     <div class="d-flex justify-content-between pr-10 pl-20 pb-25">
         <div class="d-flex">
-            <div class="circle wh50x50 overflow-hidden mr-3">
+            <div class="circle wh42x42 overflow-hidden mr-3">
                 <img class='mw-100' src="<?=getPostProfilePhotoUrl($post)?>" alt='user photo'>";
             </div>
             <div class="">
@@ -35,7 +35,7 @@ $slug = $post['slug'];
                 <div><?=forum('name')?></div>
             </div>
         </div>
-        <div class="pt-10 pr-20 pl-10"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
+        <div class="pt-10 pr-20 pl-10 pointer"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
 
     <div class="post-view-files first-image-w-100 d-flex flex-wrap">

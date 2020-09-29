@@ -96,7 +96,7 @@ $slug = $post['slug'];
     <div class="post card mb-3">
         <div class="card-body mb-3">
             <div class="row no-gutters">
-                <div class="circle wh50x50 overflow-hidden mr-3">
+                <div class="circle wh42x42 overflow-hidden mr-3">
                     <img class='mw-100' src="<?=!empty($post['author_photo_url']) ? $post['author_photo_url']: ANONYMOUS_PROFILE_PHOTO?>" alt='user photo'>";
                 </div>
                 <div class="col">
