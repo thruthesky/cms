@@ -1,5 +1,5 @@
 
-<?php include widget('header')?>
+<?php include widget('header/header.mobile')?>
 
 <main class="mr-lg-4">
 	<?php

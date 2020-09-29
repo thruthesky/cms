@@ -627,11 +627,12 @@ a:hover {
 }
 
 .helvetica {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue", serif;
 }
 .roboto {
-  font-family: "Roboto";
+  font-family: "Roboto", serif;
 }
+
 
 
 
@@ -650,6 +651,12 @@ a:hover {
   opacity: 0.01;
 }
 
+
+/// Text decoration
+
+.underline {
+  text-decoration: underline !important;
+}
 
 .pointer {
   cursor: pointer;

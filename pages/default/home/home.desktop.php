@@ -1,82 +1,16 @@
-<div class="p-5 white bg-black h-stack-1">
-    <div class="fs-xxl white">
-        모바일 앱 개발 크로스 프레임워크 순위
+<div class="p-4 h-stack-1 border">
+    <div class="fs-xl">
+        플러터 1위. 리액트네이티브 2위.
     </div>
-    <div class="container mt-4">
-        <div class="row fs-xs">
-            <div class="col white">순위</div>
-            <div class="col white">플랫폼</div>
-            <div class="col white">점유율</div>
-            <div class="col-5 white"></div>
-        </div>
-        <div class="row mt-3 light">
-            <div class="col">
-                1위
-            </div>
-            <div class="col">리액트 네이티브</div>
-            <div class="col">43%</div>
-            <div class="col-5">
-                <div class="progress">
-                    <div class="progress-bar bg-gray" role="progressbar" style="width: 53%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="row mt-1 skyblue">
-            <div class="col">
-                2위
-            </div>
-            <div class="col">플러터</div>
-            <div class="col">39%</div>
-            <div class="col-5">
-                <div class="progress">
-                    <div class="progress-bar bg-skyblue" role="progressbar" style="width: 49%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row mt-1 gray">
-            <div class="col">
-                3위
-            </div>
-            <div class="col">Cordova</div>
-            <div class="col">18%</div>
-            <div class="col-5">
-                <div class="progress">
-                    <div class="progress-bar bg-gray" role="progressbar" style="width: 49%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row gray">
-            <div class="col">
-                4위
-            </div>
-            <div class="col">Ionic</div>
-            <div class="col">18%</div>
-            <div class="col-5">
-                <div class="progress">
-                    <div class="progress-bar bg-gray" role="progressbar" style="width: 49%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-        <div class="row gray">
-            <div class="col">
-                5위
-            </div>
-            <div class="col">Xamarin</div>
-            <div class="col">14%</div>
-            <div class="col-5">
-                <div class="progress">
-                    <div class="progress-bar bg-gray" role="progressbar" style="width: 49%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-            </div>
-        </div>
-
-
+    <div>
+        <a class="underline fs-xs" href="https://trends.google.com/trends/explore?cat=32&date=today%2012-m,today%2012-m,today%2012-m,today%2012-m,today%2012-m&geo=,,,,&q=xamarin,react%20native,flutter,phonegap,ionic" target="_blank">구글 트랜드: 모바일 앱 개발 크로스 프레임워크 순위</a>
+        <a class="underline fs-xs" href="https://www.jetbrains.com/lp/devecosystem-2020/" target="_blank">Jetbrains 크로스플랫폼 모바 프레임워크 순위</a>
     </div>
+    <small>많은 자료에서 플러터가 1위, 2위 자리 다툼을 하고 있다는 것을 알 수 있다.</small>
+    <div class="px-5">
+        <a class="underline fs-xs" href="https://trends.google.com/trends/explore?cat=32&date=today%2012-m,today%2012-m,today%2012-m,today%2012-m,today%2012-m&geo=,,,,&q=xamarin,react%20native,flutter,phonegap,ionic" target="_blank"><img class="w-100" src="<?=THEME_URL?>/tmp/ranking.jpg"></a>
+    </div>
+
 </div>
 
 

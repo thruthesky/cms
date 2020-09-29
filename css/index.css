@@ -690,11 +690,11 @@ a:hover {
 }
 
 .helvetica {
-  font-family: "Helvetica Neue";
+  font-family: "Helvetica Neue", serif;
 }
 
 .roboto {
-  font-family: "Roboto";
+  font-family: "Roboto", serif;
 }
 
 .z-index-high {
@@ -711,6 +711,10 @@ a:hover {
 
 .opacity-01 {
   opacity: 0.01;
+}
+
+.underline {
+  text-decoration: underline !important;
 }
 
 .pointer {
