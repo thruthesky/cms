@@ -17,7 +17,7 @@ a:hover {
 /**
  * Layout classes
  */
-.l-center {
+.l-center, .l-body {
   margin: auto;
   width: 1130px;
 }
@@ -32,6 +32,16 @@ a:hover {
 
 .l-sidebar-width {
   width: 300px;
+}
+
+.l-body-content {
+  width: 806px;
+  overflow: hidden;
+}
+
+.l-body-sidebar {
+  width: 300px;
+  overflow: hidden;
 }
 
 .l-space {
