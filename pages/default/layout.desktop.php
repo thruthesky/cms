@@ -1,15 +1,13 @@
 <?php include widget('header/header.desktop')?>
 
 
-<div class="layout-body l-center d-flex mt-2">
-    <div class="layout-body-content l-content-width">
-        <main class="">
+<div class="l-body d-flex mt-2">
+        <main class="l-body-content">
 		    <?php
     		    include page(null, ['rwd' => true, 'including' => ['home']]);
 		    ?>
         </main>
-    </div>
-    <div class="layout-body-side-bar flex-grow-1 l-sidebar-width overflow-hidden ml-space-lg">
+    <div class="l-body-sidebar flex-grow-1 overflow-hidden ml-space-lg">
 	    <div class="p-3 border bg-light h-stack-1 overflow-hidden">
 		    <?php include widget('sidebar-login')?>
         </div>
