@@ -106,6 +106,8 @@ class ApiPost extends ApiLibrary
     /**
      * Edit a post.
      *
+     * @warning All post must be created by this method to control user's post creation. No exception.
+     *
      * @warning API Call only.
      *
      * @see wordpress-api.service.ts::edit() for more details.

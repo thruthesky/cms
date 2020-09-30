@@ -71,12 +71,12 @@ $options = get_page_options();
 
     <div class="d-flex justify-content-between px-10 gray">
         <div class="text-center w-100 mr-26">
-                <div class="fs-36"><?=$apiLib->countMyPost()?></div>
+                <div class="fs-36"><?=lib()->countMyPost()?></div>
                 <hr class="border-light">
                 <div class="fs-12">Post</div>
         </div>
         <div class="text-center w-100">
-                <div class="fs-36"><?=$apiLib->countMyComment()?></div>
+                <div class="fs-36"><?=lib()->countMyComment()?></div>
                 <hr class="border-light">
                 <div class="fs-12">Comment</div>
         </div>
