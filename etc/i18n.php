@@ -217,9 +217,20 @@ $__i18n[LOGIN_HEAD] = [
 ];
 define('REGISTRATION_HEAD', 'registration_header');
 $__i18n[REGISTRATION_HEAD] = [
-    ko => 'Fill in the form',
-    en => 'Fill in the form'
+	ko => 'Fill in the form',
+	en => 'Fill in the form'
 ];
+define('registration', 'registration');
+$__i18n[registration] = [
+	ko => '회원가입',
+	en => 'Registration'
+];
+define('registrationInProgress', 'registrationInProgress');
+$__i18n[registrationInProgress] = [
+	ko => '회원 가입 중입니다.',
+	en => 'Please, wait while registration.'
+];
+
 define('PROFILE_HEAD', 'profile_head');
 $__i18n[PROFILE_HEAD] = [
     ko => 'Touch and update your information',

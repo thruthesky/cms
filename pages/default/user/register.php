@@ -6,6 +6,7 @@
 if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration ) {
     return move(Config::$mobileVerificationPage);
 }
+
 /**
  * Init
  */

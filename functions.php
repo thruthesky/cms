@@ -1315,3 +1315,7 @@ function strcut($text, $len=32) {
 function get_uploaded_file_id($id) {
 	return "uploaded-file$id";
 }
+function get_page_id() {
+	$id = in('page', 'home');
+	return str_replace('.', '-', $id);
+}

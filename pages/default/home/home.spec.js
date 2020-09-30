@@ -20,7 +20,7 @@ context('Integration Test', () => {
     })
     describe('Home', () => {
         it('Open home', () => {
-            cy.get("[data-page='home']");
+            cy.get("#home");
         })
     })
     describe('Register', () => {

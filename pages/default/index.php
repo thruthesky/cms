@@ -44,7 +44,7 @@ if ( localhost() ) {
         .h-stack-1 { height: 348px; }
     </style>
 </head>
-<body data-page="<?php echo in('page', 'home')?>">
+<body id="<?=get_page_id()?>">
 
 <?php
 $page = page();

@@ -69,7 +69,7 @@ $options = get_page_options();
     </div>
 
     <div class="d-flex justify-content-between fs-xs">
-        <a href="#">Change password</a>
+        <span v-on:click="changePassword">Change password</span>
         <a href="/?user.logout">Logout</a>
     </div>
 
@@ -139,5 +139,6 @@ $options = get_page_options();
         });
         return false;
     }
+
 
 </script>

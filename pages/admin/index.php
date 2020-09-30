@@ -28,7 +28,7 @@ if ( localhost() ) {
     <title>관리자 페이지</title>
     <?=get_system_head_script()?>
 </head>
-<body data-page="<?=in('page', 'home')?>">
+<body id="<?=in('page', 'home')?>">
 
 <?php include widget('header')?>
 
