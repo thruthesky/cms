@@ -57,8 +57,10 @@ if (localhost()) {
             <h2 class="m-0">This is aside</h2>
         </aside>
     </section>
-    <footer class="l-footer l-center bg-lightblue">
-        <h2>This is footer</h2>
+    <footer class="l-footer p-5 bg-lightblue">
+        <div class="l-center">
+            <h2>This is footer</h2>
+        </div>
     </footer>
 </div>
 
