@@ -1342,9 +1342,6 @@ class ApiLibrary {
     public function countMyPost() {
     	/// change wordpress function.
     	return count_user_posts(login('ID'), 'post', true);
-//        $user = wp_get_current_user();
-//        global $wpdb;
-//        return $wpdb->get_var("SELECT COUNT(*) FROM wp_posts WHERE post_type='post' AND post_author=$user->ID");
     }
 
     /**
@@ -1352,9 +1349,6 @@ class ApiLibrary {
      */
     public function countMyComment() {
     	return count_user_comments(login('ID'));
-//        $user = wp_get_current_user();
-//        global $wpdb;
-//        return $wpdb->get_var("SELECT COUNT(*) FROM wp_comments WHERE user_id=$user->ID");
     }
 
 

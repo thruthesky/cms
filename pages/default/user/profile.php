@@ -21,7 +21,7 @@ $options = get_page_options();
                 ><i class="fa fa-edit gray900 position-absolute top right p-6px"></i></a>
             </div>
 
-    <div class="bg-lightgray px-10 pt-17 pb-20 mb-48 gray radius-3px">
+    <div class="bg-lightgray px-10 pt-17 pb-20 mb-2 gray radius-3px">
         <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
             <div class="d-flex justify-content-between mb-22">
                 <div>
@@ -66,10 +66,14 @@ $options = get_page_options();
             </div>
         </div>
 
-
     </div>
 
-    <div class="d-flex justify-content-between px-10 gray">
+    <div class="d-flex justify-content-between fs-xs">
+        <a href="#">Change password</a>
+        <a href="/?user.logout">Logout</a>
+    </div>
+
+    <div class="d-flex justify-content-between mt-5 px-10 gray">
         <div class="text-center w-100 mr-26">
                 <div class="fs-36"><?=lib()->countMyPost()?></div>
                 <hr class="border-light">
