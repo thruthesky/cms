@@ -1,5 +1,5 @@
 const app = {
-    deleteMobileNumber: function() {
+    deleteMobileNumber: function () {
         localStorage.removeItem('mobile')
     }
 }
@@ -17,7 +17,7 @@ const vm = Vue.createApp({
         onRegisterFormSubmit() {
             this.loader = true;
             axios.get(apiUrl + '?route=app.version')
-                .then(function(res) {
+                .then(function (res) {
                     console.log('res: ', res.data);
                 });
         }
