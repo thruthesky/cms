@@ -239,15 +239,34 @@ b, strong {
 }
 
 /**
+ * Font
+ */
+.fs-xs {
+    font-size: .75rem;
+}
+.fs-sm {
+    font-size: .85rem;
+}
+.fs-md {
+    font-size: 1rem;
+}
+.fs-lg {
+    font-size: 1.5rem;
+}
+.fs-xl {
+    font-size: 3rem;
+}
+/**
  * Micellanious
  */
 .pointer {
     cursor: pointer;
 }
+
 /**
  * Components
  */
-.page-subtitle {
+.page-subtitle, .head {
     font-size: .85rem;
     color: #3c3c3c;
 }
@@ -260,6 +279,16 @@ b, strong {
     padding: .25em;
     width: 100%;
     font-size: 1.25em;
+}
+form label {
+    font-size: .85em;
+    color: #484848;
+}
+
+.input-error {
+    color: red;
+    font-size: .8rem;
+    font-style: italic;
 }
 
 .btn-primary {

@@ -1,7 +1,11 @@
 <?php
+//header($_SERVER["SERVER_PROTOCOL"] . ' 500 Internal Server Error', true, 500);
+//echo '<h1>Something went wrong!</h1>';
+//exit;
 
 include_once './php/preflight.php';
 require_once('../../../wp-load.php');
+
 
 
 ///

@@ -807,3 +807,7 @@ real = realestate
   * For a completely different project, there should be only less than three(3) domain settings.
     It may be a one way to set the default `Config::$domain` to the theme that the project is using.
     
+## Vue Theme
+
+* The `vue` theme has entirely built with vue.js 3.
+  * One thing to note that the app is not `SPA`. The `vue.js` is used just as `jQuery` or `Knockout.js`.

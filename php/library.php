@@ -30,7 +30,6 @@ if ( function_exists('xlog') == false ) {
 }
 
 if ( function_exists('in') == false ) {
-
     /**
      *
      * @note By default it returns null if the key does not exist.
@@ -43,12 +42,12 @@ if ( function_exists('in') == false ) {
      */
     function in($name = null, $default = null)
     {
-
         // If the request is made by application/json content-type,
         // Then get the data as JSON input.
         $contentType = isset($_SERVER["CONTENT_TYPE"]) ? trim($_SERVER["CONTENT_TYPE"]) : '';
 
-        if (strcasecmp($contentType, 'application/json') == 0) {
+
+        if (strpos($contentType, 'application/json') !== false) {
             $_REQUEST = get_JSON_input();
         }
 
@@ -61,7 +60,6 @@ if ( function_exists('in') == false ) {
             return $default;
         }
     }
-
 }
 
 $_json_input = null;

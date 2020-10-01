@@ -196,6 +196,26 @@ $__i18n[inputNickname] = [
 	ko => '닉네임을 입력해주세요.',
 	en => 'Please, insert your nickname.'
 ];
+define('inputEmail', 'inputEmail');
+$__i18n[inputEmail] = [
+	ko => '이메일 주소를 입력해주세요.',
+	en => 'Please, insert your email address.'
+];
+define('inputPassword', 'inputPassword');
+$__i18n[inputPassword] = [
+	ko => '비밀번호를 입력해주세요.',
+	en => 'Please, insert your password.'
+];
+define('inputName', 'inputName');
+$__i18n[inputName] = [
+	ko => '이를 입력해주세요.',
+	en => 'Please, insert your name.'
+];
+define('inputMobileNo', 'inputMobileNo');
+$__i18n[inputMobileNo] = [
+	ko => '휴대폰 번호를 입력해주세요.',
+	en => 'Please, insert your mobile no.'
+];
 
 define('LOGIN', 'login');
 define('login', LOGIN);

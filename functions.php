@@ -5,15 +5,14 @@
  * And it called before the theme loads or the api script runs.
  */
 
-
 /**
  * `API_CALL` is true, when it is called through Ajax call or API call.
  * @TODO This may not work when the input is coming from STDIN.
  */
-if ( isset($_REQUEST['route'])) {
-	define('API_CALL', true);
-} else {
+if ( strpos($_SERVER['PHP_SELF'], 'index.php') !== false ) {
 	define('API_CALL', false);
+} else {
+	define('API_CALL', true);
 }
 
 
@@ -147,20 +146,10 @@ $__included_files = [];
 $__page_options = [];
 
 /**
- * Global user's API profile information.
- * This is the login user's profile information that should be used for profile update.
+ * If the user has `session_id` in cookie, then let the user log in.
  */
+include 'etc/user.login-with-session-id.php';
 
-$__user = $apiLib->userResponse(loginSessionIDFromCookie());
-
-/**
- * Set the user logged into Wordpress if the user logged in with cookie.
- *
- */
-
-if ( $__user && isset($__user['ID']) ) {
-	wp_set_current_user($__user['ID']);
-}
 
 
 

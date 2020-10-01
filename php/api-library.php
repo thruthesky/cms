@@ -304,8 +304,6 @@ class ApiLibrary {
 	 */
 	public function userRegister($in) {
 
-		xlog('userRegister:');
-		xlog($in);
 
 		if (isset($in['session_id'])) return ERROR_SESSION_ID_MUST_NOT_PROVIDED;
 

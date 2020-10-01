@@ -64,7 +64,8 @@ if (localhost()) {
     </footer>
 </div>
 
-
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
 <script src="<?=PAGE_URL?>/js/bundle.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@3.0.0/dist/vue.global.prod.min.js"></script>
 <script src="<?=PAGE_URL?>/js/app.js?v=<?php echo Config::$appVersion?>"></script>
