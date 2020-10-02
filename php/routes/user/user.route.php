@@ -17,11 +17,15 @@ class UserRoute extends ApiLibrary
     	$this->response($this->userFirebaseSocialLogin(in()));
     }
 
-    public function update()
-    {
-        $this->response($this->userUpdate(in()));
-    }
-    public function resign()
+	public function update()
+	{
+		$this->response($this->userUpdate(in()));
+	}
+	public function profile()
+	{
+		$this->response($this->userProfile(in()));
+	}
+	public function resign()
     {
         $this->response($this->userResign(in()));
     }

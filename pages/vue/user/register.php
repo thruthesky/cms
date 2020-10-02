@@ -3,7 +3,7 @@
  * @file register.php
  * @desc See readme
  */
-if ( ! loggedIn() && in( 'mobile' ) == null && Config::$verifyMobileOnRegistration ) {
+if ( Config::$verifyMobileOnRegistration && notLoggedIn() && in('mobile') == null  ) {
 	return move( Config::$mobileVerificationPage );
 }
 
@@ -22,6 +22,11 @@ if ( ! Config::$verifiedMobileOnly ) { ?>
 <section class="p-3 p-lg-5">
     <div class="page-subtitle"><?= tr( REGISTRATION_HEAD ) ?></div>
     <h1 class="page-title"><?= tr( registration ) ?></h1>
+    <div class="flex justify-content-end">
+        <div class="w-xxs">
+		    <?php include widget( 'social-login/vue-buttons' ) ?>
+        </div>
+    </div>
     <form @submit.prevent="onRegisterFormSubmit" autocomplete="off">
         <input type="hidden" name="firebase_uid" value="">
 		<?php if ( login( SOCIAL_LOGIN ) == null ) { ?>
@@ -97,19 +102,11 @@ if ( ! Config::$verifiedMobileOnly ) { ?>
     </form>
 
 
-    <div class="mb-56">
+    <div class="mt-5">
 		<?php include widget( 'user.logged-with' ) ?>
     </div>
 
-    <div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #AFAFAF">
-          <span class="px-10 bg-white lightgray">
-            <?= tr( 'or' ) ?>
-          </span>
-    </div>
 
-    <div class="mb-56">
-		<?php include widget( 'social-login/buttons' ) ?>
-    </div>
 
 </section>
 

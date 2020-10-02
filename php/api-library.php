@@ -115,7 +115,10 @@ class ApiLibrary {
 		if ( $user->photo_url ) {
 			$data['photo_url'] = $user->photo_url;
 			$photo = $this->get_file_from_url($user->photo_url);
-			$data['photo_ID'] = $photo['ID'];
+			/// There is no photo ID url for social login.
+			if ( $photo ) {
+				$data['photo_ID'] = $photo['ID'];
+			}
 		}
 		unset($data['user_pass']);
 
@@ -336,7 +339,7 @@ class ApiLibrary {
 			$user_nicename = $nickname;
 			$display_name = $nickname;
 		} else {
-			$nickname = '';
+			$nickname = EMPTY_NICKNAME;
 			$user_nicename = '_';
 			$display_name = '_';
 		}
@@ -441,12 +444,15 @@ class ApiLibrary {
 	 * It needs to login or register.
 	 *
 	 * @param $in
+	 *  $in['email'] is optional. If it is empty, then it will create a temporary email.
+	 *      - for Firebase social login, email address is not important. And it is safe not to save email address.
 	 *
 	 * @return array|string|null
 	 */
 	public function userFirebaseSocialLogin($in) {
 
-		$user = get_user_by('login', $in['email']);
+		$user = get_user_by_firebase_uid($in[FIREBASE_UID]);
+//		$user = get_user_by('login', $in['email']);
 																						//		if ( $user ) {
 																						//			xlog('userFirebaseSocialLogin: user exists.');
 																						//		} else {
@@ -464,16 +470,38 @@ class ApiLibrary {
 			return $this->userResponse($user->ID);
 		}
 
+		if ( !isset($in['email']) || empty($in['email']) ) {
+			$in['email'] = md5($in[FIREBASE_UID]) . '@' . TEMP_EMAIL_DOMAIN;
+		}
+
 		xlog('userFirebaseSocialLogin: login fail. going to register.');
 		$res = lib()->userRegister([
-			'user_email' => $in['email'], 'user_pass' => $in[FIREBASE_UID], SOCIAL_LOGIN => $in['provider'],
-			FIREBASE_UID => $in[FIREBASE_UID], 'name' => $in['name']
+			'user_email' => $in['email'],
+			'user_pass' => $in[FIREBASE_UID],
+			SOCIAL_LOGIN => $in['provider'],
+			FIREBASE_UID => $in[FIREBASE_UID],
+			'name' => EMPTY_NICKNAME,
+			'nickname' => $in['nickname'],
+			'photo_url' => $in['photo_url'],
 		]);
 		return $res;
 
 	}
 
 
+	/**
+	 * Simply return the user response to client end.
+	 *
+	 * @note use this when you need user's data.
+	 *
+	 * @param $in
+	 *
+	 * @return mixed
+	 */
+	public function userProfile($in) {
+		if (!isset($in['session_id'])) return ERROR_EMPTY_SESSION_ID;
+		return $this->userResponse(wp_get_current_user()->ID, true);
+	}
 
 
 	/**

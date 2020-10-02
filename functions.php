@@ -169,11 +169,13 @@ else {
 	if ( localhost() && !isCypress() ) live_reload();
 
 	// mobile check
-	checkMobileRequired();
+	if ( checkMobileRequired() ) {
 
 
-	//
-	checkProfileInformation();
+		//
+		checkProfileInformation();
+
+	}
 
 
 	//
@@ -436,6 +438,9 @@ function loggedIn() {
 	if ( is_user_logged_in() ) return true;
 	return false;
 }
+function notLoggedIn() {
+	return !loggedIn();
+}
 
 /**
  * Returns login user's session id
@@ -463,21 +468,9 @@ function loginSessionIDFromCookie() {
  */
 function login($key = null)
 {
-	global $__user;
-
 
 	if ( $key === null ) {
 		return loggedIn();
-	}
-	/**
-	 * @warning $__user is not available on API_CALL
-	 *  But this method still works perfect on API_CALL. This code is only for caching for web browser.
-	 *
-	 * Check if the value of the key exists on user's API profile.
-	 * For instance, photoURL is only exists on user's API profile.
-	 */
-	if ( isset($__user[$key]) && $__user[$key]) {
-		return $__user[$key];
 	}
 
 	/**
@@ -493,6 +486,7 @@ function login($key = null)
 		if ( $userdata && isset($userdata[$key]) && $userdata[$key] ) {
 			return $userdata[$key];
 		}
+		return get_user_meta($user->ID, $key, true);
 	}
 
 	return null;
@@ -902,13 +896,13 @@ function generate_options($options, $selected=null) {
 function generate_select($options) {
 
 	$labelClass = isset($options['labelClass']) ? $options['labelClass'] : '';
+	$selectClass = isset($options['selectClass']) ? ' ' . $options['selectClass'] : '';
 
 	return <<<EOH
-
     <div class="form-group">
         <div class="form-group">
             <label for="{$options['name']}" class="$labelClass">{$options['label']}</label>
-            <select class="form-control" id="{$options['name']}" name="{$options['name']}">
+            <select class="form-control$selectClass" id="{$options['name']}" name="{$options['name']}">
                 {$options['options']}
             </select>
         </div>
@@ -1113,12 +1107,13 @@ function rwdLayout() {
 	return 'layout' . rwd() . '.php';
 }
 
-function loginOrRegisterBySocialLogin($email, $pass, $provider) {
+function loginOrRegisterBySocialLogin($options) {
 
-	$res = lib()->userLogin(['user_email' => $email, 'user_pass' => $pass]);
+	$res = lib()->userLogin($options);
 	if ( isBackendError($res) ) {
-		$res = lib()->userRegister(['user_email' => $email, 'user_pass' => $pass, SOCIAL_LOGIN => $provider]);
+		$res = lib()->userRegister($options);
 		if ( isBackendError($res) ) {
+			/// TODO Error handling here.
 			echo tr($res);
 		}
 	}
@@ -1136,16 +1131,22 @@ EOS;
 
 /**
  * If mobile is required and the user didn't didn't input mobile, then force to verify mobile and update profile.
+ *
+ * @return bool
+ *  true - if the user does not need to verify mobile no.
+ *  false - if the user must verify mobile no.
  */
 function checkMobileRequired() {
 	if ( loggedIn() ) {
 		if ( Config::$mobileRequired && login('mobile') == null ) {
-			if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'mobile') === false && strpos(in('page'), 'admin') === false ) {
+			if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'user') === false && strpos(in('page'), 'admin') === false ) {
 				Config::setPage('user.mobile-verification');
 				set_page_options(['mode' => 'after-registration']);
+				return false;
 			}
 		}
 	}
+	return true;
 }
 
 /**
@@ -1153,7 +1154,9 @@ function checkMobileRequired() {
  */
 function checkProfileInformation() {
 	if ( ! loggedIn() ) return;
-	if ( !loginNickname() ) {
+	$nickname = loginNickname();
+
+	if ( empty($nickname) || $nickname == '-' ) {
 		if ( strpos(in('page'), 'logout') === false && strpos(in('page'), 'user') === false && strpos(in('page'), 'admin') === false ) {
 			Config::setPage( 'user.profile' );
 			set_page_options( [ 'messageCode' => inputNickname ] );
@@ -1308,3 +1311,38 @@ function get_page_id() {
 	$id = in('page', 'home');
 	return str_replace('.', '-', $id);
 }
+
+/**
+ * Find a user by his meta value.
+ * @param $name
+ * @param $value
+ *
+ * @return mixed
+ */
+function get_user_by_meta($name, $value) {
+
+	$wp_users = get_users(array(
+		'meta_key'     => $name,
+		'meta_value'   => $value,
+		'number'       => 1,
+		'count_total'  => false,
+	));
+
+	if ( count($wp_users) ) return $wp_users[0];
+	else return null;
+}
+
+/**
+ * @param $uid
+ *
+ * @return mixed|null
+ *
+ * @code
+	print_r(get_user_by_firebase_uid('abc'));
+	print_r(get_user_by_firebase_uid('mC5IrIv6eFcRpW48kb6fqzH6iFJ3'));
+ * @endcode
+ */
+function get_user_by_firebase_uid($uid) {
+	return get_user_by_meta(FIREBASE_UID, $uid);
+}
+

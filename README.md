@@ -6,6 +6,14 @@ CMS for community projects
 
 * To learn how to use this `cms` theme, read [USER MENUAL](https://github.com/thruthesky/cms/blob/master/USER_MANUAL.md).
 
+
+## Project Overview
+
+* Email is not a trust contact since some users have no email address like 'Facebook mobile number login with email address' and this goes same to many other social logins like 'Kakao Login'.
+  And some social login does not provide email address. So, email address cannot be used as a contact.
+  * That is why phone number verification comes important.
+  * SMS message with push notification, the app can have better contact to users.
+
 ## Installation
 
 ### Overview of installation
@@ -233,6 +241,11 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 * `email address` is a part of security. It must be kept in secret and never reveal.
 
 * If page has 'submit' in its name, then layout will not be shown. only the content from the page script will be shown.
+
+### User profile
+
+* User profile photo must be saved with the `photo_url` key of the user's meta.
+  * User profile photo may be coming from social service. In this case, there will be no photo ID in user response.
 
 ### How to load layout
 

@@ -25,7 +25,7 @@ if (localhost()) {
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="<?php theme_url(); ?>/css/fontawesome/css/all.css">
 
-    <link rel="stylesheet" href="<?= PAGE_URL ?>/css/index.css.php?v=<?php echo Config::$appVersion ?>">
+    <link rel="stylesheet" href="<?= PAGE_URL ?>/css/index.css?v=<?php echo Config::$appVersion ?>">
 
 
     <link rel="icon" href="<?= PAGE_URL ?>/img/icons/favicon-16.png" sizes="16x16">
@@ -48,7 +48,7 @@ if (localhost()) {
         <?php include widget('header/header')?>
     </header>
     <section class="l-body l-center flex">
-        <main class="w-100 bg-lightgreen">
+        <main class="w-100">
 			<?php
 			include page();
 			?>
@@ -63,10 +63,10 @@ if (localhost()) {
         </div>
     </footer>
 </div>
-
+<?php include 'bottom-html.php'?>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-<script src="<?=PAGE_URL?>/js/bundle.js"></script>
+<script src="<?=PAGE_URL?>/js/bundle.js?v=<?php echo Config::$appVersion?>"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue@3.0.0/dist/vue.global.prod.min.js"></script>
 <script src="<?=PAGE_URL?>/js/app.js?v=<?php echo Config::$appVersion?>"></script>
 </body>

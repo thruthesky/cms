@@ -16,7 +16,7 @@ class Config {
 
     /// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
 	/// This is only for web registration.
-    static public $verifyMobileOnRegistration = false;
+    static public $verifyMobileOnRegistration = true;
 
 
     /// If it is set to true and if user has no mobile in his meta data, the user will be redirected to mobile phone verification.
@@ -26,7 +26,7 @@ class Config {
 
     /// If it is set to true, only verified mobile can be save into user meta.
 	/// This means the user must verify phone number before registration or updating mobile no.
-    static public $verifiedMobileOnly = false;
+    static public $verifiedMobileOnly = true;
 
 
     /// If it is set to true, the mobile number becomes unique in Database.
@@ -202,15 +202,15 @@ Config::$serviceAccount = json_decode($__setting, true);
 /**
  * Overwrite Kakao Rest Api Key
  */
-Config::$kakaoRestApiKey = get_option(KAKAO_REST_API_KEY_SETTING, Config::$kakaoRestApiKey);
+Config::$kakaoRestApiKey = get_option(KAKAO_REST_API_KEY_SETTING)  ? get_option(KAKAO_REST_API_KEY_SETTING) : Config::$kakaoRestApiKey;
 Config::$kakaoRedirectURI = urlencode(Config::$kakaoRedirectURI);
 Config::$kakaoLoginApiURL = "https://kauth.kakao.com/oauth/authorize?client_id=".Config::$kakaoRestApiKey."&redirect_uri=".Config::$kakaoRedirectURI."&response_type=code";
 
 /**
  * Overwriting Naver PC & Mobile Web Client Configuration
  */
-Config::$naverClientId = get_option(NAVER_CLIENT_ID_SETTING, Config::$naverClientId);
-Config::$naverClientSecret = get_option(NAVER_CLIENT_SECRET_SETTING, Config::$naverClientSecret);
+Config::$naverClientId = get_option(NAVER_CLIENT_ID_SETTING) ? get_option(NAVER_CLIENT_ID_SETTING) : Config::$naverClientId;
+Config::$naverClientSecret = get_option(NAVER_CLIENT_SECRET_SETTING) ? get_option(NAVER_CLIENT_SECRET_SETTING) : Config::$naverClientSecret;
 Config::$naverRedirectURI =  urlencode(Config::$naverRedirectURI);
 Config::$naverLoginApiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=".Config::$naverClientId."&redirect_uri=".Config::$naverRedirectURI."&state=".Config::$naverState;
 

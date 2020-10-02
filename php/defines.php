@@ -6,6 +6,7 @@ define('PWA_START_URL', '/wp-content/themes/cms/pwa-start.html');
 
 define('FIREBASE_UID', 'firebase_uid');
 define('FIREBASE_CUSTOM_LOGIN_TOKEN', 'firebase_custom_login_token');
+define('TEMP_EMAIL_DOMAIN', 'update-email.com');
 
 
 define('SOCIAL_LOGIN', 'social_login');
@@ -35,6 +36,8 @@ define('KAKAO_REST_API_KEY_SETTING', 'kakao_rest_api_key_setting');
 define('NAVER_CLIENT_ID_SETTING', 'naver_client_id_setting');
 define('NAVER_CLIENT_SECRET_SETTING', 'naver_client_secret_setting');
 
+
+define('EMPTY_NICKNAME', '-');
 
 
 /**

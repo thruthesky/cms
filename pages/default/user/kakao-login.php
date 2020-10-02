@@ -49,7 +49,7 @@ if ($me['id']) {
 // 회원아이디 $mb_uid
 // properties 항목은 카카오 회원이 설정한 경우만 넘겨 받습니다.
 	$mb_id = $me['id']; // 아이디(숫자)
-	$mb_nickname = $me['properties']['nickname'] ?? ''; // 닉네임
+	$mb_nickname = $me['properties']['nickname'] ?? EMPTY_NICKNAME; // 닉네임. 카카오 로그인은 이름이 없다.
 	$mb_profile_image = $me['properties']['profile_image'] ?? ''; // 프로필 이미지
 	$mb_thumbnail_image = $me['properties']['thumbnail_image'] ?? ''; // 프로필 이미지
 	$mb_email = $me['kakao_account']['email'] ?? ''; // 이메일
@@ -57,8 +57,17 @@ if ($me['id']) {
 	$mb_age = $me['kakao_account']['age_range'] ?? ''; // 연령대
 	$mb_birthday = $me['kakao_account']['birthday'] ?? ''; // 생일
 
-	$email = $mb_email ? $mb_email : 'ID' . $mb_id . '@kakao.com';
-	loginOrRegisterBySocialLogin($email, $mb_id, SOCIAL_LOGIN_KAKAO);
+	$email = $mb_email ? $mb_email : 'ID' . $mb_id . '@' . TEMP_EMAIL_DOMAIN;
+
+	xlog('---------- kakao login response ---------');
+	xlog($me['properties']);
+	loginOrRegisterBySocialLogin([
+		'user_email' => $email,
+		'user_pass' => $mb_id,
+		SOCIAL_LOGIN => SOCIAL_LOGIN_KAKAO,
+		'nickname' => $mb_nickname,
+		'photo_url' => $mb_thumbnail_image,
+	]);
 } else {
 	include error_page('카카오톡 로그인 에러', '카카오 로그인 회원 정보를 가져오지 못했습니다.');
 }

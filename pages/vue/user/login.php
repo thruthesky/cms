@@ -36,7 +36,7 @@
 	</form>
 
 	<div class="mb-56">
-		<?php include widget('social-login/buttons') ?>
+		<?php include widget('social-login/vue-buttons') ?>
 	</div>
 </section>
 

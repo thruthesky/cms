@@ -46,9 +46,17 @@ if($status_code == 200) { // 성공
 
 		$res = json_decode($response, true);
 		$id = $res['response']['id'];
-		$email = isset($res['response']['email']) ? $res['response']['email'] : 'ID' . $id . '@naver.com';
+		$email = isset($res['response']['email']) ? $res['response']['email'] : 'ID' . $id . '@' . TEMP_EMAIL_DOMAIN;
+		$nickname = isset($res['response']['nickname']) ? $res['response']['nickname'] : EMPTY_NICKNAME;
 
-		loginOrRegisterBySocialLogin($email, $id, SOCIAL_LOGIN_NAVER);
+//		xlog('---------- naver login response ---------');
+//		xlog($res['response']);
+		loginOrRegisterBySocialLogin([
+			'user_email' => $email,
+			'user_pass' => $id,
+			SOCIAL_LOGIN => SOCIAL_LOGIN_NAVER,
+			'nickname' => $nickname
+		]);
 
 
 	} else {

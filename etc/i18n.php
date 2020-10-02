@@ -177,8 +177,20 @@ $__i18n[PASSWORD] = [
 define('name', 'name');
 $__i18n[name] = [
     ko => '이름',
-    en => 'Fullname'
+    en => 'Name'
 ];
+
+define('sendVerificationCode', 'sendVerificationCode');
+$__i18n[sendVerificationCode] = [
+	en => 'Send Verification Code',
+	ko => '인증 번호 발송',
+];
+define('sendingVerificationCode', 'sendingVerificationCode');
+$__i18n[sendingVerificationCode] = [
+	ko => '인증 코드를 전송 중입니다 ...',
+	en => 'Sending verfication code ...'
+];
+
 
 define('nickname', 'nickname');
 $__i18n[nickname] = [
@@ -208,9 +220,11 @@ $__i18n[inputPassword] = [
 ];
 define('inputName', 'inputName');
 $__i18n[inputName] = [
-	ko => '이를 입력해주세요.',
+	ko => '이름을 입력해주세요.',
 	en => 'Please, insert your name.'
 ];
+define('updateYourName', 'updateYourName');
+$__i18n[updateYourName] = [en=>"Update your name.", ko =>'Update your name.'];
 define('inputMobileNo', 'inputMobileNo');
 $__i18n[inputMobileNo] = [
 	ko => '휴대폰 번호를 입력해주세요.',
