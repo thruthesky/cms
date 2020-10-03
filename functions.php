@@ -779,9 +779,9 @@ function di( $obj ) {
 }
 
 function dog( $obj ) {
-	echo '<xmp>';
+	echo '<pre>';
 	print_r( $obj );
-	echo '</xmp>';
+	echo '</pre>';
 }
 
 
@@ -1133,8 +1133,9 @@ EOS;
  *
  * @return array|mixed|string
  */
-function forum( $key, $default_value = '' ) {
+function forum( $key=null, $default_value = '' ) {
 	$setting = get_forum_setting();
+	if ( $key == null ) return $setting;
 	if ( $setting ) {
 		return isset( $setting[ $key ] ) && $setting[ $key ] ? $setting[ $key ] : $default_value;
 	} else {
@@ -1515,4 +1516,13 @@ function javascript_string_encode( $str ) {
 	$str = addslashes( $str );
 
 	return $str;
+}
+
+
+function viewUrl($post) {
+	if ( isset($post['guid']) ) {
+		$arr = explode('/', $post['guid'], 4);
+		return '/' . array_pop($arr);
+	}
+	return '';
 }

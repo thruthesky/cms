@@ -25,6 +25,7 @@ if (localhost()) {
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="<?php theme_url(); ?>/css/fontawesome/css/all.css">
 
+    <link rel="stylesheet" href="<?= THEME_URL ?>/css/common.css?v=<?php echo Config::$appVersion ?>">
     <link rel="stylesheet" href="<?= PAGE_URL ?>/css/index.css?v=<?php echo Config::$appVersion ?>">
 
 
@@ -44,29 +45,31 @@ if (localhost()) {
 </head>
 
 <body id="<?= get_page_id() ?>">
+<section id="vue-app">
+    <div class="layout">
+        <div class="l-top h-5 bg-light">&nbsp;</div>
+        <header class="l-header l-center bg-lightblue">
+			<?php include widget('header/header')?>
+        </header>
+        <section class="l-body l-center flex">
+            <main class="w-100">
+				<?php
+				include page();
+				?>
+            </main>
+            <aside class="d-none d-lg-block l-sidebar-width pl-3 bg-lightred">
+                <h2 class="m-0">This is aside</h2>
+            </aside>
+        </section>
+        <footer class="l-footer p-5 bg-lightblue">
+            <div class="l-center">
+                <h2>This is footer</h2>
+            </div>
+        </footer>
+    </div>
+	<?php include THEME_PATH . '/etc/common-bottom-html.php'?>
+</section>
 
-<div class="layout">
-    <div class="l-top h-5 bg-light">&nbsp;</div>
-    <header class="l-header l-center bg-lightblue">
-        <?php include widget('header/header')?>
-    </header>
-    <section class="l-body l-center flex">
-        <main class="w-100">
-			<?php
-			include page();
-			?>
-        </main>
-        <aside class="d-none d-lg-block l-sidebar-width pl-3 bg-lightred">
-            <h2 class="m-0">This is aside</h2>
-        </aside>
-    </section>
-    <footer class="l-footer p-5 bg-lightblue">
-        <div class="l-center">
-            <h2>This is footer</h2>
-        </div>
-    </footer>
-</div>
-<?php include 'bottom-html.php'?>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
 <script src="<?=PAGE_URL?>/js/bundle.js?v=<?php echo Config::$appVersion?>"></script>

@@ -45,9 +45,11 @@ if ( ! $ID || is_wp_error($ID)) {
 
 
 update_term_meta($ID , NO_OF_POSTS_PER_PAGE, in(NO_OF_POSTS_PER_PAGE));
-update_term_meta($ID , 'post_list_theme', in('post_list_theme'));
-update_term_meta($ID , 'post_view_theme', in('post_view_theme'));
-update_term_meta($ID , 'post_edit_theme', in('post_edit_theme'));
+update_term_meta($ID , POST_LIST_THEME, in(POST_LIST_THEME));
+update_term_meta($ID , POST_VIEW_THEME, in(POST_VIEW_THEME));
+update_term_meta($ID , POST_VIEW_BUTTON_THEME, in(POST_VIEW_BUTTON_THEME));
+update_term_meta($ID , POST_VIEW_COMMENT_THEME, in(POST_VIEW_COMMENT_THEME));
+update_term_meta($ID , POST_EDIT_THEME, in(POST_EDIT_THEME));
 update_term_meta($ID , 'post_list_under_view', in('post_list_under_view'));
 update_term_meta($ID , POST_SHOW_LIKE, in(POST_SHOW_LIKE));
 update_term_meta($ID , POST_SHOW_DISLIKE, in(POST_SHOW_DISLIKE));

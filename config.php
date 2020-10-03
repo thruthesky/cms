@@ -13,7 +13,6 @@ class Config {
     static public $adminForumList = '/?page=admin.forum.list';
 
 
-
     /// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
 	/// This is only for web registration.
     static public $verifyMobileOnRegistration = true;

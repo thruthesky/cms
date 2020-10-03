@@ -1,6 +1,5 @@
 <?php
 /**
- * @file view.php
  * @widget-type post_view_theme
  * @widget-name Default post view
  */
@@ -47,7 +46,7 @@ $slug = $post['slug'];
 	<?php if (Config::$showUploadedFilesAtBottom) include widget('files/display-uploaded-files', ['post' => $post])?>
 
     <div class="px-20 mb-20">
-        <span class="mr-8 pointer" onclick="appendCommendBoxToPost()">Reply</span>
+        <span class="mr-8 pointer" onclick="onClickReply()">Reply</span>
             <a class="mr-8 pointer" href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a>
             <span class="mr-8  pointer" onclick="onPostDelete(<?=$post['ID']?>, '<?=$slug?>')">Delete</span>
         <?php if(forum(POST_SHOW_LIKE)) {?>

@@ -35,7 +35,7 @@ if ( $post ) {
 //        });
 //    })
 
-    function appendCommendBoxToPost() {
+    function onClickReply() {
 
         if ($('#comment-input-box-under-post').children().length > 0) return false;
 

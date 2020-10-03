@@ -14,6 +14,16 @@ CMS for community projects
   * That is why phone number verification comes important.
   * SMS message with push notification, the app can have better contact to users.
 
+## Changes
+
+* `Oct 3, 2020` - Frontend framework changes from Bootstrap & jQuery to `Vue.js 3`
+  * User registration, login, update, post crud, and comment crud are only done by Rest API call.
+  And Modal Dialog, Toast are not easy to implement without Frontend framework. 
+  So, it is mandatory to use a framework like Vue.js or Bootstrap.
+  
+* Default theme should moved to `boostrap theme` and should be re-written with Vue 3.
+
+
 ## Installation
 
 ### Overview of installation
@@ -936,3 +946,32 @@ real = realestate
 
 * The `vue` theme has entirely built with vue.js 3.
   * One thing to note that the app is not `SPA`. The `vue.js` is used just as `jQuery` or `Knockout.js`.
+
+* How to add CSS.
+  * Vue removes `<style>` tag in the template. so to add style, do like below.
+  
+```
+$_style =<<<EOS
+<style>
+.padding {
+  padding: 1em;
+}
+</style>
+EOS;
+insert_at_the_bottom($_style);
+```
+
+## Using common css
+
+* `cms/css/common.css` is the common CSS theme. Many of classes of common.css
+    is coming from Bootstrap and it is recommended to be used everywhere.
+    
+* Each theme uses its own CSS theme,
+  and the works and looks are very much different on each theme.
+  This is why we have a common CSS theme that has
+  text styles, margin, padding, box, break points and
+  spinner, modal, toast.
+  * For modal and toast, you need to include `etc/common-botom-html.php` before the body but outside of the vue template.
+  And of course, you need to mount the vue app.
+  
+* @warning do not add CSS style in `common.css` unless you are sure.

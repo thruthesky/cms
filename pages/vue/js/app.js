@@ -502,7 +502,7 @@ vm.component('app-submit-button', {
 
 })
 
-vm = vm.mount('body');
+vm = vm.mount('#vue-app');
 
 vm.session_id = Cookies.get('session_id');
 

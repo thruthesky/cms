@@ -26,6 +26,8 @@ define('COMMENT_SHOW_DISLIKE', 'comment_show_dislike');
 define('NO_OF_POSTS_PER_PAGE', 'no_of_posts_per_page');
 define('POST_LIST_THEME', 'post_list_theme');
 define('POST_VIEW_THEME', 'post_view_theme');
+define('POST_VIEW_BUTTON_THEME', 'post_view_button_theme');
+define('POST_VIEW_COMMENT_THEME', 'post_view_comment_theme');
 define('POST_EDIT_THEME', 'post_edit_theme');
 
 define('DOMAIN_SETTINGS', 'domain_settings');

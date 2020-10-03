@@ -36,23 +36,37 @@
 
     <?=generate_select([
         'label' => 'Select list theme',
-        'name' => 'post_list_theme',
-        'options' => generate_options(get_wiget_list('post_list_theme'), forum(POST_LIST_THEME, 'post.list')),
+        'name' => POST_LIST_THEME,
+        'options' => generate_options(get_wiget_list(POST_LIST_THEME), forum(POST_LIST_THEME, 'post.list')),
         ])?>
 
 
-    <?=generate_select([
-        'label' => 'Select view theme',
-        'name' => 'post_view_theme',
-        'options' =>     $_options = generate_options(get_wiget_list('post_view_theme'), forum(POST_VIEW_THEME, 'post.view')),
-    ])?>
+	<?=generate_select([
+		'label' => 'Select view theme',
+		'name' => POST_VIEW_THEME,
+		'options' =>     $_options = generate_options(get_wiget_list(POST_VIEW_THEME), forum(POST_VIEW_THEME, 'post.view')),
+	])?>
+
+
+	<?=generate_select([
+		'label' => 'Select view button theme',
+		'name' => POST_VIEW_BUTTON_THEME,
+		'options' =>     $_options = generate_options(get_wiget_list(POST_VIEW_BUTTON_THEME), forum(POST_VIEW_BUTTON_THEME, 'post.view-button')),
+	])?>
+
+
+	<?=generate_select([
+		'label' => 'Select view comment theme',
+		'name' => POST_VIEW_COMMENT_THEME,
+		'options' =>     $_options = generate_options(get_wiget_list(POST_VIEW_COMMENT_THEME), forum(POST_VIEW_COMMENT_THEME, 'post.view-comment')),
+	])?>
 
 
 
     <?=generate_select([
         'label' => 'Select edit theme',
-        'name' => 'post_edit_theme',
-        'options' =>     $_options = generate_options(get_wiget_list('post_edit_theme'), forum(POST_EDIT_THEME, 'post.edit')),
+        'name' => POST_EDIT_THEME,
+        'options' =>     $_options = generate_options(get_wiget_list(POST_EDIT_THEME), forum(POST_EDIT_THEME, 'post.edit')),
     ])?>
 
 
