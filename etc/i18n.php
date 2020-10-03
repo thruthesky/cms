@@ -374,6 +374,17 @@ $__i18n[mobile_verified] = [
 	en => 'Your phone number has been verified.'
 ];
 
+define('inputTitle', 'inputTitle');
+$__i18n[inputTitle] = [
+	ko => '제목을 입력하세요.',
+	en => 'Input title.'
+];
+define('inputContent', 'inputContent');
+$__i18n[inputContent] = [
+	ko => '내용을 입력하세요.',
+	en => 'Input content.'
+];
+
 
 $__json = [];
 foreach( $__i18n as $k => $v ) {

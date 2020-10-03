@@ -170,7 +170,7 @@ const app = {
      * @param append
      * @returns {any}
      */
-    formData: function (obj, append = {}) {
+    getData: function (obj, append = {}) {
         let res = JSON.parse(JSON.stringify(obj));
         return Object.assign(res, append);
     },
@@ -276,7 +276,8 @@ let vm = Vue.createApp({
             verification: {
                 mobile: '',
                 mobileVerificationSessionInfo: '',
-            }
+            },
+            posts: {},
         };
     }, // EO data
     created() {
@@ -314,9 +315,7 @@ let vm = Vue.createApp({
         isLoggedOut: function () {
             return !this.isLoggedIn;
         },
-
-
-    },
+    }, // EO computed
     methods: {
         logout() {
             this.session_id = null;
@@ -350,7 +349,7 @@ let vm = Vue.createApp({
         onLoginFormSubmit() {
             this.submitted = true;
             this.loader = true;
-            app.post(app.formData(this.login, {route: 'user.login'}))
+            app.post(app.getData(this.login, {route: 'user.login'}))
                 .then(function (res) {
                     vm.loader = false;
                     if (app.isBackendError(res)) return;
@@ -367,7 +366,7 @@ let vm = Vue.createApp({
             if (this.registerFormValidationError) return false;
 
             this.loader = true;
-            app.post(app.formData(this.register, {route: 'user.register'}))
+            app.post(app.getData(this.register, {route: 'user.register'}))
                 .then(function (res) {
                     vm.loader = false;
                     if (app.isBackendError(res)) return;
@@ -469,6 +468,29 @@ let vm = Vue.createApp({
                     else app.open('/?page=user.register&mobile=v');
                 })
         },
+        getPost: function(post_ID) {
+            if ( this.posts[post_ID] ) return this.posts[post_ID];
+            else {
+                this.posts[post_ID] = {};
+                return this.posts[post_ID];
+            }
+        },
+        togglePostView(post_ID) {
+            const post = this.getPost(post_ID);
+            if ( post.display && post.display === 'block' ) post.display = 'none';
+            else post.display = 'block';
+        },
+        onClickPostView: function(post_ID) {
+            this.togglePostView(post_ID);
+            console.log('onClickPostView()', post_ID);
+        },
+        postDisplay: function(post_ID) {
+            if ( this.posts[post_ID] && this.posts[post_ID]['display'] ) return this.posts[post_ID]['display'];
+            else return 'none';
+        },
+        onFileChange: function(name, files) {
+            console.log('name: ', name, 'files: ', files);
+        }
     } // EO methods
 });
 
