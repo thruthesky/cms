@@ -1,7 +1,7 @@
 <?php
 
 
-$re = lib()->userResign(['session_id' => sessionId()]);
+$re = $apiLib->userResign(['session_id' => sessionId()]);
 
 /**
  * Resign success

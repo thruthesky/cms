@@ -1,7 +1,7 @@
 <?php
 /**
  * @widget-type post_view_comment_theme
- * @widget-name Theme agnostic post view comment
+ * @widget-name Bootstrap & jQuery - post view comment
  */
 ?>
 <form>

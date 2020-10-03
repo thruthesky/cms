@@ -3,103 +3,105 @@
  * @file register.php
  * @desc See readme
  */
-if ( !loggedIn() && in('mobile') == null && Config::$verifyMobileOnRegistration ) {
-    return move(Config::$mobileVerificationPage);
+if ( Config::$verifyMobileOnRegistration && notLoggedIn() && in('mobile') == null  ) {
+	return move( Config::$mobileVerificationPage );
 }
 
-/**
- * Init
- */
-if( !Config::$verifiedMobileOnly ) { ?>
-    <script>
-        localStorage.removeItem('mobile')
-    </script>
-<?php } ?>
 
-<div id="register-page" class="px-40 mt-60">
-    <div class="fs-20 black"><?=tr(REGISTRATION_HEAD)?></div>
-    <h1  class="fs-40 font-weight-bold mb-34 black"><?=tr([en=>"Registration", ko =>'회원 가입'])?></h1>
-    <form class="mb-56" id="register-form" onsubmit="return onRegisterFormSubmit()">
+?>
+<script>
+    $$(function(){
+        vm.register.mobile = app.get('mobile');
+    })
+</script>
+<!--<script>-->
+<!--    /// TEST-->
+<!--    $$(function() {-->
+<!--        app.set('mobile', '+821086934225');-->
+<!--        vm.register.mobile = '+821086934225';-->
+<!--    })-->
+<!--</script>-->
+
+
+<section class="p-3 p-lg-5">
+    <div class="page-subtitle"><?= tr( REGISTRATION_HEAD ) ?></div>
+    <h1 class="page-title"><?= tr( registration ) ?></h1>
+    <small class=""><?=tr([en=>'You can login with social service instead of registration.', ko=>'회원 가입 대신, 소셜로그인을 하실 수 있습니다.'])?></small>
+    <div class="flex justify-content-end">
+        <div class="w-xxs">
+			<?php include widget( 'social-login/vue-buttons' ) ?>
+        </div>
+    </div>
+    <form @submit.prevent="onRegisterFormSubmit" autocomplete="off">
         <input type="hidden" name="firebase_uid" value="">
-        <script>
-            $$(function() {
-                firebaseAuth(function(user) {
-                    $('[name="firebase_uid"]').val(user.uid);
-                });
-            })
-        </script>
-
-        <?php if ( login(SOCIAL_LOGIN) == null ) { ?>
-            <label class="form-label fs-14 gray100"><?=tr(emailAddress)?></label>
-            <div class="input-group mb-34">
-                <input type="email" class="form-control smat-input" aria-describedby="emailHelp" name="user_email" value="<?=login('user_email')?>">
-                <div class="input-group-append">
-                    <span class="input-group-text smat-input-group-text"><i class="fa fa-user fs-xl"></i></span>
+		<?php if ( login( SOCIAL_LOGIN ) == null ) { ?>
+            <div class="mt-3">
+                <label for="user-register-email"><?= tr( emailAddress ) ?></label>
+                <div class="relative">
+                    <input class="form-input" type="email" name="user_email" id="user-register-email"
+                           v-model="register.user_email"
+                           aria-describedby="Please input email address">
+                    <div class="absolute top right p-2">
+                        <i class="fa fa-user fs-sm"></i>
+                    </div>
                 </div>
+                <app-input-error :on="registerEmailError"><?= tr( inputEmail ) ?></app-input-error>
             </div>
-            <label class="form-label fs-14 gray100"><?=tr(PASSWORD)?></label>
-            <div class="input-group mb-34">
-                <input type="password" class="form-control smat-input" name="user_pass">
-                <div class="input-group-append show pointer" onclick="showPassword()">
-                    <span class="input-group-text smat-input-group-text"><i class="fa fa-eye-slash fs-lg"></i></span>
+            <div class="mt-3">
+                <label for="user-register-password"><?= tr( PASSWORD ) ?></label>
+                <div class="relative">
+                    <input :type="showPassword ? 'text' : 'password'" class="form-input" id="user-register-password" name="user_pass"
+                           v-model="register.user_pass"
+                           autocomplete="new-password">
+                    <div class="absolute top right p-2 pointer" @click="showPassword = !showPassword">
+                        <i class="fa fs-sm" :class="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+                    </div>
                 </div>
+                <app-input-error :on="registerPasswordError"><?= tr( inputPassword ) ?></app-input-error>
             </div>
-        <?php } ?>
+		<?php } ?>
 
 
-        <label class="form-label fs-14 gray100"><?=tr('name')?></label>
-        <input type="text" class="form-control smat-input mb-34" id="fullname" name="fullname" value="<?=login('fullname')?>">
+        <div class="mt-3">
+            <label for="user-register-fullname"><?= tr( 'name' ) ?></label>
+            <input type="text" class="form-input" id="user-register-fullname" name="fullname"
+                   v-model="register.fullname" value="">
+            <app-input-error :on="registerNameError"><?= tr( inputName ) ?></app-input-error>
+        </div>
+
+        <div class="mt-3">
+            <label for="user-register-nickname"><?= tr( 'nickname' ) ?></label>
+            <input type="text" class="form-input" name="nickname" id="user-register-nickname"
+                   v-model="register.nickname" value="<?= login( 'nickname' ) ?>">
+            <app-input-error :on="registerNicknameError"><?= tr( inputNickname ) ?></app-input-error>
+        </div>
 
 
-        <label class="form-label fs-14 gray100"><?=tr('nickname')?></label>
-        <input type="text" class="form-control smat-input mb-34" name="nickname"  value="<?=login('nickname')?>">
-
-
-        <?php if ( Config::$mobileRequired ) { ?>
-            <div class="mb-34">
-                <label class="form-label fs-14 gray100"><?=tr('mobileNo')?></label>
-                <div>
-
-                    <?php if ( Config::$verifiedMobileOnly ) { ?>
-
-                        <div class="mobile"></div>
-                    <input type="hidden" name="mobile" value="">
-                        <script>
-                            $$(function() {
-                                $('.mobile').text(localStorage.getItem('mobile'))
-                                $('[name="mobile"]').val(localStorage.getItem('mobile'))
-                            })
-                        </script>
-                    <?php } else { ?>
-                    <input class="form-control smat-input" type="text" name="mobile" value="">
-                    <?php }?>
+		<?php if ( Config::$mobileRequired ) { ?>
+            <section class="mt-3">
+                <label for="user-register-mobile"><?= tr( 'mobileNo' ) ?></label>
+                <div v-if="!register.mobile">
+                    <input class="form-input" id="user-register-mobile" type="text" name="mobile"
+                           v-model="register.mobile" value="">
+                    <app-input-error :on="registerMobileError"><?= tr( inputMobileNo ) ?></app-input-error>
                 </div>
-            </div>
-        <?php } ?>
-        <button class="btn bg-lightblue white btn-lg w-100 text-uppercase" type="submit" role="submit"><?=tr([en=>'Register', ko=>'회원 가입'])?></button>
+                <div v-else>
+                    {{ register.mobile }}
+                </div>
+            </section>
+		<?php } ?>
+        <app-submit-button :button="'<?= tr( register ) ?>'"
+                           :loading="'<?= tr( registrationInProgress ) ?>'"></app-submit-button>
     </form>
 
 
-    <?php include widget('loader/loader', ['tr' => [
-	    ko => '회원 가입 중입니다...',
-	    en => 'Please wait...'
-    ]])?>
-
-    <div class="mb-56">
-        <?php include widget('user.logged-with') ?>
+    <div class="mt-5">
+		<?php include widget( 'user.logged-with' ) ?>
     </div>
 
-    <div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #AFAFAF">
-          <span class="px-10 bg-white lightgray">
-            <?=tr('or')?>
-          </span>
-    </div>
 
-    <div class="mb-56">
-        <?php include widget('social-login/buttons') ?>
-    </div>
 
-</div>
+</section>
 
 
 

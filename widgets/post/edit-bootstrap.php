@@ -2,7 +2,7 @@
 /**
  * @file edit.php
  * @widget-type post_edit_theme
- * @widget-name Default post edit
+ * @widget-name Bootstrap & jQuery - post edit
  */
 
 

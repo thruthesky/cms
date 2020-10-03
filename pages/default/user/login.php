@@ -1,45 +1,50 @@
-<div class="px-40 pt-60">
-    <div class="fs-20 black"><?=tr(LOGIN_HEAD)?></div>
-    <h1 class=" mb-56 fs-40 font-weight-bold black"><?=tr(LOGIN)?></h1>
-    <form class="login-form" onsubmit="apiUserLogin(this); return false;">
-        <label class="form-label fs-14 gray100"><?=tr('emailAddress')?></label>
-        <div class="input-group mb-34">
-            <input type="email" class="form-control smat-input" aria-label="emailHelp" name="user_email">
-            <div class="input-group-append">
-                <span class="input-group-text smat-input-group-text px-0">
-                    <i class="fa fa-user fs-xl"></i>
-                </span>
+<script>
+    $$(function(){
+        /// remove 'mobile no' that has previously input.
+        app.remove('mobile');
+    })
+</script>
+<section class="p-3">
+	<div class="head"><?=tr(LOGIN_HEAD)?></div>
+	<h1 class="page-title"><?=tr(LOGIN)?></h1>
+	<form @submit.prevent="onLoginFormSubmit">
+
+            <label class="d-block mt-3" for="loginUserEmail"><?=tr('emailAddress')?></label>
+            <div class="relative">
+                <input class="form-input" type="email"  id="loginUserEmail" name="user_email" v-model="login.user_email">
+                <div class="absolute top right p-2">
+                    <i class="fa fa-user fs-sm"></i>
+                </div>
             </div>
-        </div>
 
-        <label class="form-label fs-14 gray100"><?=tr(PASSWORD)?></label>
-        <div class="input-group mb-48">
-            <input type="password" class="form-control smat-input" name="user_pass" autocomplete="new-password">
-            <div class="input-group-append show pointer" onclick="showPassword()">
-                <span class="input-group-text smat-input-group-text px-0">
-                    <i class="fa fa-eye-slash fs-lg"></i>
-                </span>
-            </div>
-        </div>
 
-        <button type="submit" class="btn bg-lightblue white btn-lg w-100 text-uppercase mb-3"><?=tr(LOGIN)?></button>
+		<label class="d-block mt-3" for="loginUserPassword"><?=tr(PASSWORD)?></label>
+		<div class="relative">
+			<input class="form-input" :type=" showPassword ? 'text' : 'password' "  id="loginUserPassword" name="user_pass"  v-model="login.user_pass">
+			<div class="absolute top right p-2 pointer" @click="showPassword = !showPassword">
+                    <i class="fa fs-sm" :class="{'fa-eye': showPassword, 'fa-eye-slash': !showPassword}"></i>
+			</div>
+		</div>
 
-        <div class="d-flex justify-content-between mb-56 fs-12">
-            <a class="black" href="<?php echo Config::$registerPage?>">Forgot password?</a>
-            <a class="black" href="<?php echo Config::$registerPage?>">Register</a>
-        </div>
+        <app-submit-button :button="'<?= tr( login ) ?>'"
+                           :loading="'<?= tr( registrationInProgress ) ?>'"></app-submit-button>
 
-        <div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #AFAFAF">
+		<div class="d-flex justify-content-between mb-56 fs-12">
+			<a class="black" href="<?php echo Config::$registerPage?>">Forgot password?</a>
+			<a class="black" href="<?php echo Config::$registerPage?>">Register</a>
+		</div>
+
+		<div class="mb-56 text-center" style="height: 14px; border-bottom: 1px solid #AFAFAF">
               <span class="px-10 bg-white lightgray">
                 <?=tr('or')?>
               </span>
-        </div>
-    </form>
+		</div>
+	</form>
 
-    <div class="mb-56">
-        <?php include widget('social-login/buttons') ?>
-    </div>
-</div>
+	<div class="mb-56">
+		<?php include widget('social-login/vue-buttons') ?>
+	</div>
+</section>
 
 
 

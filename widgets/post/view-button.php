@@ -1,7 +1,7 @@
 <?php
 /**
  * @widget-type post_view_button_theme
- * @widget-name Post view buttons
+ * @widget-name Vue.js - post view buttons
  */
 ?>
 <div style="margin-top: 1em;">
