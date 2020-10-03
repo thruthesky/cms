@@ -23,13 +23,31 @@ firebase.auth().onAuthStateChanged(function (user) {
     }
 });
 
+/**
+ * This will be called after Naver or Kakao login,
+ * @param userResponse
+ */
 function loginWithUserResponse(userResponse) {
     app.firebaseLoginWithCustomToken(userResponse);
 }
 
+function tr(code) {
+    return __i18n[code] ? __i18n[code] : code;
+}
+
+/**
+ * Returns url Parameter in HTTP query.
+ * @param name
+ * @returns {string|string}
+ */
+function urlParam(name) {
+    name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+    var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+        results = regex.exec(location.search);
+    return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+}
 /**
  * Application js
- * @type {{deleteMobileNumber: app.deleteMobileNumber}}
  */
 const app = {
     /**
@@ -50,7 +68,24 @@ const app = {
     set: function (name, value) {
         localStorage.setItem(name, JSON.stringify(value));
     },
+    remove: function(name) {
+        localStorage.removeItem(name);
+    },
 
+    /**
+     * Return true if browser as session_id as cookie.
+     * @returns {boolean}
+     */
+    loggedIn: function () {
+        const sid = app.getSessionId();
+        if (sid) {
+            /**
+             * There must be '_' in session_id.
+             */
+            return sid.indexOf('_') >= 0;
+        }
+        return false;
+    },
     post: function (data) {
 
         const session_id = this.getSessionId();
@@ -68,6 +103,7 @@ const app = {
 
     /**
      * Register or login into PHP wordpress backend for Firebase social login.
+     * @attention After a user logged with Firebase social login(like Google, Apple, Facebook), he will immediately login or register to Wordpress backend.
      * @param user - firebase user info.
      * @returns {*}
      */
@@ -84,8 +120,7 @@ const app = {
         return this.post(data)
             .then(function (res) {
                 if (app.isBackendError(res)) return res;
-                vm.setLogin(res);
-                return res;
+                vm.setLogin(res, '/');
             });
     },
 
@@ -99,9 +134,6 @@ const app = {
     deleteSessionId: function () {
         Cookies.remove('session_id');
         Cookies.remove('session_id', {domain: rootDomain});
-    },
-    deleteMobileNumber: function () {
-        localStorage.removeItem('mobile')
     },
 
     /**
@@ -163,11 +195,7 @@ const app = {
 
             // console.log('firebase user: ', user);
 
-            return app.firebaseSocialLogin(user)
-                .then(function (res) {
-                    // console.log('firebaseSocialLogin: PHP response: ', res);
-                    return res;
-                });
+            return app.firebaseSocialLogin(user);
 
 
         }).catch(function (error) {
@@ -188,15 +216,15 @@ const app = {
 
 
     /**
+     * This will be called after Naver or Kakao login.
      * Login to Firebase with custom token after the user has logged in with PHP (wordpress) backend
      * @param userResponse
      */
     firebaseLoginWithCustomToken: function (userResponse) {
         firebase.auth().signInWithCustomToken(userResponse['firebase_custom_login_token'])
             .then(function (fb) {
-                console.log('signInWithCustomToken: ', fb, userResponse);
-                vm.setLogin(userResponse);
-                app.open('/');
+                console.log('firebaseLoginWithCustomToken() => signInWithCustomToken: ', fb, userResponse);
+                vm.setLogin(userResponse, '/');
             })
             .catch(app.alertError);
     },
@@ -239,22 +267,27 @@ let vm = Vue.createApp({
                 body: '',
                 footer: '',
             },
+            toastOptions: {
+                display: 'none',
+                cssClass: '',
+                body: 'Toast body',
+            },
             user: {},
-            // user: {
-            //     ID: '',
-            //     firebase_custom_login_token: '',
-            //     firebase_uid: '',
-            //     first_name: '',
-            //     fullname: '',
-            //     last_name: '',
-            //     mobile: '',
-            //     nickname: '',
-            //     session_id: '',
-            //     user_email: '',
-            //     user_login: '',
-            //     user_registered: '',
-            // }
+            verification: {
+                mobile: '',
+                mobileVerificationSessionInfo: '',
+            }
         };
+    }, // EO data
+    created() {
+        const id = $('body').id;
+        // if (id === 'user-mobile-verification-input-code') {
+        //     console.log('page: user-mobile-verification-input-code');
+        //     this.verification.mobile = app.get('mobile');
+        //     this.verification.mobileVerificationSessionInfo = app.get('mobileVerificationSessionInfo');
+        // } else if (id === 'user-register') {
+        //     this.register.mobile = app.get('mobile');
+        // }
     },
     computed: {
         registerEmailError() {
@@ -288,15 +321,31 @@ let vm = Vue.createApp({
         logout() {
             this.session_id = null;
             app.deleteSessionId();
+            app.open('/');
         },
         /**
          * All login must come here including User registration, login, social login. No exception.
          * @note you can do whatever here that takes with user login.
+         * @logic
+         *  - If the user has 'mobile' in localStorage, then it update it into user information and delete it.
+         *  - Lastly, it open the pageUrl.
          * @param user
+         * @param pageUrl
          */
-        setLogin(user) {
+        setLogin(user, pageUrl) {
+            console.log("setLogin() user:", user, 'pageUrl: ', pageUrl)
             app.setSessionId(user);
             this.session_id = user.session_id;
+            if ( app.get('mobile') ) {
+                vm.updateUserField('mobile', app.get('mobile')).then(function(res){
+                    console.log('user mobile updated. res: ', res);
+                    if ( pageUrl ) app.open(pageUrl);
+                });
+                app.remove('mobile');
+            } else {
+                app.remove('mobile');
+                if ( pageUrl ) app.open(pageUrl);
+            }
         },
         onLoginFormSubmit() {
             this.submitted = true;
@@ -305,12 +354,15 @@ let vm = Vue.createApp({
                 .then(function (res) {
                     vm.loader = false;
                     if (app.isBackendError(res)) return;
-                    vm.setLogin(res);
-                    app.open('/');
+                    vm.setLogin(res, '/');
                 });
         },
+        /**
+         * This is invoked by user registration form submit.
+         * @returns {boolean}
+         */
         onRegisterFormSubmit() {
-            console.log('onRegisterFormSubmit');
+            console.log('onRegisterFormSubmit()');
             this.submitted = true;
             if (this.registerFormValidationError) return false;
 
@@ -319,35 +371,18 @@ let vm = Vue.createApp({
                 .then(function (res) {
                     vm.loader = false;
                     if (app.isBackendError(res)) return;
-                    vm.setLogin(res);
-                    app.open(profilePage);
+                    vm.setLogin(res, '/');
                 });
         },
         firebaseGoogleLogin: function () {
-            app.loginFirebaseAuth(new firebase.auth.GoogleAuthProvider(), 'google.com', '구글')
-                .then(function (res) {
-                    app.open('/');
-                });
+            app.loginFirebaseAuth(new firebase.auth.GoogleAuthProvider(), 'google.com', '구글');
         },
         firebaseFacebookLogin: function () {
-            app.loginFirebaseAuth(new firebase.auth.FacebookAuthProvider(), 'facebook.com', '페이스북')
-                .then(function (res) {
-                    app.open('/');
-                });
+            app.loginFirebaseAuth(new firebase.auth.FacebookAuthProvider(), 'facebook.com', '페이스북');
         },
         /**
          * Show dialog
-         * @code
-         <button id="myBtn" @click="showDialog({
-            header: 'Yo',
-            footer: '(C) All rights reserved by Withcenter, inc',
-            body: `
-                <h1>Update your name</h1>
-                <form>
-                    <input type='text' name='fullname'>
-                </form>
-            `
-            })">Open Modal</button>
+         * @see README
          */
         showDialog: function (options) {
             this.dialog = options;
@@ -356,6 +391,32 @@ let vm = Vue.createApp({
         closeDialog: function () {
             this.dialog.display = 'none';
         },
+
+        /**
+         * Show toast
+         * @param options
+         */
+        showToast: function (options = {}) {
+            options.cssClass = options && options.cssClass ? options.cssClass : '';
+            this.toastOptions = Object.assign(this.toastOptions, options);
+            this.toastOptions.display = 'block';
+            setTimeout(function(){
+                vm.toastOptions.display = 'none';
+                console.log(vm.toastOptions.display);
+            }, options && options.delay ? options.delay : 10000);
+        },
+        toast: function(options) { this.showToast(options) },
+        toastOk: function(options) {
+            const cssClass = options && options.cssClass ? options.cssClass : '';
+            options.cssClass = cssClass + ' bg-info white';
+            this.showToast(options);
+        },
+        toastError: function(options) { this.toastWarning(options) },
+        toastWarning: function(options) {
+            const cssClass = options && options.cssClass ? options.cssClass : '';
+            options.cssClass = cssClass + ' bg-warning white';
+            this.showToast(options);
+        },
         loadProfile: function () {
             return app.post({route: 'user.profile'})
                 .then(function (res) {
@@ -363,19 +424,51 @@ let vm = Vue.createApp({
                     return res;
                 })
         },
+        /**
+         * Update user data.
+         * @param name
+         * @param value
+         * @param success - invoked only on success while thenable is returned on both success on error.
+         * @returns {*}
+         */
         updateUserField: function (name, value, success) {
             const data = {
                 route: 'user.update'
             };
             data[name] = value;
-            app.post(data)
+            return app.post(data)
                 .then(function (res) {
-                    if (app.isBackendError(res)) return;
+                    if (app.isBackendError(res)) return res;
                     vm.user = res;
-                    success(res);
+                    if (success) success(res);
                     return res;
                 });
-        }
+        },
+        /// Send mobile verification code to backend.
+        verifyMobileCode: function () {
+            this.loader = true;
+            const code = $('#verification-code').value;
+            if (!code) return app.alertError(tr('code_is_empty'));
+            const data = {
+                route: 'user.verifyPhoneVerificationCode',
+                sessionInfo: this.verification.mobileVerificationSessionInfo,
+                code: code,
+                mobile: this.verification.mobile,
+            };
+            app.post(data)
+                .then(function (res) {
+                    vm.loader = false;
+                    if (app.isBackendError(res)) {
+                        if (res.indexOf('SESSION_EXPIRED') > 0) {
+                            app.open('/?page=user.mobile-verification');
+                        }
+                        return;
+                    }
+                    /// verification success
+                    if (app.loggedIn()) app.open('/?page=user.profile&acode=mobile_verified');
+                    else app.open('/?page=user.register&mobile=v');
+                })
+        },
     } // EO methods
 });
 
@@ -413,18 +506,7 @@ vm = vm.mount('body');
 
 vm.session_id = Cookies.get('session_id');
 
-/**
- * Micro jQuery
- *
- * @code
- *  $('.abc');
- *  $('#abc');
- *  $('div.abc');
- * @endcode
- */
-function $(selector) {
-    return document.querySelector(selector);
-}
+
 
 /**
  * ------------------- TEST CODES --------------------
@@ -432,15 +514,15 @@ function $(selector) {
 function _test() {
 
 
-    vm.register.user_email = 'test@gmail.com';
-    vm.register.user_pass = 'newpassword';
-    vm.register.fullname = 'abc';
-    vm.register.nickname = 'abc';
-    vm.register.mobile = '0101341324';
+    vm.register.user_email = 'test11@gmail.com';
+    vm.register.user_pass = '12345a';
+    vm.register.fullname = 'name';
+    vm.register.nickname = 'nick';
+    // vm.register.mobile = '0101341324';
 // vm.onRegisterFormSubmit();
 }
 
-// _test();
+_test();
 
 
 

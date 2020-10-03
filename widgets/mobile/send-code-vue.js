@@ -6,13 +6,16 @@ function MobileVerificationPage() {
     self.getMobileNumberFromForm = function() {
         let mobile = $("input[name='mobile']").value;
 
-        if (!mobile) return alertBackendError(tr('ERROR_MOBILE_EMPTY'));
-        const countryCode = $("[name='country_code']").val();
+        if (!mobile)  {
+            return false;
+        }
+        const countryCode = $("[name='country_code']").value;
         if ( mobile.charAt(0) === '0' ) mobile = mobile.substring(1);
         mobile = mobile.replace(/\-/g, '');
         mobile = mobile.replace(/ /g, '');
         return countryCode + mobile;
     };
+
 
     /**
      * Call PHP backend to send verification code to the phone.
@@ -22,8 +25,13 @@ function MobileVerificationPage() {
      */
     self.sendVerificationCode = function(recaptchaToken) {
         const mobile = self.getMobileNumberFromForm();
+        vm.loader = true;
+
         if ( mobile === false ) {
-            return reInitReCaptcha();
+            app.alertError(tr('ERROR_MOBILE_EMPTY'));
+            document.location.reload();
+            return false;
+            // return reInitReCaptcha();
         }
         const data = {
             route: 'user.sendPhoneVerificationCode',
@@ -31,30 +39,15 @@ function MobileVerificationPage() {
             token: recaptchaToken
         };
 
-        showLoader();
-
-        $.ajax({
-            method: 'POST',
-            url: apiUrl,
-            data: data
-        })
-            .done(function(res) {
-                if ( isBackendError(res) ) {
-
-                    /// After alert, it must wait until user close the alert box.
-                    alertErrorWait(res);
-                    // Then, refresh the page.
+        app.post(data)
+            .then(function(res) {
+                if ( app.isBackendError(res) ) {
                     location.reload();
-
-                } else {
-                    localStorage.setItem('mobileVerificationSessionInfo', res['sessionInfo']);
-                    localStorage.setItem('mobile', mobile);
-                    move('/?page=user.mobile-verification-input-code')
+                    return;
                 }
-            })
-            .fail(ajaxFailure)
-            .always(function() {
-                hideLoader();
+                app.set('mobileVerificationSessionInfo', res['sessionInfo']);
+                app.set('mobile', mobile);
+                app.open('/?page=user.mobile-verification-input-code')
             });
     };
 
@@ -77,8 +70,7 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-verifi
     'size': 'invisible',
     'callback': function(recaptchaToken) {
         // recaptcha has been verified successfully.
-        console.log('recaptcha has been verified successfully.');
-        // mobileVerificationPage.sendVerificationCode(recaptchaToken);
+        mobileVerificationPage.sendVerificationCode(recaptchaToken);
     },
     'expired-callback': function() {
         /// Response expired. Ask user to solve reCAPTCHA again.
@@ -91,7 +83,6 @@ window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-verifi
  * Render the reCaptcha
  */
 function renderReCaptcha() {
-    console.log('renderReCaptcha');
     recaptchaVerifier.render().then(function(widgetId) {
         window.recaptchaWidgetId = widgetId;
     });
@@ -103,12 +94,12 @@ renderReCaptcha();
  * Whenevery you need to retry the reCaptchat call this.
  */
 function reInitReCaptcha() {
-    setTimeout(function() { // It needs 'setTimeout()' or It wil produce error: recaptcha Cannot read property 'style' of null
+
         window.recaptchaVerifier.reset();
         setTimeout(function () {
             renderReCaptcha();
         }, 300);
-    }, 500);
+
 }
 
 

@@ -233,6 +233,14 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 
 ## Developer Coding Guideline
 
+* Add javascript translation on a page.
+  * The code size may be a big if you add all the i18n translation into i18n Javascript variable on index.
+  So, you can add i18n translation on a page that you need to use it.  
+```
+<script>
+    add_i18n('code_is_empty', '<?=tr([en => 'Input verification code.', ko => '인증 코드를 입력해주세요.'])?>');
+</script>
+```
 
 * WEB/PWA development and design must follow bootstrap way.
 
@@ -740,12 +748,115 @@ Array
 ```
 
 
+
 ## Rich Editor and File upload
 
 * Rich editor works only on desktop(mobile) web browser. On mobile web browser, the editor will be simple textarea.
 
 
+## Modal dialog
 
+* When body is long with HTML, then it becomes extremly difficult to
+    form it with quotes and backslashes.
+    So, there is a handy PHP function to
+    turn multiple lines of HTML string into single lines of string.
+
+* Example) Modal dialog
+
+```
+<?php
+$v = <<<EOJ
+what is the content?
+    <h1>H1</h1>
+    <hr>
+    hr
+    @warning
+    Dobule quotes converts into single quotes. @!" !!"
+    <form>
+        <input name='name' value='oo'>
+    </form>
+END
+EOJ;
+?>
+
+<button @click="showDialog({
+        header: 'Update ' + 'oo',
+        body: '<?= javascript_string_encode( $v ) ?>'
+        })">Open Modal
+</button>
+```
+
+* Trigger programmatically
+
+```
+<script>
+    $$(function(){
+        vm.showDialog({
+            header: 'Update ' + 'oo',
+            body: '<?= javascript_string_encode( $v ) ?>'
+        })
+    })
+</script>
+```
+
+## Toast
+
+* You can add css classes for design.
+
+```
+<script>
+    function sayYo() {
+        alert('yo');
+    }
+</script>
+<button @click="showToast({
+    delay: 300000,
+    cssClass: 'bg-blue white',
+    body: 'hello <button onclick=\'sayYo()\'>Say Yo</button>' })">Show Toast</button>
+```
+
+* If you have a long multiple HTML string, use like below.
+
+```
+<?php
+$v = <<<EOJ
+what is the content?
+    <h1>H1</h1>
+    <hr>
+    hr
+    여기에 쌍 따옴표 @!" !!"
+    <form>
+        <input name='name' value="this is value">
+    </form>
+END
+EOJ;
+?>
+
+<button @click="showToast({
+    delay: 300000,
+    cssClass: 'bg-blue white',
+    body: '<?= javascript_string_encode( $v ) ?>' })">Show Toast</button>
+```
+
+* You can trigger toast programatically
+```
+    $$(function(){
+        vm.showToast({
+            delay: 300000,
+            cssClass: 'bg-blue white',
+            body: '<?= javascript_string_encode( $v ) ?>'
+        });
+    })
+```
+
+
+## Automatic toast on every page.
+
+* If there is a `acode` variable in HTTP query, then it will toast the translation in 'bottom-html.php'.
+
+```
+https://wordpress.philgo.com/?page=user.profile&acode=mobile_verified
+```
 
 ## TEST Scripts
 
@@ -762,6 +873,7 @@ Array
 * Naver: thruthesky chonyoungsoon jungyoungsul
 
 * Kakao: thruthesky@hanmail.net, 010-4046-7379, 
+
 
 
 

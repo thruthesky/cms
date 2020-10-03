@@ -208,6 +208,16 @@ $__i18n[inputNickname] = [
 	ko => '닉네임을 입력해주세요.',
 	en => 'Please, insert your nickname.'
 ];
+define('updateNickname', 'updateNickname');
+$__i18n[updateNickname] = [
+	ko => '닉네임을 수정해주세요.',
+	en => 'Please, update your nickname.'
+];
+define('updateEmail', 'updateEmail');
+$__i18n[updateEmail] = [
+	ko => '이메일을 수정해주세요.',
+	en => 'Please, update your email address.'
+];
 define('inputEmail', 'inputEmail');
 $__i18n[inputEmail] = [
 	ko => '이메일 주소를 입력해주세요.',
@@ -315,7 +325,7 @@ $__i18n['or'] = [
 ];
 define('EMAIL', 'email');
 $__i18n[EMAIL] = [
-    ko => 'Email',
+    ko => '이메일',
     en => 'Email'
 ];
 define('NO_POSTS_YET_1', 'no_posts_yet_1');
@@ -349,6 +359,22 @@ $__i18n[NO_COMMENTS_YET_3] = [
     en => 'Create a comment'
 ];
 
+
+
+define('SESSION_EXPIRED', 'SESSION_EXPIRED');
+$__i18n[SESSION_EXPIRED] = [
+	ko => '인증 번호가 만료되었습니다. 다시 시도해주세요. (코드: SESSION_EXPIRED)',
+	en => 'The verification code has expired. Please try again. (CODE: SESSION_EXPIRED)'
+];
+
+
+define('mobile_verified', 'mobile_verified');
+$__i18n[mobile_verified] = [
+	ko => '전화번호가 인증되었습니다.',
+	en => 'Your phone number has been verified.'
+];
+
+
 $__json = [];
 foreach( $__i18n as $k => $v ) {
     if ( isset($v['javascript']) ) {
@@ -360,5 +386,8 @@ $__json_encoded = json_encode($__json);
 $__system_head_script .= <<<EOJ
 <script>
     var __i18n = $__json_encoded;
+    function add_i18n(name, value) {
+        __i18n[name] = value;
+    }
 </script>
 EOJ;

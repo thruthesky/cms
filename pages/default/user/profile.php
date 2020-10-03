@@ -1,8 +1,8 @@
 <?php
 $options = get_page_options();
 ?>
-<?php if ( isset($options['messageCode']) ) { ?>
-    <div class="alert alert-danger"><?=tr($options['messageCode'])?></div>
+<?php if ( isset($options['code']) ) { ?>
+    <div class="alert alert-danger"><?=tr($options['code'])?></div>
 <?php } ?>
 <div class="px-30 mt-26 mb-56 helvetica">
 

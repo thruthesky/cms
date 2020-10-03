@@ -7,8 +7,13 @@ $options = get_page_options();
     $$(function () {
         vm.loadProfile()
             .then(function (res) {
-                //edit('fullname', "<?//=tr( 'name' )?>//")
-            })
+            });
+
+        <?php if ( isset($options['code']) ) { ?>
+        vm.toastWarning({
+            body: '<?=tr($options['code'])?>'
+        })
+        <?php } ?>
     });
 
     function submitButton() {
@@ -17,22 +22,34 @@ $options = get_page_options();
         const value = obj.value;
         vm.updateUserField(name, value, function () {
             vm.closeDialog();
+            vm.toastOk({body: 'Profile updated'});
         });
+        return false;
     }
 
     function edit(field, fieldName) {
+        const v = vm.user[field] ? vm.user[field] : '';
         vm.showDialog({
             header: 'Update ' + fieldName,
-            body: '' +
+            body: '<h1>HELLo</h1>' +
+                '<form onsubmit="return submitButton();">' +
                 '<div>' +
-                '   <input class="form-input edit-input-box" name="' + field + '" value="' + vm.user[field] + '">' +
+                '   <input class="form-input edit-input-box" name="' + field + '" value="' + v + '">' +
                 '</div>' +
-                '<button onclick="submitButton()">Update</button>'
+                '<button type="submit">Update</button>' +
+                '</form>'
         });
+        setTimeout(setFocus, 100);
+        setTimeout(setFocus, 300);
+    }
+    function setFocus() {
+        if ( $('.edit-input-box') ) {
+            $('.edit-input-box').focus();
+        }
     }
 </script>
-<?php if ( isset( $options['messageCode'] ) ) { ?>
-    <div class="alert alert-danger"><?= tr( $options['messageCode'] ) ?></div>
+<?php if ( isset( $options['code'] ) ) { ?>
+    <div class="alert alert-danger"><?=tr($options['code'])?></div>
 <?php } ?>
 <div class="p-3">
 
@@ -85,63 +102,12 @@ $options = get_page_options();
 
     <div class="d-flex justify-content-between fs-xs">
         <span v-on:click="changePassword">Change password</span>
-        <a href="/?user.logout">Logout</a>
+        <button @click="logout">Logout</button>
     </div>
 
-	<?php include widget( 'user.logged-with' ) ?>
-
-</div>
-
-<div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content radius-3px">
-            <div class="modal-body position-relative pt-34">
-                <span class="position-absolute top right px-10 fs-xl pointer" data-dismiss="modal">&times;</span>
-                <form id="register-form" onsubmit="return onRegisterFormSubmit()">
-                    <input type="hidden" name="session_id" value="<?= login( 'session_id' ) ?>">
-                    <label class="modal-title form-label mb-34 fs-14 gray100"></label>
-                    <input type="text" class="form-control smat-input mb-34" id="field" name="field" value="">
-                    <div class="d-flex justify-content-end mb-6 roboto">
-                        <button type="submit"
-                                class="btn btn-lg bg-lightgray200 blue text-uppercase"><?= tr( 'submit' ) ?></button>
-                    </div>
-                </form>
-            </div>
+    <?php if ( loginSocialProviderName() ) { ?>
+        <div>
+            you are logged in with <?=loginSocialProviderName()?>
         </div>
-    </div>
+    <?php } ?>
 </div>
-<script>
-    // $$(function() {
-    //     $('#profileModal').on('show.bs.modal', function (e) {
-    //         const button = $(e.relatedTarget); // Button that triggered the modal
-    //         const title = button.data('title');
-    //         const field = button.data('field');
-    //         const value = button.data('value');
-    //
-    //         const modal = $(this);
-    //         modal.find('.modal-title').text(title);
-    //         const input = modal.find('.modal-body input#field');
-    //         input.val(value);
-    //         input.attr('name', field);
-    //     })
-    // });
-    //
-    //
-    // function onRegisterFormSubmit() {
-    //     apiUserRegister(objectifyForm($('#register-form')), function(res) {
-    //         $('#profileModal').modal('hide');
-    //         alertModal(tr('profile update'), tr('profile update success'), function (dialog) {
-    //             dialog.on('hidden.bs.modal', function (e) {
-    //                 location.reload(); // update through jquery
-    //                 console.log('do something here');
-    //             })
-    //         });
-    //     }, function(res) {
-    //         alertError(res);
-    //     });
-    //     return false;
-    // }
-
-
-</script>

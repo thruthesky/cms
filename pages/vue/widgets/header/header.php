@@ -8,6 +8,7 @@
         <a href="/?page=user.register" v-if="isLoggedOut">Register</a>
         <a href="/?page=user.profile" v-if="isLoggedIn">Profile</a>
         <a href="/?page=post.list&slug=qna">QnA</a>
+        <a href="/?page=post.list&slug=discussion">Discussion</a>
 	    <?=login('ID')?>
         <?=login('nickname')?>
         (Desktop header)
@@ -23,6 +24,7 @@
         <a href="/?page=user.register" v-if="isLoggedOut">Register</a>
         <a href="/?page=user.profile" v-if="isLoggedIn">Profile</a>
         <a href="/?page=post.list&slug=qna">QnA</a>
+        <a href="/?page=post.list&slug=discussion">Discussion</a>
 	    <?=login('ID')?>
 	    <?=login('nickname')?>
         (Mobile Header)

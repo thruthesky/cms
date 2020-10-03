@@ -1,3 +1,9 @@
+<script>
+    $$(function(){
+        /// remove 'mobile no' that has previously input.
+        app.remove('mobile');
+    })
+</script>
 <section class="p-3">
 	<div class="head"><?=tr(LOGIN_HEAD)?></div>
 	<h1 class="page-title"><?=tr(LOGIN)?></h1>

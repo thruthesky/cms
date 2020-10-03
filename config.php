@@ -29,7 +29,8 @@ class Config {
     static public $verifiedMobileOnly = true;
 
 
-    /// If it is set to true, the mobile number becomes unique in Database.
+    /// If it is set to true, the mobile number cannot be registered twice. It becomes a unique mobile number in Database.
+	/// To test, you can make it false. So, many account can be registered with same mobile number.
 	/// Recommendation: true
     static public $uniqueMobile = true;
 

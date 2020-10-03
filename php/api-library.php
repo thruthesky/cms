@@ -512,7 +512,7 @@ class ApiLibrary {
 	 *
 	 * @note it gets user input data from $_REQUEST and update the user.
 	 *
-	 * @note This method can be called with only one property.
+	 * @note This method can be called with only one property or without any property. It will only update properties in `$in`.
 	 *  For instance, user wants to update first name only, then user can only pass first name without other properties like user_email, user_nickname.
 	 *
 	 * @warning User can change email.
@@ -523,7 +523,16 @@ class ApiLibrary {
 	{
 
 		if (!isset($in['session_id'])) return ERROR_EMPTY_SESSION_ID;
-		if (isset($in['mobile']) ) return ERROR_MOBILE_CANNOT_BE_CHANGED_ON_UPDATE; // Mobile phone number cannot be changed on update.
+
+
+		if (isset($in['mobile']) ) {
+			if ( $this->mobile_already_verified($in['mobile']) ) {
+				// Mobile number is verified. and delete not to reuse it.
+				$this->delete_verified_mobile($in['mobile']);
+			} else {
+				return ERROR_MOBILE_NO_IS_NOT_VERIFIED; // Mobile phone number cannot be changed on update.
+			}
+		}
 
 
 
@@ -1209,7 +1218,7 @@ class ApiLibrary {
 
 
 
-		if ( $this->mobile_already_exists($in['mobile']) ) {
+		if ( Config::$uniqueMobile && $this->mobile_already_exists($in['mobile']) ) {
 			return ERROR_MOBILE_NUMBER_ALREADY_REGISTERED;
 		}
 
@@ -1278,7 +1287,6 @@ class ApiLibrary {
 			'sessionInfo' => $in['sessionInfo'],
 			'code' => $in['code']
 		];
-		xlog($fields);
 
 		$ch = curl_init($urlAuth);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
@@ -1302,7 +1310,9 @@ class ApiLibrary {
 
 		if ( isset($result['error']) ) { // error
 			$msg = $result['error']['message'];
-			return tr($msg);
+			$re = tr($msg);
+			xlog("error return: $re");
+			return $re;
 		} else { // success
 			$this->insert_verified_mobile(in('mobile'));
 			if ( loggedIn() ) {
@@ -1328,8 +1338,12 @@ class ApiLibrary {
 	public function mobile_already_verified($mobile) {
 		global $wpdb;
 		$q = "SELECT stamp FROM x_verified_mobile_numbers WHERE mobile='$mobile'";
-		xlog($q);
 		return $wpdb->get_var($q);
+	}
+	public function delete_verified_mobile($mobile) {
+		global $wpdb;
+		$q = "DELETE FROM x_verified_mobile_numbers WHERE mobile='$mobile'";
+		return $wpdb->query($q);
 	}
 
 	/**

@@ -180,7 +180,7 @@ define('ERROR_WRONG_EMAIL_FORMAT', 'invalid_email_format');
 define('ERROR_WRONG_PASSWORD', 'wrong_password');
 define('ERROR_PASSWORD_TOO_SHORT', 'password_too_short');
 define('ERROR_EMPTY_SESSION_ID', 'session_id_is_empty');
-define('ERROR_MOBILE_CANNOT_BE_CHANGED_ON_UPDATE', 'ERROR_MOBILE_CANNOT_BE_CHANGED_ON_UPDATE');
+define('ERROR_MOBILE_NO_IS_NOT_VERIFIED', 'ERROR_MOBILE_NO_IS_NOT_VERIFIED');
 
 
 define('ERROR_WRONG_SESSION_ID', 'wrong_session_id');

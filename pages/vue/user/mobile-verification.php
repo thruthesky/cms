@@ -1,3 +1,3 @@
 <?php
 
-include widget('mobile/verification-vue');
+include widget('mobile/send-code-vue');

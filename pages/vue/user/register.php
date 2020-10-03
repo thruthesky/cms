@@ -7,24 +7,29 @@ if ( Config::$verifyMobileOnRegistration && notLoggedIn() && in('mobile') == nul
 	return move( Config::$mobileVerificationPage );
 }
 
-/**
- * Init
- */
-if ( ! Config::$verifiedMobileOnly ) { ?>
-    <script>
-        $$(function () {
-            app.deleteMobileNumber();
-        })
-    </script>
-<?php } ?>
+
+?>
+<script>
+    $$(function(){
+        vm.register.mobile = app.get('mobile');
+    })
+</script>
+<!--<script>-->
+<!--    /// TEST-->
+<!--    $$(function() {-->
+<!--        app.set('mobile', '+821086934225');-->
+<!--        vm.register.mobile = '+821086934225';-->
+<!--    })-->
+<!--</script>-->
 
 
 <section class="p-3 p-lg-5">
     <div class="page-subtitle"><?= tr( REGISTRATION_HEAD ) ?></div>
     <h1 class="page-title"><?= tr( registration ) ?></h1>
+    <small class=""><?=tr([en=>'You can login with social service instead of registration.', ko=>'회원 가입 대신, 소셜로그인을 하실 수 있습니다.'])?></small>
     <div class="flex justify-content-end">
         <div class="w-xxs">
-		    <?php include widget( 'social-login/vue-buttons' ) ?>
+			<?php include widget( 'social-login/vue-buttons' ) ?>
         </div>
     </div>
     <form @submit.prevent="onRegisterFormSubmit" autocomplete="off">
@@ -75,30 +80,18 @@ if ( ! Config::$verifiedMobileOnly ) { ?>
 		<?php if ( Config::$mobileRequired ) { ?>
             <section class="mt-3">
                 <label for="user-register-mobile"><?= tr( 'mobileNo' ) ?></label>
-                <div>
-					<?php if ( Config::$verifiedMobileOnly ) { ?>
-
-                        <div class="mobile"></div>
-                    <input type="hidden" name="mobile" value="">
-                        <script>
-							<?php
-							/// @TODO fix this. save it into app class of the javascript.
-							?>
-                            $$(function () {
-                                $('.mobile').text(localStorage.getItem('mobile'))
-                                $('[name="mobile"]').val(localStorage.getItem('mobile'))
-                            })
-                        </script>
-					<?php } else { ?>
+                <div v-if="!register.mobile">
                     <input class="form-input" id="user-register-mobile" type="text" name="mobile"
                            v-model="register.mobile" value="">
-                        <app-input-error :on="registerMobileError"><?= tr( inputMobileNo ) ?></app-input-error>
-					<?php } ?>
+                    <app-input-error :on="registerMobileError"><?= tr( inputMobileNo ) ?></app-input-error>
+                </div>
+                <div v-else>
+                    {{ register.mobile }}
                 </div>
             </section>
 		<?php } ?>
         <app-submit-button :button="'<?= tr( register ) ?>'"
-                    :loading="'<?= tr( registrationInProgress ) ?>'"></app-submit-button>
+                           :loading="'<?= tr( registrationInProgress ) ?>'"></app-submit-button>
     </form>
 
 
