@@ -7,6 +7,8 @@
  * Get post of the page.
  */
 $_post = get_page_post();
+if ( empty($_post) ) return;
+xlog($_post);
 $post  = post()->postGet( [
 	'ID' => $_post->ID
 ] );

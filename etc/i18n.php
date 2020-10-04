@@ -389,6 +389,12 @@ $__i18n[doYouWantToCancelPosting] = [
 	ko => '글 작성을 취소하시겠습니까?',
 	en => 'Do you want to cancel posting?'
 ];
+define('waitWhileLoading', 'waitWhileLoading');
+$__i18n[waitWhileLoading] = [
+	ko => '잠시만 기다려주세요...',
+	en => 'Please wait while loading...'
+];
+
 
 
 

@@ -1328,7 +1328,7 @@ function addRichTextEditor( $selector ) {
       tinymce.init({
         selector: '$selector',
         relative_urls : false,
-        content_css : "/wp-content/themes/cms/css/index.css",
+        content_css : "/wp-content/themes/cms/css/common.css",
         menubar: false,
         statusbar: false,
         plugins: 'code link autoresize',
@@ -1527,4 +1527,21 @@ function viewUrl($post) {
 		return '/' . array_pop($arr);
 	}
 	return '';
+}
+
+/**
+ * @param $name
+ * @param string $color
+ *
+ * @return string
+ *
+ * @code
+ * <img class="size-sm" src="<?=svg('trash', 'grey')?>">
+ * @endcode
+ */
+function svg($name, $color='black') {
+	$_svg = file_get_contents(THEME_PATH . "/svg/$name.svg");
+	$_svg = str_replace('"', "'", $_svg);
+	$_svg = str_replace('currentColor', $color, $_svg);
+	return "data:image/svg+xml;utf8," . $_svg;
 }

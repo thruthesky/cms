@@ -35,9 +35,12 @@ $page_no ++;
 	            <?=$post['ID']?>
                 <a href="<?=viewUrl($post)?>" @click.prevent="onClickPostView(<?=$post['ID']?>)"><?=$post['post_title']?></a>
             </div>
-            <article class="d-none" :style="{display: postDisplay(<?=$post['ID']?>)}">
+            <article class="d-none bg-lighter p-3" :style="{display: postDisplay(<?=$post['ID']?>)}">
+	            <?php if (Config::$showUploadedFilesOnTop) include widget('files/display-uploaded-files', ['post' => $post])?>
                 <?=$post['post_content']?>
-
+                <hr>
+	            <?php if (Config::$showUploadedFilesAtBottom) include widget('files/display-uploaded-files', ['post' => $post])?>
+                <hr>
                 <div class="buttons">
                     <a href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a> Delete Like Dislike Report
                 </div>

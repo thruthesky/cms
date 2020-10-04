@@ -5,8 +5,8 @@
 
 include_once './php/preflight.php';
 require_once('../../../wp-load.php');
-
-
+// TEST
+//sleep(3);
 
 ///
 xlog('[xlog] api.php begin', in());

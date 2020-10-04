@@ -71,7 +71,9 @@ class ApiFile extends ApiLibrary
         }
 
 //        xlog("attach_id: $attach_id");
-        update_attached_file($attach_id, $file_path); // update post_meta for the use of get_attached_file(), get_attachment_url();
+        $re = update_attached_file($attach_id, $file_path); // update post_meta for the use of get_attached_file(), get_attachment_url();
+	    if ( $re ) xlog('update_attached_file success: ');
+	    else xlog('update_attached_file failed: ');
         require_once ABSPATH . 'wp-admin/includes/image.php';
 
         /**
@@ -84,7 +86,14 @@ class ApiFile extends ApiLibrary
          *
          */
         $attach_data = wp_generate_attachment_metadata($attach_id, $file_path);
-        wp_update_attachment_metadata($attach_id,  $attach_data);
+	    if ( $attach_data ) xlog('wp_generate_attachment_metadata success: ');
+	    else xlog('wp_generate_attachment_metadata failed: ');
+
+
+        $re = wp_update_attachment_metadata($attach_id,  $attach_data);
+
+	    if ( $re ) xlog('wp_update_attachment_metadata success: ');
+	    else xlog("wp_update_attachment_metadata failed: attach_id: $attach_id ");
 
         return $this->get_uploaded_file($attach_id);
     }

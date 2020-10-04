@@ -780,14 +780,14 @@ class ApiLibrary {
 		}
 		/// Featured Image Url.
 		///
-		$post_thumbnail_id = get_post_thumbnail_id($post['ID']);
+		$post_thumbnail_id = get_post_thumbnail_id( $post['ID'] );
 		/**
 		 * @TODO double check the sizes.
 		 */
-		if ($post_thumbnail_id) {
-			$post['featured_image_url'] = wp_get_attachment_image_url($post_thumbnail_id, 'full');
-			$post['featured_image_thumbnail_url_2'] = wp_get_attachment_image_url($post_thumbnail_id, '100x100');
-			$post['featured_image_ID'] = $post_thumbnail_id;
+		if ( $post_thumbnail_id ) {
+			$post['featured_image_url']             = wp_get_attachment_image_url( $post_thumbnail_id, 'full' );
+			$post['featured_image_thumbnail_url_2'] = wp_get_attachment_image_url( $post_thumbnail_id, '100x100' );
+			$post['featured_image_ID']              = $post_thumbnail_id;
 		}
 
 		//
@@ -940,6 +940,7 @@ class ApiLibrary {
 				$up['post_type'] = $post_type;
 			}
 			wp_update_post($up);
+//			set_post_thumbnail($post_ID, $file_ID);
 		}
 	}
 
@@ -1076,8 +1077,7 @@ class ApiLibrary {
 		$ret = [];
 
 		$files = get_children(['post_parent' => $parent_ID, 'post_type' => $post_type, 'orderby' => 'ID', 'order' => 'ASC']);
-		// xlog('get_uploaded_files ====> ' . $files);
-
+//		xlog('get_uploaded_files ====> ', $files);
 
 		if ($files) {
 			foreach ($files as $file) {
@@ -1115,7 +1115,8 @@ class ApiLibrary {
 			//        'post' => $post->post_parent
 		];
 		if ($ret['media_type'] == 'image') {
-			$ret['thumbnail_url'] = $post->guid; // thumbnail url
+			$image_attributes = wp_get_attachment_image_src( $post->ID, 'thumbnail' );
+			$ret['thumbnail_url'] = $image_attributes[0];
 		}
 		/// Add image size, width, height
 		$ret['exif'] = image_exif_details(image_path_from_url($ret['url']));

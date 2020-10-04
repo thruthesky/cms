@@ -13,14 +13,31 @@ CMS for community projects
   And some social login does not provide email address. So, email address cannot be used as a contact.
   * That is why phone number verification comes important.
   * SMS message with push notification, the app can have better contact to users.
+  
+### System settings
+
+* Vue.js 3
+* pages/default/bundle.js includes
+  * `axios`
+  * `cookie`
+  * `loadash core` at https://github.com/lodash/lodash/wiki/Build-Differences
+* common.css
+  * dialog
+  * toast
+  * spinner,
+  * progress bar
+  * utility classes
 
 ## Changes
 
 * `Oct 3, 2020` - Frontend framework changes from Bootstrap & jQuery to `Vue.js 3`
   * User registration, login, update, post crud, and comment crud are only done by Rest API call.
   And Modal Dialog, Toast are not easy to implement without Frontend framework. 
-  So, it is mandatory to use a framework like Vue.js or Bootstrap.
-  
+  So, it is mandatory to use a front-end framework or library.
+  And our choice is now `Vue.js 3`
+  * `Vue.js 3` has no `Design System` and existing design systems(UI library) are only for `Vue.js 2`.
+    So, we do not use design system at this time of 2020. 10.
+    * We use our own all css theme and components.
 * Default theme should moved to `boostrap theme` and should be re-written with Vue 3.
 
 
@@ -260,6 +277,8 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 
 * If page has 'submit' in its name, then layout will not be shown. only the content from the page script will be shown.
 
+
+
 ### User profile
 
 * User profile photo must be saved with the `photo_url` key of the user's meta.
@@ -288,6 +307,17 @@ if ( noLayout($page) ) {
     include 'layout' . rwd() . '.php';
 }
 ```
+
+## Logic
+
+### Infinite scrolling on post list page with  Vue.js 3 and SEO
+
+* When you do infinite scrolling there is one thing to consider on SEO.
+* There is no next page link and how are you going to let Search Robot to crawl next page?
+* The solution we have is to simply show 'next page' link at the bottom of the post list page.
+  * Simply load next page with Vue.js when it scrolls to at the bottom of the page.
+  * So, user won't have to touch 'next page' while Robot will get 'next page' link.
+
 
 ## Web/PWA Functionality
 
@@ -968,10 +998,38 @@ insert_at_the_bottom($_style);
     
 * Each theme uses its own CSS theme,
   and the works and looks are very much different on each theme.
-  This is why we have a common CSS theme that has
-  text styles, margin, padding, box, break points and
-  spinner, modal, toast.
-  * For modal and toast, you need to include `etc/common-botom-html.php` before the body but outside of the vue template.
+  This is why we have a common CSS style
+* `common.css` has
+  * default styles,
+  * text styles,
+  * margin,
+  * padding,
+  * box,
+  * break points,
+  * spinner,
+  * modal,
+  * toast,
+  * progress bar,
+  * Icons like `.trash`, `.close`
+  
+ * For modal and toast, you need to include `etc/common-botom-html.php` before the body but outside of the vue template.
   And of course, you need to mount the vue app.
   
 * @warning do not add CSS style in `common.css` unless you are sure.
+
+
+### Icons
+
+* You can add any kinds of `svg` file in `svg` folder, then use it with `svg()` php function.
+  * Good Source: https://feathericons.com/
+  * Good Source: Font awesome 5 Pro. We have paid pro version.
+
+* Examples
+  * You can change color with color parameter.
+  * To change size, simply use css class.
+
+```html
+    <img src="<?=svg('trash', 'red')?>">
+    <img class="size-lg" src="<?=svg('close', 'blue')?>">
+    <img class="size-xl bglighter" src="<?=svg('v-more', 'green')?>">
+```

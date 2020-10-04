@@ -22,9 +22,6 @@ if (localhost()) {
     <meta name="theme-color" content="#4285f4">
     <link rel="apple-touch-icon" href="<?php theme_url() ?>/img/pwa/Icon-192.png">
 
-    <!-- Fontawesome CSS -->
-    <link rel="stylesheet" href="<?php theme_url(); ?>/css/fontawesome/css/all.css">
-
     <link rel="stylesheet" href="<?= THEME_URL ?>/css/common.css?v=<?php echo Config::$appVersion ?>">
     <link rel="stylesheet" href="<?= PAGE_URL ?>/css/index.css?v=<?php echo Config::$appVersion ?>">
 

@@ -123,7 +123,7 @@ EOJ;
 	 * @var bool
 	 * If it is set to true, then the app shows photos & files on top of the post view page.
 	 */
-	static public $showUploadedFilesAtBottom = false;
+	static public $showUploadedFilesAtBottom = true;
 	/**
 	 * @var bool
 	 * If it is set to true, then the app does not show photos or files that are displayed inside the post view content.

@@ -166,11 +166,15 @@ const app = {
         return err;
     },
     /**
-     * Get model data and convert it into JSON object. Then, attach the append.
+     * Return Vue data by after un-proxying.
+     *
+     * Get model data and convert it into JSON object.
+     * Then, attach the append.
      * @param obj - View Model Data
      * @param append
      * @returns {any}
      */
+    getProxyData: function(obj, append={}) { return this.getData(obj, append); },
     getData: function (obj, append = {}) {
         let res = JSON.parse(JSON.stringify(obj));
         return Object.assign(res, append);
@@ -522,7 +526,10 @@ let vm = Vue.createApp({
                         return;
                     }
                     this.uploadPercentage = 0;
-                    console.log('file upload success:', res);
+                    if ( ! this.form.files ) this.form.files = [];
+                    this.form.files.push(res);
+                    insertImageIntoEditor(res);
+                    console.log('file upload success:', app.getData(this.form));
                 }.bind(this))
                 .catch(app.alertError);
         },
@@ -552,26 +559,70 @@ let vm = Vue.createApp({
          short_date_time: "05:12 am"
          slug: "discussion"
          */
-        onPostEditFormSubmit: function () {
-            console.log(app.getData(this.form));
-            app.post(app.getData(this.form))
+        onPostEditFormSubmit: function (event) {
+
+            const data = app.getData(this.form);
+
+            // get the post content from textarea.
+            // TinyMCE is not working with v-bind.
+            // This is working on both plain textarea and TinyMCE rich-editor enchanted textarea.
+            data.post_content = $('#post-create-content').value;
+
+            // get files separated by comma.
+            data.files = data.files.map(e => e.ID).join(',');
+            this.loader = true;
+            app.post(data)
                 .then(function (res) {
                     if (app.isBackendError(res)) return res;
                     app.open('/?page=post.list&slug=' + res.slug);
                 });
         },
+        /**
+         * Initialize edit page
+         * @param obj
+         *
+         * @note the reason why we load post data with Rest api is because it is easy to interact with vue.js.
+         *  - If you want to display post data with PHP, then you will have difficulties with the quotes, line breaks, etc.
+         */
         onPostEdit: function (obj) {
             this.form = obj;
             if (this.form.ID) {
+                this.form.loading = true;
                 app.post({route: 'post.get', ID: this.form.ID})
                     .then(function (res) {
                         if (app.isBackendError(res)) return;
-                        console.log(res);
+                        delete vm.form.loading;
                         vm.form.post_title = res.post_title;
                         vm.form.post_content = res.post_content;
                         vm.form.files = res.files;
                     });
             }
+        },
+        onClickDeleteFile: function(file) {
+            console.log('onClickDeleteFile(): file:', file);
+            file.deleting = true;
+            app.post({route: 'file.delete', ID: file.ID})
+                .then(function(res) {
+                    if ( app.isBackendError(res) ) {
+                        file.deleting = false;
+                        return;
+                    }
+                    console.log('delete sucess: ', res);
+                    vm.form.files = _.filter(vm.form.files, function(e) {
+                        return e.ID !== res.ID;
+                    });
+                }.bind(this));
+        },
+        /**
+         * Calls global function.
+         *
+         * @usage When you need a variable in Vue model, specially in v-for loop, use this method to callback global function with the value of the loop.
+         *
+         * @param func
+         * @param params
+         */
+        callback: function(func, params) {
+            window[func](params);
         }
     } // EO methods
 });
@@ -579,7 +630,7 @@ let vm = Vue.createApp({
 
 vm.component('app-loader', {
     template:
-        '<div class="flex justify-content-center my-3">' +
+        '<div class="flex justify-content-center">' +
         '<div class="spinner"></div>' +
         '<div class="ml-2"><slot></slot></div>' +
         '</div>'
@@ -591,18 +642,20 @@ vm.component('app-input-error', {
 });
 
 vm.component('app-submit-button', {
-    props: ['button', 'loading', 'id'],
+    props: ['button', 'loading', 'id', 'cssclass'],
     computed: {
         isLoading() {
             return this.$root.loader;
         },
         isNotLoading() {
             return !this.isLoading;
-        }
+        },
     },
     template:
-        '<button :id="id" class="btn-primary mt-3 rounded" type="submit" v-if="isNotLoading">{{ button }}</button>' +
-        '<app-loader v-if="isLoading">{{ loading }}</app-loader>'
+        '<div class="mt-3" :class="cssclass">' +
+        '<button :id="id" class="btn-primary rounded" type="submit" v-if="isNotLoading">{{ button }}</button>' +
+        '<app-loader v-if="isLoading">{{ loading }}</app-loader>' +
+        '</div>'
 
 })
 
