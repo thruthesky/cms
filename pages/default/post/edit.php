@@ -1,4 +1,5 @@
 <?php
 
-include widget(forum(POST_EDIT_THEME, 'post.edit'));
+$path = forum(POST_EDIT_THEME, 'post.edit');
+include widget($path);
 

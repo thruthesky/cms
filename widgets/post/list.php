@@ -12,7 +12,8 @@ $page_no = get_page_no();
 $posts = post()->postSearch( [
 	'slug'        => $forum['slug'],
 	'numberposts' => $forum[ NO_OF_POSTS_PER_PAGE ],
-	'paged'       => $page_no
+	'paged'       => $page_no,
+    'with_autop' => true,
 ] );
 $page_no ++;
 ?>
@@ -24,7 +25,7 @@ $page_no ++;
 	        <?=forum('name')?>
         </h3>
         <section class="buttons flex">
-            <a class="btn-primary" href="/?page=post.edit">Create</a>
+            <a class="btn-primary" href="/?page=post.edit&slug=<?=$forum['slug']?>">Create</a>
             <button class="btn-primary ml-1">Notification</button>
         </section>
     </div>
@@ -36,6 +37,10 @@ $page_no ++;
             </div>
             <article class="d-none" :style="{display: postDisplay(<?=$post['ID']?>)}">
                 <?=$post['post_content']?>
+
+                <div class="buttons">
+                    <a href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a> Delete Like Dislike Report
+                </div>
             </article>
         </div>
 	<?php } ?>

@@ -780,7 +780,9 @@ function di( $obj ) {
 
 function dog( $obj ) {
 	echo '<pre>';
-	print_r( $obj );
+	$re = print_r( $obj, true );
+	$re = str_replace('<', '&lt;', $re);
+	echo $re;
 	echo '</pre>';
 }
 

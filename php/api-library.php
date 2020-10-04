@@ -761,9 +761,7 @@ class ApiLibrary {
 	 * @param $options
 	 *
 	 * @note by default, post_content is returned in 'wpautop()' stirng.
-	 *  if $options['with_autop'] is set to true, 'post_content' will be set as normal, and 'post_content_autop' wil have wpautop() string.
-	 *  if $optoins['with_autop'] is set set and $options['autop'] is set to false, then it does not do wpautop()
-	 *
+	 *  if $options['with_autop'] is set to true, 'post_content' will contain <p>,<br> tags converted by wordpress - wpautop() string.
 	 * @note postCreate(), postUpdate(), postSearch() uses 'with_autop' option by default.
 	 *
 	 * @return mixed|array
@@ -778,7 +776,7 @@ class ApiLibrary {
 
 
 		if (isset($options['with_autop']) && $options['with_autop']) {
-			$post['post_content_autop'] = wpautop(($post['post_content']));
+			$post['post_content'] = wpautop(($post['post_content']));
 		}
 		/// Featured Image Url.
 		///
@@ -846,7 +844,29 @@ class ApiLibrary {
 		if ( !isset($post['dislike']) ) $post['dislike'] = 0;
 
 
-		return $post;
+		$ret = [
+			'ID' => $post['ID'],
+			'ancestors' => $post['ancestors'],
+			'author_name' => $post['author_name'],
+			'author_photo_url' => $post['author_photo_url'],
+			'comment_count' => $post['comment_count'],
+			'comments' => $post['comments'],
+			'dislike' => $post['dislike'],
+			'first_image_ID' => $post['first_image_ID'],
+			'files' => $post['files'],
+			'guid' => $post['guid'],
+			'like' => $post['like'],
+			'post_author' => $post['post_author'],
+			'post_category' => $post['post_category'],
+			'post_content' => $post['post_content'],
+			'post_date' => $post['post_date'],
+			'post_name' => $post['post_name'],
+			'post_parent' => $post['post_parent'],
+			'post_title' => $post['post_title'],
+			'short_date_time' => $post['short_date_time'],
+			'slug' => $post['slug'],
+		];
+		return $ret;
 	}
 
 	function getUserVoteChoice($ID, $options) {

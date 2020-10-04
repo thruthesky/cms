@@ -28,7 +28,7 @@ if ( Config::$verifyMobileOnRegistration && notLoggedIn() && in('mobile') == nul
     <h1 class="page-title"><?= tr( registration ) ?></h1>
     <small class=""><?=tr([en=>'You can login with social service instead of registration.', ko=>'회원 가입 대신, 소셜로그인을 하실 수 있습니다.'])?></small>
     <div class="flex justify-content-end">
-        <div class="w-xxs">
+        <div class="w-xxl">
 			<?php include widget( 'social-login/vue-buttons' ) ?>
         </div>
     </div>

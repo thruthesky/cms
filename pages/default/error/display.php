@@ -3,11 +3,14 @@
  *
  */
 /**
- * @param $options['code'] is the code
- * @param $options['message'] is the message
+ * @param $options['code'] is the code. It is mandatory
+ * @param $options['message'] is the message. It is optional. If message is not set, then it displays the translation text of the code.
  */
 $options = get_page_options();
-if ( !isset($options['code']) ) $options['code'] = 'error';
+if ( !isset($options['message']) || empty($options['message']) ) {
+	$options['message'] = tr($options['code']);
+	$options['code'] = 'error';
+}
 
 ?>
 <div class="px-40 pt-60 helvetica text-center">

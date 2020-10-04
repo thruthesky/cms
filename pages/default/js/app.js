@@ -46,6 +46,7 @@ function urlParam(name) {
         results = regex.exec(location.search);
     return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
 }
+
 /**
  * Application js
  */
@@ -68,7 +69,7 @@ const app = {
     set: function (name, value) {
         localStorage.setItem(name, JSON.stringify(value));
     },
-    remove: function(name) {
+    remove: function (name) {
         localStorage.removeItem(name);
     },
 
@@ -278,6 +279,12 @@ let vm = Vue.createApp({
                 mobileVerificationSessionInfo: '',
             },
             posts: {},
+            // HTML form binding object for global use.
+            // Post edit, comment edit is using this.
+            // @note this form is reset every time on page load since it is not SPA.
+            form: {},
+            // Upload percentage for global use.
+            uploadPercentage: 0,
         };
     }, // EO data
     created() {
@@ -335,15 +342,15 @@ let vm = Vue.createApp({
             console.log("setLogin() user:", user, 'pageUrl: ', pageUrl)
             app.setSessionId(user);
             this.session_id = user.session_id;
-            if ( app.get('mobile') ) {
-                vm.updateUserField('mobile', app.get('mobile')).then(function(res){
+            if (app.get('mobile')) {
+                vm.updateUserField('mobile', app.get('mobile')).then(function (res) {
                     console.log('user mobile updated. res: ', res);
-                    if ( pageUrl ) app.open(pageUrl);
+                    if (pageUrl) app.open(pageUrl);
                 });
                 app.remove('mobile');
             } else {
                 app.remove('mobile');
-                if ( pageUrl ) app.open(pageUrl);
+                if (pageUrl) app.open(pageUrl);
             }
         },
         onLoginFormSubmit() {
@@ -399,19 +406,23 @@ let vm = Vue.createApp({
             options.cssClass = options && options.cssClass ? options.cssClass : '';
             this.toastOptions = Object.assign(this.toastOptions, options);
             this.toastOptions.display = 'block';
-            setTimeout(function(){
+            setTimeout(function () {
                 vm.toastOptions.display = 'none';
                 console.log(vm.toastOptions.display);
             }, options && options.delay ? options.delay : 10000);
         },
-        toast: function(options) { this.showToast(options) },
-        toastOk: function(options) {
+        toast: function (options) {
+            this.showToast(options)
+        },
+        toastOk: function (options) {
             const cssClass = options && options.cssClass ? options.cssClass : '';
             options.cssClass = cssClass + ' bg-info white';
             this.showToast(options);
         },
-        toastError: function(options) { this.toastWarning(options) },
-        toastWarning: function(options) {
+        toastError: function (options) {
+            this.toastWarning(options)
+        },
+        toastWarning: function (options) {
             const cssClass = options && options.cssClass ? options.cssClass : '';
             options.cssClass = cssClass + ' bg-warning white';
             this.showToast(options);
@@ -468,8 +479,8 @@ let vm = Vue.createApp({
                     else app.open('/?page=user.register&mobile=v');
                 })
         },
-        getPost: function(post_ID) {
-            if ( this.posts[post_ID] ) return this.posts[post_ID];
+        getPost: function (post_ID) {
+            if (this.posts[post_ID]) return this.posts[post_ID];
             else {
                 this.posts[post_ID] = {};
                 return this.posts[post_ID];
@@ -477,19 +488,90 @@ let vm = Vue.createApp({
         },
         togglePostView(post_ID) {
             const post = this.getPost(post_ID);
-            if ( post.display && post.display === 'block' ) post.display = 'none';
+            if (post.display && post.display === 'block') post.display = 'none';
             else post.display = 'block';
         },
-        onClickPostView: function(post_ID) {
+        onClickPostView: function (post_ID) {
             this.togglePostView(post_ID);
             console.log('onClickPostView()', post_ID);
         },
-        postDisplay: function(post_ID) {
-            if ( this.posts[post_ID] && this.posts[post_ID]['display'] ) return this.posts[post_ID]['display'];
+        postDisplay: function (post_ID) {
+            if (this.posts[post_ID] && this.posts[post_ID]['display']) return this.posts[post_ID]['display'];
             else return 'none';
         },
-        onFileChange: function(name, files) {
+        onFileChange: function (name, files) {
             console.log('name: ', name, 'files: ', files);
+            let formData = new FormData();
+            formData.append('session_id', app.getSessionId());
+            formData.append('route', 'file.upload');
+            formData.append('userfile', files[0]);
+            // You should have a server side REST API
+            axios.post(apiUrl,
+                formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    onUploadProgress: function( progressEvent ) {
+                        this.uploadPercentage = parseInt( Math.round( ( progressEvent.loaded / progressEvent.total ) * 100 ) );
+                    }.bind(this),
+                })
+                .then(function (responseData) {
+                    const res = responseData.data;
+                    if ( app.isBackendError(res) ) {
+                        app.alertError(res);
+                        return;
+                    }
+                    this.uploadPercentage = 0;
+                    console.log('file upload success:', res);
+                }.bind(this))
+                .catch(app.alertError);
+        },
+        /**
+         * Post create & edit
+         *
+         * @example Return value from backend response.
+         ID: "123"
+         ancestors: []
+         author_name: "00-"
+         author_photo_url: ""
+         comment_count: "0"
+         comments: []
+         dislike: 0
+         first_image_ID: "0"
+         guid: "https://wordpress.philgo.com/title-again/"
+         like: 0
+         post_author: "104"
+         post_category: [5]
+         post_content: "later↵content."
+         post_content_autop: "<p>later<br />↵content.</p>↵"
+         post_date: "2020-10-04 05:12:50"
+         post_name: "title-again"
+         post_parent: 0
+         post_title: "title again"
+         route: "post.edit"
+         short_date_time: "05:12 am"
+         slug: "discussion"
+         */
+        onPostEditFormSubmit: function () {
+            console.log(app.getData(this.form));
+            app.post(app.getData(this.form))
+                .then(function (res) {
+                    if (app.isBackendError(res)) return res;
+                    app.open('/?page=post.list&slug=' + res.slug);
+                });
+        },
+        onPostEdit: function (obj) {
+            this.form = obj;
+            if (this.form.ID) {
+                app.post({route: 'post.get', ID: this.form.ID})
+                    .then(function (res) {
+                        if (app.isBackendError(res)) return;
+                        console.log(res);
+                        vm.form.post_title = res.post_title;
+                        vm.form.post_content = res.post_content;
+                        vm.form.files = res.files;
+                    });
+            }
         }
     } // EO methods
 });
@@ -527,7 +609,6 @@ vm.component('app-submit-button', {
 vm = vm.mount('#vue-app');
 
 vm.session_id = Cookies.get('session_id');
-
 
 
 /**

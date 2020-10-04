@@ -384,6 +384,12 @@ $__i18n[inputContent] = [
 	ko => '내용을 입력하세요.',
 	en => 'Input content.'
 ];
+define('doYouWantToCancelPosting', 'doYouWantToCancelPosting');
+$__i18n[doYouWantToCancelPosting] = [
+	ko => '글 작성을 취소하시겠습니까?',
+	en => 'Do you want to cancel posting?'
+];
+
 
 
 $__json = [];

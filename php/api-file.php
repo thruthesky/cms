@@ -1,6 +1,11 @@
 <?php
-
-
+/**
+ * @file api-file.php
+ */
+/**
+ * When mp4 is uploaded, it produces `Call to undefined function wp_read_video_metadata` error without `media.php`
+ */
+require_once( ABSPATH . 'wp-admin/includes/media.php' );
 class ApiFile extends ApiLibrary
 {
 

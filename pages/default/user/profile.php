@@ -72,7 +72,7 @@ $options = get_page_options();
     <section class="bg-lighter p-3 rounded">
 
 
-        <div class="mt-5 w-xxs pointer" onclick="edit('user_email', '<?= tr( emailAddress ) ?>')">
+        <div class="mt-5 w-xxl pointer" onclick="edit('user_email', '<?= tr( emailAddress ) ?>')">
             <div><?= tr( emailAddress ) ?></div>
             <div class="flex align-items-center justify-content-between">
                 <div>{{ user.user_email }}</div>
@@ -81,7 +81,7 @@ $options = get_page_options();
         </div>
 
 
-        <div class="mt-5 w-xxs pointer" onclick="edit('nickname', '<?= tr( nickname ) ?>')">
+        <div class="mt-5 w-xxl pointer" onclick="edit('nickname', '<?= tr( nickname ) ?>')">
             <div><?= tr( nickname ) ?></div>
             <div class="flex align-items-center justify-content-between">
                 <div>{{ user.nickname }}</div>
@@ -89,7 +89,7 @@ $options = get_page_options();
             </div>
         </div>
 
-        <div class="mt-3 w-xxs pointer" onclick="app.open(mobilePage)">
+        <div class="mt-3 w-xxl pointer" onclick="app.open(mobilePage)">
             <div><?= tr( mobileNo ) ?></div>
             <div class="flex align-items-center justify-content-between">
                 <div>{{ user.mobile }}</div>
