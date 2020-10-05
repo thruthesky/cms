@@ -52,7 +52,7 @@ if ( ! isMobile() ) {
         <div class="mt-2">
             <label for="post-create-content">Content</label>
 			<?php if ( isMobile() ) { ?>
-                <textarea class="form-input h-lg fs-md" name="post_content"  id="post-create-content"
+                <textarea class="form-input fs-md" name="post_content"  id="post-create-content"
                           v-model="form.post_content" aria-describedby="Content"
                           placeholder="<?= tr( inputContent ) ?>"></textarea>
 			<?php } else { ?>

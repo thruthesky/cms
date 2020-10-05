@@ -13,7 +13,7 @@ $posts = post()->postSearch( [
 	'slug'        => $forum['slug'],
 	'numberposts' => $forum[ NO_OF_POSTS_PER_PAGE ],
 	'paged'       => $page_no,
-    'with_autop' => true,
+	'with_autop'  => true,
 ] );
 $page_no ++;
 ?>
@@ -22,28 +22,56 @@ $page_no ++;
 <section class="post-list p-3">
     <div class="content-between">
         <h3>
-	        <?=forum('name')?>
+			<?= forum( 'name' ) ?>
         </h3>
         <section class="buttons flex">
-            <a class="btn-primary" href="/?page=post.edit&slug=<?=$forum['slug']?>">Create</a>
+            <a class="btn-primary" href="/?page=post.edit&slug=<?= $forum['slug'] ?>">Create</a>
             <button class="btn-primary ml-1">Notification</button>
         </section>
     </div>
 	<?php foreach ( $posts as $post ) { ?>
         <div class="post">
             <div>
-	            <?=$post['ID']?>
-                <a href="<?=viewUrl($post)?>" @click.prevent="onClickPostView(<?=$post['ID']?>)"><?=$post['post_title']?></a>
+				<?= $post['ID'] ?>
+                <a href="<?= viewUrl( $post ) ?>"
+                   @click.prevent="onClickPostView(<?= $post['ID'] ?>)"><?= $post['post_title'] ?></a>
             </div>
-            <article class="d-none bg-lighter p-3" :style="{display: postDisplay(<?=$post['ID']?>)}">
-	            <?php if (Config::$showUploadedFilesOnTop) include widget('files/display-uploaded-files', ['post' => $post])?>
-                <?=$post['post_content']?>
-                <hr>
-	            <?php if (Config::$showUploadedFilesAtBottom) include widget('files/display-uploaded-files', ['post' => $post])?>
-                <hr>
-                <div class="buttons">
-                    <a href="/?page=post.edit&ID=<?=$post['ID']?>">Edit</a> Delete Like Dislike Report
+            <article class="d-none bg-lighter p-3" :style="{display: postDisplay(<?= $post['ID'] ?>)}">
+
+				<?php // Show files & buttons on top of content
+				if ( forum( BUTTONS_ABOVE_CONTENT ) ) {
+					include 'buttons.php';
+					echo '<hr>';
+				}
+				if ( forum( FILES_ABOVE_CONTENT ) ) {
+					include widget( 'files/display-uploaded-files', [ 'post' => $post ] );
+					echo $post['files'] ? '<hr>' : '';
+				}
+				?>
+
+                <div class=""><?= $post['post_content'] ?></div>
+
+				<?php // Show files & buttons at bottom of content
+				if ( forum( FILES_BELOW_CONTENT ) ) {
+					echo $post['files'] ? '<hr>' : '';
+					include widget( 'files/display-uploaded-files', [ 'post' => $post ] );
+				}
+				if ( forum( BUTTONS_BELOW_CONTENT ) ) {
+					echo '<hr>';
+					include 'buttons.php';
+				}
+				?>
+
+
+                <div class="v-center">
+                    <img class="size-md" src="<?=svg('camera')?>">
+                    <textarea class="form-input ml-1 h-xlg" v-model="form.content"></textarea>
                 </div>
+                <div class="flex-end" v-show="form.content">
+                    <div>Send</div>
+                </div>
+
+
             </article>
         </div>
 	<?php } ?>
@@ -54,5 +82,7 @@ $page_no ++;
 /** Below is for Search Robot. */
 ?>
 <div class="center p-3 fs-sm">
-    <div class="spinner"></div> <a href="/?page=post.list&slug=<?=in('slug')?>&page_no=<?=$page_no?>" class="load-more opacity ml-2" title="Loading next page...">Loading Next Page...</a>
+    <div class="spinner"></div>
+    <a href="/?page=post.list&slug=<?= in( 'slug' ) ?>&page_no=<?= $page_no ?>" class="load-more opacity ml-2"
+       title="Loading next page...">Loading Next Page...</a>
 </div>

@@ -55,6 +55,8 @@ hr {
 
 /**
  * Layout
+ * Desktop layout should follow below.
+ * .l-width(or l-center) is the whole width(including sidebar width). 1130px.
  */
 .l-width, .l-center {
     overflow: hidden;
@@ -63,6 +65,7 @@ hr {
 .l-center {
     margin: 0 auto;
 }
+/* sidebar width inside the l-width. use it with pl-3. */
 .l-sidebar-width {
     overflow: hidden;
     width: 314px;
@@ -108,8 +111,11 @@ hr {
 .center {
     display: flex;
 }
-.justify-content-end {
+.justify-content-end, .flex-end {
     justify-content: flex-end;
+}
+.flex-end {
+    display: flex;
 }
 .align-items-center, .v-center {
     align-items: center;
@@ -177,6 +183,32 @@ hr {
 .mw-100 {
     max-width: 100%;
 }
+
+
+.h-xs {
+    height: .25em;
+}
+.h-sm {
+    height: .5em;
+}
+
+.h-md {
+    height: 1em;
+}
+.h-lg {
+    height: 1.5em;
+}
+/* extra lg size */
+.h-xlg {
+     height: 2em;
+}
+.h-xl {
+    height: 3em;
+}
+.h-xxl {
+    height: 6em;
+}
+
 
 /**
  * Margin, Padding, Height
@@ -311,22 +343,6 @@ hr {
     width: 360px;
 }
 
-
-.h-xs {
-    height: 16px;
-}
-.h-sm {
-    height: 32px;
-}
-.h-md {
-    height: 64px;
-}
-.h-lg {
-    height: 128px;
-}
-.h-xl {
-    height: 256px;
-}
 
 
 

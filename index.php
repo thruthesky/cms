@@ -34,6 +34,8 @@ $__system_head_script .=<<<EOH
             if ( document.readyState === "complete" ) fn(); // for calling it after Ajax load.
             else window.addEventListener('load', fn); // for calling after load.
         }
+        
+        function $(selector) { return document.querySelector(selector);} // jQuery like
     </script>
 EOH;
 

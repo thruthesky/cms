@@ -55,10 +55,12 @@ update_term_meta($ID , POST_SHOW_LIKE, in(POST_SHOW_LIKE));
 update_term_meta($ID , POST_SHOW_DISLIKE, in(POST_SHOW_DISLIKE));
 update_term_meta($ID , COMMENT_SHOW_LIKE, in(COMMENT_SHOW_LIKE));
 update_term_meta($ID , COMMENT_SHOW_DISLIKE, in(COMMENT_SHOW_DISLIKE));
+update_term_meta($ID , FILES_ABOVE_CONTENT, in(FILES_ABOVE_CONTENT));
+update_term_meta($ID , FILES_BELOW_CONTENT, in(FILES_BELOW_CONTENT));
+update_term_meta($ID , BUTTONS_ABOVE_CONTENT, in(BUTTONS_ABOVE_CONTENT));
+update_term_meta($ID , BUTTONS_BELOW_CONTENT, in(BUTTONS_BELOW_CONTENT));
 
 $cat = get_category($ID);
-
-
 
 jsGo("/?page=admin.forum.setting&slug=" . $cat->slug, in('cat_ID') ? "Update Success" : "Create Success");
 

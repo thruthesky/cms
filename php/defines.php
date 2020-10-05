@@ -29,6 +29,10 @@ define('POST_VIEW_THEME', 'post_view_theme');
 define('POST_VIEW_BUTTON_THEME', 'post_view_button_theme');
 define('POST_VIEW_COMMENT_THEME', 'post_view_comment_theme');
 define('POST_EDIT_THEME', 'post_edit_theme');
+define('FILES_ABOVE_CONTENT', 'files_above_content');
+define('FILES_BELOW_CONTENT', 'files_below_content');
+define('BUTTONS_ABOVE_CONTENT', 'buttons_above_content');
+define('BUTTONS_BELOW_CONTENT', 'buttons_below_content');
 
 define('DOMAIN_SETTINGS', 'domain_settings');
 define('FIREBASE_CONFIG_SETTING', 'firebase_config_setting');

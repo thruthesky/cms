@@ -500,6 +500,7 @@ let vm = Vue.createApp({
             console.log('onClickPostView()', post_ID);
         },
         postDisplay: function (post_ID) {
+            return 'block'; // test
             if (this.posts[post_ID] && this.posts[post_ID]['display']) return this.posts[post_ID]['display'];
             else return 'none';
         },
@@ -569,7 +570,9 @@ let vm = Vue.createApp({
             data.post_content = $('#post-create-content').value;
 
             // get files separated by comma.
-            data.files = data.files.map(e => e.ID).join(',');
+            if ( data.files ) {
+                data.files = data.files.map(e => e.ID).join(',');
+            }
             this.loader = true;
             app.post(data)
                 .then(function (res) {

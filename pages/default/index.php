@@ -36,9 +36,6 @@ if (localhost()) {
 
     <title><?= Config::$appName ?></title>
 	<?= get_system_head_script() ?>
-    <script>
-        function $(selector) { return document.querySelector(selector);} // jQuery like
-    </script>
 </head>
 
 <body id="<?= get_page_id() ?>">

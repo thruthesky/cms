@@ -25,7 +25,7 @@
  */
 ?>
 <h1>Admin Forum List</h1>
-<a class="btn btn-primary" href="/?page=admin.forum.setting">Add</a>
+<a class="btn btn-primary" href="/?page=admin.forum.setting&mode=create">Add</a>
 <?php
 $cats = get_categories(['hide_empty' => false]);
 foreach ($cats as $cat) {

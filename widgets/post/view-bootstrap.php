@@ -41,9 +41,9 @@ $slug = $post['slug'];
         <div class="pt-10 pr-20 pl-10 pointer"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></div>
     </div>
 
-    <?php if (Config::$showUploadedFilesOnTop) include widget('files/display-uploaded-files', ['post' => $post])?>
+    <?php if (forum(FILES_ABOVE_CONTENT)) include widget('files/display-uploaded-files', ['post' => $post])?>
     <div class="px-20 pt-20 pb-12 mb-15 bg-lightgray100"><?=$post['post_content']?></div>
-	<?php if (Config::$showUploadedFilesAtBottom) include widget('files/display-uploaded-files', ['post' => $post])?>
+	<?php if (forum(FILES_BELOW_CONTENT)) include widget('files/display-uploaded-files', ['post' => $post])?>
 
     <div class="px-20 mb-20">
         <span class="mr-8 pointer" onclick="onClickReply()">Reply</span>

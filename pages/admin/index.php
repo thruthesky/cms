@@ -20,7 +20,7 @@ if ( localhost() ) {
     <!-- Fontawesome CSS -->
     <link rel="stylesheet" href="<?php theme_url();?>/css/fontawesome/css/all.css">
     <!-- Index CSS compiled from index.scss -->
-    <link rel="stylesheet" href="<?php theme_url()?>/css/index.css?v=<?php echo Config::$appVersion?>">
+    <link rel="stylesheet" href="<?php theme_url()?>/css/common.css?v=<?php echo Config::$appVersion?>">
 
     <link rel="shortcut icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
     <link rel="icon" href="<?php theme_url()?>/favicon.ico" type="image/x-icon">
