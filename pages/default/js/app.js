@@ -500,7 +500,7 @@ let vm = Vue.createApp({
             console.log('onClickPostView()', post_ID);
         },
         postDisplay: function (post_ID) {
-            return 'block'; // test
+            // return 'block'; // test11
             if (this.posts[post_ID] && this.posts[post_ID]['display']) return this.posts[post_ID]['display'];
             else return 'none';
         },
