@@ -3,7 +3,7 @@
         <div class="dialog-modal-header flex align-items-center justify-content-between bg-lighter"
              v-if="dialog.header">
             <div class="py-2 px-3 fs-lg">{{ dialog.header }}</div>
-            <span class="close fs-lg py-2 px-3 pointer" @click="dialog.display='none'">&times;</span>
+            <span class="fs-lg py-2 px-3 pointer" @click="dialog.display='none'">&times;</span>
         </div>
         <div class="dialog-modal-body p-3 bg-white">
             <div v-html="dialog.body"></div>

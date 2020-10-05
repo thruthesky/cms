@@ -31,7 +31,7 @@ $options = get_page_options();
         const v = vm.user[field] ? vm.user[field] : '';
         vm.showDialog({
             header: 'Update ' + fieldName,
-            body: '<h1>HELLo</h1>' +
+            body: '' +
                 '<form onsubmit="return submitButton();">' +
                 '<div>' +
                 '   <input class="form-input edit-input-box" name="' + field + '" value="' + v + '">' +
