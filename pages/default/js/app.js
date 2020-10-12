@@ -247,6 +247,9 @@ const app = {
  * @attention Keep the codes that are necessary to control the model. All extra codes should go to 'app' class.
  *
  */
+
+
+
 let vm = Vue.createApp({
     data() {
         return {
@@ -282,11 +285,18 @@ let vm = Vue.createApp({
                 mobile: '',
                 mobileVerificationSessionInfo: '',
             },
+
+
+            // post list container on post list page.
+            //
+            // Key is the post_ID and value is the post.
             posts: {},
+
             // HTML form binding object for global use.
             // Post edit, comment edit is using this.
             // @note this form is reset every time on page load since it is not SPA.
             form: {},
+
             // Upload percentage for global use.
             uploadPercentage: 0,
         };
@@ -300,6 +310,11 @@ let vm = Vue.createApp({
         // } else if (id === 'user-register') {
         //     this.register.mobile = app.get('mobile');
         // }
+    },
+    beforeMount() {
+        if ( typeof posts_in_post_list_page !== 'undefined' ) { // Initialize posts in List page.
+            this.insertPosts(posts_in_post_list_page);
+        }
     },
     computed: {
         registerEmailError() {
@@ -327,6 +342,7 @@ let vm = Vue.createApp({
             return !this.isLoggedIn;
         },
     }, // EO computed
+
     methods: {
         logout() {
             this.session_id = null;
@@ -483,25 +499,35 @@ let vm = Vue.createApp({
                     else app.open('/?page=user.register&mobile=v');
                 })
         },
-        getPost: function (post_ID) {
-            if (this.posts[post_ID]) return this.posts[post_ID];
-            else {
-                this.posts[post_ID] = {};
-                return this.posts[post_ID];
-            }
-        },
+        // getPost: function (post_ID) {
+        //
+        //     return _.find(this.posts, function(e) { return e.ID === post_ID; });
+        //
+        //     // if (this.posts[post_ID]) return this.posts[post_ID];
+        //     // else {
+        //     //     this.posts[post_ID] = {};
+        //     //     return this.posts[post_ID];
+        //     // }
+        // },
         togglePostView(post_ID) {
-            const post = this.getPost(post_ID);
+            const post = this.posts[post_ID];
+            if ( ! post ) return;
             if (post.display && post.display === 'block') post.display = 'none';
             else post.display = 'block';
+
         },
+
+
         onClickPostView: function (post_ID) {
             this.togglePostView(post_ID);
-            console.log('onClickPostView()', post_ID);
+            // console.log('onClickPostView()', post_ID);
         },
+
         postDisplay: function (post_ID) {
-            // return 'block'; // test11
-            if (this.posts[post_ID] && this.posts[post_ID]['display']) return this.posts[post_ID]['display'];
+            // console.log(post_ID);
+            return 'block'; // test
+
+            if (this.posts[post_ID] && this.posts[post_ID]['display'] ) return this.posts[post_ID]['display']; // bug
             else return 'none';
         },
         onFileChange: function (name, files) {
@@ -626,7 +652,35 @@ let vm = Vue.createApp({
          */
         callback: function(func, params) {
             window[func](params);
-        }
+        },
+
+        onCommentFormSubmit: function(post_ID) {
+            // console.log('post: onCommentFormSubmit() ', this.posts[post_ID]);
+            // const data = app.getProxyData(this.posts[post_ID]);
+            const post = this.posts[post_ID];
+            const data = {
+                route: 'comment.edit',
+                comment_post_ID: post_ID,
+                comment_content: post.comment_content,
+            }
+            console.log('comment form: ', data);
+
+            post.loader = true;
+            app.post(data)
+                .then(function(res){
+                    post.loader = false;
+                    if ( app.isBackendError(res) ) return;
+                    console.log('comment created: ', res);
+
+                });
+
+        },
+
+        insertPosts: function(posts) {
+            for( const post of posts ) {
+                this.posts[post.ID] = post;
+            }
+        },
     } // EO methods
 });
 

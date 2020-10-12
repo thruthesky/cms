@@ -16,8 +16,14 @@ $posts = post()->postSearch( [
 	'with_autop'  => true,
 ] );
 $page_no ++;
-?>
 
+
+?>
+<script>
+
+    const posts_in_post_list_page = <?=json_encode($posts)?>;
+
+</script>
 
 <section class="post-list p-3">
     <div class="content-between">
@@ -63,14 +69,26 @@ $page_no ++;
 				?>
 
 
-                <div class="v-center">
-                    <img class="size-md" src="<?=svg('camera')?>">
-                    <textarea class="form-input ml-1 h-xlg" v-model="form.content"></textarea>
-                </div>
-                <div class="flex-end" v-show="form.content">
-                    <div>Send</div>
-                </div>
+                <form @submit.prevent="onCommentFormSubmit(<?=$post['ID']?>)">
+                    <div class="v-center">
+                        <img class="size-md" src="<?= svg( 'camera' ) ?>">
+                        <textarea class="form-input ml-1 h-xlg" v-model="posts[<?=$post['ID']?>].comment_content"></textarea>
+                    </div>
+                    <div class="flex-end" v-show="posts[<?=$post['ID']?>].comment_content">
+                        <button class="mt-1 py-2 px-3" type="submit" v-if="!posts[<?=$post['ID']?>].loader">Send</button>
+                        <div class="flex mt-2" v-if="posts[<?=$post['ID']?>].loader"><div class="spinner"></div><div class="ml-2">Sending</div></div>
+                    </div>
+                </form>
 
+                <section class="comments mt-3">
+	                <?php foreach( $post['comments'] as $comment ) { ?>
+                        <article class="p-3 bg-white">
+                            <?=$comment['comment_ID']?>
+                            <hr>
+                            <?=$comment['comment_content']?>
+                        </article>
+	                <?php } ?>
+                </section>
 
             </article>
         </div>
@@ -82,7 +100,7 @@ $page_no ++;
 /** Below is for Search Robot. */
 ?>
 <div class="center p-3 fs-sm">
-    <div class="spinner"></div>
+    <!--    <div class="spinner"></div>-->
     <a href="/?page=post.list&slug=<?= in( 'slug' ) ?>&page_no=<?= $page_no ?>" class="load-more opacity ml-2"
-       title="Loading next page...">Loading Next Page...</a>
+       title="Loading next page...">Load Next Page...</a>
 </div>

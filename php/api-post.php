@@ -47,7 +47,7 @@ class ApiPost extends ApiLibrary
             $returns[] = $this->postResponse($p, $in);
         }
 
-        return $returns;
+        return [ 'posts' => $returns ];
     }
 
 

@@ -32,6 +32,7 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/?page=admin.settings.domain">Domain Settings</a></li>
+                        <li><a class="dropdown-item" href="/?page=admin.settings.client">Client Settings</a></li>
                         <li><a class="dropdown-item" href="#">System Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Help</a></li>
