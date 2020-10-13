@@ -37,8 +37,14 @@ if (localhost()) {
     <title><?= Config::$appName ?></title>
 	<?= get_system_head_script() ?>
 </head>
-
 <body id="<?= get_page_id() ?>">
+
+<?php
+if ( in('page') == 'user.kakao-login' || in('page') == 'user.naver-login' ) {
+	include page();
+} else {
+?>
+
 <section id="vue-app">
     <div class="layout">
         <div class="l-top h-5 bg-light">&nbsp;</div>
@@ -63,6 +69,7 @@ if (localhost()) {
     </div>
 	<?php include THEME_PATH . '/etc/common-bottom-html.php'?>
 </section>
+<?php } ?>
 
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>

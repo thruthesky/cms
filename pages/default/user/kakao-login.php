@@ -4,7 +4,7 @@ if ( !isset($_GET['code']) ) {
 	return;
 }
 
-include widget('loader/login');
+//include widget('loader/login');
 
 $returnCode = $_GET["code"]; // 서버로 부터 토큰을 발급받을 수 있는 코드를 받아옵니다.
 // API 요청 URL
@@ -23,7 +23,7 @@ $status_code   = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 curl_close( $ch );
 
 //var_dump( $loginResponse ); // Kakao API 서버로 부터 받아온 값
-$accessToken = json_decode( $loginResponse )->access_token; //Access Token만 따로 뺌
+$accessToken = json_decode( $loginResponse )->access_token; //Access Token 만 따로 뺌
 //echo "<br><br> accessToken : " . $accessToken;
 
 // 사용자 정보 가저오기

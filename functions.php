@@ -44,9 +44,9 @@ $__page_post = null;
 
 
 require 'php/defines.php';
+require 'php/library.php';
 require 'config.php';
 require 'etc/i18n.php';
-require 'php/library.php';
 require 'php/api-library.php';
 require 'php/api-post.php';
 require 'php/api-comment.php';
@@ -1226,6 +1226,15 @@ function loginOrRegisterBySocialLogin( $options ) {
 			echo tr( $res );
 		}
 	}
+
+	$url = Config::$returnUrlAfterSocialLogin;
+	echo <<<EOS
+<script>
+document.location.href = "$url/?session_id={$res['session_id']}";
+</script>
+EOS;
+	return;
+
 
 	/// 로그인 성공. $res 는 userResponse
 	$json = json_encode( $res );

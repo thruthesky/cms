@@ -3,7 +3,7 @@ if ( !isset($_GET['code']) ) {
 	include error_page('네이버 로그인 에러', '회원 정보 코드를 가져오지 못했습니다.');
 	return;
 }
-include widget('loader/login');
+//include widget('loader/login');
 
 
 // 네이버 로그인 콜백 예제

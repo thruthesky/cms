@@ -13,6 +13,8 @@ class Config {
     static public $adminForumList = '/?page=admin.forum.list';
 
 
+
+
     /// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
 	/// This is only for web registration.
     static public $verifyMobileOnRegistration = true;
@@ -81,6 +83,12 @@ EOJ;
 	 */
 	static public $firebaseCreateUserIfNotExist = true;
 
+
+	/**
+	 * return URL after social login(Kakao, Naver)
+	 * @var string
+	 */
+	static public $returnUrlAfterSocialLogin = "";
 
 	/**
 	 * Naver Login
@@ -214,3 +222,14 @@ Config::$naverClientSecret = get_option(NAVER_CLIENT_SECRET_SETTING) ? get_optio
 Config::$naverRedirectURI =  urlencode(Config::$naverRedirectURI);
 Config::$naverLoginApiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=".Config::$naverClientId."&redirect_uri=".Config::$naverRedirectURI."&state=".Config::$naverState;
 
+
+/**
+ * return url to vue client.
+ *
+ * When a user logs in with Kakao or Naver account, the app do Rest Api OAuth, so, it needs to return back to Vue client.
+ */
+if ( localhost() ) {
+	Config::$returnUrlAfterSocialLogin = "https://vue.sonub.com:8080";
+} else {
+	Config::$returnUrlAfterSocialLogin = "https://sonub.com";
+}
