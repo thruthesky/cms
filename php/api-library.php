@@ -919,6 +919,8 @@ class ApiLibrary {
 	 * Attach uploaded files to a post.
 	 * @param $post_ID int Post ID as wp_posts.ID
 	 * @param $files mixed IDs of attachment in wp_posts
+	 *      - It can be a string of file ID separated by comma.
+	 *      - Or it can be an array containing file ID.
 	 * @param string $post_type
 	 *          - For comment, it is COMMENT_ATTACHMENT.
 	 * @attention
@@ -933,7 +935,7 @@ class ApiLibrary {
 	public function attachFiles($post_ID, $files, $post_type = '')
 	{
 		if (!$files) return;
-		if (!is_array($files)) {
+		if (is_string($files)) {
 			$files = explode(',', $files);
 		}
 		foreach ($files as $file_ID) {
