@@ -7,6 +7,7 @@ use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 use Kreait\Firebase\Messaging\AndroidConfig;
 
+
 class NotificationRoute extends ApiLibrary {
 
 
@@ -81,7 +82,7 @@ class NotificationRoute extends ApiLibrary {
 		if ( $re ) {
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {
 				if ( isset( $re['results'][0]['error'] ) ) {
-					$this->error( ERROR_TOPIC_SUBSCRIPTION_FAILED, "Topic subscription has failed. Error: " . $re['results'][0]['error'] );
+					$this->error( ERROR_TOPIC_SUBSCRIPTION_FAILED . "Topic subscription has failed. Error: " . $re['results'][0]['error'] );
 				} else {
 					$this->success( [ 'topic' => $topic, 'token' => $token ] );
 				}
@@ -104,13 +105,13 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
 
-		$re = unsubscribeFirebaseTopic( $topic, $token ); // unsubscribe to firebase with topic
+		$re = $this->unsubscribeFirebaseTopic( $topic, $token ); // unsubscribe to firebase with topic
 
 
 		if ( $re ) {
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {
 				if ( isset( $re['results'][0]['error'] ) ) {
-					$this->error( ERROR_TOPIC_UNSUBSCRIPTION_FAILED, "Topic unsubscription has failed. Error: " . $re['results'][0]['error'] );
+					$this->error( ERROR_TOPIC_UNSUBSCRIPTION_FAILED . "Topic unsubscription has failed. Error: " . $re['results'][0]['error'] );
 				} else {
 					$this->success( [ 'topic' => $topic, 'token' => $token ] );
 				}
@@ -153,8 +154,28 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_DATA_PROVIDED );
 		}
 
-		$this->success( sendMessageToTopic( $topic, $title, $body, $click_action, $iconUrl, $data ) );
+		$this->success( $this->messageToTopic( $topic, $title, $body, $click_action, $iconUrl, $data ) );
 	}
+
+    private function messageToTopic($topic, $title, $body, $url, $iconUrl, $data = '') {
+
+        $message = CloudMessage::withTarget('topic', $topic)
+            ->withWebPushConfig($this->getWebPushData($title, $body, $this->iconUrl($iconUrl), $url, $data))
+            ->withNotification($this->getNotificationData($title, $body, $this->iconUrl($iconUrl), $url, $data))
+            ->withAndroidConfig($this->getAndroidPushData())
+//    ->withApnsConfig('...')
+        ;
+
+
+
+        $messaging = firebase()->createMessaging();
+        try {
+            return $messaging->send($message);
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+
+    }
 
 	/**
 	 * send notification to a token.
@@ -190,8 +211,14 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_DATA_PROVIDED );
 		}
 
-		$this->success( sendMessageToToken( $token, $title, $body, $click_action, $iconUrl, $data ) );
+		$this->success( $this->messageToToken( $token, $title, $body, $click_action, $iconUrl, $data ) );
 	}
+
+
+    function iconUrl($url=null) {
+        if ( $url ) return $url;
+        return 'https://wp-local.sonub.com/wp-content/themes/cms/tmp/app-icon2.png';   // need to be update on production
+    }
 
 
 	/**
@@ -205,6 +232,7 @@ class NotificationRoute extends ApiLibrary {
 
 	private function subscribeFirebaseTopic( $topic, $token ) {
 		$messaging = firebase()->createMessaging();
+
 		try {
 			return $messaging->subscribeToTopic( $topic, $token );
 		} catch ( Firebase\Exception\MessagingException $e ) {
@@ -215,6 +243,128 @@ class NotificationRoute extends ApiLibrary {
 			return $e->getMessage();
 		}
 	}
+
+
+    /**
+     * @param $token
+     * @param $title
+     * @param $body
+     * @param $url
+     * @param $iconUrl
+     * @param string $data
+     * @return array|string
+     */
+    private function messageToToken($token, $title, $body, $url, $iconUrl, $data = '') {
+
+        $message = CloudMessage::withTarget('token', $token)
+            ->withWebPushConfig($this->getWebPushData($title, $body, $this->iconUrl($iconUrl), $url, $data))
+            ->withNotification($this->getNotificationData($title, $body, $this->iconUrl($iconUrl), $url, $data))
+            ->withAndroidConfig($this->getAndroidPushData())
+            ->withData($this->getData($title, $body, $this->iconUrl($iconUrl), $url, $data)) // required
+//    ->withApnsConfig('...')
+        ;
+
+        $messaging = firebase()->createMessaging();
+        try {
+            return $messaging->send($message);
+        } catch (Exception $e) {
+
+            /**
+             * @todo deleted token if not 'Requested entity was not found'
+             */
+            return $e->getMessage();
+        }
+
+    }
+
+    /**
+     * @param $topic string - topic
+     * @param $token string - token
+     * @return mixed
+     * @throws Firebase\Exception\FirebaseException
+     * @throws Firebase\Exception\MessagingException
+     */
+    private function unsubscribeFirebaseTopic($topic, $token) {
+        $messaging = firebase()->createMessaging();
+        try {
+            return $messaging->unsubscribeFromTopic($topic, $token);
+        } catch ( Firebase\Exception\MessagingException $e ) {
+            return $e->getMessage();
+        } catch ( Firebase\Exception\FirebaseException $e ) {
+            return $e->getMessage();
+        } catch ( Exception $e ) {
+            return $e->getMessage();
+        }
+    }
+
+
+    /**
+     * it look like data and notification is redundant but this is needed here specially for onResume and onLaunch
+     * because onResume and onLaunch notification became empty. so we can rely on data to display on ui
+     *
+     * @param $title
+     * @param $body
+     * @param $imageUrl
+     * @param $clickUrl
+     * @param $data
+     * @return array
+     */
+    private function getData($title, $body, $imageUrl, $clickUrl, $data) {
+        $notification = [
+            'title' => $title,
+            'body' => $body,
+            'image' => $imageUrl,
+            'click_action' => $clickUrl,
+            'data' => $data
+        ];
+        return $notification;
+    }
+
+
+
+
+    private function getNotificationData($title, $body, $imageUrl, $clickUrl, $data) {
+        $notification = Notification::fromArray([
+            'title' => $title,
+            'body' => $body,
+            'image' => $imageUrl,
+            'click_action' => $clickUrl,
+            'data' => $data
+        ]);
+        return $notification;
+    }
+
+    private function getWebPushData($title, $body, $iconUrl, $clickUrl, $data) {
+        $body = mb_strcut($body, 0, 128);
+        return [
+            'notification' => [
+                'title' => $title,
+                'body' => $body,
+                'icon' => $iconUrl,
+                'click_action' => $clickUrl,
+                'data' => $data
+            ],
+            'fcm_options' => [
+                'link' => $clickUrl,
+            ],
+        ];
+    }
+
+
+    private function getAndroidPushData() {
+        return AndroidConfig::fromArray([
+            'notification' => [
+                'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            ],
+        ]);
+    }
+
+
+
+
+
+
+
 
 
 }

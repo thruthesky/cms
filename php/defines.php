@@ -129,16 +129,9 @@ define('PUSH_TOKENS', 'x_push_tokens');
 define('ERROR_TOPIC_SUBSCRIPTION_FAILED', 'topic_subscription_failed');
 
 
-
-/**
- * @todo defines below are not in use. remove on Oct 1st.
- * -----------------------------------
- */
-
-//
-//if ( ! defined( 'API_DIR' ) ) {
-//    define( 'API_DIR', dirname( __FILE__ ) );
-//}
+if ( ! defined( 'API_DIR' ) ) {
+    define( 'API_DIR', dirname( __FILE__ ) );
+}
 
 
 /// Without trailing slash(/)
