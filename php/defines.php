@@ -123,6 +123,13 @@ define('emailAddress', 'emailAddress');
 define('ERROR_EMAIL_EXISTS', 'ERROR_EMAIL_EXISTS');
 
 
+
+
+define('PUSH_TOKENS', 'x_push_tokens');
+define('ERROR_TOPIC_SUBSCRIPTION_FAILED', 'topic_subscription_failed');
+
+
+
 /**
  * @todo defines below are not in use. remove on Oct 1st.
  * -----------------------------------
@@ -172,7 +179,6 @@ define('USER_NOT_ALLOWED_METAS_FOR_RESPONSE', [
     'wp_user-settings-time'
 ]);
 
-define('PUSH_TOKENS', 'push_tokens');
 
 define('ERROR_WORDPRESS_ERROR', 'wordpress_error');
 define('ERROR_NO_DATA', 'no_data_from_backend');
@@ -230,7 +236,6 @@ define('ERROR_USER_NOT_FOUND', 'user_not_found');
 
 define('ERROR_NO_TOKEN_PROVIDED', 'no_token_provided');
 define('ERROR_NO_TOPIC_PROVIDED', 'no_topic_provided');
-define('ERROR_TOPIC_SUBSCRIPTION_FAILED', 'topic_subscription_failed');
 define('ERROR_TOPIC_UNSUBSCRIPTION_FAILED', 'topic_unsubscription_failed');
 
 define('ERROR_NO_POST_TITLE_PROVIDED', 'post_title_is_not_provided');

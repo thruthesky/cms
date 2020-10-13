@@ -137,6 +137,12 @@ EOJ;
 	 * If it is set to true, then the app does not show photos or files that are displayed inside the post view content.
 	 */
 	static public $hidePhotosInContent = true;
+
+	/**
+	 * The topic that all token will subscribe.
+	 * @var string
+	 */
+	static public $allTopic = 'allTopic';
 }
 
 

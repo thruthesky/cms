@@ -620,7 +620,7 @@ class ApiLibrary {
 	 */
 	public function updateUserMeta($ID, $k, $v)
 	{
-		if ($k == 'photo_url') {
+		if ($k == 'photo_url') { //
 			$file = $this->getAttachmentFromGUID($v);
 			if ($file) {
 				$path = get_attached_file($file['id']);
@@ -630,6 +630,8 @@ class ApiLibrary {
 					$image->save($path);
 				}
 			}
+		} else if ($k == 'push_token' ) {
+
 		}
 		xlog("updateUserMeta($ID, $k, $v)");
 		update_user_meta($ID, $k, $v);

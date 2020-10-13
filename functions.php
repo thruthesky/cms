@@ -82,8 +82,9 @@ function cms_theme_activation() {
 	global $wpdb;
 	$back              = $wpdb->show_errors;
 	$wpdb->show_errors = false;
-	cms_insert_schema( THEME_PATH . '/tmp/x_vote_log.schema.sql' );
-	cms_insert_schema( THEME_PATH . '/tmp/x_verified_mobile_numbers.schema.sql' );
+	cms_insert_schema( THEME_PATH . '/etc/db/x_vote_log.schema.sql' );
+	cms_insert_schema( THEME_PATH . '/etc/db/x_verified_mobile_numbers.schema.sql' );
+	cms_insert_schema( THEME_PATH . '/etc/db/x_push_tokens.schema.sql' );
 	$wpdb->show_errors = $back;
 }
 
