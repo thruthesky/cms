@@ -64,7 +64,7 @@ class ApiComment extends ApiPost
                 $title = $user->display_name . " commented to your post";
                 $body = $post['post_title'];
                 foreach ($post_author_tokens as $token) {
-                    dog('post messageToToken');
+//                    dog('post messageToToken');
                     messageToToken($token['token'], $title, $body, $post['guid'], '', $data = $post['ID']);    // send message by token
                 }
             }
@@ -81,7 +81,7 @@ class ApiComment extends ApiPost
                     $title = $user->display_name . " commented to your comment";
                     $body = $parent_comment['comment_content'];
                     foreach ($comment_author_tokens as $token) {
-                        dog('comment messageToToken');
+//                        dog('comment messageToToken');
                         messageToToken($token['token'], $title, $body, $post['guid'], '', $data = $post['ID']);  // send message by token
                     }
                 }

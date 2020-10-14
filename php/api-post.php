@@ -1,6 +1,8 @@
 <?php
 
 
+include_once API_DIR . '/routes/notification/notification.library.php';
+
 class ApiPost extends ApiLibrary
 {
 
@@ -165,6 +167,17 @@ class ApiPost extends ApiLibrary
 
         $this->updateFirstImage($ID);
         $this->updatePostMeta($ID);
+
+        // send notification to topic
+        if (isset($cat)) {
+            $title = 'New post on ' . $cat->slug;
+            $body = $in['post_title'];
+            $post = get_post($ID, ARRAY_A);
+            messageToTopic($cat->slug, $title, $body, $post['guid'], '', $data = login('ID'));
+        }
+
+
+
         return $this->postResponse($ID, ['with_autop' => true]);
     }
 
