@@ -281,7 +281,8 @@ $ phprun vendor/bin/phpunit tests/ApiPostTest.php
 
 ### User profile
 
-* User profile photo must be saved with the `photo_url` key of the user's meta.
+* User profile photo url must be saved with the `photo_url` key of the user's meta.
+  * To let the user upload his profile photo, the app can simple upload a file to wordpress backend and put the full url in `photo_url` of user's meta.
   * User profile photo may be coming from social service. In this case, there will be no photo ID in user response.
 
 ### How to load layout
