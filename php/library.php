@@ -212,3 +212,10 @@ function getCommentPostParent( $comment_ID ) {
 function get_converted_post_id_from_comment_id( $comment_ID ) {
     return getCommentPostParent( $comment_ID );
 }
+
+
+
+function getTokens($user_ID) {
+    global $wpdb;
+    return $wpdb->get_results("SELECT token FROM " . PUSH_TOKENS ." WHERE user_ID=$user_ID", ARRAY_A);
+}

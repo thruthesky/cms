@@ -1,5 +1,6 @@
 <?php
 
+include_once API_DIR . '/routes/notification/notification.library.php';
 
 class ApiComment extends ApiPost
 {
@@ -52,9 +53,44 @@ class ApiComment extends ApiPost
         if (isset($in['files']) && !empty($in['files'])) {
             $this->attachFiles($comment_id, $in['files'], COMMENT_ATTACHMENT);
         }
+
+
+        // notify post owner
+        $post = get_post($in['comment_post_ID'], ARRAY_A);                                                      // get post
+        if ($user->ID !== $post['post_author']) {                                                                     // check if user is not owner
+            $notifyPostOwner = get_user_meta($post['post_author'], 'notifyPost', true);                     // get user meta notifyPost
+            if( $notifyPostOwner === 'Y' ) {                                                                          // check user allow to get notified
+                $post_author_tokens = getTokens($post['post_author']);                                                // get all user token
+                $title = $user->display_name . " commented to your post";
+                $body = $post['post_title'];
+                foreach ($post_author_tokens as $token) {
+                    dog('post messageToToken');
+                    messageToToken($token['token'], $title, $body, $post['guid'], '', $data = $post['ID']);    // send message by token
+                }
+            }
+        }
+
+
+        // notify comment parent
+        if ($in['comment_parent'] &&  $in['comment_parent'] !== $in['comment_post_ID']) {                               // check if comment to another comment
+            $parent_comment =  get_comment($in['comment_parent'], ARRAY_A);                                      // get parent comment
+            if ($user->ID !== $parent_comment['user_id']) {                                                             // check if user is not the owner of parent comment
+                $notifyCommentOwner = get_user_meta($parent_comment['user_id'], 'notifyComment', true);       // get user meta notifyComment
+                if ($notifyCommentOwner === 'Y') {                                                                      // check if user allow to get notified
+                    $comment_author_tokens = getTokens($parent_comment['user_id']);                                     // get user tokens
+                    $title = $user->display_name . " commented to your comment";
+                    $body = $parent_comment['comment_content'];
+                    foreach ($comment_author_tokens as $token) {
+                        dog('comment messageToToken');
+                        messageToToken($token['token'], $title, $body, $post['guid'], '', $data = $post['ID']);  // send message by token
+                    }
+                }
+            }
+        }
+
+
         return $this->commentResponse($comment_id, $in);
     }
-
 
     private function commentUpdate($in)
     {
