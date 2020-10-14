@@ -108,6 +108,31 @@ function messageToToken($token, $title, $body, $url, $iconUrl, $data = '') {
 
 }
 
+function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '') {
+
+	$messaging = firebase()->createMessaging();
+
+	$message = CloudMessage::new()
+	                       ->withWebPushConfig(getWebPushData($title, $body, iconUrl($iconUrl), $url, $data))
+	                       ->withNotification(getNotificationData($title, $body, iconUrl($iconUrl), $url, $data))
+	                       ->withAndroidConfig(getAndroidPushData())
+	                       ->withData(getData($title, $body, iconUrl($iconUrl), $url, $data)); // required
+
+	$report = $messaging->sendMulticast($message, $tokens);
+
+	echo 'Successful sends: '.$report->successes()->count().PHP_EOL;
+	echo 'Failed sends: '.$report->failures()->count().PHP_EOL;
+
+	if ($report->hasFailures()) {
+		foreach ($report->failures()->getItems() as $failure) {
+			echo $failure->error()->getMessage().PHP_EOL;
+		}
+	}
+
+	return $report;
+
+}
+
 
 
 /**

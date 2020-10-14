@@ -137,6 +137,15 @@ function lib() {
 }
 
 /**
+ * @return ApiComment
+ */
+function comment() {
+	global $apiComment;
+	return $apiComment;
+}
+
+
+/**
  * List of included files.
  */
 $__included_files = [];
@@ -1220,20 +1229,32 @@ function rwdLayout() {
 function loginOrRegisterBySocialLogin( $options ) {
 
 	$res = lib()->userLogin( $options );
+	$error_msg = '';
 	if ( isBackendError( $res ) ) {
 		$res = lib()->userRegister( $options );
 		if ( isBackendError( $res ) ) {
 			/// TODO Error handling here.
-			echo tr( $res );
+			$error_msg = $res;
 		}
 	}
 
-	$url = Config::$returnUrlAfterSocialLogin;
-	echo <<<EOS
+	if ( $error_msg ) {
+		$url = Config::$returnUrlAfterSocialLogin;
+		echo <<<EOS
+<script>
+document.location.href = "$url/?error=$error_msg";
+</script>
+EOS;
+	} else {
+		$url = Config::$returnUrlAfterSocialLogin;
+		echo <<<EOS
 <script>
 document.location.href = "$url/?session_id={$res['session_id']}";
 </script>
 EOS;
+	}
+
+
 	return;
 
 
