@@ -854,7 +854,7 @@ class ApiLibrary {
 			'comment_count' => $post['comment_count'],
 			'comments' => $post['comments'],
 			'dislike' => $post['dislike'],
-			'first_image_ID' => $post['first_image_ID'],
+			'first_image_ID' => $post['first_image_ID'] ?? '',
 			'files' => $post['files'],
 			'guid' => $post['guid'],
 			'like' => $post['like'],
