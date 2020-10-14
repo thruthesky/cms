@@ -73,11 +73,15 @@ class ApiComment extends ApiPost
 
         // notify comment parent
         if ($in['comment_parent'] &&  $in['comment_parent'] !== $in['comment_post_ID']) {                               // check if comment to another comment
-            $parent_comment =  get_comment($in['comment_parent'], ARRAY_A);                                      // get parent comment
+
+        	// TODO: (later) Getting the whole comment is slow. It only needs to get what it needs.
+        	$parent_comment =  get_comment($in['comment_parent'], ARRAY_A);                                      // get parent comment
             if ($user->ID !== $parent_comment['user_id']) {                                                             // check if user is not the owner of parent comment
                 $notifyCommentOwner = get_user_meta($parent_comment['user_id'], 'notifyComment', true);       // get user meta notifyComment
                 if ($notifyCommentOwner === 'Y') {                                                                      // check if user allow to get notified
-                    $comment_author_tokens = getTokens($parent_comment['user_id']);                                     // get user tokens
+
+                	// TODO: Post -> A -> B(my comment) -> C -> D(my comment) -> E -> F -> Someone create a New Comment.
+                	$comment_author_tokens = getTokens($parent_comment['user_id']);                                     // get user tokens
                     $title = $user->display_name . " commented to your comment";
                     $body = $parent_comment['comment_content'];
                     foreach ($comment_author_tokens as $token) {
