@@ -120,14 +120,14 @@ function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '')
 
 	$report = $messaging->sendMulticast($message, $tokens);
 
-	echo 'Successful sends: '.$report->successes()->count().PHP_EOL;
-	echo 'Failed sends: '.$report->failures()->count().PHP_EOL;
+//	echo 'Successful sends: '.$report->successes()->count().PHP_EOL;
+//	echo 'Failed sends: '.$report->failures()->count().PHP_EOL;
 
-	if ($report->hasFailures()) {
-		foreach ($report->failures()->getItems() as $failure) {
-			echo $failure->error()->getMessage().PHP_EOL;
-		}
-	}
+//	if ($report->hasFailures()) {
+//		foreach ($report->failures()->getItems() as $failure) {
+//			return $failure->error()->getMessage().PHP_EOL;
+//		}
+//	}
 
 	return $report;
 

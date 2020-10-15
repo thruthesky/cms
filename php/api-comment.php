@@ -74,7 +74,7 @@ class ApiComment extends ApiPost {
                     $owner_tokens[] = $token['token'];
 				}
 				if ($owner_tokens) {
-                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = $post['ID'] );
+                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
                 }
             }
 		}
@@ -85,8 +85,15 @@ class ApiComment extends ApiPost {
             $title              = mb_substr($post['post_title'], 0,65);
             $body               = $user->display_name . " commented to your comment";
 			$tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
-			sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = '');
+			sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 		}
+
+		// notify forum subscriber
+        $cat = get_category($post['post_category'][0]);
+        $slug = $cat->slug;
+        $title =  mb_substr($post['post_title'], 0,64);
+        $body = $slug . ' has new comment.';
+        messageToTopic('notification_comment' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
 
 
