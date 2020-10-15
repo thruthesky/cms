@@ -62,24 +62,30 @@ class ApiComment extends ApiPost {
 
 
 		// notify post owner
-		$post = get_post( $in['comment_post_ID'], ARRAY_A );                                                      // get post
-		if ( $user->ID !== $post['post_author'] ) {                                                                     // check if user is not owner
-			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );                     // get user meta notifyPost
-			if ( $notifyPostOwner === 'Y' ) {                                                                          // check user allow to get notified
-				$post_author_tokens = getTokens( $post['post_author'] );                                                // get all user token
-				$title              = $user->display_name . " commented to your post";
-				$body               = $post['post_title'];
+		$post = get_post( $in['comment_post_ID'], ARRAY_A );
+		if ( $user->ID !== $post['post_author'] ) {
+			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
+			if ( $notifyPostOwner === 'Y' ) {
+				$post_author_tokens = getTokens( $post['post_author'] );
+				$title              = mb_substr($post['post_title'], 0,64);
+				$body               = $user->display_name . " commented to your post";
+				$owner_tokens = [];
 				foreach ( $post_author_tokens as $token ) {
-//                    dog('post messageToToken');
-					messageToToken( $token['token'], $title, $body, $post['guid'], '', $data = $post['ID'] );    // send message by token
+                    $owner_tokens[] = $token['token'];
 				}
-			}
+				if ($owner_tokens) {
+                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = $post['ID'] );
+                }
+            }
 		}
 
+		// notify comment ancestors
 		$comment = get_comment( $comment_id );
 		if ( $comment->comment_parent ) {
+            $title              = mb_substr($post['post_title'], 0,65);
+            $body               = $user->display_name . " commented to your comment";
 			$tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
-//			sendMessageToTokens($tokens, ....);
+			sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = '');
 		}
 
 
