@@ -1039,6 +1039,14 @@ function get_page_post() {
 
 
 /**
+ * @deprecated use load_forum_settings();
+ */
+function get_forum_setting() {
+	return load_forum_settings();
+}
+
+
+/**
  * Set the forum settings of current post before the `post` change.
  *
  * Use this method to set forum setting on post view page.
@@ -1051,11 +1059,12 @@ function get_page_post() {
  *
  * @return array
  */
-function get_forum_setting() {
+function load_forum_settings() {
 	global $__get_forum_setting;
 	if ( $__get_forum_setting !== null ) {
 		return $__get_forum_setting;
 	}
+
 	$cat = null;
 	if ( in( 'slug' ) ) {
 		$cat = get_category_by_slug( in( 'slug' ) );
@@ -1076,6 +1085,14 @@ function get_forum_setting() {
 		}
 	}
 
+	$re = get_forum_settings($cat);
+
+	$__get_forum_setting = $re;
+
+	return $re;
+}
+
+function get_forum_settings($cat) {
 	$re = [];
 	if ( $cat ) {
 		$re['cat_ID']      = $cat->cat_ID;
@@ -1093,8 +1110,6 @@ function get_forum_setting() {
 		}
 		$re[ NO_OF_POSTS_PER_PAGE ] = isset( $re[ NO_OF_POSTS_PER_PAGE ] ) && $re[ NO_OF_POSTS_PER_PAGE ] ? $re[ NO_OF_POSTS_PER_PAGE ] : 10;
 	}
-	$__get_forum_setting = $re;
-
 	return $re;
 }
 
@@ -1575,4 +1590,27 @@ function svg($name, $color='black') {
 	$_svg = str_replace('"', "'", $_svg);
 	$_svg = str_replace('currentColor', $color, $_svg);
 	return "data:image/svg+xml;utf8," . $_svg;
+}
+
+
+function get_i18n($languages) {
+	global $wpdb;
+
+	$rows = $wpdb->get_results("SELECT * FROM wp_options WHERE option_name LIKE 'i18n_%'", ARRAY_A);
+
+	$kvs = [];
+	foreach($rows as $row ) {
+		$kvs[$row['option_name']] = $row['option_value'];
+	}
+	$res = [];
+	foreach($kvs as $k => $v ) {
+		if ( strpos($k, "i18n_key") !== false ) {
+			$name = str_replace("i18n_key_", "", $k);
+			foreach($languages as $ln) {
+				$res[$name][$ln] = isset($kvs["i18n_{$ln}_$name"]) ? $kvs["i18n_{$ln}_$name"] : '';
+			}
+		}
+	}
+
+	return $res;
 }

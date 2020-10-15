@@ -3,42 +3,46 @@
 
 class Config {
 	static public $appName = '플러터 코리아';
-    static public $domain = 'default';
-    static public $appVersion = RELEASE_DATE_STAMP;
-    static public $apiUrl = '/wp-content/themes/cms/api.php';
-    static public $registerPage = '/?page=user.register';
-    static public $mobileVerificationPage = '/?page=user.mobile-verification';
-    static public $resignResultPage = '/?page=user.resign_result';
-    static public $adminUserList = '/?page=admin.user.list';
-    static public $adminForumList = '/?page=admin.forum.list';
+	static public $domain = 'default';
+	static public $appVersion = RELEASE_DATE_STAMP;
+	static public $apiUrl = '/wp-content/themes/cms/api.php';
+	static public $registerPage = '/?page=user.register';
+	static public $mobileVerificationPage = '/?page=user.mobile-verification';
+	static public $resignResultPage = '/?page=user.resign_result';
+	static public $adminUserList = '/?page=admin.user.list';
+	static public $adminForumList = '/?page=admin.forum.list';
 
 
+// 언어는 여기에 얼마든지 추가 할 수 있다.
+// You can add language here.
+//$languages = [ 'en', 'ko', 'ja' ];
 
+	static public $i18n_languages = [ 'en', 'ko' ];
 
-    /// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
+	/// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
 	/// This is only for web registration.
-    static public $verifyMobileOnRegistration = true;
+	static public $verifyMobileOnRegistration = true;
 
 
-    /// If it is set to true and if user has no mobile in his meta data, the user will be redirected to mobile phone verification.
+	/// If it is set to true and if user has no mobile in his meta data, the user will be redirected to mobile phone verification.
 	/// This is both Social login and Web registration.
-    static public $mobileRequired = true;
+	static public $mobileRequired = true;
 
 
-    /// If it is set to true, only verified mobile can be save into user meta.
+	/// If it is set to true, only verified mobile can be save into user meta.
 	/// This means the user must verify phone number before registration or updating mobile no.
-    static public $verifiedMobileOnly = true;
+	static public $verifiedMobileOnly = true;
 
 
-    /// If it is set to true, the mobile number cannot be registered twice. It becomes a unique mobile number in Database.
+	/// If it is set to true, the mobile number cannot be registered twice. It becomes a unique mobile number in Database.
 	/// To test, you can make it false. So, many account can be registered with same mobile number.
 	/// Recommendation: true
-    static public $uniqueMobile = true;
+	static public $uniqueMobile = true;
 
 
-    static public $apikey = 'AIzaSyClwlY3-l4GQOKgqvq-VtCcKJ_Ql8rVPt8';
-    static public $serviceAccount = [];
-    static public $serviceAccountJson ='
+	static public $apikey = 'AIzaSyClwlY3-l4GQOKgqvq-VtCcKJ_Ql8rVPt8';
+	static public $serviceAccount = [];
+	static public $serviceAccountJson = '
 {
   "type": "service_account",
   "project_id": "sonub-version-2020",
@@ -54,8 +58,7 @@ class Config {
 ';
 
 
-
-    static public $firebaseConfig =<<<EOJ
+	static public $firebaseConfig = <<<EOJ
 const firebaseConfig = {
     apiKey: "AIzaSyDaj8gzVYM-bS93emOndKEvBXmw1o83fcQ",
     authDomain: "sonub-version-2020.firebaseapp.com",
@@ -95,9 +98,9 @@ EOJ;
 	 */
 	static public $naverClientId = "uCSRMmdn9Neo98iSpduh";
 	static public $naverClientSecret = "lmEXnwDKAD";
-    static public $naverRedirectURI = HOME_URL . '/?page=user.naver-login';
-    static public $naverState = "RAMDOM_STATE";
-    static public $naverLoginApiURL = null;
+	static public $naverRedirectURI = HOME_URL . '/?page=user.naver-login';
+	static public $naverState = "RAMDOM_STATE";
+	static public $naverLoginApiURL = null;
 
 	/**
 	 * Kakao Login
@@ -107,20 +110,21 @@ EOJ;
 	static public $kakaoLoginApiURL = null;
 
 
-    /**
-     * To open a page instead of HTTP page variable.
-     * @code
-	    Config::setPage('user.mobile-verification');
-	    set_page_options(['mode' => 'after-registration']);
-     * @endcode
-     */
-    static public $page = null;
-    static public function setPage($page) {
-    	self::$page = $page;
-    }
+	/**
+	 * To open a page instead of HTTP page variable.
+	 * @code
+	 * Config::setPage('user.mobile-verification');
+	 * set_page_options(['mode' => 'after-registration']);
+	 * @endcode
+	 */
+	static public $page = null;
+
+	static public function setPage( $page ) {
+		self::$page = $page;
+	}
 
 
-    static public $firebaseEmailAddressFormat = "ID{ID}@sonub.com";
+	static public $firebaseEmailAddressFormat = "ID{ID}@sonub.com";
 
 	/**
 	 * @var bool
@@ -149,84 +153,84 @@ EOJ;
 /**
  * Get host name
  */
-if (isset($_SERVER['HTTP_HOST'])) {
-    $_host = $_SERVER['HTTP_HOST'];
+if ( isset( $_SERVER['HTTP_HOST'] ) ) {
+	$_host = $_SERVER['HTTP_HOST'];
 } else {
-    $_host = null;
+	$_host = null;
 }
 
 
 /**
  * Match host name to page.
  */
-if ( isset($_REQUEST['page']) && strpos($_REQUEST['page'], 'admin.') !== false ) { // if 'page' HTTP variable has 'admin', then it uses 'admin' theme.
-    Config::$domain = 'admin';
+if ( isset( $_REQUEST['page'] ) && strpos( $_REQUEST['page'], 'admin.' ) !== false ) { // if 'page' HTTP variable has 'admin', then it uses 'admin' theme.
+	Config::$domain = 'admin';
 } else {
-	$setting = get_option(DOMAIN_SETTINGS);
+	$setting = get_option( DOMAIN_SETTINGS );
 	if ( $setting ) {
-		$domains = parse_ini_string($setting);
-		foreach( $domains as $domain => $v ) {
-			if ( strpos($_host, $domain) !== false ) {
-				Config::$domain =$v;
+		$domains = parse_ini_string( $setting );
+		foreach ( $domains as $domain => $v ) {
+			if ( strpos( $_host, $domain ) !== false ) {
+				Config::$domain = $v;
 			}
 		}
 	}
 }
 
-define('PAGE_URL', THEME_URL . '/pages/'. Config::$domain);
+define( 'PAGE_URL', THEME_URL . '/pages/' . Config::$domain );
 
 
 /**
  * Overwrite apikey
  */
-$__apikey = get_option(FIREBASE_API_KEY_SETTING);
-if ( $__apikey) {
+$__apikey = get_option( FIREBASE_API_KEY_SETTING );
+if ( $__apikey ) {
 	Config::$apikey = $__apikey;
 }
 /**
  * Overwriting firebaseConfig
  */
-$setting = get_option(FIREBASE_CONFIG_SETTING);
+$setting = get_option( FIREBASE_CONFIG_SETTING );
 if ( $setting ) {
-	$__firebaseConfig = stripslashes($setting);
+	$__firebaseConfig = stripslashes( $setting );
 } else {
 	$__firebaseConfig = Config::$firebaseConfig;
 }
-$snippet=<<<EOJ
+$snippet = <<<EOJ
 <script>$__firebaseConfig</script>
 EOJ;
 
-add_system_head_script($snippet);
+add_system_head_script( $snippet );
 
 
 /**
  * Overwrite firebase service account key
  */
 
-$setting = get_option(FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING);
+$setting = get_option( FIREBASE_SERVICE_ACCOUNT_JSON_KEY_SETTING );
 if ( $setting ) {
-	$__setting = stripslashes($setting);
+	$__setting = stripslashes( $setting );
 } else {
 	$__setting = Config::$serviceAccountJson;
 }
 
-Config::$serviceAccount = json_decode($__setting, true);
+Config::$serviceAccount = json_decode( $__setting, true );
 
 
 /**
  * Overwrite Kakao Rest Api Key
  */
-Config::$kakaoRestApiKey = get_option(KAKAO_REST_API_KEY_SETTING)  ? get_option(KAKAO_REST_API_KEY_SETTING) : Config::$kakaoRestApiKey;
-Config::$kakaoRedirectURI = urlencode(Config::$kakaoRedirectURI);
-Config::$kakaoLoginApiURL = "https://kauth.kakao.com/oauth/authorize?client_id=".Config::$kakaoRestApiKey."&redirect_uri=".Config::$kakaoRedirectURI."&response_type=code";
+Config::$kakaoRestApiKey  = get_option( KAKAO_REST_API_KEY_SETTING ) ? get_option( KAKAO_REST_API_KEY_SETTING ) : Config::$kakaoRestApiKey;
+Config::$kakaoRedirectURI = urlencode( Config::$kakaoRedirectURI );
+Config::$kakaoLoginApiURL = "https://kauth.kakao.com/oauth/authorize?client_id=" . Config::$kakaoRestApiKey . "&redirect_uri=" . Config::$kakaoRedirectURI . "&response_type=code";
 
 /**
  * Overwriting Naver PC & Mobile Web Client Configuration
  */
-Config::$naverClientId = get_option(NAVER_CLIENT_ID_SETTING) ? get_option(NAVER_CLIENT_ID_SETTING) : Config::$naverClientId;
-Config::$naverClientSecret = get_option(NAVER_CLIENT_SECRET_SETTING) ? get_option(NAVER_CLIENT_SECRET_SETTING) : Config::$naverClientSecret;
-Config::$naverRedirectURI =  urlencode(Config::$naverRedirectURI);
-Config::$naverLoginApiURL = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=".Config::$naverClientId."&redirect_uri=".Config::$naverRedirectURI."&state=".Config::$naverState;
+Config::$naverClientId     = get_option( NAVER_CLIENT_ID_SETTING ) ? get_option( NAVER_CLIENT_ID_SETTING ) : Config::$naverClientId;
+Config::$naverClientSecret = get_option( NAVER_CLIENT_SECRET_SETTING ) ? get_option( NAVER_CLIENT_SECRET_SETTING ) : Config::$naverClientSecret;
+Config::$naverRedirectURI  = urlencode( Config::$naverRedirectURI );
+Config::$naverLoginApiURL  = "https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=" . Config::$naverClientId . "&redirect_uri=" . Config::$naverRedirectURI . "&state=" . Config::$naverState;
 
 
 /**
