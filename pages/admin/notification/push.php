@@ -15,6 +15,9 @@ if ( in( 'mode' ) == 'send' ) {
     <h1>Push Notification</h1>
 
     Send Notification via Topic
+    Forum prefix: "notification_post_" + "slug"
+
+
     <form  action="?">
 
         <input type="hidden" name="page" value="admin.notification.push">

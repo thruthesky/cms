@@ -173,7 +173,7 @@ class ApiPost extends ApiLibrary
             $title = 'New post on ' . $cat->slug;
             $body = $in['post_title'];
             $post = get_post($ID, ARRAY_A);
-            messageToTopic('notification_post' . $cat->slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
+            messageToTopic('notification_post_' . $cat->slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
         }
 
 
