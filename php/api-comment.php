@@ -63,22 +63,22 @@ class ApiComment extends ApiPost {
 
 		// notify post owner
 		$post = get_post( $in['comment_post_ID'], ARRAY_A );
-//		if ( $user->ID !== $post['post_author'] ) {
-//			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
-//			if ( $notifyPostOwner === 'Y' ) {
-//				$post_author_tokens = getTokens( $post['post_author'] );
-//				$title              = mb_substr($post['post_title'], 0,64);
-//				$body               = $user->display_name . " commented to your post";
-//				$owner_tokens = [];
-//				foreach ( $post_author_tokens as $token ) {
-//                    $owner_tokens[] = $token['token'];
-//				}
-//				if ($owner_tokens) {
-//                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
-//                }
-//            }
-//		}
-//
+		if ( $user->ID !== $post['post_author'] ) {
+			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
+			if ( $notifyPostOwner === 'Y' ) {
+				$post_author_tokens = getTokens( $post['post_author'] );
+				$title              = mb_substr($post['post_title'], 0,64);
+				$body               = $user->display_name . " commented to your post";
+				$owner_tokens = [];
+				foreach ( $post_author_tokens as $token ) {
+                    $owner_tokens[] = $token['token'];
+				}
+				if ($owner_tokens) {
+                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+                }
+            }
+		}
+
 		// notify comment ancestors
 		$comment = get_comment( $comment_id );
 		if ( $comment->comment_parent ) {
