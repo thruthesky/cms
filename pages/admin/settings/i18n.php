@@ -10,17 +10,19 @@ if ( in( 'mode' ) == 'update' ) {
 	foreach ( $languages as $ln ) {
 		update_option( "i18n_{$ln}_{$key}", in( $ln ), false );
 	}
-} else if ( in('mode') == 'delete' ) {
+} else if ( in( 'mode' ) == 'delete' ) {
 	$key = in( 'key' );
-    delete_option("i18n_key_$key");
+	delete_option( "i18n_key_$key" );
 	foreach ( $languages as $ln ) {
-		delete_option( "i18n_{$ln}_{$key}");
+		delete_option( "i18n_{$ln}_{$key}" );
 	}
 }
 
 
 ?>
     <h1>Client i18n Settings</h1>
+    <a href="/?page=admin.settings.i18n-export">Export</a>
+    <a href="/?page=admin.settings.i18n-import">Import</a>
 
 
     <form action="?">
@@ -48,9 +50,9 @@ foreach ( get_i18n( $languages ) as $key => $values ) {
         <form>
             <input type="hidden" name="page" value="admin.settings.i18n">
             <input name="key" value="<?= $key ?>">
-	        <?php foreach ( $languages as $ln ) { ?>
-                <input name="<?=$ln?>" value="<?= $values[$ln] ?>">
-	        <?php } ?>
+			<?php foreach ( $languages as $ln ) { ?>
+                <input name="<?= $ln ?>" value="<?= $values[ $ln ] ?>">
+			<?php } ?>
             <button type="submit" name="mode" value="update">Update</button>
             <button type="submit" name="mode" value="delete">Delete</button>
         </form>

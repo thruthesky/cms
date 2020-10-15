@@ -13,10 +13,9 @@ class Config {
 	static public $adminForumList = '/?page=admin.forum.list';
 
 
-// 언어는 여기에 얼마든지 추가 할 수 있다.
-// You can add language here.
-//$languages = [ 'en', 'ko', 'ja' ];
-
+	// 언어는 여기에 얼마든지 추가 할 수 있다.
+	// You can add language here.
+	//$languages = [ 'en', 'ko', 'ja' ];
 	static public $i18n_languages = [ 'en', 'ko' ];
 
 	/// If it is set to true, users will be redirected to mobile phone verification page on Web registration.
