@@ -91,7 +91,7 @@ class ApiComment extends ApiPost {
 		// notify forum subscriber
         $cat = get_category($post['post_category'][0]);
         $slug = $cat->slug;
-        $title = $slug . 'forum has new comment.';
+        $title = $slug . ' forum has new comment.';
         $body =  mb_substr($post['post_title'], 0,64);
         messageToTopic('notification_comment' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
