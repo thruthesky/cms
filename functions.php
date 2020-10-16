@@ -55,6 +55,8 @@ require 'php/api-category.php';
 require 'php/firebase.php';
 
 
+xlog("New session begins at:" . time());
+
 /**
  * Filter 404 response code to 200.
  * @return bool
@@ -1613,4 +1615,20 @@ function get_i18n($languages) {
 	}
 
 	return $res;
+}
+
+/**
+ * Returns the slug of first category of the post categories
+ * @param $categories
+ *
+ * @return string
+ */
+function get_first_slug($categories) {
+	// get post slug as category name and pass
+	if (count($categories)) {
+		$cat = get_category($categories[0]);
+		return $cat->slug;
+	} else {
+		return '';
+	}
 }

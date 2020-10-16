@@ -3,10 +3,15 @@
 
 class PostRoute extends ApiPost
 {
-    public function search()
-    {
-        $this->response($this->postSearch(in()));
-    }
+	public function search()
+	{
+		$this->response($this->postSearch(in()));
+	}
+
+	public function latest()
+	{
+		$this->response($this->postLatest(in()));
+	}
 
     public function get()
     {
