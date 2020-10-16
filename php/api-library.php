@@ -1426,13 +1426,13 @@ class ApiLibrary {
             $rows = $this->getUserTokens($user_id);
             if ($filter) {
                 if ( get_user_meta($user_id, $filter, true) == 'Y' ) {
-                    foreach( $rows as $row ) {
-                        $tokens[] = $row['token'];
+                    foreach( $rows as $token ) {
+                        $tokens[] = $token;
                     }
                 }
             } else {
-                foreach( $rows as $row ) {
-                    $tokens[] = $row['token'];
+                foreach( $rows as $token ) {
+                    $tokens[] = $token;
                 }
             }
         }
@@ -1475,7 +1475,12 @@ class ApiLibrary {
 
     function getUserTokens($user_ID) {
         global $wpdb;
-        return $wpdb->get_results("SELECT token FROM " . PUSH_TOKENS ." WHERE user_ID=$user_ID", ARRAY_A);
+        $rows =  $wpdb->get_results("SELECT token FROM " . PUSH_TOKENS ." WHERE user_ID=$user_ID", ARRAY_A);
+        $tokens = [];
+        foreach( $rows as $user ) {
+            $tokens[] = $user['token'];
+        }
+        return $tokens;
     }
 
     public function getForumSubscribers($slug = '', $mode = null ) {

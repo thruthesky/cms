@@ -83,19 +83,19 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
 
+        if (!is_user_logged_in()) $this->error(ERROR_LOGIN_FIRST);
+
         $tokens = $this->getUserTokens(login('ID'));
 		$re = subscribeFirebaseTopic( $topic, $tokens ); // subscribe to firebase with topic
-//        $data = [];
-//        $data[$topic] = "Y";
-//        $this->updateUserMetas(login('ID'), $data);
+        update_user_meta(login('ID'), $topic, "Y");
 
 		if ( $re ) {
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {
-				if ( isset( $re['results'][0]['error'] ) ) {
-					$this->error( ERROR_TOPIC_SUBSCRIPTION_FAILED . "Topic subscription has failed. Error: " . $re['results'][0]['error'] );
-				} else {
+//				if ( isset( $re['results'][0]['error'] ) ) {
+//					$this->error( ERROR_TOPIC_SUBSCRIPTION_FAILED . "Topic subscription has failed. Error: " . $re['results'][0]['error'] );
+//				} else {
 					$this->success( [ 'topic' => $topic, 'token' => $token ] );
-				}
+//				}
 			}
 		}
 		$this->error( ERROR_TOPIC_SUBSCRIPTION_FAILED );
@@ -108,26 +108,24 @@ class NotificationRoute extends ApiLibrary {
 	public function unsubscribeTopic() {
 		$topic = in( 'topic' );
 		$token = in( 'token' );
+
 		if ( ! $topic ) {
 			$this->error( ERROR_NO_TOPIC_PROVIDED );
 		}
 		if ( ! $token ) {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
-
+        if (!is_user_logged_in()) $this->error(ERROR_LOGIN_FIRST);
         $tokens = $this->getUserTokens(login('ID'));
 		$re = unsubscribeFirebaseTopic( $topic, $tokens ); // unsubscribe to firebase with topic
-//        $data = [];
-//        $data[$topic] = "N";
-//        $this->updateUserMetas(login('ID'), $data);
-
+        update_user_meta(login('ID'), $topic, "N");
 		if ( $re ) {
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {
-				if ( isset( $re['results'][0]['error'] ) ) {
-					$this->error( ERROR_TOPIC_UNSUBSCRIPTION_FAILED . "Topic unsubscription has failed. Error: " . $re['results'][0]['error'] );
-				} else {
+//				if ( isset( $re['results'][0]['error'] ) ) {
+//					$this->error( ERROR_TOPIC_UNSUBSCRIPTION_FAILED . "Topic unsubscription has failed. Error: " . $re['results'][0]['error'] );
+//				} else {
 					$this->success( [ 'topic' => $topic, 'token' => $token ] );
-				}
+//				}
 			}
 		}
 		$this->error( ERROR_TOPIC_UNSUBSCRIPTION_FAILED );
