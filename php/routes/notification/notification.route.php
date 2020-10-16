@@ -39,9 +39,16 @@ class NotificationRoute extends ApiLibrary {
 		 * Insert the token if it's a new token and subscribe to all topics that the user subscribed.
 		 */
 		if ( empty( $row ) ) {
-			/// @todo - subscribe the token to all the topic that the user subscribed to.
 			// insert
 			$wpdb->insert( PUSH_TOKENS, [ 'user_ID' => $user_ID, 'token' => $token, 'stamp' => time() ] );
+
+			// subscribe the token to all the topic that the user subscribed to.
+            $topics = $this->getUserForumTopics($user_ID);
+
+            foreach ($topics as $topic ) {
+                subscribeFirebaseTopic( $topic, $token );
+            }
+
 		} else {
 			// update on if there is no user_ID in the record.
 			// @warning. This causes if another user logged in with that device with the token, the user_ID will not be changed.
@@ -76,10 +83,11 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
 
-		/// @todo Get all the tokens of the user and subscribe to the topic at once.
-
-		$re = subscribeFirebaseTopic( $topic, $token ); // subscribe to firebase with topic
-
+        $tokens = $this->getUserTokens(login('ID'));
+		$re = subscribeFirebaseTopic( $topic, $tokens ); // subscribe to firebase with topic
+//        $data = [];
+//        $data[$topic] = "Y";
+//        $this->updateUserMetas(login('ID'), $data);
 
 		if ( $re ) {
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {
@@ -107,10 +115,11 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
 
-		/// @todo Get all the tokens of the user and unsubscribe from the topic at once.
-
-		$re = unsubscribeFirebaseTopic( $topic, $token ); // unsubscribe to firebase with topic
-
+        $tokens = $this->getUserTokens(login('ID'));
+		$re = unsubscribeFirebaseTopic( $topic, $tokens ); // unsubscribe to firebase with topic
+//        $data = [];
+//        $data[$topic] = "N";
+//        $this->updateUserMetas(login('ID'), $data);
 
 		if ( $re ) {
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {

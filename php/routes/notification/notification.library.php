@@ -15,18 +15,18 @@ function iconUrl($url=null) {
 
 /**
  * @param $topic string - topic
- * @param $token string - token
+ * @param $tokenOrTokens mixed - token or tokens
  *
  * @return mixed
  * @throws Firebase\Exception\FirebaseException
  * @throws Firebase\Exception\MessagingException
  */
 
-function subscribeFirebaseTopic( $topic, $token ) {
+function subscribeFirebaseTopic( $topic, $tokenOrTokens ) {
     $messaging = firebase()->createMessaging();
 
     try {
-        return $messaging->subscribeToTopic( $topic, $token );
+        return $messaging->subscribeToTopic( $topic, $tokenOrTokens );
     } catch ( Firebase\Exception\MessagingException $e ) {
         return $e->getMessage();
     } catch ( Firebase\Exception\FirebaseException $e ) {
@@ -38,15 +38,15 @@ function subscribeFirebaseTopic( $topic, $token ) {
 
 /**
  * @param $topic string - topic
- * @param $token string - token
+ * @param $tokenOrTokens mixed - token or tokens
  * @return mixed
  * @throws Firebase\Exception\FirebaseException
  * @throws Firebase\Exception\MessagingException
  */
-function unsubscribeFirebaseTopic($topic, $token) {
+function unsubscribeFirebaseTopic($topic, $tokenOrTokens) {
     $messaging = firebase()->createMessaging();
     try {
-        return $messaging->unsubscribeFromTopic($topic, $token);
+        return $messaging->unsubscribeFromTopic($topic, $tokenOrTokens);
     } catch ( Firebase\Exception\MessagingException $e ) {
         return $e->getMessage();
     } catch ( Firebase\Exception\FirebaseException $e ) {
@@ -119,9 +119,7 @@ function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '')
 	                       ->withData(getData($title, $body, iconUrl($iconUrl), $url, $data)); // required
 
 
-    // @todo chuck to the tokens
     $chunks = array_chunk($tokens, 500);
-
     $report = [];
     foreach ( $chunks as $chunk ) {
         $report[] = $messaging->sendMulticast($message, $chunk);

@@ -1414,12 +1414,23 @@ class ApiLibrary {
         return $this->getTokensFromIDs($asc);
     }
 
-    public function getTokensFromIDs($ids = []) {
+
+    /**
+     * @param array $ids
+     * @param null $filter 'notifyComment' || 'notifyPost'
+     * @return array
+     */
+    public function getTokensFromIDs($ids = [], $filter = null) {
         $tokens = [];
         foreach( $ids as $user_id ) {
-            $notifyCommentOwner = get_user_meta($user_id, 'notifyComment', true);
-            if ( $notifyCommentOwner == 'Y' ) {
-                $rows = getTokens($user_id);
+            $rows = $this->getUserTokens($user_id);
+            if ($filter) {
+                if ( get_user_meta($user_id, $filter, true) == 'Y' ) {
+                    foreach( $rows as $row ) {
+                        $tokens[] = $row['token'];
+                    }
+                }
+            } else {
                 foreach( $rows as $row ) {
                     $tokens[] = $row['token'];
                 }
@@ -1449,7 +1460,7 @@ class ApiLibrary {
             if ( $comment ) {
                 if ( $comment->user_id == login( 'ID' ) ) {
                     continue;
-                } // TODO: double check to remove my id.
+                }
                 $asc[] = $comment->user_id;
             } else {
                 break;
@@ -1462,14 +1473,30 @@ class ApiLibrary {
 
     }
 
-    public function getForumSubscribers($mode = 'post' , $slug = '') {
+    function getUserTokens($user_ID) {
         global $wpdb;
-        $rows = $wpdb->get_results("SELECT user_id FROM wp_usermeta WHERE meta_key='notification_{$mode}_{$slug}' AND meta_value='Y' ", ARRAY_A);
+        return $wpdb->get_results("SELECT token FROM " . PUSH_TOKENS ." WHERE user_ID=$user_ID", ARRAY_A);
+    }
+
+    public function getForumSubscribers($slug = '', $mode = null ) {
+        $topic = $mode ? "meta_key=notification_{$mode}_{$slug}" : "meta_key LIKE notification_%_{$slug}";
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT user_id FROM wp_usermeta WHERE $topic AND meta_value='Y' ", ARRAY_A);
         $ids = [];
         foreach( $rows as $user ) {
             $ids[] = $user['user_id'];
         }
         return $ids;
+    }
+
+    public function getUserForumTopics($user_ID) {
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT meta_key FROM wp_usermeta WHERE meta_key LIKE 'notification_%' AND meta_value='Y' AND user_id=$user_ID ", ARRAY_A);
+        $topics = [];
+        foreach( $rows as $user ) {
+            $topics[] = $user['meta_key'];
+        }
+        return $topics;
     }
 
 

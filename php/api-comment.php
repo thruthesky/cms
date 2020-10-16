@@ -63,87 +63,55 @@ class ApiComment extends ApiPost {
         /**
          * 1) check if post owner want to receive message from his post
          * 2) get notification comment ancestors
-         * 3) get subscriber
-         * 4) make it unique
-         * 5) get users token
-         * 6) send batch 500 is maximum
+         * 3) make it unique
+         * 4) get topic subscriber
+         * 5) remove all subscriber from token users
+         * 6) get users token
+         * 7) send batch 500 is maximum
          */
 
 		/**
-		 * @todo get all the user id of post and comment accestors. - name as 'token users'
-		 * @todo and get all the user id of topic subscribers. - named as 'topic subscribers'.
-		 * @todo remove users of 'topic subscribers' from 'token users'. - with array_intersect.
+		 *  get all the user id of post and comment ancestors. - name as 'token users'
+		 *  get all the user id of topic subscribers. - named as 'topic subscribers'.
+		 *  remove users of 'topic subscribers' from 'token users'. - with array_diff($array1, $array2) return the array1 that has no match from array2
 		 *
 		 */
 
         // 1 post owner
         $post = get_post( $in['comment_post_ID'], ARRAY_A );
-        $user_ids = [];
+        $token_users = [];
         if ( !$this->isMyPost( $post['post_author']) ) {
             $notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
-            if ( $notifyPostOwner === 'Y' )  $user_ids[] = $post['post_author'];
+            if ( $notifyPostOwner === 'Y' )  $token_users[] = $post['post_author'];
         }
 
         //2 ancestors
         $comment = get_comment( $comment_id );
         if ( $comment->comment_parent ) {
-            $user_ids = array_merge($user_ids, $this->getAncestors($comment->comment_ID));
+            $token_users = array_merge($token_users, $this->getAncestors($comment->comment_ID));
         }
+        // 3 unique
+        $token_users = array_unique( $token_users );
 
-        //3 subscriber
+        //4 get topic subscriber
         $slug = get_first_slug($post['post_category']);
-        $user_ids = array_merge($user_ids, $this->getForumSubscribers('comment', $slug));
+        $topic_subscribers = $this->getForumSubscribers('comment', $slug);
 
-        //4 unique
-        $user_ids = array_unique( $user_ids );
+        //5 remove all subscriber to token users
+        $token_users = array_diff($token_users, $topic_subscribers);
 
-        //5 token
-        $tokens = $this->getTokensFromIDs($user_ids);
 
-        // send notification
+        //6 token
+        $tokens = $this->getTokensFromIDs($token_users, 'notifyComment');
+
+        //7 send notification to tokens and topic
         $title              = "(New Comment)-" .  $post['post_title'];
         $body               = $in['comment_content'];
         sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
 
         return $this->commentResponse( $comment_id, $in );
-
-
-		// notify post owner
-//		$post = get_post( $in['comment_post_ID'], ARRAY_A );
-//		if ( $user->ID !== $post['post_author'] ) {
-//			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
-//			if ( $notifyPostOwner === 'Y' ) {
-//				$post_author_tokens = getTokens( $post['post_author'] );
-//				$title              = mb_substr($post['post_title'], 0,64);
-//				$body               = $user->display_name . " commented to your post";
-//				$owner_tokens = [];
-//				foreach ( $post_author_tokens as $token ) {
-//                    $owner_tokens[] = $token['token'];
-//				}
-//				if ($owner_tokens) {
-//                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
-//                }
-//            }
-//		}
-
-		// notify comment ancestors
-//		$comment = get_comment( $comment_id );
-//		if ( $comment->comment_parent ) {
-//            $title              = mb_substr($post['post_title'], 0,65);
-//            $body               = $user->display_name . " commented to your comment";
-//            $tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
-//            sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
-//        }
-
-		// notify forum subscriber
-//        $cat = get_category($post['post_category'][0]);
-//        $slug = $cat->slug;
-//        $title = $slug . ' forum has new comment.';
-//        $body =  mb_substr($post['post_title'], 0,64);
-//        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
-
-
 	}
 
 
