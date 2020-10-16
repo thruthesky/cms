@@ -93,7 +93,7 @@ class ApiComment extends ApiPost {
         $slug = $cat->slug;
         $title = $slug . ' forum has new comment.';
         $body =  mb_substr($post['post_title'], 0,64);
-        messageToTopic('notification_comment' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
+        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
 
 
