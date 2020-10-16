@@ -185,6 +185,7 @@ function getNotificationData($title, $body, $imageUrl, $clickUrl, $data) {
 }
 
 function getWebPushData($title, $body, $iconUrl, $clickUrl, $data) {
+    $title = mb_strcut($title, 0, 64);
     $body = mb_strcut($body, 0, 128);
     return [
         'notification' => [
