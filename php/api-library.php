@@ -1416,5 +1416,68 @@ class ApiLibrary {
     	return count_user_comments(login('ID'));
     }
 
+    public function get_ancestor_tokens_for_push_notifications($comment_ID) {
+        $asc = $this->getAncestors($comment_ID);
+        return $this->getTokensFromIDs($asc);
+    }
+
+    public function getTokensFromIDs($ids = []) {
+        $tokens = [];
+        foreach( $ids as $user_id ) {
+            $notifyCommentOwner = get_user_meta($user_id, 'notifyComment', true);
+            if ( $notifyCommentOwner == 'Y' ) {
+                $rows = getTokens($user_id);
+                foreach( $rows as $row ) {
+                    $tokens[] = $row['token'];
+                }
+            }
+        }
+        return $tokens;
+    }
+
+    /**
+     * Returns an array of user ids that are in the path(tree) of comment hierarchy.
+     *
+     * @note it does not include the login user and it does not have duplicated user id.
+     *
+     * @param $comment_ID
+     *
+     * @return array
+     *
+     *
+     */
+    public function getAncestors( $comment_ID ) {
+
+        $comment = get_comment( $comment_ID );
+        $asc     = [];
+
+        while ( true ) {
+            $comment = get_comment( $comment->comment_parent );
+            if ( $comment ) {
+                if ( $comment->user_id == login( 'ID' ) ) {
+                    continue;
+                } // TODO: double check to remove my id.
+                $asc[] = $comment->user_id;
+            } else {
+                break;
+            }
+        }
+
+        $asc = array_unique( $asc );
+
+        return $asc;
+
+    }
+
+    public function getForumSubscribers($mode = 'post' , $slug = '') {
+        global $wpdb;
+        $rows = $wpdb->get_results("SELECT user_id FROM wp_usermeta WHERE meta_key='notification_{$mode}_{$slug}' AND meta_value='Y' ", ARRAY_A);
+        $ids = [];
+        foreach( $rows as $user ) {
+            $ids[] = $user['user_id'];
+        }
+        return $ids;
+    }
+
 
 }

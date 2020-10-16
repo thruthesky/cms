@@ -60,95 +60,86 @@ class ApiComment extends ApiPost {
 			$this->attachFiles( $comment_id, $in['files'], COMMENT_ATTACHMENT );
 		}
 
+        /**
+         * 1) check if post owner want to receive message from his post
+         * 2) get notification comment ancestors
+         * 3) get subscriber
+         * 4) make it unique
+         * 5) get users token
+         * 6) send batch 500 is maximum
+         */
 
-		// notify post owner
-		$post = get_post( $in['comment_post_ID'], ARRAY_A );
-		if ( $user->ID !== $post['post_author'] ) {
-			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
-			if ( $notifyPostOwner === 'Y' ) {
-				$post_author_tokens = getTokens( $post['post_author'] );
-				$title              = mb_substr($post['post_title'], 0,64);
-				$body               = $user->display_name . " commented to your post";
-				$owner_tokens = [];
-				foreach ( $post_author_tokens as $token ) {
-                    $owner_tokens[] = $token['token'];
-				}
-				if ($owner_tokens) {
-                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
-                }
-            }
-		}
-
-		// notify comment ancestors
-		$comment = get_comment( $comment_id );
-		if ( $comment->comment_parent ) {
-            $title              = mb_substr($post['post_title'], 0,65);
-            $body               = $user->display_name . " commented to your comment";
-            $tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
-            sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+        // 1 post owner
+        $post = get_post( $in['comment_post_ID'], ARRAY_A );
+        $user_ids = [];
+        if ( !$this->isMyPost( $post['post_author']) ) {
+            $notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
+            if ( $notifyPostOwner === 'Y' )  $user_ids[] = $post['post_author'];
         }
 
-		// notify forum subscriber
+        //2 ancestors
+        $comment = get_comment( $comment_id );
+        if ( $comment->comment_parent ) {
+            $user_ids = array_merge($user_ids, $this->getAncestors($comment->comment_ID));
+        }
+
+        //3 subscriber
         $cat = get_category($post['post_category'][0]);
         $slug = $cat->slug;
-        $title = $slug . ' forum has new comment.';
-        $body =  mb_substr($post['post_title'], 0,64);
-        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
+        $user_ids = array_merge($user_ids, $this->getForumSubscribers('comment', $slug));
+
+        //4 unique
+        $user_ids = array_unique( $user_ids );
+
+        //5 token
+        $tokens = $this->getTokensFromIDs($user_ids);
+
+        // send notification
+        $title              = "(New Comment)-" .  $post['post_title'];
+        $body               = $in['comment_content'];
+        sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+
+        return $this->commentResponse( $comment_id, $in );
 
 
+		// notify post owner
+//		$post = get_post( $in['comment_post_ID'], ARRAY_A );
+//		if ( $user->ID !== $post['post_author'] ) {
+//			$notifyPostOwner = get_user_meta( $post['post_author'], 'notifyPost', true );
+//			if ( $notifyPostOwner === 'Y' ) {
+//				$post_author_tokens = getTokens( $post['post_author'] );
+//				$title              = mb_substr($post['post_title'], 0,64);
+//				$body               = $user->display_name . " commented to your post";
+//				$owner_tokens = [];
+//				foreach ( $post_author_tokens as $token ) {
+//                    $owner_tokens[] = $token['token'];
+//				}
+//				if ($owner_tokens) {
+//                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+//                }
+//            }
+//		}
 
-		return $this->commentResponse( $comment_id, $in );
+		// notify comment ancestors
+//		$comment = get_comment( $comment_id );
+//		if ( $comment->comment_parent ) {
+//            $title              = mb_substr($post['post_title'], 0,65);
+//            $body               = $user->display_name . " commented to your comment";
+//            $tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
+//            sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+//        }
+
+		// notify forum subscriber
+//        $cat = get_category($post['post_category'][0]);
+//        $slug = $cat->slug;
+//        $title = $slug . ' forum has new comment.';
+//        $body =  mb_substr($post['post_title'], 0,64);
+//        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
+
+
 	}
 
-	public function get_ancestor_tokens_for_push_notifications($comment_ID) {
-		$asc = $this->getAncestors($comment_ID);
-		$tokens = [];
-		foreach( $asc as $user_id ) {
-			$notifyCommentOwner = get_user_meta($user_id, 'notifyComment', true);
-			if ( $notifyCommentOwner == 'Y' ) {
-//				print_r($user_id);
-				$rows = getTokens($user_id);
-				foreach( $rows as $row ) {
-					$tokens[] = $row['token'];
-				}
-			}
-		}
-		return $tokens;
-	}
 
-	/**
-	 * Returns an array of user ids that are in the path(tree) of comment hierarchy.
-	 *
-	 * @note it does not include the login user and it does not have duplicated user id.
-	 *
-	 * @param $comment_ID
-	 *
-	 * @return array
-	 *
-	 *
-	 */
-	public function getAncestors( $comment_ID ) {
-
-		$comment = get_comment( $comment_ID );
-		$asc     = [];
-
-		while ( true ) {
-			$comment = get_comment( $comment->comment_parent );
-			if ( $comment ) {
-				if ( $comment->user_id == login( 'ID' ) ) {
-					continue;
-				} // TODO: dobule check to remove my id.
-				$asc[] = $comment->user_id;
-			} else {
-				break;
-			}
-		}
-
-		$asc = array_unique( $asc );
-
-		return $asc;
-
-	}
 
 
 	private function commentUpdate( $in ) {

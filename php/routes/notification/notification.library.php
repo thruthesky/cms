@@ -118,6 +118,8 @@ function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '')
 	                       ->withAndroidConfig(getAndroidPushData())
 	                       ->withData(getData($title, $body, iconUrl($iconUrl), $url, $data)); // required
 
+
+    // @todo chuck to the tokens
 	$report = $messaging->sendMulticast($message, $tokens);
 
 

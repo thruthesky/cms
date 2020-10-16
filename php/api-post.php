@@ -168,12 +168,19 @@ class ApiPost extends ApiLibrary
         $this->updateFirstImage($ID);
         $this->updatePostMeta($ID);
 
-        // send notification to topic
+        // send notification to forum subscriber
         if (isset($cat)) {
             $title = 'New post on ' . $cat->slug;
             $body = $in['post_title'];
             $post = get_post($ID, ARRAY_A);
-            messageToTopic('notification_post_' . $cat->slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
+
+            //3 subscriber
+            $cat = get_category($post['post_category'][0]);
+            $slug = $cat->slug;
+            $user_ids = $this->getForumSubscribers('post', $slug);
+            $tokens = $this->getTokensFromIDs($user_ids);
+            sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+//            messageToTopic('notification_post_' . $cat->slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
         }
 
 
