@@ -69,6 +69,13 @@ class ApiComment extends ApiPost {
          * 6) send batch 500 is maximum
          */
 
+		/**
+		 * @todo get all the user id of post and comment accestors. - name as 'token users'
+		 * @todo and get all the user id of topic subscribers. - named as 'topic subscribers'.
+		 * @todo remove users of 'topic subscribers' from 'token users'. - with array_intersect.
+		 *
+		 */
+
         // 1 post owner
         $post = get_post( $in['comment_post_ID'], ARRAY_A );
         $user_ids = [];
@@ -84,8 +91,7 @@ class ApiComment extends ApiPost {
         }
 
         //3 subscriber
-        $cat = get_category($post['post_category'][0]);
-        $slug = $cat->slug;
+        $slug = get_first_slug($post['post_category']);
         $user_ids = array_merge($user_ids, $this->getForumSubscribers('comment', $slug));
 
         //4 unique
@@ -98,6 +104,7 @@ class ApiComment extends ApiPost {
         $title              = "(New Comment)-" .  $post['post_title'];
         $body               = $in['comment_content'];
         sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+
 
         return $this->commentResponse( $comment_id, $in );
 

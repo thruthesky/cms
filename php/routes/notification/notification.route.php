@@ -33,15 +33,22 @@ class NotificationRoute extends ApiLibrary {
 		}
 
 		//
-		$row = $wpdb->get_row( "SELECT * FROM " . PUSH_TOKENS . " WHERE token='$token'" );
+		$row = $wpdb->get_row( "SELECT * FROM " . PUSH_TOKENS . " WHERE token='$token'", ARRAY_A );
 
-		//
+		/**
+		 * Insert the token if it's a new token and subscribe to all topics that the user subscribed.
+		 */
 		if ( empty( $row ) ) {
+			/// @todo - subscribe the token to all the topic that the user subscribed to.
 			// insert
 			$wpdb->insert( PUSH_TOKENS, [ 'user_ID' => $user_ID, 'token' => $token, 'stamp' => time() ] );
 		} else {
-			// update
-			$wpdb->update( PUSH_TOKENS, [ 'user_ID' => $user_ID ], [ 'token' => $token ] );
+			// update on if there is no user_ID in the record.
+			// @warning. This causes if another user logged in with that device with the token, the user_ID will not be changed.
+			if ( $row['user_ID'] != $user_ID ) {
+				$wpdb->update( PUSH_TOKENS, [ 'user_ID' => $user_ID ], [ 'token' => $token ] );
+			}
+
 		}
 
 		//
@@ -69,6 +76,7 @@ class NotificationRoute extends ApiLibrary {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
 
+		/// @todo Get all the tokens of the user and subscribe to the topic at once.
 
 		$re = subscribeFirebaseTopic( $topic, $token ); // subscribe to firebase with topic
 
@@ -98,6 +106,8 @@ class NotificationRoute extends ApiLibrary {
 		if ( ! $token ) {
 			$this->error( ERROR_NO_TOKEN_PROVIDED );
 		}
+
+		/// @todo Get all the tokens of the user and unsubscribe from the topic at once.
 
 		$re = unsubscribeFirebaseTopic( $topic, $token ); // unsubscribe to firebase with topic
 
