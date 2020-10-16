@@ -1483,6 +1483,12 @@ class ApiLibrary {
         return $tokens;
     }
 
+
+    /**
+     * @param string $slug
+     * @param null $mode 'post' | 'comment'
+     * @return array
+     */
     public function getForumSubscribers($slug = '', $mode = null ) {
         $topic = $mode ? "meta_key='notification_{$mode}_{$slug}'" : "meta_key LIKE 'notification_%_{$slug}'";
         global $wpdb;

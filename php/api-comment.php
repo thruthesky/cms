@@ -96,7 +96,7 @@ class ApiComment extends ApiPost {
 
         // 4 get topic subscriber
         $slug = get_first_slug($post['post_category']);
-        $topic_subscribers = $this->getForumSubscribers('comment', $slug);
+        $topic_subscribers = $this->getForumSubscribers( $slug, 'comment');
 
         // 5 remove all subscriber to token users
         $token_users = array_diff($token_users, $topic_subscribers);
