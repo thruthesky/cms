@@ -120,8 +120,15 @@ function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '')
 
 
     // @todo chuck to the tokens
-	$report = $messaging->sendMulticast($message, $tokens);
+    $chunks = array_chunk($tokens, 500);
 
+    $report = [];
+    foreach ( $chunks as $chunk ) {
+        $report[] = $messaging->sendMulticast($message, $chunk);
+    }
+
+
+//	$report = $messaging->sendMulticast($message, $tokens);
 
 //	echo 'Successful sends: '.$report->successes()->count().PHP_EOL;
 //	echo 'Failed sends: '.$report->failures()->count().PHP_EOL;
