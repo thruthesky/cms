@@ -108,6 +108,18 @@ function messageToToken($token, $title, $body, $url, $iconUrl, $data = '') {
 
 }
 
+/**
+ * @param $tokens - array of tokens. If it has more than 500 tokens, it loops and sends to all the tokens.
+ * @param $title
+ * @param $body
+ * @param $url
+ * @param $iconUrl
+ * @param string $data
+ *
+ * @return array
+ * @throws Firebase\Exception\FirebaseException
+ * @throws Firebase\Exception\MessagingException
+ */
 function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '') {
 
 	$messaging = firebase()->createMessaging();

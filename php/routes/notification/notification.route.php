@@ -90,6 +90,7 @@ class NotificationRoute extends ApiLibrary {
         update_user_meta(login('ID'), $topic, "Y");
 
 		if ( $re ) {
+			/// @TODO later. If there is any error on a token, then it is invalid and needed to be deleted from database.
 			if ( isset( $re['results'] ) && count( $re['results'] ) ) {
 //				if ( isset( $re['results'][0]['error'] ) ) {
 //					$this->error( ERROR_TOPIC_SUBSCRIPTION_FAILED . "Topic subscription has failed. Error: " . $re['results'][0]['error'] );

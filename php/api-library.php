@@ -1411,7 +1411,7 @@ class ApiLibrary {
 
     public function get_ancestor_tokens_for_push_notifications($comment_ID) {
         $asc = $this->getAncestors($comment_ID);
-        return $this->getTokensFromIDs($asc);
+        return $this->getTokensFromUserIDs($asc);
     }
 
 
@@ -1420,7 +1420,7 @@ class ApiLibrary {
      * @param null $filter 'notifyComment' || 'notifyPost'
      * @return array
      */
-    public function getTokensFromIDs($ids = [], $filter = null) {
+    public function getTokensFromUserIDs($ids = [], $filter = null) {
         $tokens = [];
         foreach( $ids as $user_id ) {
             $rows = $this->getUserTokens($user_id);
@@ -1484,7 +1484,7 @@ class ApiLibrary {
     }
 
     public function getForumSubscribers($slug = '', $mode = null ) {
-        $topic = $mode ? "meta_key=notification_{$mode}_{$slug}" : "meta_key LIKE notification_%_{$slug}";
+        $topic = $mode ? "meta_key='notification_{$mode}_{$slug}'" : "meta_key LIKE 'notification_%_{$slug}'";
         global $wpdb;
         $rows = $wpdb->get_results("SELECT user_id FROM wp_usermeta WHERE $topic AND meta_value='Y' ", ARRAY_A);
         $ids = [];

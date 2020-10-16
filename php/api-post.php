@@ -220,7 +220,7 @@ class ApiPost extends ApiLibrary {
             $cat = get_category($post['post_category'][0]);
             $slug = $cat->slug;
             $user_ids = $this->getForumSubscribers('post', $slug);
-            $tokens = $this->getTokensFromIDs($user_ids);
+            $tokens = $this->getTokensFromUserIDs($user_ids);
             sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
 //            messageToTopic('notification_post_' . $cat->slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
         }

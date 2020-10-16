@@ -90,26 +90,27 @@ class ApiComment extends ApiPost {
         if ( $comment->comment_parent ) {
             $token_users = array_merge($token_users, $this->getAncestors($comment->comment_ID));
         }
+
         // 3 unique
         $token_users = array_unique( $token_users );
 
-        //4 get topic subscriber
+        // 4 get topic subscriber
         $slug = get_first_slug($post['post_category']);
         $topic_subscribers = $this->getForumSubscribers('comment', $slug);
 
-        //5 remove all subscriber to token users
+        // 5 remove all subscriber to token users
         $token_users = array_diff($token_users, $topic_subscribers);
 
 
-        //6 token
-        $tokens = $this->getTokensFromIDs($token_users, 'notifyComment');
+        // 6 token
+        $tokens = $this->getTokensFromUserIDs($token_users, 'notifyComment');
 
         //7 send notification to tokens and topic
-        $title              = "(New Comment)-" .  $post['post_title'];
+        $title              = $post['post_title'];
         $body               = $in['comment_content'];
-        sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
-        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
+        messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
+		sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
 
         return $this->commentResponse( $comment_id, $in );
 	}
