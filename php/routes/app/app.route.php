@@ -29,6 +29,7 @@ class AppRoute extends ApiLibrary {
 		$lang = in('lang') ? in('lang') : 'en';
 		$i18n = [];
 		foreach( get_i18n(Config::$i18n_languages) as $k => $values ) {
+			$k = strtolower($k);
 			$i18n[$k] = $values[$lang];
 		}
 		$data = [

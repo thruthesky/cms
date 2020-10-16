@@ -194,7 +194,7 @@ class ApiLibrary {
 	 */
 	public function session_login($session_id)
 	{
-		xlog('session_login($session_id)');
+		xlog("session_login($session_id)");
 		if (empty($session_id)) $this->error(ERROR_EMPTY_SESSION_ID);
 
 		$arr = explode('_', $session_id);
@@ -833,18 +833,17 @@ class ApiLibrary {
 
 
 		// get post slug as category name and pass
-		if (count($post['post_category'])) {
-			$cat = get_category($post['post_category'][0]);
-			$post['slug'] = $cat->slug;
-		}
+//		if (count($post['post_category'])) {
+//			$cat = get_category($post['post_category'][0]);
+//			$post['slug'] = $cat->slug;
+//		}
+		$post['slug'] = get_first_slug($post['post_category']);
 
 		// Check if user voted on this post
-		$post['user_vote'] = $this->getUserVoteChoice($post['ID'], $options);
-
+		$post['user_vote'] = $this->getVoteChoice( $post['ID'], login('ID') );
 
 		if ( !isset($post['like']) ) $post['like'] = 0;
 		if ( !isset($post['dislike']) ) $post['dislike'] = 0;
-
 
 		$ret = [
 			'ID' => $post['ID'],
@@ -868,15 +867,8 @@ class ApiLibrary {
 			'short_date_time' => $post['short_date_time'],
 			'slug' => $post['slug'],
 		];
-		return $ret;
-	}
 
-	function getUserVoteChoice($ID, $options) {
-		$user = $this->get_user_by_session_id($options);
-		if ($user) {
-			return $this->getVoteChoice($ID, $user->ID);
-		}
-		return null;
+		return $ret;
 	}
 
 
@@ -1021,7 +1013,7 @@ class ApiLibrary {
 		$ret['author_photo_url'] = get_user_meta($comment['user_id'], 'photo_url', true);;
 		// date
 		$ret['short_date_time'] = $this->shortDateTime($comment['comment_date']);
-		$ret['user_vote'] = $this->getUserVoteChoice(get_converted_post_id_from_comment_id($comment_id), $options);
+		$ret['user_vote'] = $this->getVoteChoice(get_converted_post_id_from_comment_id($comment_id), login('ID'));
 
 		// Add meta data and merge into comment.
 		$metas = get_comment_meta($comment['comment_ID'], '', true);
@@ -1213,17 +1205,18 @@ class ApiLibrary {
 	 * @return null/string
 	 */
 	public function getVoteChoice($post_id, $user_id) {
+		if ( ! $user_id ) return '';
 		global $wpdb;
 		return $wpdb->get_var("SELECT choice FROM x_like_log WHERE post_id=$post_id AND user_id=$user_id");
 	}
 
 	/**
+	 * @todo @bug this method let the user login. So, do not use this method for getting user information.
 	 * get user by session id
 	 * @param $in
 	 * @return null|WP_User
 	 */
 	function get_user_by_session_id($in) {
-
 		if ( isset($in['session_id']) && !empty($in['session_id']) ) {
 			$user = $this->authenticate($in);
 			if ( $user instanceof WP_User ) return $user;

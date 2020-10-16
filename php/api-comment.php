@@ -270,7 +270,7 @@ class ApiComment extends ApiPost {
 			'ID'        => $comment_ID,
 			'like'      => $like,
 			'dislike'   => $dislike,
-			'user_vote' => $this->getUserVoteChoice( $converted_post_id, $in )
+			'user_vote' => $this->getVoteChoice( $converted_post_id, login('ID') )
 		];
 	}
 
