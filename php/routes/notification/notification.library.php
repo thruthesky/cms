@@ -57,12 +57,13 @@ function unsubscribeFirebaseTopic($topic, $tokenOrTokens) {
 }
 
 
-function messageToTopic($topic, $title, $body, $url, $iconUrl, $data = '') {
+function messageToTopic($topic, $title, $body, $url, $iconUrl, $data = []) {
 
     $message = CloudMessage::withTarget('topic', $topic)
         ->withWebPushConfig(getWebPushData($title, $body, iconUrl($iconUrl), $url, $data))
         ->withNotification(getNotificationData($title, $body, iconUrl($iconUrl), $url, $data))
         ->withAndroidConfig(getAndroidPushData())
+	    ->withData($data);
 //    ->withApnsConfig('...')
     ;
 
@@ -85,13 +86,13 @@ function messageToTopic($topic, $title, $body, $url, $iconUrl, $data = '') {
  * @param string $data
  * @return array|string
  */
-function messageToToken($token, $title, $body, $url, $iconUrl, $data = '') {
+function messageToToken($token, $title, $body, $url, $iconUrl, $data = []) {
 
     $message = CloudMessage::withTarget('token', $token)
         ->withWebPushConfig(getWebPushData($title, $body, iconUrl($iconUrl), $url, $data))
         ->withNotification(getNotificationData($title, $body, iconUrl($iconUrl), $url, $data))
         ->withAndroidConfig(getAndroidPushData())
-        ->withData(getData($title, $body, iconUrl($iconUrl), $url, $data)) // required
+        ->withData($data)
 //    ->withApnsConfig('...')
     ;
 
@@ -120,7 +121,7 @@ function messageToToken($token, $title, $body, $url, $iconUrl, $data = '') {
  * @throws Firebase\Exception\FirebaseException
  * @throws Firebase\Exception\MessagingException
  */
-function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '') {
+function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = []) {
 
 	$messaging = firebase()->createMessaging();
 
@@ -128,7 +129,7 @@ function sendMessageToTokens($tokens, $title, $body, $url, $iconUrl, $data = '')
 	                       ->withWebPushConfig(getWebPushData($title, $body, iconUrl($iconUrl), $url, $data))
 	                       ->withNotification(getNotificationData($title, $body, iconUrl($iconUrl), $url, $data))
 	                       ->withAndroidConfig(getAndroidPushData())
-	                       ->withData(getData($title, $body, iconUrl($iconUrl), $url, $data)); // required
+	                       ->withData($data); // required
 
 
     $chunks = array_chunk($tokens, 500);

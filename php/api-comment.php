@@ -110,7 +110,7 @@ class ApiComment extends ApiPost {
         $body               = $in['comment_content'];
 
         messageToTopic('notification_comment_' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
-		sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+		sendMessageToTokens( $tokens, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
         return $this->commentResponse( $comment_id, $in );
 	}

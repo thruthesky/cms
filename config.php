@@ -4,6 +4,13 @@
 class Config {
 	static public $appName = '플러터 코리아';
 	static public $domain = 'default';
+
+	/**
+	 * Home url with current browser domain.
+	 *
+	 * @note it differs from wordpress home_url() that is using guid. This uses the domain of web browser.
+	 */
+	static public $currentHomeUrl = null;
 	static public $appVersion = RELEASE_DATE_STAMP;
 	static public $apiUrl = '/wp-content/themes/cms/api.php';
 	static public $registerPage = '/?page=user.register';
@@ -158,6 +165,11 @@ if ( isset( $_SERVER['HTTP_HOST'] ) ) {
 	$_host = null;
 }
 
+
+/**
+ * Set home url with current browser domain.
+ */
+Config::$currentHomeUrl = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 
 /**
  * Match host name to page.
