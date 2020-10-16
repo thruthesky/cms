@@ -40,7 +40,7 @@ class ApiComment extends ApiPost {
 		$commentdata = [
 			'comment_post_ID'      => $in['comment_post_ID'],
 			'comment_content'      => $in['comment_content'],
-			'comment_parent'       => $in['comment_parent'],
+			'comment_parent'       => $in['comment_parent'] ?? 0,
 			'user_id'              => $user->ID,
 			'comment_author'       => $user->nickname,
 			'comment_author_url'   => $user->user_url,
@@ -74,7 +74,7 @@ class ApiComment extends ApiPost {
                     $owner_tokens[] = $token['token'];
 				}
 				if ($owner_tokens) {
-                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = $post['ID'] );
+                    sendMessageToTokens( $owner_tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
                 }
             }
 		}
@@ -84,9 +84,16 @@ class ApiComment extends ApiPost {
 		if ( $comment->comment_parent ) {
             $title              = mb_substr($post['post_title'], 0,65);
             $body               = $user->display_name . " commented to your comment";
-			$tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
-			sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = '');
-		}
+            $tokens = $this->get_ancestor_tokens_for_push_notifications($comment->comment_ID);
+            sendMessageToTokens($tokens, $title, $body, $post['guid'], '', $data = json_encode(['sender' => login('ID')]));
+        }
+
+		// notify forum subscriber
+        $cat = get_category($post['post_category'][0]);
+        $slug = $cat->slug;
+        $title = $slug . ' forum has new comment.';
+        $body =  mb_substr($post['post_title'], 0,64);
+        messageToTopic('notification_comment' . $slug, $title, $body, $post['guid'], '', $data = ['sender' => login('ID')]);
 
 
 
@@ -99,7 +106,7 @@ class ApiComment extends ApiPost {
 		foreach( $asc as $user_id ) {
 			$notifyCommentOwner = get_user_meta($user_id, 'notifyComment', true);
 			if ( $notifyCommentOwner == 'Y' ) {
-				print_r($user_id);
+//				print_r($user_id);
 				$rows = getTokens($user_id);
 				foreach( $rows as $row ) {
 					$tokens[] = $row['token'];

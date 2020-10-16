@@ -33,6 +33,7 @@
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="/?page=admin.settings.domain">Domain Settings</a></li>
                         <li><a class="dropdown-item" href="/?page=admin.settings.i18n">i18n Settings</a></li>
+                        <li><a class="dropdown-item" href="/?page=admin.notification.push">Push Notification</a></li>
                         <li><a class="dropdown-item" href="#">System Settings</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#">Help</a></li>
